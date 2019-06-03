@@ -1,4 +1,5 @@
 *.secret.*
+*.SECRET.*
 release_cmd/*
 fetch_all.php
 import_db.php
