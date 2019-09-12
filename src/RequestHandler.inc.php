@@ -1,56 +1,38 @@
 <?php
   // Includes
-  $file_DB = __DIR__."/DatabaseHandler.inc.php";
-  if (file_exists($file_DB)) include_once($file_DB);
-  $file_SM = __DIR__."/StateMachine.inc.php";
-  if (file_exists($file_SM)) include_once($file_SM);
-  $file_RQ = __DIR__."/ReadQuery.inc.php";
-  if (file_exists($file_RQ)) include_once($file_RQ);
+  $file_DB = __DIR__."/DatabaseHandler.inc.php"; if (file_exists($file_DB)) include_once($file_DB);
+  $file_SM = __DIR__."/StateMachine.inc.php"; if (file_exists($file_SM)) include_once($file_SM);
+  $file_RQ = __DIR__."/ReadQuery.inc.php"; if (file_exists($file_RQ)) include_once($file_RQ);
+  $file_AH = __DIR__."/AuthHandler.inc.php"; if (file_exists($file_AH)) include_once($file_AH);
 
   // Global function for StateMachine
-  function api($data) {
-    $url = API_URL;
-    $token = MACHINE_TOKEN;
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
-    $headers = array();
-    //JWT token for Authentication
-    $headers[] = 'Cookie: token='.$token;
-    if ($data) {
-      $json = json_encode($data);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-      $headers[] = 'Content-Type: application/json';
-      $headers[] = 'Content-Length: '.strlen($json);
+  function api($data, $token = null) {
+    // Do not even connect outside -> just call the functions internally
+    $cmd = $data["cmd"];
+    $param = $data["param"];
+    if ($cmd != "") {
+      $RH = new RequestHandler($token);
+      if (!is_null($param)) // are there parameters?
+        $result = $RH->$cmd($param); // execute with params
+      else
+        $result = $RH->$cmd(); // execute
+      // Output result
+      return $result;
     }
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $verbose = fopen('php://temp', 'w+');
-    curl_setopt($ch, CURLOPT_STDERR, $verbose);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    $result = curl_exec($ch);
-    // Debug Info
-    if ($result === FALSE)
-      printf("cUrl error (#%d): %s<br>\n", curl_errno($ch), htmlspecialchars(curl_error($ch)));
-    rewind($verbose);
-    $verboseLog = stream_get_contents($verbose);
-    return $result;
   }
-  function fmtError($errormessage) {
-    return json_encode(['error' => ['msg' => $errormessage]]);
-  }
+  function fmtError($errormessage) { return json_encode(['error' => ['msg' => $errormessage]]); }
 
+  //-------------------------------------------------------
   class Config {
     public static function getConfig() {
-      return file_get_contents(__DIR__.'/../'.DB_NAME.'-config.inc.json');
+      $filepath = __DIR__.'/../config.inc.json';
+      if (file_exists($filepath)) return file_get_contents($filepath);
+      return null;
     }
     public static function getColsByTablename($tablename, $data = null) {
       if (is_null($data))
         $data = json_decode(Config::getConfig(), true);
-      $cols = $data[$tablename]["columns"];      
+      $cols = $data[$tablename]["columns"];
       return $cols;
     }
     public static function getColnamesByTablename($tablename) {
@@ -58,10 +40,7 @@
       $result = [];
       foreach ($cols as $colname => $col) {
         if (array_key_exists('foreignKey', $col)) {
-          /*$t = $col['foreignKey']['table'];
-          $c = $col['foreignKey']['col_id'];
-          $alias = implode('/', [$t, $c]);
-          $result[] = '`' . $alias . '`.' . $colname;*/
+          # foreign Key
         }
         elseif ($col['is_virtual']) {
           # virtual Column
@@ -99,7 +78,6 @@
       // TODO: !!!
       return true;
     }
-    // Checks
     public static function doesTableExist($tablename) {
       $result = false;
       //$tablename = strtolower($tablename); // always lowercase
@@ -108,8 +86,11 @@
       return $result;
     }
     public static function doesColExistInTable($tablename, $colname) {
-      $cols = Config::getColsByTablename($tablename);
-      $colnames = array_keys($cols);
+      $colnames = Config::getRealColnames($tablename);
+      return in_array($colname, $colnames);
+    }
+    public static function doesVirtualColExistInTable($tablename, $colname) {
+      $colnames = Config::getVirtualColnames($tablename);
       return in_array($colname, $colnames);
     }
     public static function hasColumnFK($tablename, $colname) {
@@ -126,13 +107,27 @@
       // = boolean // check if contains only vaild letters
       return (!preg_match('/[^A-Za-z0-9_]/', $colname));
     }
-    public static function getVirtualColnames($tablename, $data = null) {
+    public static function getVirtualSelects($tablename, $data = null) {
       $res = array();
       $cols = Config::getColsByTablename($tablename, $data);
       // Collect only virtual Columns
       foreach ($cols as $colname => $col) {
-        if ($col["is_virtual"])
-          $res[] = $colname;
+        if ($col["is_virtual"] && $col["field_type"] != "reversefk")
+          $res[$colname] = $col["virtual_select"];
+      }
+      return $res;
+    }
+    public static function getRevFKs($tablename, $data = null) {
+      $res = array();
+      $cols = Config::getColsByTablename($tablename, $data);
+      // Collect only virtual Columns
+      foreach ($cols as $colname => $col) {
+        if ($col["is_virtual"] && $col["field_type"] == "reversefk")
+          $res[$colname] = [
+            "revfk_tablename" => $col["revfk_tablename"],
+            "revfk_colname1" => $col["revfk_colname1"],
+            "revfk_colname2" => $col["revfk_colname2"]
+          ];
       }
       return $res;
     }
@@ -145,6 +140,32 @@
           continue;
         else
           $res[] = $colname;
+      }
+      return $res;
+    }
+    public static function getVirtualColnames($tablename) {
+      $res = array();
+      $cols = Config::getColsByTablename($tablename);
+      if (is_null($cols)) return [];
+      // Collect only virtual Columns
+      foreach ($cols as $colname => $col) {
+        if ($col["is_virtual"] && $col["field_type"] != "reversefk")
+          $res[] = $colname;
+      }
+      return $res;
+    }
+    public static function getJoinedColnames($tablename) {
+      $res = array();
+      $cols = Config::getColsByTablename($tablename);
+      foreach ($cols as $colname => $col) {
+        if (array_key_exists('foreignKey', $col) && $col["foreignKey"]['table'] != '') {
+          $extTblCols = Config::getColnamesByTablename($col["foreignKey"]['table']);
+          foreach ($extTblCols as $extColname) {
+            $arr = explode(".", $extColname);
+            $alias = '`'.$tablename.'/'.$colname.'`.'.end($arr);          
+            $res[] = $alias;
+          }
+        }
       }
       return $res;
     }
@@ -163,15 +184,103 @@
       }
       return $res;
     }
+    public static function getStdFilter($tablename) {
+      $data = json_decode(Config::getConfig(), true);
+      return $data[$tablename]["stdfilter"];
+    }
   }
 
   class RequestHandler {
+    private $token = null;
+
+    public function __construct($tokendata = null) {
+      $this->token = $tokendata;
+    }
     private static function splitQuery($row) {
       $res = array();
       foreach ($row as $key => $value) { 
         $res[] = array("key" => $key, "value" => $value);
       }
       return $res;
+    }
+    private static function fmtCell($dtype, $inp) {
+      if (is_null($inp)) return null;
+      // TIME, DATE, DATETIME, FLOAT, VAR_STRING
+      switch ($dtype) {
+        case 'TINY': // Bool
+        case 'LONG':
+        case 'LONGLONG':
+          return (int)$inp;
+          break;
+        case 'NEWDECIMAL':
+        case 'FLOAT':
+          return (float)$inp;
+          break;
+        default:
+          return (string)$inp;
+          break;
+      }
+    }
+    private static function path2tree(&$tree, $path, $value) {
+      $parts = explode("/", $path);
+      if (count($parts) > 1) {
+        $first = $parts[0];
+        array_shift($parts); // remove first element
+        $path = implode("/", $parts);
+        if (!array_key_exists($first, $tree)) {
+          $tree[$first] = []; // overwrite
+        } else if (!is_array($tree[$first])) {
+          $tree[$first] = [];
+        }
+        self::path2tree($tree[$first], $path, $value); // go deeper
+      }
+      else
+        $tree[$path] = $value;
+    }
+    private static function parseResultData($tablename, $stmt) {
+      $tree = [];
+      //-------- Loop Row
+      while($singleRow = $stmt->fetch(PDO::FETCH_NUM)) {
+        //-----------------------------------
+        // Loop Cell
+
+        // TODO: Improve this with Link
+        /*
+        if ($tablename == '_nodes')
+          $singleRow[] = "http://localhost/APMS_test/bpmspace_sqms2_v1/api.php?table=_edges";
+        */
+        foreach($singleRow as $i => $value) {
+          $meta = $stmt->getColumnMeta($i);
+          //--- Make a good Path
+          $strPath = $meta["table"];
+          $parts = explode('/', $strPath);
+
+          array_shift($parts); // Remove first element of Path (= Origin-Table)
+          if ($tablename == '_nodes' ||  $tablename == '_orphans')
+            array_unshift($parts, $singleRow[1]);
+          else if ($tablename == '_edges') {
+            array_unshift($parts, $singleRow[2]);
+            array_unshift($parts, $singleRow[1]);
+          }
+          array_unshift($parts, $singleRow[0]); // Prepend ID
+
+          $parts[] = $meta["name"]; // Append Colname
+          $path = implode("/", $parts);
+          // ------------ Path
+          $val = self::fmtCell($meta['native_type'], $value); // Convert Value
+          self::path2tree($tree, $path, $val);
+        }
+      }
+      // Deliver
+      if ($tablename != '_nodes' && $tablename != '_edges' && $tablename != '_orphans') {
+        $result = null;
+        foreach ($tree as $el) {
+          $result[] = $el;
+        }
+        return $result;
+      }
+      else
+        return $tree;      
     }
     private function readRowByPrimaryID($tablename, $ElementID) {
       $primColName = Config::getPrimaryColNameByTablename($tablename);
@@ -209,27 +318,6 @@
     private function isValidFilterStruct($input) {
       return !is_null($input) && is_array($input) && (array_key_exists('all', $input) || array_key_exists('columns', $input));
     }
-    private function fmtCell($dtype, $inp) {
-      if (is_null($inp)) return null;
-      //echo $dtype." (".$test.")\n";
-      // TIME, DATE, DATETIME, FLOAT, VAR_STRING
-      switch ($dtype) {
-        case 'TINY': // Bool
-        case 'LONG':
-        case 'LONGLONG':
-          return (int)$inp;
-          break;
-        
-        case 'NEWDECIMAL':
-        case 'FLOAT':
-          return (float)$inp;
-          break;
-
-        default:
-          return (string)$inp;
-          break;
-      }
-    }
     private function getFormCreate($param) {
       $tablename = $param["table"];
       // Check Parameter
@@ -248,219 +336,203 @@
       }
       return '{}';
     }
-    private function getNextStates($param) {
-      $tablename = $param["table"];
-      $stateID = $this->getActualStateByRow($tablename, $param['row']);
-      // Check Parameter
-      if (!Config::isValidTablename($tablename)) die('Invalid Tablename!');
-      if (!Config::doesTableExist($tablename)) die(fmtError('Table does not exist!'));
-      // execute query
-      $SE = new StateMachine(DB::getInstance()->getConnection(), $tablename);
-      $res = $SE->getNextStates($stateID);
-      return json_encode($res);
-    }
     private function logHistory($tablename, $value, $isCreate) {
+      /*
       if (Config::hasHistory()) {
         // Identify via Token
-        global $token;
-        $token_uid = -1;
-        if (property_exists($token, 'uid')) $token_uid = $token->uid;
         // Write into Database
+        $UserID = 0; // TODO: TokenID
         $sql = "INSERT INTO History (User_id, History_table, History_valuenew, History_created) VALUES (?,?,?,?)";
         $pdo = DB::getInstance()->getConnection();
         $histStmt = $pdo->prepare($sql);
-        $histStmt->execute([$token_uid, $tablename, json_encode($value), ($isCreate ? "1" : "0")]);
+        $histStmt->execute([$UserID, $tablename, json_encode($value), ($isCreate ? "1" : "0")]);
       }
-    }
-
-    //=======================================================
- 
-    // [OPTIONS]
+      */
+    }  
     private function inititalizeTable($tablename) {
       // Init Vars
       $pdo = DB::getInstance()->getConnection();
-      $SE = new StateMachine($pdo, $tablename);
       $param = ["table" => $tablename];
-      // TODO: If Table = hidden then return
-      // TODO: If Table = readonly then exclude formcreate      
-      // ---- Structure
       $config = json_decode(Config::getConfig(), true);
-      $result = [];
-      $result['config'] = $config[$tablename];
+      $result = $config[$tablename];
+      // FormCreate
       $result['formcreate'] = $this->getFormCreate($param);
-      $result['sm_states'] = $SE->getStates();
-      $result['sm_rules'] = $SE->getLinks();
-      return $result;
-    }
-    public function init($param = null) {
-      $tablename = $param["table"];
-      if (is_null($param) && empty($tablename)) {
-        // Read all Tables
-        $conf = json_decode(Config::getConfig(), true);
-        $result = [];
-        foreach ($conf as $tablename => $t) {
-          //echo $tablename;
-          $result[$tablename] = $this->inititalizeTable($tablename);
-        }
-      } else {
-        // Check Parameter
-        if (!Config::isValidTablename($tablename)) die(fmtError('Invalid Tablename!'));
-        if (!Config::doesTableExist($tablename)) die(fmtError('Table does not exist!'));
-        $result = $this->inititalizeTable($tablename);
-      }
-      return json_encode($result);
-    }
-
-    // Helper functions for Tree rendering
-    private static function rowPath2Tree(&$row, $path, $value) {
-      $parts = explode("/", $path);
-      if (count($parts) > 1) {
-        $first = $parts[0];
-        array_shift($parts);
-        $path = implode("/", $parts);
-        if (!array_key_exists($first, $row) || !is_array($row[$first])) // overwrite
-          $row[$first] = [];
-        self::rowPath2Tree($row[$first], $path, $value); // go deeper
-      }
-      else {
-        $row[$path] = $value;
-      }
-    }
-    private static function arr_multi_compare($array1, $array2){
-      $result = array();
-      foreach ($array1 as $key => $value) {
-        if (!is_array($array2) || !array_key_exists($key, $array2)) {
-          $result[$key] = $value;
-          continue;
-        }
-        if (is_array($value)) {
-          $recursiveArrayDiff = static::arr_multi_compare($value, $array2[$key]);
-          if (count($recursiveArrayDiff)) {
-              $result[$key] = $recursiveArrayDiff;
-          }
-          continue;
-        }
-        if ($value != $array2[$key]) {
-          $result[$key] = $value;
-        }
+      // StateMachine
+      $SE = new StateMachine($pdo, $tablename);
+      if ($SE->getID() > 0) {
+        $result['sm_states'] = $SE->getStates();
+        $result['sm_rules'] = $SE->getLinks();
       }
       return $result;
     }
-    private function parseResultData($tablename, $stmt) {
-      $priColname = Config::getPrimaryColNameByTablename($tablename);
+    private function getConfigByRoleID($RoleID) {
+      // Collect ALL Tables!
+      $conf = json_decode(Config::getConfig(), true);
       $result = [];
-      while($singleRow = $stmt->fetch(PDO::FETCH_NUM)) {
-        $row = [];
-        // Loop Cell
-        foreach($singleRow as $i => $value) {
-          $meta = $stmt->getColumnMeta($i);
-          $parts = explode('/', $meta["table"]);
-          array_shift($parts);
-          $parts[] = $meta["name"];
-          $val = $this->fmtCell($meta['native_type'], $value);
-
-          if (!is_null($val)) {
-            //--- TODO: Trick for merging! (has many)
-            if (!Config::doesColExistInTable($tablename, $parts[0]))
-              $parts[0] .= '/0';
-            $path = implode('/', $parts);
-            self::rowPath2Tree($row, $path, $val);
-          }
-        }
-        // Only append the differences
-        $found = false;
-        foreach ($result as $key => $rw) {
-          if ($rw[$priColname] == $row[$priColname]) {
-            // Already exists
-            $found = true;
-            $diff = self::arr_multi_compare($row, $rw);
-            $result[$key] = array_merge_recursive($rw, $diff);
-            break;
-          }
-        }
-        if (!$found)
-          $result[] = $row;
+      foreach ($conf as $tablename => $t) {
+        $x = $this->inititalizeTable($tablename);
+        if (!is_null($x)) $result[$tablename] = $x;
       }
-      // Deliver
-      return $result;
+      //------------- Merge ConfigStd and ConfigRole and overwrite the Std.
+      $pdo = DB::getInstance()->getConnection();
+      $roleConf = [];
+      $stmt = $pdo->prepare("SELECT ConfigDiff FROM `role` AS r JOIN `role_user` AS rl ON r.role_id = rl.role_id WHERE rl.user_id = ?");
+      if ($stmt->execute([$RoleID])) {
+        $res = $stmt->fetch();
+        if (!empty($res) && !is_null($res[0]))
+          $roleConf = json_decode($res[0], true);
+      }
+      // check if valid config
+      if (is_null($roleConf)) $roleConf = [];
+      $newconf = array_replace_recursive($result, $roleConf);
+      //-------------
+      // Remove Hidden Tables dynamically!
+      $cleanArr = [];
+      foreach ($newconf as $tname => $TConf) {
+        // Remove Std-Filter
+        unset($TConf["stdfilter"]);
+        foreach ($TConf["columns"] as $colname => $col) {
+          unset($TConf["columns"][$colname]["virtual_select"]);
+        }        
+        // Append to cleaned Array
+        if ($TConf["mode"] != "hi") $cleanArr[$tname] = $TConf;
+      }
+      return $cleanArr;
     }
-
+    //=======================================================
     // [GET] Reading
+    public function init() {
+      $config = $this->getConfigByRoleID($this->token->uid);
+      $res = ["user" => $this->token, "tables" => $config];
+      return json_encode($res);
+    }
     public function read($param) {
       //--------------------- Check Params
-      $validParams = ['table', 'limitStart', 'limitSize', 'ascdesc', 'orderby', 'filter', 'search'];
+      $validParams = ['table', 'limit', 'sort', 'filter', 'search', 'path'];      
       $hasValidParams = $this->validateParamStruct($validParams, $param);
       if (!$hasValidParams) die(fmtError('Invalid parameters! (allowed are: '.implode(', ', $validParams).')'));
       // Parameters and default values
-      @$tablename = isset($param["table"]) ? $param["table"] : die(fmtError('Table is not set!'));
-      // -- Ordering, Limit, and Pagination
-      @$limitStart = isset($param["limitStart"]) ? $param["limitStart"] : null;
-      @$limitSize = isset($param["limitSize"]) ? $param["limitSize"] : null;
-      @$ascdesc = isset($param["ascdesc"]) ? $param["ascdesc"] : null; 
-      @$orderby = isset($param["orderby"]) ? $param["orderby"] : null; // has to be a column name
-      @$filter = isset($param["filter"]) ? $param["filter"] : null;
-      @$search = isset($param["search"]) ? $param["search"] : null; // all columns in OR
+      @$tablename = isset($param["table"]) ? $param["table"] : null;
+      @$path = isset($param["path"]) ? $param["path"] : null;
+      @$limit = isset($param["limit"]) ? $param["limit"] : null;
+      @$sort = isset($param["sort"]) ? $param["sort"] : null;
+      @$filter = isset($param["filter"]) ? $param["filter"] : null; // additional Filter
+      @$search = isset($param["search"]) ? $param["search"] : null; // all columns: [like this] OR [like this] OR ...
 
-      // Identify via Token
-      global $token;
-      $token_uid = -1;
-      if (property_exists($token, 'uid')) $token_uid = $token->uid;
-      // Table
+
+      // ===> PATH
+
+      if (!is_null($path)) {
+
+        // Ask the Path [tname/id]
+        $parts = explode('/', $path);
+
+        $id = end($parts);
+        $tname = prev($parts);
+        
+        /*$result = [
+          "path" => $path,
+          "tablename" => $tname,
+          "id" => $id,
+          "edges" => "http://localhost/APMS_test/bpmspace_sqms2_v1/api.php?path=test/123"
+        ];*/
+
+        $tablename = $tname;
+      }
+
+        //return json_encode($result, true);
+      //}
+
+
+
+      //--- Table
+      if (is_null($tablename)) die(fmtError('Table is not set!'));
       if (!Config::isValidTablename($tablename)) die(fmtError('Invalid Tablename!'));
       if (!Config::doesTableExist($tablename)) die(fmtError('Table does not exist!'));
-
-      //--- Limit
-      if (!is_null($limitStart) && is_null($limitSize)) die(fmtError("Error in Limit Params (LimitSize is not set)!"));
-      if (is_null($limitStart) && !is_null($limitSize)) die(fmtError("Error in Limit Params (LimitStart is not set)!"));
-      if (!is_null($limitStart) && !is_null($limitSize)) {
-        // Valid structure
-        if (!is_numeric($limitStart)) die(fmtError("LimitStart is not numeric!"));
-        if (!is_numeric($limitSize)) die(fmtError("LimitSize is not numeric!"));
-      } else {
-        // default:
-        $limitStart = null;
-        $limitSize = null;
+      //================================================
+      //-- Check Rights
+      if (!is_null($this->token)){
+        $allowedTablenames = array_keys($this->getConfigByRoleID($this->token->uid));
+        if (!in_array($tablename, $allowedTablenames)) die(fmtError('No access to this Table!'));        
       }
-      //--- OrderBy
-      if (!is_null($ascdesc) && is_null($orderby)) die(fmtError("AscDesc can not be set without OrderBy!"));
-      if (!is_null($orderby)) {
-        //if (!Config::isValidColname($orderby)) die(fmtError('OrderBy: Invalid Columnname!'));
-        //if (!Config::doesColExistInTable($tablename, $orderby)) die(fmtError('OrderBy: Column does not exist in this Table!'));
-        //--- ASC/DESC
-        $ascdesc = strtolower(trim($ascdesc));
-        if ($ascdesc == "") $ascdesc == "ASC";
-        elseif ($ascdesc == "asc") $ascdesc == "ASC";
-        elseif ($ascdesc == "desc") $ascdesc == "DESC";
-        else die(fmtError("AscDesc has no valid value (value has to be empty, ASC or DESC)!"));
-      }
-      //================================================  New Version:
-
       // Build a new Read Query Object
       $rq = new ReadQuery($tablename);
-      $rq->setLimit($limitSize, $limitStart);
-      $rq->setSorting($orderby, $ascdesc);
-
-      //--- Filter
-      $rq->setFilter('{"=":[1,1]}'); // inital Filter (has no influence)
-      // add Search for all columns
+      //--- Limit
+      if (!is_null($limit)) {
+        $limitParts = explode(",", $limit);
+        $lim = $limitParts[0];
+        $offset = 0;
+        if (empty(trim($lim))) die(fmtError("Limit is empty!"));
+        if (!is_numeric($lim)) die(fmtError("Limit is not numeric!"));
+        // with Offset
+        if (count($limitParts) == 1) {
+          $rq->setLimit($lim);
+        }
+        elseif (count($limitParts) == 2) {
+          $off = $limitParts[1];
+          if (empty(trim($off))) die(fmtError("Offset is empty!"));
+          if (!is_numeric($off)) die(fmtError("Offset is not numeric!"));
+          $rq->setLimit($lim, $off);
+        }
+        else {
+          die(fmtError("Limit-Param has too many values!"));
+        }        
+      }
+      //--- Sorting
+      if (!is_null($sort)) {
+        //if (!Config::isValidColname($orderby)) die(fmtError('OrderBy: Invalid Columnname!'));
+        //if (!Config::doesColExistInTable($tablename, $orderby)) die(fmtError('OrderBy: Column does not exist in this Table!'));
+        $sortDir = "ASC"; // Default
+        $sortParts = explode(",", $sort);
+        $sortColumn = $sortParts[0];
+        if (empty(trim($sortColumn))) die(fmtError("Sort-Param: Column is empty!"));
+        if (count($sortParts) == 2) {
+          $sortDir = $sortParts[1];
+        } elseif (count($sortParts) > 2) {
+          die(fmtError("Sort-Param has too many values (only 1 or 2 allowed i.e. sort=col1,DESC)!"));
+        }
+        // ASC/DESC
+        $sortDir = strtolower(trim($sortDir));
+        if ($sortDir == "") $sortDir == "ASC";
+        elseif ($sortDir == "asc") $sortDir == "ASC";
+        elseif ($sortDir == "desc") $sortDir == "DESC";
+        else die(fmtError("Sort-Param has invalid value (has to be empty, ASC or DESC)!"));
+        //--> Set Sorting
+        $rq->setSorting($sortColumn, $sortDir);
+      }
+      //--- Virtual-Columns      
+      $vc = Config::getVirtualSelects($tablename);
+      foreach ($vc as $col => $sel) {
+        $rq->addSelect("$sel AS `$col`");
+      }
+      //--- Filter      
+      $rq->setFilter('{"=":[1,1]}'); // default Minimum (1=1 --> always true)
+      $stdFilter = Config::getStdFilter($tablename);
+      if (!is_null($stdFilter) && !empty($stdFilter))
+      $rq->setFilter($stdFilter); // standard Filter (set serverside!)
+      
+      //--- Search (Having & all columns)
       if (!is_null($search)) {
-        $search = "%".$search."%";
+        $search = "'%".$search."%'";
         $els = [];
-        $cols = Config::getColnamesByTablename($tablename);
+        //-- Search real cols + virtCols + joins
+        $cols = array_merge(
+          Config::getColnamesByTablename($tablename),
+          Config::getVirtualColnames($tablename),
+          Config::getJoinedColnames($tablename)
+        );
         foreach ($cols as $colname) {
-          $els[] = "{\"like\": [\"$colname\", \"$search\"]}";
+          $els[] = '{"like":["'.$colname.'","'.$search.'"]}';
         }      
         $term = '{"or":['. implode(',', $els) .']}';
-        $rq->addFilter($term);
+        $rq->setHaving($term);
       }
-      // add Custom Filter
-      if (!is_null($filter)) {
+      //--- add Custom Filter
+      if (!is_null($filter))
         $rq->addFilter($filter);
-      }
 
-      //--- Add Joins from Config
+      //--- Joins (via Config)
       $joins = Config::getJoinedCols($tablename);
-      // TODO: Multilayered JOINS
       foreach ($joins as $key => $value) {
         $localCol = $value["col_id"];
         $extCol = $value["replace"];
@@ -468,8 +540,22 @@
         $rq->addJoin($tablename.'.'.$localCol, $extTable.'.'.$extCol);
       }
 
+      //--- Get Reverse Tables
+      /*
+      $revTbls = Config::getRevFKs($tablename);
+      $priColname = Config::getPrimaryColNameByTablename($tablename);
+      foreach ($revTbls as $colname => $tbl) {
+        $rq->addJoin(
+          $tablename.'.'.$priColname,
+          $tbl["revfk_tablename"].'.'.$tbl["revfk_colname"],
+          $tablename."/".$colname
+        );
+      }
+      */
+      //$rq->addJoin($tablename.'.'.$priColname, 'demo_order_person.demo_order_person_ID'); // 3rd level
+      //var_dump($rq->getStatement());
       //$rq->addJoin($tablename.'.store_id', 'store.store_id'); // Normal FK
-      //$rq->addJoin($tablename.'.storechef_id', 'employee.employee_id'); // has 1 (NOT PrimaryKEY!)
+      //$rq->addJoin($tablename.'.storechef_id', 'employee.employee_id'); // has 1 (NOT PrimaryKEY!)      
       //$rq->addJoin($tablename.'.store_id', 'product_store.store_id', true); // belongs to Many (via PrimaryKEY)
       //$rq->addJoin($tablename.'/product_store.product_id', 'product.product_id'); // has 1 (NOT PrimaryKEY!)
       //$rq->addJoin($tablename.'/product_store.store_id', 'store.store_id'); // has 1 (NOT PrimaryKEY!)
@@ -494,15 +580,12 @@
         $r = $this->parseResultData($tablename, $stmt);
         $result = ["count" => $count, "records" => $r];
         return json_encode($result, true);
-      } else {
+      }
+      else {
         // Error -> Return Error
-        echo $stmt->queryString."\n\n";
-        echo json_encode($rq->getValues())."\n\n";
-        var_dump($stmt->errorInfo());
-        exit();
+        die(fmtError($stmt->errorInfo()[2] . ' -> ' . $stmt->queryString));
       }
     }
-
     // Stored Procedure can be Read and Write (GET and POST)
     public function call($param) {
       // Strcuture: {name: "sp_table", inputs: ["test", 13, 42, "2019-01-01"]}
@@ -530,13 +613,9 @@
       }
       else {
         // Query-Error
-        echo $stmt->queryString."<br>";
-        echo json_encode($vals)."<br>";
-        var_dump($stmt->errorInfo());
-        exit();
+        die(fmtError($stmt->errorInfo()[2]));
       }
     }
-
     // [POST] Creating
     public function create($param) {
       // Inputs
@@ -545,13 +624,10 @@
       // Check Parameter
       if (!Config::isValidTablename($tablename)) die(fmtError('Invalid Tablename!'));
       if (!Config::doesTableExist($tablename)) die(fmtError('Table does not exist!'));
-
       // New State Machine
       $pdo = DB::getInstance()->getConnection();
       $SM = new StateMachine($pdo, $tablename);
-
       $script_result = []; // init
-
       //--- Has StateMachine? then execute Scripts
       if ($SM->getID() > 0) {
         // Override/Set EP
@@ -567,8 +643,6 @@
         // NO StateMachine => goto next step (write min data)
         $script_result[] = array("allow_transition" => true);
       }
-
-
       //--- If allow transition then Create
       if (@$script_result[0]["allow_transition"] == true) {
       	// Reload row, because maybe the TransitionScript has changed some params
@@ -584,7 +658,6 @@
             $vals[] = $el["value"];
           }
         }
-
         // --- Operation CREATE
         // Build Query
         $strKeys = implode(",", $keys); // Build str for keys
@@ -593,7 +666,6 @@
         $stmt = $pdo->prepare("INSERT INTO $tablename ($strKeys) VALUES ($strVals)");
         $stmt->execute($vals);
         $newElementID = $pdo->lastInsertId();
-
 
         // INSERT successful
         if ($newElementID > 0) {
@@ -627,9 +699,7 @@
       // Return
       return json_encode($script_result);
     }
-
     // [PATCH] Changing
-    // TODO: Remove Update function bzw. combine into 1 Function (update = specialcase)
     public function update($param, $allowUpdateFromSM = false) {
        // Parameter
       $tablename = $param["table"];
@@ -678,10 +748,6 @@
       }
       else {
         // ErrorHandling
-        //echo $stmt->queryString."<br />";
-        //var_dump($stmt->errorInfo());
-        //$script_result[0]["element_id"] = 0;
-        //$script_result[0]["errormsg"] = $stmt->errorInfo()[2];
         die(fmtError($stmt->errorInfo()[2]));
       }
       // Log History
@@ -758,68 +824,9 @@
         $res = $SE->executeScript($in_script, $param, $tablename);
         $res["allow_transition"] = true;
         $feedbackMsgs[] = $res;
-        echo json_encode($feedbackMsgs);
-        exit;
-
-      } else 
-        die(fmtError("Transition not possible!"));
+        return json_encode($feedbackMsgs);
+      }
+      else 
+        return fmtError("Transition not possible!");
     }
-    // TODO => this function merges update + makeTransition
-    public function change($param) {
-    }
-
-    // [DELETE] Deleting
-    public function delete($param) {
-      //---- NOT SUPPORTED FOR NOW [!]
-      die(fmtError('The Delete-Command is currently not supported!'));
-      // Parameter
-      $tablename = $param["table"];
-      $row = $param["row"];
-      // Check Parameter
-      if (!Config::isValidTablename($tablename)) die(fmtError('Invalid Tablename!'));
-      if (!Config::doesTableExist($tablename)) die(fmtError('Table does not exist!'));
-      // Extract relevant Info via Config
-      $pcol = Config::getPrimaryColNameByTablename($tablename);
-      $id = (int)$row[$pcol];
-      // Execute on Database
-      $success = false;
-      $pdo = DB::getInstance()->getConnection();
-      $stmt = $pdo->prepare("DELETE FROM $tablename WHERE $pcol = ?");
-      $stmt->execute(array($id));
-      // Check if rows where updated
-      $success = ($pdo->rowCount() > 0);
-      // Output
-      return $success ? "1" : "0";
-    }  
-
-    //---------------------------------- File Handling (check Token) ... [GET]
-    /*
-    public function getFile($param) {
-      // Download File from Server
-
-      // Inputs
-      $filename = $param["name"];
-      $filepath = $param["path"];
-      $tmp_parts = explode(".", $param["name"]);
-      $filetype = end($tmp_parts);
-
-      // Whitelists
-      $whitelist_paths = WHITELIST_PATHS;
-      $whitelist_types = WHITELIST_TYPES;
-
-      if (in_array($filepath, $whitelist_paths) && in_array($filetype, $whitelist_types)) {
-        //echo "path and type in whitelist\n";
-        // File exists
-        $filepathcomplete = __DIR__."/../".$filepath . $filename;
-        //echo "Filepath: ".$filepathcomplete."\n";
-        if (file_exists($filepathcomplete)) {
-          //echo "File exists\n";
-          $filecontent = file_get_contents($filepathcomplete);
-          echo $filecontent;
-        } else 
-          die(fmtError("error"));
-      } else
-        die(fmtError("error"));
-    }
-    */
   }

@@ -55,10 +55,10 @@ class DB {
         let HTTPBody = undefined;
         let url = me.API_URL;
         if (params) {
-            data['paramJS'] = params;
+            data['param'] = params;
         }
         if (command == 'init') {
-            HTTPMethod = 'OPTIONS';
+            HTTPMethod = 'GET';
         }
         else if (command == 'create') {
             HTTPMethod = 'POST';
@@ -71,6 +71,10 @@ class DB {
                 return key + '=' + (isObject(val) ? JSON.stringify(val) : val);
             }).join('&');
             url += '?' + getString;
+        }
+        else if (command == 'update') {
+            HTTPMethod = 'PATCH';
+            HTTPBody = JSON.stringify(data);
         }
         else if (command == 'delete') {
             HTTPMethod = 'DELETE';
@@ -95,6 +99,7 @@ class DB {
         });
     }
 }
+DB.API_URL = 'api.php';
 class Modal {
     constructor(heading, content, footer = '', isBig = false) {
         this.options = {
@@ -110,10 +115,10 @@ class Modal {
         if (this.isBig)
             sizeType = ' modal-xl';
         let html = `<div id="${this.DOM_ID}" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog${sizeType}" role="document">
+      <div class="modal-dialog${sizeType}">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">${this.heading}</h5>
+            <h5 class="modal-title w-75">${this.heading}</h5>
             <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -150,63 +155,16 @@ class Modal {
     setContent(html) {
         document.getElementById(this.DOM_ID).getElementsByClassName('modal-body')[0].innerHTML = html;
     }
-    show(focusFirstEditableField = true) {
+    show() {
         let modal = document.getElementById(this.DOM_ID);
         modal.classList.add('show');
         modal.style.display = 'block';
-        if (focusFirstEditableField) {
-            let firstElement = modal.getElementsByClassName('rwInput')[0];
-            if (firstElement)
-                firstElement.focus();
-        }
     }
     close() {
         document.getElementById(this.DOM_ID).parentElement.remove();
     }
     getDOMID() {
         return this.DOM_ID;
-    }
-    setLoadingState(isLoading) {
-        const inputs = document.getElementById(this.DOM_ID).getElementsByTagName('input');
-        const textareas = document.getElementById(this.DOM_ID).getElementsByTagName('texarea');
-        const btns = document.getElementById(this.DOM_ID).getElementsByTagName('button');
-        const selects = document.getElementById(this.DOM_ID).getElementsByTagName('select');
-        if (isLoading) {
-            for (const el of inputs) {
-                el.setAttribute('disabled', 'disabled');
-            }
-            ;
-            for (const el of textareas) {
-                el.setAttribute('disabled', 'disabled');
-            }
-            ;
-            for (const el of btns) {
-                el.setAttribute('disabled', 'disabled');
-            }
-            ;
-            for (const el of selects) {
-                el.setAttribute('disabled', 'disabled');
-            }
-            ;
-        }
-        else {
-            for (const el of inputs) {
-                el.removeAttribute('disabled');
-            }
-            ;
-            for (const el of textareas) {
-                el.removeAttribute('disabled');
-            }
-            ;
-            for (const el of btns) {
-                el.removeAttribute('disabled');
-            }
-            ;
-            for (const el of selects) {
-                el.removeAttribute('disabled');
-            }
-            ;
-        }
     }
 }
 class StateMachine {
@@ -251,13 +209,11 @@ class StateMachine {
         tmp.remove();
         return { background: colBG, color: colFont };
     }
-    openSEPopup() {
-        let me = this;
-        let M = new Modal('<i class="fa fa-random"></i> Workflow <span class="text-muted ml-3">of ' + me.myTable.getTableIcon() + ' ' + me.myTable.getTableAlias() + '</span>', '<div class="statediagram" style="width: 100%; height: 300px;"></div>', '<button class="btn btn-secondary fitsm"><i class="fa fa-expand"></i> Fit</button>', true);
-        let container = document.getElementsByClassName('statediagram')[0];
+    renderHTML(querySelector) {
         const idOffset = 100;
-        let nodes = this.myStates.map(state => {
-            let node = {};
+        let counter = 1;
+        const _nodes = this.myStates.map(state => {
+            const node = {};
             node['id'] = (idOffset + state.id);
             node['label'] = state.name;
             node['isEntryPoint'] = (state.entrypoint == 1);
@@ -268,17 +224,16 @@ class StateMachine {
             node['color'] = css.background;
             return node;
         });
-        let edges = this.myLinks.map(link => {
-            let edge = {};
+        const _edges = this.myLinks.map(link => {
+            const edge = {};
             edge['from'] = (idOffset + link.from);
             edge['to'] = (idOffset + link.to);
             return edge;
         });
-        let counter = 1;
-        nodes.forEach(node => {
+        _nodes.forEach(node => {
             if (node.isEntryPoint) {
-                nodes.push({ id: counter, color: 'LimeGreen', shape: 'dot', size: 10, title: 'Entrypoint' });
-                edges.push({ from: counter, to: node.id });
+                _nodes.push({ id: counter, color: 'LimeGreen', shape: 'dot', size: 10, title: 'Entrypoint' });
+                _edges.push({ from: counter, to: node.id });
                 counter++;
             }
             if (node.isExit) {
@@ -288,8 +243,8 @@ class StateMachine {
                 node.font = { multi: 'html', color: 'black' };
             }
         });
-        let data = { nodes: nodes, edges: edges };
-        let options = {
+        const options = {
+            height: '400px',
             edges: { color: { color: '#888888' }, shadow: true, length: 100, arrows: 'to', arrowStrikethrough: true, smooth: {} },
             nodes: {
                 shape: 'box', margin: 20, heightConstraint: { minimum: 40 }, widthConstraint: { minimum: 80, maximum: 200 },
@@ -305,24 +260,17 @@ class StateMachine {
             physics: { enabled: false },
             interaction: {}
         };
-        let network = new vis.Network(container, data, options);
-        M.show();
+        let network = new vis.Network(querySelector, { nodes: _nodes, edges: _edges }, options);
         network.fit({ scale: 1, offset: { x: 0, y: 0 } });
-        let btns = document.getElementsByClassName('fitsm');
-        for (let btn of btns) {
-            btn.addEventListener("click", function (e) {
-                e.preventDefault();
-                network.fit({ scale: 1, offset: { x: 0, y: 0 } });
-            });
-        }
     }
     getFormDiffByState(StateID) {
         let result = {};
         this.myStates.forEach(el => {
             if (StateID == el.id && el.form_data) {
                 const strForm = el.form_data.trim();
-                if (strForm != '')
+                if (strForm != '') {
                     result = JSON.parse(strForm);
+                }
             }
         });
         return result;
@@ -338,48 +286,46 @@ class StateMachine {
 }
 class RawTable {
     constructor(tablename) {
+        this.Sort = '';
         this.Search = '';
-        this.AscDesc = SortOrder.DESC;
+        this.PriColname = '';
+        this.PageLimit = 10;
         this.PageIndex = 0;
-        this.tablename = tablename;
-        this.actRowCount = 0;
-        this.resetFilter();
+        const t = this;
+        t.actRowCount = 0;
+        t.tablename = tablename;
+        t.Config = JSON.parse(JSON.stringify(DB.Config.tables[tablename]));
+        t.Columns = t.Config.columns;
+        for (const colname of Object.keys(t.Columns)) {
+            if (t.Columns[colname].is_primary) {
+                t.PriColname = colname;
+                return;
+            }
+        }
+        t.resetFilter();
     }
     createRow(data, callback) {
-        DB.request('create', { table: this.tablename, row: data }, function (r) {
-            callback(r);
-        });
-    }
-    deleteRow(RowID, callback) {
-        let me = this;
-        let data = {};
-        data[this.PrimaryColumn] = RowID;
-        DB.request('delete', { table: this.tablename, row: data }, function (response) {
-            me.loadRows(function () {
-                callback(response);
-            });
-        });
+        DB.request('create', { table: this.tablename, row: data }, function (r) { callback(r); });
     }
     updateRow(RowID, new_data, callback) {
         let data = new_data;
-        data[this.PrimaryColumn] = RowID;
+        data[this.PriColname] = RowID;
         DB.request('update', { table: this.tablename, row: new_data }, function (response) {
             callback(response);
         });
     }
-    transitRow(RowID, TargetStateID, trans_data = null, callback) {
-        let data = { state_id: 0 };
-        if (trans_data)
-            data = trans_data;
-        data[this.PrimaryColumn] = RowID;
-        data.state_id = TargetStateID;
+    transitRow(RowID, TargetStateID = null, trans_data = {}, callback) {
+        let data = trans_data;
+        data[this.PriColname] = RowID;
+        if (TargetStateID)
+            data['state_id'] = TargetStateID;
         DB.request('makeTransition', { table: this.tablename, row: data }, function (response) {
             callback(response);
         });
     }
     loadRow(RowID, callback) {
-        let data = { table: this.tablename, limitStart: 0, limitSize: 1, filter: {} };
-        data.filter = '{"=": ["' + this.PrimaryColumn + '", ' + RowID + ']}';
+        let data = { table: this.tablename, limit: 1, filter: {} };
+        data.filter = '{"=": ["' + this.PriColname + '", ' + RowID + ']}';
         DB.request('read', data, function (response) {
             const row = response.records[0];
             callback(row);
@@ -387,63 +333,64 @@ class RawTable {
     }
     loadRows(callback) {
         let me = this;
-        let data = { table: me.tablename, orderby: me.OrderBy, ascdesc: me.AscDesc };
+        let data = { table: me.tablename, sort: me.Sort };
         if (me.Filter && me.Filter !== '')
             data['filter'] = me.Filter;
         if (me.Search && me.Search !== '')
             data['search'] = me.Search;
-        if (me.PageLimit && me.PageLimit) {
-            data['limitStart'] = me.PageIndex * me.PageLimit;
-            data['limitSize'] = me.PageLimit;
-        }
+        const offset = me.PageIndex * me.PageLimit;
+        if (me.PageLimit && me.PageLimit)
+            data['limit'] = me.PageLimit + (offset == 0 ? '' : ',' + offset);
         DB.request('read', data, function (response) {
             me.Rows = response.records;
             me.actRowCount = response.count;
             callback(response);
         });
     }
-    getNrOfRows() {
-        return this.actRowCount;
+    getNrOfRows() { return this.actRowCount; }
+    getTablename() { return this.tablename; }
+    setSearch(searchText) { this.Search = searchText; }
+    getSearch() { return this.Search; }
+    getSortColname() { return this.Sort.split(',')[0]; }
+    getSortDir() {
+        let dir = this.Sort.split(',')[1];
+        if (!dir)
+            dir = "ASC";
+        return dir;
     }
-    getTablename() {
-        return this.tablename;
-    }
-    setSearch(searchText) {
-        this.Search = searchText;
-    }
-    getSearch() {
-        return this.Search;
-    }
-    setFilter(filterStr) {
-        this.Filter = filterStr;
-    }
+    setSort(sortStr) { this.Sort = sortStr; }
+    setFilter(filterStr) { this.Filter = filterStr; }
     setColumnFilter(columnName, filterText) {
         this.Filter = '{"=": ["' + columnName + '","' + filterText + '"]}';
     }
-    resetFilter() {
-        this.Filter = '';
-    }
-    resetLimit() {
-        this.PageIndex = null;
-        this.PageLimit = null;
-    }
-    getRows() {
-        return this.Rows;
-    }
+    resetFilter() { this.Filter = ''; }
+    resetLimit() { this.PageIndex = null; this.PageLimit = null; }
+    getRows() { return this.Rows; }
+    getConfig() { return this.Config; }
+    getTableType() { return this.Config.table_type; }
+    getPrimaryColname() { return this.PriColname; }
+    setRows(ArrOfRows) { this.Rows = ArrOfRows; }
+    getTableIcon() { return this.getConfig().table_icon; }
+    getTableAlias() { return this.getConfig().table_alias; }
 }
 class Table extends RawTable {
     constructor(tablename, SelType = SelectType.NoSelect) {
         super(tablename);
         this.SM = null;
         this.isExpanded = true;
+        this.selType = SelectType.NoSelect;
         this.customFormCreateOptions = {};
         this.diffFormCreateObject = {};
         this.TableType = TableType.obj;
         this.GUIOptions = {
-            maxCellLength: 30,
+            maxCellLength: 50,
             showControlColumn: true,
             showWorkflowButton: false,
             smallestTimeUnitMins: true,
+            Relation: {
+                createTitle: "New Relation",
+                createBtnRelate: "Add Relation"
+            },
             modalHeaderTextCreate: 'Create Entry',
             modalHeaderTextModify: 'Modify Entry',
             modalButtonTextCreate: 'Create',
@@ -456,51 +403,31 @@ class Table extends RawTable {
         };
         this.onSelectionChanged = new LiteEvent();
         this.onEntriesModified = new LiteEvent();
-        let me = this;
-        me.GUID = GUI.getID();
-        me.selType = SelType;
-        me.PageIndex = 0;
-        me.PageLimit = 10;
-        me.selectedRow = undefined;
-        me.tablename = tablename;
-        me.OrderBy = '';
-        let resp = JSON.parse(JSON.stringify(DB.Config[tablename]));
-        me.TableConfig = resp['config'];
-        me.diffFormCreateObject = JSON.parse(resp['formcreate']);
-        me.Columns = me.TableConfig.columns;
-        me.ReadOnly = me.TableConfig.mode == 'ro';
-        me.TableType = me.TableConfig.table_type;
-        if (me.TableConfig['se_active'])
-            me.SM = new StateMachine(me, resp['sm_states'], resp['sm_rules']);
-        if (me.ReadOnly && me.selType == SelectType.NoSelect)
-            me.GUIOptions.showControlColumn = false;
-        for (const col of Object.keys(me.Columns)) {
-            if (me.Columns[col].is_primary)
-                me.PrimaryColumn = col;
-            if (me.Columns[col].show_in_grid && me.OrderBy == '')
-                me.OrderBy = '`' + tablename + '`.' + col;
-        }
+        this.GUID = GUI.getID();
+        this.selType = SelType;
+        this.selectedRow = undefined;
+        this.TableType = this.getConfig().table_type;
+        this.setSort(this.getConfig().stdsorting);
+        this.ReadOnly = (this.getConfig().mode == 'ro');
+        if (this.getConfig().se_active)
+            this.SM = new StateMachine(this, this.getConfig().sm_states, this.getConfig().sm_rules);
+        if (!this.ReadOnly)
+            this.diffFormCreateObject = JSON.parse(this.getConfig().formcreate);
     }
     isRelationTable() {
         return (this.TableType !== TableType.obj);
     }
+    getTableType() {
+        return this.TableType;
+    }
     setCustomFormCreateOptions(customData) {
         this.customFormCreateOptions = customData;
     }
-    getPrimaryColname() {
-        return this.PrimaryColumn;
-    }
-    getTableIcon() {
-        return this.TableConfig.table_icon;
-    }
-    getTableAlias() {
-        return this.TableConfig.table_alias;
-    }
     toggleSort(ColumnName) {
-        let me = this;
-        this.OrderBy = ColumnName;
-        this.AscDesc = (this.AscDesc == SortOrder.DESC) ? SortOrder.ASC : SortOrder.DESC;
-        this.loadRows(() => { me.renderContent(); });
+        let t = this;
+        const SortDir = (t.getSortDir() == SortOrder.DESC) ? SortOrder.ASC : SortOrder.DESC;
+        this.setSort(ColumnName + ',' + SortDir);
+        this.loadRows(() => { t.renderContent(); });
     }
     setPageIndex(targetIndex) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -549,148 +476,49 @@ class Table extends RawTable {
         return pages;
     }
     renderEditForm(Row, diffObject, ExistingModal = undefined) {
-        let t = this;
-        let RowID = Row[t.PrimaryColumn];
+        const t = this;
         let defaultFormObj = t.getDefaultFormObject();
         let newObj = mergeDeep({}, defaultFormObj, diffObject);
         for (const key of Object.keys(Row)) {
             newObj[key].value = Row[key];
         }
-        const TableAlias = 'in ' + this.getTableIcon() + ' ' + this.getTableAlias();
-        const ModalTitle = this.GUIOptions.modalHeaderTextModify + '<span class="text-muted mx-3">(' + RowID + ')</span><span class="text-muted ml-3">' + TableAlias + '</span>';
-        let M = ExistingModal || new Modal(ModalTitle, '', '', true);
-        M.options.btnTextClose = t.GUIOptions.modalButtonTextModifyClose;
-        const newForm = new FormGenerator(t, RowID, newObj, M.getDOMID());
-        const htmlForm = newForm.getHTML();
-        M.setHeader(ModalTitle);
-        M.setContent(htmlForm);
-        newForm.initEditors();
-        let btns = '';
-        let saveBtn = '';
-        const actStateID = Row.state_id['state_id'];
-        const actStateName = Row.state_id['name'];
-        const cssClass = ' state' + actStateID;
-        const nexstates = t.SM.getNextStates(actStateID);
-        if (nexstates.length > 0) {
-            let cnt_states = 0;
-            btns = `<div class="btn-group dropup ml-0 mr-auto">
-        <button type="button" class="btn ${cssClass} text-white dropdown-toggle" data-toggle="dropdown">${actStateName}</button>
-      <div class="dropdown-menu p-0">`;
-            nexstates.forEach(function (state) {
-                let btn_text = state.name;
-                let btnDropdown = '';
-                if (actStateID == state.id) {
-                    saveBtn = `<div class="ml-auto mr-0">
-<button class="btn btn-primary btnState btnStateSave mr-1" data-rowid="${RowID}" data-targetstate="${state.id}" type="button">
-  <i class="fa fa-floppy-o"></i>&nbsp;${t.GUIOptions.modalButtonTextModifySave}</button>
-<button class="btn btn-outline-primary btnState btnSaveAndClose" data-rowid="${RowID}" data-targetstate="${state.id}" type="button">
-  ${t.GUIOptions.modalButtonTextModifySaveAndClose}
-</button>
-</div>`;
-                }
-                else {
-                    cnt_states++;
-                    btnDropdown = '<a class="dropdown-item btnState btnStateChange state' + state.id + '" data-rowid="' + RowID + '" data-targetstate="' + state.id + '">' + btn_text + '</a>';
-                }
-                btns += btnDropdown;
-            });
-            btns += '</div></div>';
-            if (cnt_states == 0)
-                btns = '<button type="button" class="btn ' + cssClass + ' text-white" tabindex="-1" disabled>' + actStateName + '</button>';
-        }
-        else {
-            btns = '<button type="button" class="btn ' + cssClass + ' text-white" tabindex="-1" disabled>' + actStateName + '</button>';
-        }
-        btns += saveBtn;
-        M.setFooter(btns);
-        let modal = document.getElementById(M.getDOMID());
-        let btnsState = modal.getElementsByClassName('btnState');
-        for (let btn of btnsState) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const TargetStateID = parseInt(btn.getAttribute('data-targetstate'));
-                const closeModal = btn.classList.contains('btnSaveAndClose');
-                t.setState(newForm.getValues(), RowID, TargetStateID, M, closeModal);
-            });
-        }
-        if (M) {
-            M.show();
-            newForm.refreshEditors();
-        }
     }
-    saveEntry(SaveModal, data, closeModal = true) {
-        let t = this;
-        SaveModal.setLoadingState(true);
-        t.updateRow(data[t.PrimaryColumn], data, function (r) {
-            if (r == "1") {
-                t.loadRows(function () {
-                    SaveModal.setLoadingState(false);
-                    if (closeModal)
-                        SaveModal.close();
-                    t.renderContent();
-                    t.onEntriesModified.trigger();
-                });
-            }
-            else {
-                SaveModal.setLoadingState(false);
-                const ErrorModal = new Modal('Error', '<b class="text-danger">Element could not be updated!</b><br><pre>' + r + '</pre>');
-                ErrorModal.show();
-            }
-        });
+    getSelectedRowID() {
+        return this.selectedRow[this.getPrimaryColname()];
     }
-    setState(data, RowID, targetStateID, myModal, closeModal) {
+    setState(data, RowID, targetStateID, callback) {
         let t = this;
-        let actState = undefined;
+        let actStateID = null;
         for (const row of t.Rows) {
-            if (row[t.PrimaryColumn] == RowID)
-                actState = row['state_id'];
+            if (row[t.getPrimaryColname()] == RowID)
+                actStateID = row['state_id'];
         }
         t.transitRow(RowID, targetStateID, data, function (response) {
+            t.onEntriesModified.trigger();
             let counter = 0;
-            let messages = [];
+            const messages = [];
             response.forEach(msg => {
                 if (msg.show_message)
                     messages.push({ type: counter, text: msg.message });
                 counter++;
             });
             messages.reverse();
-            if (counter === 3) {
-                t.loadRows(function () {
-                    t.renderContent();
-                    t.onEntriesModified.trigger();
-                    if (myModal) {
-                        const diffObject = t.SM.getFormDiffByState(targetStateID);
-                        let newRow = null;
-                        t.Rows.forEach(row => {
-                            if (row[t.PrimaryColumn] == RowID)
-                                newRow = row;
-                        });
-                        if (newRow)
-                            t.renderEditForm(newRow, diffObject, myModal);
-                        else {
-                            t.loadRow(RowID, res => {
-                                t.renderEditForm(res, diffObject, myModal);
-                            });
-                        }
-                    }
-                    if (myModal && closeModal)
-                        myModal.close();
-                });
-            }
-            let htmlStateFrom = t.renderStateButton(actState.state_id, t.SM.getStateNameById(actState.state_id));
-            let htmlStateTo = t.renderStateButton(targetStateID, t.SM.getStateNameById(targetStateID));
+            const htmlStateFrom = t.renderStateButton(actStateID, false);
+            const htmlStateTo = t.renderStateButton(targetStateID, false);
             for (const msg of messages) {
-                let tmplTitle = '';
+                let title = '';
                 if (msg.type == 0)
-                    tmplTitle = `OUT <span class="text-muted ml-2">${htmlStateFrom} &rarr;</span>`;
+                    title = `OUT <span class="text-muted ml-2">${htmlStateFrom} &rarr;</span>`;
                 if (msg.type == 1)
-                    tmplTitle = `Transition <span class="text-muted ml-2">${htmlStateFrom} &rarr; ${htmlStateTo}</span>`;
+                    title = `Transition <span class="text-muted ml-2">${htmlStateFrom} &rarr; ${htmlStateTo}</span>`;
                 if (msg.type == 2)
-                    tmplTitle = `IN <span class="text-muted ml-2">&rarr; ${htmlStateTo}</span>`;
-                let resM = new Modal(tmplTitle, msg.text);
+                    title = `IN <span class="text-muted ml-2">&rarr; ${htmlStateTo}</span>`;
+                const resM = new Modal(title, msg.text);
                 resM.options.btnTextClose = t.GUIOptions.modalButtonTextModifyClose;
                 resM.show();
             }
+            if (counter === 3)
+                callback();
         });
     }
     getDefaultFormObject() {
@@ -704,404 +532,103 @@ class Table extends RawTable {
         }
         return FormObj;
     }
-    createEntry() {
-        let me = this;
-        const ModalTitle = this.GUIOptions.modalHeaderTextCreate + '<span class="text-muted ml-3">in ' + this.getTableIcon() + ' ' + this.getTableAlias() + '</span>';
-        const CreateBtns = `<div class="ml-auto mr-0">
-  <button class="btn btn-success btnCreateEntry andReopen" type="button">${this.GUIOptions.modalButtonTextCreate}</button>
-  <button class="btn btn-outline-success btnCreateEntry ml-1" type="button">${this.GUIOptions.modalButtonTextCreate} &amp; Close</button>
-</div>`;
-        let defFormObj = me.getDefaultFormObject();
-        const diffFormCreate = me.diffFormCreateObject;
-        let newObj = mergeDeep({}, defFormObj, diffFormCreate);
-        newObj = mergeDeep({}, newObj, this.customFormCreateOptions);
-        for (const key of Object.keys(newObj)) {
-            if (newObj[key].field_type == 'reversefk')
-                newObj[key].mode_form = 'hi';
-        }
-        const fCreate = new FormGenerator(me, undefined, newObj, null);
-        const M = new Modal(ModalTitle, fCreate.getHTML(), CreateBtns, true);
-        M.options.btnTextClose = me.GUIOptions.modalButtonTextModifyClose;
-        const ModalID = M.getDOMID();
-        fCreate.initEditors();
-        const btns = document.getElementById(ModalID).getElementsByClassName('btnCreateEntry');
-        for (const btn of btns) {
-            btn.addEventListener('click', function (e) {
-                e.preventDefault();
-                M.setLoadingState(true);
-                let data = fCreate.getValues();
-                const reOpenModal = btn.classList.contains('andReopen');
-                me.createRow(data, function (r) {
-                    let msgs = r;
-                    let counter = 0;
-                    msgs.forEach(msg => {
-                        if (msg.show_message) {
-                            const stateEntry = msg['_entry-point-state'];
-                            const stateTo = me.renderStateButton(stateEntry['id'], stateEntry['name']);
-                            let tmplTitle = '';
-                            if (counter == 0)
-                                tmplTitle = `Transition <span class="text-muted ml-2">Create &rarr; ${stateTo}</span>`;
-                            if (counter == 1)
-                                tmplTitle = `IN <span class="text-muted ml-2">&rarr; ${stateTo}</span>`;
-                            let resM = new Modal(tmplTitle, msg.message);
-                            resM.options.btnTextClose = me.GUIOptions.modalButtonTextModifyClose;
-                            resM.show();
-                        }
-                        if (msg.element_id) {
-                            if (msg.element_id > 0) {
-                                console.info('Element created! ID:', msg.element_id);
-                                me.loadRows(function () {
-                                    M.setLoadingState(false);
-                                    me.renderContent();
-                                    me.renderFooter();
-                                    me.renderHeader();
-                                    me.onEntriesModified.trigger();
-                                    if (reOpenModal) {
-                                        me.modifyRow(msg.element_id, M);
-                                    }
-                                    else
-                                        M.close();
-                                });
-                            }
-                        }
-                        else {
-                            if (msg.element_id == 0) {
-                                alert(msg.errormsg);
-                            }
-                        }
-                        if (counter == 0 && !msg.show_message && msg.message == 'RelationActivationCompleteCloseTheModal') {
-                            me.loadRows(function () {
-                                me.renderContent();
-                                me.renderFooter();
-                                me.renderHeader();
-                                me.onEntriesModified.trigger();
-                                M.close();
-                            });
-                        }
-                        counter++;
-                    });
-                });
-            });
-        }
-        M.show();
-        fCreate.refreshEditors();
-    }
-    modifyRow(id, ExistingModal = null) {
-        let me = this;
-        if (me.selType == SelectType.Single) {
-            me.selectedRow = me.Rows[id];
-            for (const row of me.Rows) {
-                if (row[me.PrimaryColumn] == id) {
-                    me.selectedRow = row;
+    modifyRow(id) {
+        let t = this;
+        const pcname = t.getPrimaryColname();
+        if (t.selType == SelectType.Single) {
+            t.selectedRow = t.Rows[id];
+            for (const row of t.Rows) {
+                if (row[pcname] == id) {
+                    t.selectedRow = row;
                     break;
                 }
             }
-            me.isExpanded = false;
-            me.renderContent();
-            me.renderHeader();
-            me.renderFooter();
-            me.onSelectionChanged.trigger();
-            if (ExistingModal) {
-                ExistingModal.close();
-            }
+            document.getElementById(t.GUID).parentElement.innerHTML = `<span class="d-block text-muted" style="margin-top:.4rem;">${t.getTablename() + ' &rarr; ' + id}</span>`;
+            t.onSelectionChanged.trigger();
             return;
         }
         else {
-            if (me.ReadOnly) {
-                alert('The Table "' + me.tablename + '" is read-only!');
+            if (t.ReadOnly) {
+                alert("Can not modify!\nTable \"" + t.getTablename() + "\" is read-only!");
                 return;
             }
             let TheRow = null;
-            this.Rows.forEach(row => { if (row[me.PrimaryColumn] == id)
+            this.Rows.forEach(row => { if (row[pcname] == id)
                 TheRow = row; });
-            if (me.SM) {
-                const diffJSON = me.SM.getFormDiffByState(TheRow.state_id.state_id);
-                me.renderEditForm(TheRow, diffJSON, ExistingModal);
-            }
-            else {
-                const tblTxt = 'in ' + me.getTableIcon() + ' ' + me.getTableAlias();
-                const ModalTitle = me.GUIOptions.modalHeaderTextModify + '<span class="text-muted mx-3">(' + id + ')</span><span class="text-muted ml-3">' + tblTxt + '</span>';
-                const FormObj = mergeDeep({}, me.getDefaultFormObject());
-                for (const key of Object.keys(TheRow)) {
-                    const v = TheRow[key];
-                    FormObj[key].value = isObject(v) ? v[Object.keys(v)[0]] : v;
-                }
-                const guid = (ExistingModal) ? ExistingModal.getDOMID() : null;
-                const fModify = new FormGenerator(me, id, FormObj, guid);
-                const M = ExistingModal || new Modal('', '', '', true);
-                M.options.btnTextClose = this.GUIOptions.modalButtonTextModifyClose;
-                M.setContent(fModify.getHTML());
-                fModify.initEditors();
-                M.setHeader(ModalTitle);
-                M.setFooter(`<div class="ml-auto mr-0">
-          <button class="btn btn-primary btnSave" type="button">
-            <i class="fa fa-floppy-o"></i> ${this.GUIOptions.modalButtonTextModifySave}
-          </button>
-          <button class="btn btn-outline-primary btnSave andClose" type="button">
-            ${this.GUIOptions.modalButtonTextModifySaveAndClose}
-          </button>
-        </div>`);
-                const btnsSave = document.getElementById(M.getDOMID()).getElementsByClassName('btnSave');
-                for (const btn of btnsSave) {
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        const closeModal = btn.classList.contains('andClose');
-                        me.saveEntry(M, fModify.getValues(), closeModal);
-                    });
-                }
-                const form = document.getElementById(M.getDOMID()).getElementsByTagName('form')[0];
-                const newEl = document.createElement("input");
-                newEl.setAttribute('value', '' + id);
-                newEl.setAttribute('name', this.PrimaryColumn);
-                newEl.setAttribute('type', 'hidden');
-                newEl.classList.add('rwInput');
-                form.appendChild(newEl);
-                if (M) {
-                    M.setLoadingState(false);
-                    M.show();
-                    fModify.refreshEditors();
-                }
+            if (t.SM) {
+                const diffJSON = t.SM.getFormDiffByState(TheRow.state_id);
+                t.renderEditForm(TheRow, diffJSON, null);
             }
         }
     }
-    getSelectedRowID() {
-        return this.selectedRow[this.PrimaryColumn];
-    }
-    renderStateButton(ID, name, withDropdown = false) {
-        const cssClass = 'state' + ID;
+    renderStateButton(StateID, withDropdown, altName = undefined) {
+        const name = altName || this.SM.getStateNameById(StateID);
+        const cssClass = 'state' + StateID;
         if (withDropdown) {
-            return `<div class="dropdown showNextStates">
-            <button title="State-ID: ${ID}" class="btn dropdown-toggle btnGridState btn-sm label-state ${cssClass}" data-toggle="dropdown">${name}</button>
+            return `<div class="dropdown">
+            <button title="State-ID: ${StateID}" class="btn dropdown-toggle btnState btnGrid btnEnabled loadStates btn-sm label-state ${cssClass}"
+              data-stateid="${StateID}" data-toggle="dropdown">${name}</button>
             <div class="dropdown-menu p-0">
               <p class="m-0 p-3 text-muted"><i class="fa fa-spinner fa-pulse"></i> Loading...</p>
             </div>
           </div>`;
         }
         else {
-            return `<button title="State-ID: ${ID}" onclick="return false;" class="btn btnGridState btn-sm label-state ${cssClass}">${name}</button>`;
+            return `<button title="State-ID: ${StateID}" onclick="return false;" class="btn btnState btnGrid btnDisabled btn-sm label-state ${cssClass}">${name}</button>`;
         }
     }
-    formatCell(colname, cellContent, isHTML = false) {
+    formatCellFK(colname, cellData) {
+        const showColumns = this.Columns[colname].foreignKey.col_subst;
+        let cols = [];
+        Object.keys(cellData).forEach(c => {
+            if (showColumns === '*' || showColumns.indexOf(c) >= 0) {
+                let subCell = {};
+                subCell[c] = cellData[c];
+                cols.push(subCell);
+            }
+        });
+        return cols;
+    }
+    formatCell(colname, cellContent, isHTML = false, mainRowID) {
         if (isHTML)
             return cellContent;
-        let t = this;
         if (typeof cellContent == 'string') {
             if (cellContent.length > this.GUIOptions.maxCellLength)
                 return escapeHtml(cellContent.substr(0, this.GUIOptions.maxCellLength) + "\u2026");
         }
         else if ((typeof cellContent === "object") && (cellContent !== null)) {
-            const nrOfCells = Object.keys(cellContent).length;
-            const split = (nrOfCells == 1 ? 100 : (100 * (1 / (nrOfCells - 1))).toFixed(0));
-            let content = '<table class="w-100 p-0 border-0"><tr class="border-0">';
-            let cnt = 0;
-            Object.keys(cellContent).forEach(c => {
-                let val = cellContent[c];
-                if (nrOfCells > 1 && cnt == 0) {
-                    const fTablename = t.Columns[colname].foreignKey.table;
-                    content += '<td style="max-width: 30px; width: 30px;" class="border-0 controllcoulm align-middle" onclick="gEdit(\'' + fTablename + '\', ' + val + ')"><i class="far fa-edit"></i></td>';
-                    cnt += 1;
-                    return;
+            let cols = this.formatCellFK(colname, cellContent);
+            let content = '';
+            const split = (100 * (1 / cols.length)).toFixed(0);
+            const firstEl = cellContent;
+            const fTablename = this.Columns[colname].foreignKey.table;
+            let rowID = null;
+            let fTbl = new Table(fTablename);
+            cols.forEach(col => {
+                let htmlCell = col;
+                if (isObject(col)) {
+                    const vals = recflattenObj(col);
+                    let v = vals.join(' | ');
+                    v = v.length > 55 ? v.substring(0, 55) + "\u2026" : v;
+                    htmlCell = v;
                 }
-                if ((typeof val === "object") && (val !== null)) {
-                    if (c === 'state_id') {
-                        if (val['state_id'])
-                            content += '<td class="border-0" style="width: ' + split + '%">' + t.renderStateButton(val['state_id'], val['name'], false) + '</td>';
-                        else
-                            content += '<td class="border-0">&nbsp;</td>';
-                    }
-                    else
-                        content += '<td class="border-0" style="width: ' + split + '%">' + JSON.stringify(val) + '</td>';
-                }
-                else {
-                    if (val)
-                        content += '<td class="border-0" style="width: ' + split + '%">' + this.formatCell(colname, val, true) + '</td>';
-                    else
-                        content += '<td class="border-0">&nbsp;</td>';
-                }
-                cnt += 1;
+                if (fTbl)
+                    htmlCell = fTbl.renderCell(col, Object.keys(col)[0]);
+                content += '<td class="border-0" style="width: ' + split + '%;">' + htmlCell + '</td>';
             });
-            content += '</tr></table>';
-            return content;
+            if (fTbl && !fTbl.ReadOnly) {
+                rowID = firstEl[Object.keys(firstEl)[0]];
+                const path = location.hash.split('/');
+                path.shift();
+                if (path.length === 1)
+                    path.push(mainRowID.toString());
+                path.push(fTablename, rowID);
+                content = `<td style="max-width: 30px; width: 30px;" class="border-0 controllcoulm align-middle">
+        <a href="#/${path.join('/')}"><i class="far fa-edit"></i></a></td>` + content;
+            }
+            return `<table class="w-100 h-100 p-0 m-0 border-0" style="white-space: nowrap;"><tr data-rowid="${fTablename}:${rowID}">${content}</tr></table>`;
         }
         return escapeHtml(cellContent);
-    }
-    htmlHeaders(colnames) {
-        let t = this;
-        let th = '';
-        if (t.GUIOptions.showControlColumn)
-            th = `<th class="border-0 align-middle text-center text-muted" scope="col">
-        ${t.selType == SelectType.Single ? '<i class="fa fa-link"></i>' :
-                (t.TableType == TableType.obj ? '<i class="fa fa-cog"></i>' : '<i class="fa fa-link"></i>')}
-      </th>`;
-        for (const colname of colnames) {
-            if (t.Columns[colname].show_in_grid) {
-                const ordercol = t.OrderBy.replace('a.', '');
-                th += `<th scope="col" data-colname="${colname}" ${(t.Columns[colname].is_primary || ['state_id', 'state_id_FROM', 'state_id_TO'].indexOf(colname) >= 0) ? 'style="max-width:120px;width:120px;" ' : ''}class="border-0 p-0 align-middle datatbl_header${colname == ordercol ? ' sorted' : ''}">` +
-                    '<div class="float-left pl-1 pb-1">' + t.Columns[colname].column_alias + '</div>' +
-                    '<div class="float-right pr-3">' + (colname == ordercol ?
-                    '&nbsp;' + (t.AscDesc == SortOrder.ASC ? '<i class="fa fa-sort-up"></i>' : (t.AscDesc == SortOrder.DESC ? '<i class="fa fa-sort-down"></i>' : '')) + '' : '') +
-                    '</div>';
-                if (t.Columns[colname].field_type == 'foreignkey') {
-                    let cols = {};
-                    try {
-                        cols = JSON.parse(t.Columns[colname].foreignKey.col_subst);
-                    }
-                    catch (error) {
-                        cols[t.Columns[colname].foreignKey.col_subst] = 1;
-                    }
-                    const colsnames = Object.keys(cols);
-                    if (colsnames.length > 1) {
-                        let subheaders = '';
-                        let tmpTable = new Table(t.Columns[colname].foreignKey.table);
-                        const split = (100 * (1 / colsnames.length)).toFixed(0);
-                        for (const c of colsnames) {
-                            const tmpAlias = tmpTable.Columns[c].column_alias;
-                            subheaders += '<td class="border-0 align-middle" style="width: ' + split + '%">' + tmpAlias + '</td>';
-                        }
-                        ;
-                        th += `<table class="w-100 border-0"><tr>${subheaders}</tr></table>`;
-                    }
-                }
-                th += '<div class="clearfix"></div>';
-                th += '</th>';
-            }
-        }
-        return th;
-    }
-    getHeader() {
-        let t = this;
-        const hasEntries = t.Rows && (t.Rows.length > 0);
-        let NoText = 'No Objects';
-        if (t.TableType != TableType.obj)
-            NoText = 'No Relations';
-        let Text = '';
-        if (t.selectedRow) {
-            const vals = recflattenObj(t.selectedRow);
-            Text = '' + vals.join(' | ');
-        }
-        else {
-            Text = t.getSearch();
-        }
-        const searchBar = `<div class="form-group m-0 p-0 mr-1 float-left">
-      <input type="text" ${(!hasEntries ? 'readonly disabled ' : '')}class="form-control${(!hasEntries ? '-plaintext' : '')} w-100 filterText"
-        ${(Text != '' ? ' value="' + Text + '"' : '')}
-        placeholder="${(!hasEntries ? NoText : t.GUIOptions.filterPlaceholderText)}">
-    </div>`;
-        const btnCreate = `<button class="btn btn-${(t.selType === SelectType.Single || t.TableType != 'obj') ? 'light text-success' : 'success'} btnCreateEntry mr-1">
-      ${t.TableType != TableType.obj ?
-            '<i class="fa fa-link"></i><span class="d-none d-md-inline pl-2">Add Relation</span>' :
-            `<i class="fa fa-plus"></i><span class="d-none d-md-inline pl-2">${t.GUIOptions.modalButtonTextCreate} ${t.getTableAlias()}</span>`}
-    </button>`;
-        const btnWorkflow = `<button class="btn btn-info btnShowWorkflow mr-1">
-      <i class="fa fa-random"></i><span class="d-none d-md-inline pl-2">Workflow</span>
-    </button>`;
-        const btnExpand = `<button class="btn btn-light btnExpandTable ml-auto mr-0" title="Expand or Collapse Table" type="button">
-      ${t.isExpanded ? '<i class="fa fa-chevron-up"></i>' : '<i class="fa fa-chevron-down"></i>'}
-    </button>`;
-        let html = '<div class="tbl_header form-inline">';
-        if (!t.PageLimit && t.TableType !== TableType.obj) { }
-        else
-            html += searchBar;
-        if (!t.ReadOnly)
-            html += btnCreate;
-        if (t.SM && t.GUIOptions.showWorkflowButton)
-            html += btnWorkflow;
-        if (t.selType === SelectType.Single && hasEntries)
-            html += btnExpand;
-        html += '</div>';
-        return html;
-    }
-    getContent() {
-        let t = this;
-        let tds = '';
-        if (!t.isExpanded)
-            return '';
-        function compare(a, b) {
-            a = parseInt(t.Columns[a].col_order);
-            b = parseInt(t.Columns[b].col_order);
-            return a < b ? -1 : (a > b ? 1 : 0);
-        }
-        const sortedColumnNames = Object.keys(t.Columns).sort(compare);
-        const ths = t.htmlHeaders(sortedColumnNames);
-        t.Rows.forEach(function (row) {
-            const RowID = row[t.PrimaryColumn];
-            let data_string = '';
-            let isSelected = false;
-            if (t.selectedRow) {
-                isSelected = (t.selectedRow[t.PrimaryColumn] == RowID);
-            }
-            if (t.GUIOptions.showControlColumn) {
-                data_string = `<td scope="row" class="controllcoulm modRow align-middle border-0" data-rowid="${row[t.PrimaryColumn]}">
-          ${(t.selType == SelectType.Single ? (isSelected ? '<i class="far fa-check-circle"></i>' : '<i class="far fa-circle"></i>')
-                    : (t.TableType == TableType.obj ? '<i class="far fa-edit"></i>' : '<i class="fas fa-link"></i>'))}
-        </td>`;
-            }
-            sortedColumnNames.forEach(function (col) {
-                if (t.Columns[col].show_in_grid)
-                    data_string += '<td class="align-middle py-0 border-0">' + t.renderCell(row, col) + '</td>';
-            });
-            if (t.GUIOptions.showControlColumn) {
-                tds += `<tr class="datarow row-${row[t.PrimaryColumn] + (isSelected ? ' table-info' : '')}">${data_string}</tr>`;
-            }
-            else {
-                if (t.ReadOnly) {
-                    tds += '<tr class="datarow row-' + row[t.PrimaryColumn] + '" data-rowid="' + row[t.PrimaryColumn] + '">' + data_string + '</tr>';
-                }
-                else {
-                    tds += '<tr class="datarow row-' + row[t.PrimaryColumn] + ' editFullRow modRow" data-rowid="' + row[t.PrimaryColumn] + '">' + data_string + '</tr>';
-                }
-            }
-        });
-        return `<div class="tbl_content ${((t.selType == SelectType.Single && !t.isExpanded) ? ' collapse' : '')}" id="${t.GUID}">
-      ${(t.Rows && t.Rows.length > 0) ?
-            `<div class="tablewrapper border table-responsive-md mt-1">
-        <table class="table table-striped table-hover m-0 table-sm datatbl">
-          <thead>
-            <tr>${ths}</tr>
-          </thead>
-          <tbody>
-            ${tds}
-          </tbody>
-        </table>
-      </div>` : (t.getSearch() != '' ? 'Sorry, nothing found.' : '')}
-    </div>`;
-    }
-    getFooter() {
-        let t = this;
-        if (!t.Rows || t.Rows.length <= 0)
-            return '<div class="tbl_footer"></div>';
-        let pgntn = '';
-        let PaginationButtons = t.getPaginationButtons();
-        if (PaginationButtons.length > 1) {
-            PaginationButtons.forEach(btnIndex => {
-                if (t.PageIndex == t.PageIndex + btnIndex) {
-                    pgntn += `<li class="page-item active"><span class="page-link">${t.PageIndex + 1 + btnIndex}</span></li>`;
-                }
-                else {
-                    pgntn += `<li class="page-item"><a class="page-link" data-pageindex="${t.PageIndex + btnIndex}">${t.PageIndex + 1 + btnIndex}</a></li>`;
-                }
-            });
-        }
-        if (t.selType == SelectType.Single && !t.isExpanded)
-            return `<div class="tbl_footer"></div>`;
-        let statusText = '';
-        if (this.getNrOfRows() > 0 && this.Rows.length > 0) {
-            let text = this.GUIOptions.statusBarTextEntries;
-            text = text.replace('{lim_from}', '' + ((this.PageIndex * this.PageLimit) + 1));
-            text = text.replace('{lim_to}', '' + ((this.PageIndex * this.PageLimit) + this.Rows.length));
-            text = text.replace('{count}', '' + this.getNrOfRows());
-            statusText = text;
-        }
-        else {
-            statusText = this.GUIOptions.statusBarTextNoEntries;
-        }
-        return `<div class="tbl_footer">
-      <div class="text-muted p-0 px-2">
-        <p class="float-left m-0 mb-1"><small>${statusText}</small></p>
-        <nav class="float-right"><ul class="pagination pagination-sm m-0 my-1">${pgntn}</ul></nav>
-        <div class="clearfix"></div>
-      </div>
-    </div>`;
     }
     renderCell(row, col) {
         let t = this;
@@ -1140,7 +667,7 @@ class Table extends RawTable {
         }
         else if (t.Columns[col].field_type == 'number') {
             const number = parseInt(value);
-            return number.toLocaleString('de-DE');
+            return number.toString();
         }
         else if (t.Columns[col].field_type == 'float') {
             const number = parseFloat(value);
@@ -1149,76 +676,180 @@ class Table extends RawTable {
         else if (t.Columns[col].field_type == 'switch' || t.Columns[col].field_type == 'checkbox') {
             return parseInt(value) !== 0 ? '<i class="fa fa-check text-success "></i>' : '<i class="fa fa-times text-danger"></i>';
         }
-        else if (col == 'state_id' && t.tablename != 'state') {
-            let isExitNode = t.SM.isExitNode(value['state_id']);
+        else if (t.Columns[col].field_type == 'state') {
+            const stateID = value;
+            const isExitNode = t.SM.isExitNode(stateID);
             const withDropdown = !(t.ReadOnly || isExitNode);
-            return t.renderStateButton(value['state_id'], value['name'], withDropdown);
+            return t.renderStateButton(stateID, withDropdown);
         }
-        else if ((t.tablename == 'state' && col == 'name') || (t.tablename == 'state_rules' && (col == 'state_id_FROM' || col == 'state_id_TO'))) {
-            let stateID = 0;
-            let text = '';
-            if ((typeof value === "object") && (value !== null)) {
-                stateID = parseInt(value['state_id']);
-                text = value['name'];
-            }
-            else {
-                stateID = parseInt(row['state_id']);
-                text = value;
-            }
-            return t.renderStateButton(stateID, text);
+        else if (col == 'name' && t.getTablename() == 'state') {
+            const stateID = parseInt(row['state_id']);
+            return t.renderStateButton(stateID, false, value);
+        }
+        else if ((col == 'state_id_FROM' || col == 'state_id_TO') && t.getTablename() == 'state_rules') {
+            const stateID = parseInt(value['state_id']);
+            return t.renderStateButton(stateID, false, value['name']);
         }
         const isHTML = t.Columns[col].is_virtual || t.Columns[col].field_type == 'htmleditor';
-        value = t.formatCell(col, value, isHTML);
+        value = t.formatCell(col, value, isHTML, row[t.getPrimaryColname()]);
         return value;
     }
-    renderHeader() {
+    htmlHeaders(colnames) {
         let t = this;
-        const tableEl = document.getElementById(t.GUID).parentElement;
-        tableEl.getElementsByClassName('tbl_header')[0].innerHTML = t.getHeader();
-        function filterEvent(t) {
-            return __awaiter(this, void 0, void 0, function* () {
-                t.PageIndex = 0;
-                const element = tableEl.getElementsByClassName('filterText')[0];
-                const filterText = element.value;
-                t.setSearch(filterText);
-                t.loadRows(function () {
-                    return __awaiter(this, void 0, void 0, function* () {
-                        if (t.Rows.length == t.PageLimit) {
-                            yield t.renderFooter();
-                        }
-                        else {
-                            t.actRowCount = t.Rows.length;
-                            yield t.renderFooter();
-                        }
-                        yield t.renderContent();
-                    });
+        let th = '';
+        if (t.GUIOptions.showControlColumn) {
+            th = `<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;"></th>`;
+            if (t.TableType !== TableType.obj && t.selType !== SelectType.Single) {
+                th = '<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;">' +
+                    '<a href="' + location.hash + '/' + t.getTablename() + '/create"><i class="fa fa-link text-success"></i></a>';
+                const cols = [];
+                colnames.map(col => {
+                    if (t.Columns[col].field_type == 'foreignkey')
+                        cols.push(col);
                 });
-            });
+                const colM = cols[1];
+                const objTable2 = t.Columns[colM].foreignKey.table;
+                th += '<a class="ml-2" href="' + location.hash + '/' + t.getTablename() + '/create/' + objTable2 + '/create"><i class="fa fa-plus text-success"></i></a></th>';
+            }
+            else if (t.TableType === TableType.obj && t.selType === SelectType.Single) {
+                th = '<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;"><a href="' + location.hash + '/' + t.getTablename() +
+                    '/create"><i class="fa fa-plus text-success"></i></a></th>';
+            }
         }
-        let el = null;
-        el = tableEl.getElementsByClassName('filterText')[0];
-        if (el)
-            el.addEventListener('keydown', function (e) {
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    filterEvent(t);
+        for (const colname of colnames) {
+            if (t.Columns[colname].show_in_grid) {
+                const ordercol = t.getSortColname();
+                const orderdir = t.getSortDir();
+                th += `<th data-colname="${colname}" ${(['state_id', 'state_id_FROM', 'state_id_TO'].indexOf(colname) >= 0) ? 'style="max-width:80px;width:80px;" ' : ''}class="border-0 p-0 align-middle datatbl_header${colname == ordercol ? ' sorted' : ''}">` +
+                    '<div class="float-left pl-1 pb-1">' + t.Columns[colname].column_alias + '</div>' +
+                    '<div class="float-right pr-3">' + (colname == ordercol ?
+                    '&nbsp;' + (orderdir == SortOrder.ASC ? '<i class="fa fa-sort-up"></i>' : (orderdir == SortOrder.DESC ? '<i class="fa fa-sort-down"></i>' : '')) + '' : '') +
+                    '</div>';
+                if (t.Columns[colname].field_type == 'foreignkey') {
+                    let cols = {};
+                    try {
+                        cols = JSON.parse(t.Columns[colname].foreignKey.col_subst);
+                    }
+                    catch (error) {
+                        cols[t.Columns[colname].foreignKey.col_subst] = 1;
+                    }
+                    const colsnames = Object.keys(cols);
+                    if (colsnames.length > 1) {
+                        let subheaders = '';
+                        let tmpTable = new Table(t.Columns[colname].foreignKey.table);
+                        const split = (100 * (1 / colsnames.length)).toFixed(0);
+                        for (const c of colsnames) {
+                            const tmpAlias = tmpTable.Columns[c].column_alias;
+                            subheaders += '<td class="border-0 align-middle" style="width: ' + split + '%">' + tmpAlias + '</td>';
+                        }
+                        ;
+                        th += `<table class="w-100 border-0"><tr>${subheaders}</tr></table>`;
+                    }
+                }
+                th += '<div class="clearfix"></div>';
+                th += '</th>';
+            }
+        }
+        return th;
+    }
+    getContent() {
+        let t = this;
+        let tds = '';
+        const pcname = t.getPrimaryColname();
+        if (!t.isExpanded)
+            return '';
+        function compare(a, b) {
+            a = parseInt(t.Columns[a].col_order);
+            b = parseInt(t.Columns[b].col_order);
+            return a < b ? -1 : (a > b ? 1 : 0);
+        }
+        const sortedColumnNames = Object.keys(t.Columns).sort(compare);
+        const ths = t.htmlHeaders(sortedColumnNames);
+        t.Rows.forEach(function (row) {
+            const RowID = row[pcname];
+            let data_string = '';
+            let isSelected = false;
+            if (t.selectedRow)
+                isSelected = (t.selectedRow[pcname] == RowID);
+            if (t.GUIOptions.showControlColumn) {
+                const path = location.hash;
+                data_string = `<td class="controllcoulm align-middle">
+          ${(t.selType == SelectType.Single ? (isSelected ?
+                    '<i class="far fa-check-circle"></i>' : '<span class="modRow"><i class="far fa-circle"></i></span>')
+                    : (t.TableType == TableType.obj ?
+                        `<a href="#/${t.getTablename()}/${RowID}"><i class="far fa-edit"></i></a>` :
+                        `<a href="#/${t.getTablename()}/${RowID}"><i class="fas fa-link"></i></a>`))}
+        </td>`;
+            }
+            sortedColumnNames.forEach(function (col) {
+                if (t.Columns[col].show_in_grid) {
+                    data_string += '<td ' + (t.Columns[col].field_type === 'foreignkey' ? ' class="p-0 m-0 h-100"' : '') + '>' + t.renderCell(row, col) + '</td>';
                 }
             });
-        el = tableEl.getElementsByClassName('btnShowWorkflow')[0];
-        if (el)
-            el.addEventListener('click', function (e) { e.preventDefault(); t.SM.openSEPopup(); });
-        el = tableEl.getElementsByClassName('btnCreateEntry')[0];
-        if (el)
-            el.addEventListener('click', function (e) { e.preventDefault(); t.createEntry(); });
-        el = tableEl.getElementsByClassName('btnExpandTable')[0];
-        if (el)
-            el.addEventListener('click', function (e) {
-                e.preventDefault();
-                t.isExpanded = !t.isExpanded;
-                t.renderContent();
-                t.renderHeader();
-                t.renderFooter();
+            if (t.GUIOptions.showControlColumn) {
+                tds += `<tr class="${(isSelected ? ' table-info' : '')}" data-rowid="${t.getTablename() + ':' + row[pcname]}">${data_string}</tr>`;
+            }
+            else {
+                if (t.ReadOnly) {
+                    tds += '<tr data-rowid="' + t.getTablename() + ':' + row[pcname] + '">' + data_string + '</tr>';
+                }
+                else {
+                    tds += '<tr class="editFullRow modRow" data-rowid="' + t.getTablename() + ':' + row[pcname] + '">' + data_string + '</tr>';
+                }
+            }
+        });
+        return `<div class="tbl_content ${((t.selType == SelectType.Single && !t.isExpanded) ? ' collapse' : '')}" id="${t.GUID}">
+      ${(t.Rows && t.Rows.length > 0) ?
+            `<div class="tablewrapper border table-responsive-md">
+        <table class="table table-striped table-hover m-0 table-sm datatbl">
+          <thead>
+            <tr>${ths}</tr>
+          </thead>
+          <tbody>
+            ${tds}
+          </tbody>
+        </table>
+      </div>` : (t.getSearch() != '' ? 'Sorry, nothing found.' : '')}
+    </div>`;
+    }
+    getFooter() {
+        let t = this;
+        if (!t.Rows || t.Rows.length <= 0)
+            return '<div class="tbl_footer"></div>';
+        let pgntn = '';
+        let PaginationButtons = t.getPaginationButtons();
+        if (PaginationButtons.length > 1) {
+            PaginationButtons.forEach(btnIndex => {
+                if (t.PageIndex == t.PageIndex + btnIndex) {
+                    pgntn += `<li class="page-item active"><span class="page-link">${t.PageIndex + 1 + btnIndex}</span></li>`;
+                }
+                else {
+                    pgntn += `<li class="page-item"><a href="${window.location}" class="page-link" data-pageindex="${t.PageIndex + btnIndex}">${t.PageIndex + 1 + btnIndex}</a></li>`;
+                }
             });
+        }
+        if (t.selType == SelectType.Single && !t.isExpanded)
+            return `<div class="tbl_footer"></div>`;
+        if ((t.TableType == TableType.t1_1 || t.TableType == TableType.tn_1) && t.actRowCount === 1)
+            return `<div class="tbl_footer"></div>`;
+        let statusText = '';
+        if (this.getNrOfRows() > 0 && this.Rows.length > 0) {
+            let text = this.GUIOptions.statusBarTextEntries;
+            text = text.replace('{lim_from}', '' + ((this.PageIndex * this.PageLimit) + 1));
+            text = text.replace('{lim_to}', '' + ((this.PageIndex * this.PageLimit) + this.Rows.length));
+            text = text.replace('{count}', '' + this.getNrOfRows());
+            statusText = text;
+        }
+        else {
+            statusText = this.GUIOptions.statusBarTextNoEntries;
+        }
+        return `<div class="tbl_footer">
+      <div class="text-muted p-0 px-2">
+        <p class="float-left m-0 mb-1"><small>${statusText}</small></p>
+        <nav class="float-right"><ul class="pagination pagination-sm m-0 my-1">${pgntn}</ul></nav>
+        <div class="clearfix"></div>
+      </div>
+    </div>`;
     }
     renderContent() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -1242,38 +873,77 @@ class Table extends RawTable {
                 for (const el of els) {
                     el.addEventListener('click', function (e) {
                         e.preventDefault();
-                        const RowID = el.getAttribute('data-rowid');
-                        t.modifyRow(RowID);
+                        const RowData = el.parentNode.parentNode.getAttribute('data-rowid').split(':');
+                        const Tablename = RowData[0];
+                        const ID = RowData[1];
+                        if (t.getTablename() !== Tablename) {
+                            const tmpTable = new Table(Tablename);
+                            tmpTable.loadRow(ID, function (Row) {
+                                tmpTable.setRows([Row]);
+                                tmpTable.modifyRow(ID);
+                            });
+                        }
+                        else
+                            t.modifyRow(ID);
                     });
                 }
             }
-            $('#' + t.GUID + ' .showNextStates').off('show.bs.dropdown').on('show.bs.dropdown', function () {
-                let jQRow = $(this).parent().parent();
-                let RowID = jQRow.find('td:first').data('rowid');
-                let Row = {};
-                const pc = t.getPrimaryColname();
-                for (const row of t.Rows) {
-                    if (row[pc] == RowID) {
-                        Row = row;
-                        break;
-                    }
-                }
-                const nextstates = t.SM.getNextStates(Row['state_id'].state_id);
-                if (nextstates.length > 0) {
-                    jQRow.find('.dropdown-menu').empty();
-                    let btns = '';
-                    nextstates.map(state => {
-                        btns += `<a class="dropdown-item btnState btnStateChange state${state.id}" data-rowid="${RowID}" data-targetstate="${state.id}">${state.name}</a>`;
-                    });
-                    jQRow.find('.dropdown-menu').html(btns);
-                    $('#' + t.GUID + ' .btnState').click(function (e) {
+            els = tableEl.getElementsByClassName('loadStates');
+            if (els) {
+                for (const el of els) {
+                    el.addEventListener('click', function (e) {
                         e.preventDefault();
-                        const RowID = $(this).data('rowid');
-                        const TargetStateID = $(this).data('targetstate');
-                        t.setState('', RowID, TargetStateID, undefined, false);
+                        const DropDownMenu = el.parentNode.querySelectorAll('.dropdown-menu')[0];
+                        const StateID = el.getAttribute('data-stateid');
+                        const RowData = el.parentNode.parentNode.parentNode.getAttribute('data-rowid').split(':');
+                        const Tablename = RowData[0];
+                        const ID = RowData[1];
+                        if (DropDownMenu.classList.contains("show"))
+                            return;
+                        if (Tablename === t.getTablename()) {
+                            const nextstates = t.SM.getNextStates(StateID);
+                            if (nextstates.length > 0) {
+                                DropDownMenu.innerHTML = '';
+                                nextstates.map(state => {
+                                    const btn = document.createElement('a');
+                                    btn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
+                                    btn.setAttribute('href', 'javascript:void(0)');
+                                    btn.innerText = state.name;
+                                    btn.addEventListener("click", function (e) {
+                                        e.preventDefault();
+                                        t.setState({}, ID, state.id, function () {
+                                            t.loadRows(function () { t.renderContent(); });
+                                        });
+                                    });
+                                    DropDownMenu.appendChild(btn);
+                                });
+                            }
+                        }
+                        else {
+                            const tmpTable = new Table(Tablename);
+                            tmpTable.loadRow(ID, function (Row) {
+                                tmpTable.setRows([Row]);
+                                const nextstates = tmpTable.SM.getNextStates(Row['state_id']);
+                                if (nextstates.length > 0) {
+                                    DropDownMenu.innerHTML = '';
+                                    nextstates.map(state => {
+                                        const btn = document.createElement('a');
+                                        btn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
+                                        btn.setAttribute('href', 'javascript:void(0)');
+                                        btn.text = state.name;
+                                        btn.addEventListener("click", function () {
+                                            tmpTable.setState({}, ID, state.id, function () {
+                                                t.loadRows(function () { t.renderContent(); });
+                                            });
+                                        });
+                                        DropDownMenu.appendChild(btn);
+                                    });
+                                }
+                            });
+                        }
                     });
                 }
-            });
+            }
         });
     }
     renderFooter() {
@@ -1290,11 +960,13 @@ class Table extends RawTable {
     }
     renderHTML(DOM_ID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const content = this.getHeader() + (yield this.getContent()) + this.getFooter();
-            document.getElementById(DOM_ID).innerHTML = content;
-            yield this.renderHeader();
-            yield this.renderContent();
-            yield this.renderFooter();
+            const content = (yield this.getContent()) + this.getFooter();
+            const el = document.getElementById(DOM_ID);
+            if (el) {
+                el.innerHTML = content;
+                yield this.renderContent();
+                yield this.renderFooter();
+            }
         });
     }
     get SelectionHasChanged() {
@@ -1363,69 +1035,70 @@ class FormGenerator {
                 if (isObject(x)) {
                     ID = x[Object.keys(x)[0]];
                     const vals = recflattenObj(x);
-                    el.value = vals.join(' | ');
+                    v = vals.join(' | ');
+                    v = v.length > 55 ? v.substring(0, 55) + "\u2026" : v;
                 }
             }
-            result += `
-        <input type="hidden" name="${key}" value="${ID != 0 ? ID : ''}" class="inputFK${el.mode_form != 'hi' ? ' rwInput' : ''}">
-        <div class="external-table">
-          <div class="input-group" ${el.mode_form == 'rw' ? 'onclick="loadFKTable(this)"' : ''} data-tablename="${el.fk_table}"${el.customfilter ? "data-customfilter='" + el.customfilter + "'" : ''}>
-            <input type="text" class="form-control filterText${el.mode_form == 'rw' ? ' bg-white editable' : ''}" ${v !== '' ? 'value="' + v + '"' : ''} placeholder="Nothing selected" readonly>
-            ${el.mode_form == 'ro' ? '' :
-                `<div class="input-group-append">
-                <button class="btn btn-primary btnLinkFK" title="Link Element" type="button">
-                  <i class="fa fa-unlink"></i>
-                </button>
-              </div>`}
-          </div>
-        </div>`;
+            const getSelection = (cont, isReadOnly, custfilter) => {
+                if (custfilter) {
+                    const rd = this.data;
+                    const colnames = Object.keys(rd);
+                    for (const colname of colnames) {
+                        const pattern = '%' + colname + '%';
+                        if (custfilter.indexOf(pattern) >= 0) {
+                            const firstCol = Object.keys(rd[colname].value)[0];
+                            custfilter = custfilter.replace(new RegExp(pattern, "g"), rd[colname].value[firstCol]);
+                        }
+                    }
+                }
+                if (isReadOnly)
+                    return '<span class="d-block text-muted" style="margin-top: .4rem;">' + cont + '</span>';
+                else
+                    return '<a class="d-block text-decoration-none" style="margin-top: .4rem;" onclick="loadFKTable(this, \'' +
+                        el.fk_table + '\', \'' + (custfilter ? encodeURI(custfilter) : '') + '\')" href="javascript:void(0);">' + cont + '</a>';
+            };
+            result += `<div><input type="hidden" name="${key}" value="${ID != 0 ? ID : ''}" class="inputFK${el.mode_form != 'hi' ? ' rwInput' : ''}">`;
+            result += (v ? getSelection(v, (el.mode_form === 'ro'), el.customfilter) : getSelection('Nothing selected', (el.mode_form === 'ro'), el.customfilter));
+            result += `</div>`;
         }
         else if (el.field_type == 'reversefk') {
             const tmpGUID = GUI.getID();
-            const OriginRowID = this.oRowID;
             const extTablename = el.revfk_tablename;
-            const extTableColSelf = el.revfk_colname;
-            const hideCol = '`' + extTablename + '/' + extTableColSelf + '`.' + extTableColSelf;
-            result += `<div id="${tmpGUID}"></div>`;
-            let tmp = new Table(extTablename, SelectType.NoSelect);
-            tmp.Columns[extTableColSelf].show_in_grid = false;
-            tmp.Columns[tmp.getPrimaryColname()].show_in_grid = false;
-            tmp.ReadOnly = (el.mode_form == 'ro');
-            tmp.GUIOptions.showControlColumn = !tmp.ReadOnly;
-            tmp.setColumnFilter(hideCol, '' + OriginRowID);
-            let fkCols = [];
-            for (const colname of Object.keys(tmp.Columns)) {
-                if (tmp.Columns[colname].field_type == 'foreignkey')
-                    fkCols.push(colname);
-            }
-            const i = fkCols.indexOf(extTableColSelf);
-            if (i > -1)
-                fkCols.splice(i, 1);
-            const colnamex = fkCols[0];
-            const refreshSel = function () {
-                let customFormCreate = {};
-                customFormCreate[extTableColSelf] = {};
-                customFormCreate[extTableColSelf]['value'] = OriginRowID;
-                customFormCreate[extTableColSelf]['mode_form'] = 'ro';
-                if (tmp.isRelationTable()) {
-                    const ids = [];
-                    for (const Row of tmp.getRows()) {
-                        ids.push(Row[colnamex][colnamex]);
-                    }
-                    if (ids.length > 0) {
-                        const filter = '{\"nin\": [\"' + colnamex + '\", \"' + ids.join(',') + '\"]}';
-                        customFormCreate[colnamex] = {};
-                        customFormCreate[colnamex]['customfilter'] = filter;
-                    }
+            const extTableColSelf = el.revfk_colname1;
+            const extTableColExt = el.revfk_colname2;
+            const extTableColExtFilter = el.revfk_col2filter;
+            const hideCol = '`' + extTablename + '`.' + extTableColSelf;
+            const extTable = new Table(extTablename);
+            let custFormCreate = {};
+            const tablenameM = extTable.Columns[el.revfk_colname2].foreignKey.table;
+            extTable.ReadOnly = (el.mode_form == 'ro');
+            if (extTable.isRelationTable()) {
+                extTable.Columns[extTableColSelf].show_in_grid = false;
+                extTable.setColumnFilter(hideCol, this.oRowID.toString());
+                custFormCreate[extTableColSelf] = {};
+                custFormCreate[extTableColSelf]['value'] = this.oRowID;
+                custFormCreate[extTableColSelf]['mode_form'] = 'ro';
+                if (extTableColExtFilter) {
+                    custFormCreate[extTableColExt] = {};
+                    custFormCreate[extTableColExt]['customfilter'] = extTableColExtFilter;
                 }
-                tmp.setCustomFormCreateOptions(customFormCreate);
-            };
-            tmp.resetLimit();
-            tmp.EntriesHaveChanged.on(refreshSel);
-            tmp.loadRows(function () {
-                tmp.renderHTML(tmpGUID);
-                refreshSel();
+                extTable.setCustomFormCreateOptions(custFormCreate);
+            }
+            extTable.loadRows(rows => {
+                if (!extTable.ReadOnly && rows['count'] == 0) {
+                    document.getElementById(tmpGUID).innerHTML =
+                        `<a class="btn btn-default text-success" href="${location.hash + '/' + extTable.getTablename() + '/create/' + tablenameM}/create"><i class="fa fa-plus"></i> Create</a>`
+                            +
+                                `<span class="mx-3">or</span>` +
+                            `<a class="btn btn-default text-success" href="${location.hash + '/' + extTable.getTablename()}/create"><i class="fa fa-link"></i> Relate</a>`;
+                }
+                else if (extTable.ReadOnly && rows['count'] == 0) {
+                    document.getElementById(tmpGUID).innerHTML = '<p class="text-muted mt-2">No Entries</p>';
+                }
+                else
+                    extTable.renderHTML(tmpGUID);
             });
+            result += `<div id="${tmpGUID}"><p class="text-muted mt-2"><span class="spinner-grow spinner-grow-sm"></span> Loading Elements...</p></div>`;
         }
         else if (el.field_type == 'htmleditor') {
             const newID = GUI.getID();
@@ -1438,7 +1111,7 @@ class FormGenerator {
             result += `<textarea class="codeeditor" id="${newID}"></textarea>`;
         }
         else if (el.field_type == 'rawhtml') {
-            result += el.value;
+            result += '<div class="pt-2">' + el.value + '</div>';
         }
         else if (el.field_type == 'enum') {
             result += `<select name="${key}" class="custom-select${el.mode_form == 'rw' ? ' rwInput' : ''}" id="inp_${key}"${el.mode_form == 'ro' ? ' disabled' : ''}>`;
@@ -1521,6 +1194,7 @@ class FormGenerator {
     }
     initEditors() {
         let t = this;
+        let cnt = 0;
         for (const key of Object.keys(t.editors)) {
             const options = t.editors[key];
             if (options.editor === 'quill') {
@@ -1530,7 +1204,9 @@ class FormGenerator {
                     QuillOptions['modules'] = { toolbar: false };
                 }
                 t.editors[key]['objQuill'] = new Quill('#' + options.id, QuillOptions);
-                t.editors[key]['objQuill'].root.innerHTML = t.data[key].value || '';
+                t.editors[key]['objQuill'].root.innerHTML = t.data[key].value || '<p></p>';
+                if (cnt === 0)
+                    t.editors[key]['objQuill'].focus();
             }
             else if (options.editor === 'codemirror') {
                 const editor = CodeMirror.fromTextArea(document.getElementById(options.id), {
@@ -1541,8 +1217,9 @@ class FormGenerator {
                 editor.setSize(null, 111);
                 t.editors[key]['objCodemirror'] = editor;
             }
+            cnt++;
         }
-        let elements = document.querySelectorAll('.modal input[type=number]');
+        let elements = document.querySelectorAll('input[type=number]');
         for (let el of elements) {
             el.addEventListener('keydown', function (e) {
                 const kc = e.keyCode;
@@ -1557,7 +1234,7 @@ class FormGenerator {
                 }
             });
         }
-        elements = document.querySelectorAll('.modal .rwInput:not(textarea)');
+        elements = document.querySelectorAll('.rwInput:not(textarea)');
         for (let el of elements) {
             el.addEventListener('keydown', function (e) {
                 if (e.which == 13)
@@ -1574,16 +1251,6 @@ class FormGenerator {
         }
     }
 }
-$(function () {
-    let hash = window.location.hash;
-    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-    $('.nav-tabs a').click(function (e) {
-        $(this).tab('show');
-        const scrollmem = $('body').scrollTop() || $('html').scrollTop();
-        window.location.hash = this.hash;
-        $('html,body').scrollTop(scrollmem);
-    });
-});
 function escapeHtml(string) {
     const entityMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;' };
     return String(string).replace(/[&<>"'`=\/]/g, function (s) {
@@ -1621,36 +1288,27 @@ function recflattenObj(x) {
         return res;
     }
 }
-function loadFKTable(btnElement) {
-    let me = $(btnElement);
+function loadFKTable(element, tablename, customfilter) {
     const randID = GUI.getID();
-    const FKTable = me.data('tablename');
-    const CustomFilter = me.data('customfilter');
-    let fkInput = me.parent().parent().parent().find('.inputFK');
-    fkInput.val('');
-    me.parent().parent().parent().find('.external-table').replaceWith('<div id="' + randID + '"></div>');
-    let tmpTable = new Table(FKTable, SelectType.Single);
-    if (CustomFilter)
-        tmpTable.setFilter(CustomFilter);
-    tmpTable.loadRows(function () {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield tmpTable.renderHTML(randID);
-            const el = document.getElementById(randID).getElementsByClassName('filterText')[0];
-            el.focus();
-        });
+    const hiddenInput = element.parentNode.getElementsByClassName('inputFK')[0];
+    element.outerHTML = '<div id="' + randID + '"></div>';
+    hiddenInput.value = null;
+    let tmpTable = null;
+    try {
+        tmpTable = new Table(tablename, SelectType.Single);
+    }
+    catch (e) {
+        document.getElementById(randID).innerHTML = '<p class="text-muted mt-2">No Access to this Table!</p>';
+        return;
+    }
+    if (customfilter) {
+        tmpTable.setFilter(decodeURI(customfilter));
+    }
+    tmpTable.loadRows(rows => {
+        tmpTable.renderHTML(randID);
     });
     tmpTable.SelectionHasChanged.on(function () {
         const selRowID = tmpTable.getSelectedRowID();
-        if (selRowID)
-            fkInput.val(selRowID);
-        else
-            fkInput.val("");
-    });
-}
-function gEdit(tablename, RowID) {
-    const tmpTable = new Table(tablename, 0);
-    tmpTable.setColumnFilter(tmpTable.getPrimaryColname(), '' + RowID);
-    tmpTable.loadRows(function () {
-        tmpTable.modifyRow(RowID);
+        hiddenInput.value = '' || selRowID;
     });
 }

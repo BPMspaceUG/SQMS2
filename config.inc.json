@@ -1,0 +1,1591 @@
+{
+    "role": {
+        "table_alias": "Role",
+        "table_type": "obj",
+        "order": 1,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "Role_id,DESC",
+        "in_menu": false,
+        "se_active": false,
+        "columns": {
+            "Role_id": {
+                "column_alias": "Role id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "Role_name": {
+                "column_alias": "Name",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "text"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabus": {
+        "table_alias": "Syllabus",
+        "table_type": "obj",
+        "order": "1",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Syllabus_id,DESC",
+        "in_menu": true,
+        "se_active": true,
+        "columns": {
+            "sqms2_Syllabus_id": {
+                "column_alias": "Syllabus id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Syllabus_titel": {
+                "column_alias": "Titel",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_Syllabus_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 3,
+                "mode_form": "hi",
+                "field_type": "textarea"
+            },
+            "sqms2_Syllabus_Valid_from": {
+                "column_alias": "From",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "date"
+            },
+            "sqms2_Syllabus_Valid_to": {
+                "column_alias": "Valid to",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 5,
+                "mode_form": "rw",
+                "field_type": "date"
+            },
+            "sqms2_Syllabus_Version": {
+                "column_alias": "Version",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 6,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 7,
+                "mode_form": "hi",
+                "field_type": "state"
+            },
+            "virtualCol": {
+                "field_type": "reversefk",
+                "column_alias": "Description",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 3,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_tablename": "sqms2_syllabus_desc",
+                "revfk_colname1": "sqms2_Syllabus_id_fk_783731",
+                "revfk_colname2": "sqms2_Text_id_fk_178796"
+            },
+            "virtualColx": {
+                "field_type": "reversefk",
+                "column_alias": "SyllabusChapters",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 3,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_tablename": "sqms2_syllabus_syllabuschapter",
+                "revfk_colname1": "sqms2_Syllabus_id_fk_870666",
+                "revfk_colname2": "sqms2_SyllabusChapter_id_fk_327935"
+            },
+            "virtualColxx": {
+                "field_type": "reversefk",
+                "column_alias": "Topic",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 1,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_tablename": "sqms2_syllabus_topic",
+                "revfk_colname1": "sqms2_Syllabus_id_fk_345197",
+                "revfk_colname2": "sqms2_Topic_id_fk_945295"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
+    },
+    "role_liamuser": {
+        "table_alias": "Liamuser",
+        "table_type": "obj",
+        "order": 2,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "Role_User_id,DESC",
+        "in_menu": false,
+        "se_active": false,
+        "columns": {
+            "Role_User_id": {
+                "column_alias": "User id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "Role_id": {
+                "column_alias": "Role id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "role",
+                    "col_id": "Role_id",
+                    "col_subst": "*"
+                }
+            },
+            "User_id": {
+                "column_alias": "User id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "number"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabuschapter": {
+        "table_alias": "Syllabuschapter",
+        "table_type": "obj",
+        "order": "2",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_SyllabusChapter_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_SyllabusChapter_id": {
+                "column_alias": "SyllabusChapter id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_SyllabusChapter_titel": {
+                "column_alias": "Titel",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_SyllabusChapter_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 3,
+                "mode_form": "hi",
+                "field_type": "textarea"
+            },
+            "sqms2_SyllabusChapter_ChapterNumber": {
+                "column_alias": "ChapterNumber",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_SyllabusChapter_Severity": {
+                "column_alias": "Severity",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 5,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 6,
+                "mode_form": "hi",
+                "field_type": "state"
+            },
+            "virtualCol": {
+                "field_type": "reversefk",
+                "column_alias": "Description",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 3,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_tablename": "sqms2_syllabuschapter_desc",
+                "revfk_colname1": "sqms2_SyllabusChapter_id_fk_886795",
+                "revfk_colname2": "sqms2_Text_id_fk_524933"
+            },
+            "virtualColx": {
+                "field_type": "reversefk",
+                "column_alias": "Question",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 3,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_tablename": "sqms2_syllabuschapter_question",
+                "revfk_colname1": "sqms2_SyllabusChapter_id_fk_920241",
+                "revfk_colname2": "sqms2_Question_id_fk_285826"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fa fa-boxes\u0022\u003E\u003C\/i\u003E"
+    },
+    "_orphans": {
+        "table_alias": "Orphans",
+        "table_icon": "\u003Ci class=\u0022far fa-star\u0022\u003E\u003C\/i\u003E",
+        "href": "#",
+        "order": 3,
+        "mode": "ro",
+        "stdfilter": "",
+        "in_menu": false,
+        "se_active": false,
+        "is_virtual": true,
+        "columns": [],
+        "table_type": "obj",
+        "showKids": false
+    },
+    "_nodes": {
+        "table_alias": "Nodes",
+        "table_icon": "\u003Ci class=\u0022far fa-star\u0022\u003E\u003C\/i\u003E",
+        "href": "#",
+        "order": 3,
+        "mode": "ro",
+        "stdfilter": "",
+        "in_menu": false,
+        "se_active": false,
+        "is_virtual": true,
+        "columns": [],
+        "table_type": "obj",
+        "showKids": false
+    },
+    "_edges": {
+        "table_alias": "Edges",
+        "table_icon": "\u003Ci class=\u0022far fa-star\u0022\u003E\u003C\/i\u003E",
+        "href": "#",
+        "order": 3,
+        "mode": "ro",
+        "stdfilter": "",
+        "stdsorting": "ObjectID",
+        "in_menu": false,
+        "se_active": false,
+        "is_virtual": true,
+        "columns": [],
+        "table_type": "obj",
+        "showKids": false
+    },
+    "virtualTbl": {
+        "table_alias": "Dashboard",
+        "table_icon": "\u003Ci class=\u0022far fa-star\u0022\u003E\u003C\/i\u003E",
+        "href": "#",
+        "order": 3,
+        "mode": "ro",
+        "in_menu": false,
+        "se_active": false,
+        "is_virtual": true,
+        "columns": [],
+        "table_type": "obj",
+        "showKids": false,
+        "virtualcontent": "let x = new Table(\u0022_edges\u0022);\nx.loadRows(function(){x.renderHTML(\u0027test\u0027);});\nreturn \u0027\u003Ch1\u003EHallo Person!\u003C\/h1\u003E\u003Cdiv id=\u0022test\u0022\u003E\u003C\/div\u003E\u0027;"
+    },
+    "sqms2_answer_text": {
+        "table_alias": "A-T",
+        "table_type": "1_n",
+        "order": 4,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Answer_Text_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Answer_Text_id": {
+                "column_alias": "Text id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Answer_id_fk_154388": {
+                "column_alias": "154388",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_answer",
+                    "col_id": "sqms2_Answer_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Text_id_fk_842740": {
+                "column_alias": "842740",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_text",
+                    "col_id": "sqms2_Text_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_examsetversion": {
+        "table_alias": "Examsetversion",
+        "table_type": "obj",
+        "order": 5,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_ExamSetVersion_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_ExamSetVersion_id": {
+                "column_alias": "ExamSetVersion id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_title": {
+                "column_alias": "Title",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_ExamSetVersion_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_ExamSetVersion_Version": {
+                "column_alias": "Version",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_Set": {
+                "column_alias": "ExamSetVersion Set",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 5,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_SampleSet": {
+                "column_alias": "SampleSet",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 6,
+                "mode_form": "rw",
+                "field_type": "switch"
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 7,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_question": {
+        "table_alias": "Question",
+        "table_type": "obj",
+        "order": 6,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Question_id,DESC",
+        "in_menu": true,
+        "se_active": true,
+        "columns": {
+            "sqms2_Question_id": {
+                "column_alias": "Question id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Question_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 2,
+                "mode_form": "hi",
+                "field_type": "textarea"
+            },
+            "_LIAMUSER_ID": {
+                "column_alias": "LIAMUSER ID",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_Question_Version": {
+                "column_alias": "Version",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_Question_type": {
+                "column_alias": "Type",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 5,
+                "mode_form": "rw",
+                "field_type": "enum",
+                "col_options": "[{\u0022name\u0022:\u0022CALCULATED\u0022,\u0022value\u0022:\u0022CALCULATED\u0022},{\u0022name\u0022:\u0022CALCULATED MULTI-CHOICE\u0022,\u0022value\u0022:\u0022CALCULATED MULTI-CHOICE\u0022},{\u0022name\u0022:\u0022CALCULATED SIMPLE\u0022,\u0022value\u0022:\u0022CALCULATED SIMPLE\u0022},{\u0022name\u0022:\u0022DESCRIPTION\u0022,\u0022value\u0022:\u0022DESCRIPTION\u0022},{\u0022name\u0022:\u0022ESSAY\u0022,\u0022value\u0022:\u0022ESSAY\u0022},{\u0022name\u0022:\u0022MATCHING\u0022,\u0022value\u0022:\u0022MATCHING\u0022},{\u0022name\u0022:\u0022EMBEDDED ANSWERS\u0022,\u0022value\u0022:\u0022EMBEDDED ANSWERS\u0022},{\u0022name\u0022:\u0022MULTIPLE CHOICE\u0022,\u0022value\u0022:\u0022MULTIPLE CHOICE\u0022},{\u0022name\u0022:\u0022SHORT ANSWER\u0022,\u0022value\u0022:\u0022SHORT ANSWER\u0022},{\u0022name\u0022:\u0022NUMERICAL\u0022,\u0022value\u0022:\u0022NUMERICAL\u0022},{\u0022name\u0022:\u0022RANDOM SHORT-ANSWER MATCHING\u0022,\u0022value\u0022:\u0022RANDOM SHORT-ANSWER MATCHING\u0022},{\u0022name\u0022:\u0022TRUE\\\/FALSE\u0022,\u0022value\u0022:\u0022TRUE\\\/FALSE\u0022}]"
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 6,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E"
+    },
+    "sqms2_answer": {
+        "table_alias": "Answer",
+        "table_type": "obj",
+        "order": "7",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Answer_id,DESC",
+        "in_menu": true,
+        "se_active": true,
+        "columns": {
+            "sqms2_Answer_id": {
+                "column_alias": "Answer id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Answer_History": {
+                "column_alias": "Histroy",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 2,
+                "mode_form": "hi",
+                "field_type": "textarea"
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E"
+    },
+    "sqms2_question_answer": {
+        "table_alias": "Q-A",
+        "table_type": "1_n",
+        "order": 7,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Question_Answer_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Question_Answer_id": {
+                "column_alias": "Answer id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Question_id_fk_735802": {
+                "column_alias": "735802",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question",
+                    "col_id": "sqms2_Question_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Answer_id_fk_995603": {
+                "column_alias": "995603",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_answer",
+                    "col_id": "sqms2_Answer_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_question_examsetversion": {
+        "table_alias": "Q-EV",
+        "table_type": "1_n",
+        "order": 8,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Question_ExamSetVersion_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Question_ExamSetVersion_id": {
+                "column_alias": "ExamSetVersion id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_id_fk_264577": {
+                "column_alias": "264577",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_examsetversion",
+                    "col_id": "sqms2_ExamSetVersion_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Question_id_fk_615560": {
+                "column_alias": "615560",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question",
+                    "col_id": "sqms2_Question_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_question_examsetversion_answer": {
+        "table_alias": "Answer",
+        "table_type": "n_m",
+        "order": 9,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Question_ExamSetVersion_Answer_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Question_ExamSetVersion_Answer_id": {
+                "column_alias": "Answer id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Question_ExamSetVersion_id_fk_186326": {
+                "column_alias": "186326",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question_examsetversion",
+                    "col_id": "sqms2_Question_ExamSetVersion_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Answer_id_fk_507266": {
+                "column_alias": "507266",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_answer",
+                    "col_id": "sqms2_Answer_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_question_text": {
+        "table_alias": "Q-T",
+        "table_type": "1_n",
+        "order": 10,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Question_Text_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Question_Text_id": {
+                "column_alias": "Text id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Question_id_fk_783494": {
+                "column_alias": "783494",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question",
+                    "col_id": "sqms2_Question_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Text_id_fk_559100": {
+                "column_alias": "559100",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_text",
+                    "col_id": "sqms2_Text_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabus_desc": {
+        "table_alias": "S-D",
+        "table_type": "1_n",
+        "order": 12,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Syllabus_desc_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Syllabus_desc_id": {
+                "column_alias": "Desc id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Syllabus_id_fk_783731": {
+                "column_alias": "Syllabus",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_syllabus",
+                    "col_id": "sqms2_Syllabus_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Text_id_fk_178796": {
+                "column_alias": "Description",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_text",
+                    "col_id": "sqms2_Text_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": "1",
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabus_syllabuschapter": {
+        "table_alias": "S-SE",
+        "table_type": "1_n",
+        "order": 13,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Syllabus_SyllabusChapter_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Syllabus_SyllabusChapter_id": {
+                "column_alias": "SyllabusChapter id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Syllabus_id_fk_870666": {
+                "column_alias": "Syllabus",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_syllabus",
+                    "col_id": "sqms2_Syllabus_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_SyllabusChapter_id_fk_327935": {
+                "column_alias": "SyllabusChapters",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_syllabuschapter",
+                    "col_id": "sqms2_SyllabusChapter_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": "1",
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabus_topic": {
+        "table_alias": "S-T",
+        "table_type": "n_1",
+        "order": 14,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Syllabus_Topic_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Syllabus_Topic_id": {
+                "column_alias": "Topic id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Syllabus_id_fk_345197": {
+                "column_alias": "Syllabus",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_syllabus",
+                    "col_id": "sqms2_Syllabus_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Topic_id_fk_945295": {
+                "column_alias": "Topic",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_topic",
+                    "col_id": "sqms2_Topic_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": "1",
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabuschapter_desc": {
+        "table_alias": "SE-Text",
+        "table_type": "1_n",
+        "order": 16,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_SyllabusChapter_desc_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_SyllabusChapter_desc_id": {
+                "column_alias": "Desc id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_SyllabusChapter_id_fk_886795": {
+                "column_alias": "SyllabusChapter",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_syllabuschapter",
+                    "col_id": "sqms2_SyllabusChapter_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Text_id_fk_524933": {
+                "column_alias": "Description",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_text",
+                    "col_id": "sqms2_Text_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": "1",
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_syllabuschapter_question": {
+        "table_alias": "SE-Q",
+        "table_type": "1_n",
+        "order": 17,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_SyllabusChapter_Question_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_SyllabusChapter_Question_id": {
+                "column_alias": "Question id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_SyllabusChapter_id_fk_920241": {
+                "column_alias": "SyllabusChapter",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_syllabuschapter",
+                    "col_id": "sqms2_SyllabusChapter_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Question_id_fk_285826": {
+                "column_alias": "Questions",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question",
+                    "col_id": "sqms2_Question_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": "1",
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_text_text": {
+        "table_alias": "T-T",
+        "table_type": "1_n",
+        "order": 19,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Text_Text_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Text_Text_id": {
+                "column_alias": "Text id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Text_id_fk_508677": {
+                "column_alias": "508677",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_text",
+                    "col_id": "sqms2_Text_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Text_id_fk_899589": {
+                "column_alias": "899589",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_text",
+                    "col_id": "sqms2_Text_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_text": {
+        "table_alias": "Text",
+        "table_type": "obj",
+        "order": "20",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Text_id,DESC",
+        "in_menu": true,
+        "se_active": true,
+        "columns": {
+            "sqms2_Text_id": {
+                "column_alias": "Text id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Text": {
+                "column_alias": "Text",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "htmleditor"
+            },
+            "sqms2_text_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "col_order": 3,
+                "mode_form": "hi",
+                "field_type": "textarea"
+            },
+            "sqms2_language_iso_short": {
+                "column_alias": "Short",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "enum",
+                "col_options": "[{\u0022name\u0022:\u0022DE\u0022,\u0022value\u0022:\u0022DE\u0022},{\u0022name\u0022:\u0022EN\u0022,\u0022value\u0022:\u0022EN\u0022},{\u0022name\u0022:\u0022FR\u0022,\u0022value\u0022:\u0022FR\u0022},{\u0022name\u0022:\u0022SP\u0022,\u0022value\u0022:\u0022SP\u0022},{\u0022name\u0022:\u0022IT\u0022,\u0022value\u0022:\u0022IT\u0022}]"
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 5,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E"
+    },
+    "sqms2_topic_question": {
+        "table_alias": "Question",
+        "table_type": "1_n",
+        "order": 21,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Topic_Question_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Topic_Question_id": {
+                "column_alias": "Question id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Topic_id_fk_824630": {
+                "column_alias": "824630",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_topic",
+                    "col_id": "sqms2_Topic_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Question_id_fk_664094": {
+                "column_alias": "664094",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question",
+                    "col_id": "sqms2_Question_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_topic_role": {
+        "table_alias": "Role",
+        "table_type": "1_n",
+        "order": 22,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Topic_Role_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "columns": {
+            "sqms2_Topic_Role_id": {
+                "column_alias": "Role id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Topic_id_fk_811732": {
+                "column_alias": "811732",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_topic",
+                    "col_id": "sqms2_Topic_id",
+                    "col_subst": "*"
+                }
+            },
+            "Role_id_fk_928470": {
+                "column_alias": "928470",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "role",
+                    "col_id": "Role_id",
+                    "col_subst": "*"
+                }
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
+    "sqms2_topic": {
+        "table_alias": "Topic",
+        "table_type": "obj",
+        "order": "30",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Topic_id,DESC",
+        "in_menu": true,
+        "se_active": true,
+        "columns": {
+            "sqms2_Topic_id": {
+                "column_alias": "Topic id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "sqms2_Topic_title": {
+                "column_alias": "Title",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_Topic_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "hi",
+                "field_type": "state"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fa fa-shapes\u0022\u003E\u003C\/i\u003E"
+    },
+    "state_machines": {
+        "table_alias": "Machines",
+        "table_type": "obj",
+        "order": "100",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "id,DESC",
+        "in_menu": false,
+        "se_active": false,
+        "columns": {
+            "id": {
+                "column_alias": "Id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "tablename": {
+                "column_alias": "Tablename",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "text"
+            },
+            "transition_script": {
+                "column_alias": "Script",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "form_data": {
+                "column_alias": "Data",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            }
+        },
+        "table_icon": ""
+    },
+    "state": {
+        "table_alias": "State",
+        "table_type": "obj",
+        "order": "101",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "state_id,DESC",
+        "in_menu": true,
+        "se_active": false,
+        "columns": {
+            "state_id": {
+                "column_alias": "State id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "name": {
+                "column_alias": "Name",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "text"
+            },
+            "form_data": {
+                "column_alias": "Data",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "entrypoint": {
+                "column_alias": "Entrypoint",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "switch"
+            },
+            "statemachine_id": {
+                "column_alias": "Statemachine id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 5,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "state_machines",
+                    "col_id": "id",
+                    "col_subst": "{\u0022tablename\u0022: 1}"
+                }
+            },
+            "script_IN": {
+                "column_alias": "Script IN",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 6,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "script_OUT": {
+                "column_alias": "Script OUT",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 7,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            }
+        },
+        "table_icon": ""
+    },
+    "state_rules": {
+        "table_alias": "Rules",
+        "table_type": "n_m",
+        "order": "102",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "state_rules_id,DESC",
+        "in_menu": false,
+        "se_active": false,
+        "columns": {
+            "state_rules_id": {
+                "column_alias": "Rules id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "state_id_FROM": {
+                "column_alias": "FROM",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "state",
+                    "col_id": "state_id",
+                    "col_subst": "{\u0022name\u0022: 1}"
+                }
+            },
+            "state_id_TO": {
+                "column_alias": "Id TO",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "state",
+                    "col_id": "state_id",
+                    "col_subst": "{\u0022name\u0022: 1}"
+                }
+            },
+            "transition_script": {
+                "column_alias": "Script",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            }
+        },
+        "table_icon": ""
+    }
+}

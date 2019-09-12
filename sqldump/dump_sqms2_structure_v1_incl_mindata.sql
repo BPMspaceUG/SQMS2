@@ -69,7 +69,7 @@ DROP TABLE IF EXISTS `sqms2_text`;
 CREATE TABLE `sqms2_text` (
   `sqms2_Text_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_Text` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_text_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_text_History` MEDIUMTEXT NULL DEFAULT NULL,
   `sqms2_language_iso_short` ENUM('DE','EN','FR','SP','IT') NULL DEFAULT NULL,
   `state_id` BIGINT(20) NULL DEFAULT 17,
 KEY (`state_id`),
@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS `sqms2_Question`;
 		
 CREATE TABLE `sqms2_Question` (
   `sqms2_Question_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sqms2_Question_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_Question_History` MEDIUMTEXT NULL DEFAULT NULL,
   `_LIAMUSER_ID` BIGINT(20) NULL DEFAULT NULL,
   `sqms2_Question_Version` INT(11) NULL DEFAULT 1,
   `sqms2_Question_type` ENUM('CALCULATED','CALCULATED MULTI-CHOICE','CALCULATED SIMPLE','DESCRIPTION','ESSAY','MATCHING','EMBEDDED ANSWERS','MULTIPLE CHOICE','SHORT ANSWER','NUMERICAL','RANDOM SHORT-ANSWER MATCHING','TRUE/FALSE') NULL DEFAULT NULL,
@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `sqms2_Syllabus`;
 CREATE TABLE `sqms2_Syllabus` (
   `sqms2_Syllabus_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_Syllabus_titel` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_Syllabus_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_Syllabus_History` MEDIUMTEXT NULL DEFAULT NULL,
   `sqms2_Syllabus_Valid_from` DATE NULL DEFAULT NULL,
   `sqms2_Syllabus_Valid_to` DATE NULL DEFAULT NULL,
   `sqms2_Syllabus_Version` INT(11) NULL DEFAULT 1,
@@ -151,7 +151,7 @@ DROP TABLE IF EXISTS `sqms2_SyllabusChapter`;
 CREATE TABLE `sqms2_SyllabusChapter` (
   `sqms2_SyllabusChapter_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_SyllabusChapter_titel` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_SyllabusChapter_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_SyllabusChapter_History` MEDIUMTEXT NULL DEFAULT NULL,
   `sqms2_SyllabusChapter_ChapterNumber` INT(11) NULL DEFAULT NULL,
   `sqms2_SyllabusChapter_Severity` INT(11) NULL DEFAULT NULL,
   `state_id` BIGINT(20) NULL DEFAULT 9,
@@ -168,7 +168,7 @@ DROP TABLE IF EXISTS `sqms2_Answer`;
 		
 CREATE TABLE `sqms2_Answer` (
   `sqms2_Answer_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `sqms2_Answer_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_Answer_History` MEDIUMTEXT NULL DEFAULT NULL,
   `state_id` BIGINT(20) NULL DEFAULT 1,
 KEY (`state_id`),
   PRIMARY KEY (`sqms2_Answer_id`)
@@ -200,7 +200,7 @@ DROP TABLE IF EXISTS `sqms2_Topic`;
 CREATE TABLE `sqms2_Topic` (
   `sqms2_Topic_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_Topic_title` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_Topic_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_Topic_History` MEDIUMTEXT NULL DEFAULT NULL,
   `state_id` BIGINT(20) NULL DEFAULT 21,
 KEY (`state_id`),
   PRIMARY KEY (`sqms2_Topic_id`)
@@ -296,7 +296,7 @@ DROP TABLE IF EXISTS `sqms2_ExamSetVersion`;
 CREATE TABLE `sqms2_ExamSetVersion` (
   `sqms2_ExamSetVersion_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_ExamSetVersion_title` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_ExamSetVersion_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_ExamSetVersion_History` MEDIUMTEXT NULL DEFAULT NULL,
   `sqms2_ExamSetVersion_Version` INT(11) NULL DEFAULT 1,
   `sqms2_ExamSetVersion_Set` INT(11) NULL DEFAULT 1,
   `sqms2_ExamSetVersion_SampleSet` TINYINT(4) NULL DEFAULT 0,
@@ -537,37 +537,37 @@ ALTER TABLE `sqms2_Topic_Role` ENGINE=InnoDB AUTO_INCREMENT=3322321 DEFAULT CHAR
 -- Test Data
 -- ---
 
--- INSERT INTO `sqms2_Syllabus` (`sqms2_Syllabus_id`,`sqms2_Syllabus_titel`,`sqms2_Syllabus_Info`,`sqms2_Syllabus_Valid_from`,`sqms2_Syllabus_Valid_to`,`sqms2_Syllabus_Version`) VALUES
+-- INSERT INTO `sqms2_Syllabus` (`sqms2_Syllabus_id`,`sqms2_Syllabus_titel`,`sqms2_Syllabus_History`,`sqms2_Syllabus_Valid_from`,`sqms2_Syllabus_Valid_to`,`sqms2_Syllabus_Version`) VALUES
 -- ('','','','','','');
 -- INSERT INTO `sqms2_Syllabus_desc` (`sqms2_Syllabus_desc_id`,`sqms2_Syllabus_id_fk_783731`,`sqms2_Text_id_fk_178796`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_text` (`sqms2_Text_id`,`sqms2_Text`,`sqms2_text_Info`,`sqms2_language_iso_short`) VALUES
+-- INSERT INTO `sqms2_text` (`sqms2_Text_id`,`sqms2_Text`,`sqms2_text_History`,`sqms2_language_iso_short`) VALUES
 -- ('','','','');
 -- INSERT INTO `sqms2_Syllabus_SyllabusChapter` (`sqms2_Syllabus_SyllabusChapter_id`,`sqms2_Syllabus_id_fk_870666`,`sqms2_SyllabusChapter_id_fk_327935`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_SyllabusChapter` (`sqms2_SyllabusChapter_id`,`sqms2_SyllabusChapter_titel`,`sqms2_SyllabusChapter_Info`,`sqms2_SyllabusChapter_ChapterNumber`,`sqms2_SyllabusChapter_Severity`) VALUES
+-- INSERT INTO `sqms2_SyllabusChapter` (`sqms2_SyllabusChapter_id`,`sqms2_SyllabusChapter_titel`,`sqms2_SyllabusChapter_History`,`sqms2_SyllabusChapter_ChapterNumber`,`sqms2_SyllabusChapter_Severity`) VALUES
 -- ('','','','','');
 -- INSERT INTO `sqms2_Text_Text` (`sqms2_Text_Text_id`,`sqms2_Text_id_fk_508677`,`sqms2_Text_id_fk_899589`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_SyllabusChapter_desc` (`sqms2_SyllabusChapter_desc_id`,`sqms2_SyllabusChapter_id_fk_886795`,`sqms2_Text_id_fk_524933`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_Topic` (`sqms2_Topic_id`,`sqms2_Topic_title`,`sqms2_Topic_Info`) VALUES
+-- INSERT INTO `sqms2_Topic` (`sqms2_Topic_id`,`sqms2_Topic_title`,`sqms2_Topic_History`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_Syllabus_Topic` (`sqms2_Syllabus_Topic_id`,`sqms2_Syllabus_id_fk_345197`,`sqms2_Topic_id_fk_945295`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_SyllabusChapter_Question` (`sqms2_SyllabusChapter_Question_id`,`sqms2_SyllabusChapter_id_fk_920241`,`sqms2_Question_id_fk_285826`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_Question` (`sqms2_Question_id`,`sqms2_Question_Info`,`_LIAMUSER_ID`,`sqms2_Question_Version`,`sqms2_Question_type`) VALUES
+-- INSERT INTO `sqms2_Question` (`sqms2_Question_id`,`sqms2_Question_History`,`_LIAMUSER_ID`,`sqms2_Question_Version`,`sqms2_Question_type`) VALUES
 -- ('','','','','');
 -- INSERT INTO `sqms2_Question_Text` (`sqms2_Question_Text_id`,`sqms2_Text_id_fk_559100`,`sqms2_Question_id_fk_783494`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_Question_Answer` (`sqms2_Question_Answer_id`,`sqms2_Question_id_fk_735802`,`sqms2_Answer_id_fk_995603`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_Answer` (`sqms2_Answer_id`,`sqms2_Answer_Info`) VALUES
+-- INSERT INTO `sqms2_Answer` (`sqms2_Answer_id`,`sqms2_Answer_History`) VALUES
 -- ('','');
 -- INSERT INTO `sqms2_Answer_Text` (`sqms2_Answer_Text_id`,`sqms2_Answer_id_fk_154388`,`sqms2_Text_id_fk_842740`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_ExamSetVersion` (`sqms2_ExamSetVersion_id`,`sqms2_ExamSetVersion_title`,`sqms2_ExamSetVersion_Info`,`sqms2_ExamSetVersion_Version`,`sqms2_ExamSetVersion_Set`,`sqms2_ExamSetVersion_SampleSet`) VALUES
+-- INSERT INTO `sqms2_ExamSetVersion` (`sqms2_ExamSetVersion_id`,`sqms2_ExamSetVersion_title`,`sqms2_ExamSetVersion_History`,`sqms2_ExamSetVersion_Version`,`sqms2_ExamSetVersion_Set`,`sqms2_ExamSetVersion_SampleSet`) VALUES
 -- ('','','','','','');
 -- INSERT INTO `sqms2_Question_ExamSetVersion` (`sqms2_Question_ExamSetVersion_id`,`sqms2_ExamSetVersion_id_fk_264577`,`sqms2_Question_id_fk_615560`) VALUES
 -- ('','','');
@@ -581,33 +581,33 @@ ALTER TABLE `sqms2_Topic_Role` ENGINE=InnoDB AUTO_INCREMENT=3322321 DEFAULT CHAR
 -- Date: 2019-06-03 15:52
 */
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7457,'new','',1,2246,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7458,'active','{\"sqms2_Answer_Info\":{\"mode_form\":\"ro\"}}',0,2246,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7458,'active','{\"sqms2_Answer_History\":{\"mode_form\":\"ro\"}}',0,2246,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7459,'update','',0,2246,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7460,'inactive','{\"sqms2_Answer_Info\":{\"mode_form\":\"ro\"}}',0,2246,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7460,'inactive','{\"sqms2_Answer_History\":{\"mode_form\":\"ro\"}}',0,2246,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7461,'new','',1,2247,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7462,'active','{\"sqms2_Syllabus_titel\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Info\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_from\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_to\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Version\":{\"mode_form\":\"ro\"}}',0,2247,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7462,'active','{\"sqms2_Syllabus_titel\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_History\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_from\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_to\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Version\":{\"mode_form\":\"ro\"}}',0,2247,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7463,'update','',0,2247,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7464,'inactive','{\"sqms2_Syllabus_titel\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Info\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_from\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_to\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Version\":{\"mode_form\":\"ro\"}}',0,2247,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7464,'inactive','{\"sqms2_Syllabus_titel\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_History\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_from\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_to\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Version\":{\"mode_form\":\"ro\"}}',0,2247,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7465,'new','',1,2248,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7466,'active','{\"sqms2_SyllabusChapter_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Info\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_ChapterNumber\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7466,'active','{\"sqms2_SyllabusChapter_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_History\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_ChapterNumber\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7467,'update','',0,2248,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7468,'inactive','{\"sqms2_SyllabusChapter_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Info\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_ChapterNumber\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7468,'inactive','{\"sqms2_SyllabusChapter_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_History\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_ChapterNumber\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7469,'new','',1,2249,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7470,'active','{\"sqms2_Question_Info\":{\"mode_form\":\"ro\"},\"_LIAMUSER_ID\":{\"mode_form\":\"ro\"},\"sqms2_Question_Version\":{\"mode_form\":\"ro\"},\"sqms2_Question_type\":{\"mode_form\":\"ro\"}}',0,2249,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7470,'active','{\"sqms2_Question_History\":{\"mode_form\":\"ro\"},\"_LIAMUSER_ID\":{\"mode_form\":\"ro\"},\"sqms2_Question_Version\":{\"mode_form\":\"ro\"},\"sqms2_Question_type\":{\"mode_form\":\"ro\"}}',0,2249,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7471,'update','',0,2249,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7472,'inactive','{\"sqms2_Question_Info\":{\"mode_form\":\"ro\"},\"_LIAMUSER_ID\":{\"mode_form\":\"ro\"},\"sqms2_Question_Version\":{\"mode_form\":\"ro\"},\"sqms2_Question_type\":{\"mode_form\":\"ro\"}}',0,2249,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7472,'inactive','{\"sqms2_Question_History\":{\"mode_form\":\"ro\"},\"_LIAMUSER_ID\":{\"mode_form\":\"ro\"},\"sqms2_Question_Version\":{\"mode_form\":\"ro\"},\"sqms2_Question_type\":{\"mode_form\":\"ro\"}}',0,2249,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7473,'new','',1,2250,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7474,'active','{\"sqms2_Text\":{\"mode_form\":\"ro\"},\"sqms2_text_Info\":{\"mode_form\":\"ro\"},\"sqms2_language_iso_short\":{\"mode_form\":\"ro\"}}',0,2250,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7474,'active','{\"sqms2_Text\":{\"mode_form\":\"ro\"},\"sqms2_text_History\":{\"mode_form\":\"ro\"},\"sqms2_language_iso_short\":{\"mode_form\":\"ro\"}}',0,2250,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7475,'update','',0,2250,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7476,'inactive','{\"sqms2_Text\":{\"mode_form\":\"ro\"},\"sqms2_text_Info\":{\"mode_form\":\"ro\"},\"sqms2_language_iso_short\":{\"mode_form\":\"ro\"}}',0,2250,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7476,'inactive','{\"sqms2_Text\":{\"mode_form\":\"ro\"},\"sqms2_text_History\":{\"mode_form\":\"ro\"},\"sqms2_language_iso_short\":{\"mode_form\":\"ro\"}}',0,2250,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7477,'new','',1,2251,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7478,'active','{\"sqms2_Topic_title\":{\"mode_form\":\"ro\"},\"sqms2_Topic_Info\":{\"mode_form\":\"ro\"}}',0,2251,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7478,'active','{\"sqms2_Topic_title\":{\"mode_form\":\"ro\"},\"sqms2_Topic_History\":{\"mode_form\":\"ro\"}}',0,2251,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7479,'update','',0,2251,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7480,'inactive','{\"sqms2_Topic_title\":{\"mode_form\":\"ro\"},\"sqms2_Topic_Info\":{\"mode_form\":\"ro\"}}',0,2251,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7480,'inactive','{\"sqms2_Topic_title\":{\"mode_form\":\"ro\"},\"sqms2_Topic_History\":{\"mode_form\":\"ro\"}}',0,2251,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7481,'new','',1,2252,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7482,'active','{\"sqms2_ExamSetVersion_title\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Info\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Version\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Set\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_SampleSet\":{\"mode_form\":\"ro\"}}',0,2252,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7482,'active','{\"sqms2_ExamSetVersion_title\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_History\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Version\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Set\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_SampleSet\":{\"mode_form\":\"ro\"}}',0,2252,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7483,'update','',0,2252,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7484,'inactive','{\"sqms2_ExamSetVersion_title\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Info\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Version\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Set\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_SampleSet\":{\"mode_form\":\"ro\"}}',0,2252,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7484,'inactive','{\"sqms2_ExamSetVersion_title\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_History\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Version\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_Set\":{\"mode_form\":\"ro\"},\"sqms2_ExamSetVersion_SampleSet\":{\"mode_form\":\"ro\"}}',0,2252,NULL,NULL);
 
 
 
