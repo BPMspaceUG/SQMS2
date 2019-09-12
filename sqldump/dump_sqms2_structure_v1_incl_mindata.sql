@@ -142,21 +142,21 @@ KEY (`Role_id`)
 );
 
 -- ---
--- Table 'sqms2_SyllabusElement'
+-- Table 'sqms2_SyllabusChapter'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `sqms2_SyllabusElement`;
+DROP TABLE IF EXISTS `sqms2_SyllabusChapter`;
 		
-CREATE TABLE `sqms2_SyllabusElement` (
-  `sqms2_SyllabusElement_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sqms2_SyllabusElement_titel` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_SyllabusElement_Info` MEDIUMTEXT NULL DEFAULT NULL,
-  `sqms2_SyllabusElement_Order` INT(11) NULL DEFAULT NULL,
-  `sqms2_SyllabusElement_Severity` INT(11) NULL DEFAULT NULL,
+CREATE TABLE `sqms2_SyllabusChapter` (
+  `sqms2_SyllabusChapter_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `sqms2_SyllabusChapter_titel` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_SyllabusChapter_Info` MEDIUMTEXT NULL DEFAULT NULL,
+  `sqms2_SyllabusChapter_ChapterNumber` INT(11) NULL DEFAULT NULL,
+  `sqms2_SyllabusChapter_Severity` INT(11) NULL DEFAULT NULL,
   `state_id` BIGINT(20) NULL DEFAULT 9,
 KEY (`state_id`),
-  PRIMARY KEY (`sqms2_SyllabusElement_id`)
+  PRIMARY KEY (`sqms2_SyllabusChapter_id`)
 );
 
 -- ---
@@ -239,19 +239,19 @@ KEY (`sqms2_Syllabus_id_fk_345197`)
 );
 
 -- ---
--- Table 'sqms2_SyllabusElement_Question'
+-- Table 'sqms2_SyllabusChapter_Question'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `sqms2_SyllabusElement_Question`;
+DROP TABLE IF EXISTS `sqms2_SyllabusChapter_Question`;
 		
-CREATE TABLE `sqms2_SyllabusElement_Question` (
-  `sqms2_SyllabusElement_Question_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sqms2_SyllabusElement_id_fk_920241` BIGINT(20) NULL DEFAULT NULL,
+CREATE TABLE `sqms2_SyllabusChapter_Question` (
+  `sqms2_SyllabusChapter_Question_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `sqms2_SyllabusChapter_id_fk_920241` BIGINT(20) NULL DEFAULT NULL,
   `sqms2_Question_id_fk_285826` BIGINT(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`sqms2_SyllabusElement_Question_id`),
+  PRIMARY KEY (`sqms2_SyllabusChapter_Question_id`),
 KEY (`sqms2_Question_id_fk_285826`),
-KEY (`sqms2_SyllabusElement_id_fk_920241`)
+KEY (`sqms2_SyllabusChapter_id_fk_920241`)
 );
 
 -- ---
@@ -306,18 +306,18 @@ KEY (`state_id`)
 );
 
 -- ---
--- Table 'sqms2_Syllabus_SyllabusElement'
+-- Table 'sqms2_Syllabus_SyllabusChapter'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `sqms2_Syllabus_SyllabusElement`;
+DROP TABLE IF EXISTS `sqms2_Syllabus_SyllabusChapter`;
 		
-CREATE TABLE `sqms2_Syllabus_SyllabusElement` (
-  `sqms2_Syllabus_SyllabusElement_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sqms2_Syllabus_SyllabusChapter` (
+  `sqms2_Syllabus_SyllabusChapter_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_Syllabus_id_fk_870666` BIGINT(20) NULL DEFAULT NULL,
-  `sqms2_SyllabusElement_id_fk_327935` BIGINT(20) NULL DEFAULT NULL,
-KEY (`sqms2_SyllabusElement_id_fk_327935`),
-  PRIMARY KEY (`sqms2_Syllabus_SyllabusElement_id`),
+  `sqms2_SyllabusChapter_id_fk_327935` BIGINT(20) NULL DEFAULT NULL,
+KEY (`sqms2_SyllabusChapter_id_fk_327935`),
+  PRIMARY KEY (`sqms2_Syllabus_SyllabusChapter_id`),
 KEY (`sqms2_Syllabus_id_fk_870666`)
 );
 
@@ -354,18 +354,18 @@ KEY (`sqms2_Question_id_fk_664094`),
 );
 
 -- ---
--- Table 'sqms2_SyllabusElement_desc'
+-- Table 'sqms2_SyllabusChapter_desc'
 -- 
 -- ---
 
-DROP TABLE IF EXISTS `sqms2_SyllabusElement_desc`;
+DROP TABLE IF EXISTS `sqms2_SyllabusChapter_desc`;
 		
-CREATE TABLE `sqms2_SyllabusElement_desc` (
-  `sqms2_SyllabusElement_desc_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sqms2_SyllabusElement_id_fk_886795` BIGINT(20) NULL DEFAULT NULL,
+CREATE TABLE `sqms2_SyllabusChapter_desc` (
+  `sqms2_SyllabusChapter_desc_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `sqms2_SyllabusChapter_id_fk_886795` BIGINT(20) NULL DEFAULT NULL,
   `sqms2_Text_id_fk_524933` BIGINT(20) NULL DEFAULT NULL,
-KEY (`sqms2_SyllabusElement_id_fk_886795`),
-  PRIMARY KEY (`sqms2_SyllabusElement_desc_id`),
+KEY (`sqms2_SyllabusChapter_id_fk_886795`),
+  PRIMARY KEY (`sqms2_SyllabusChapter_desc_id`),
 KEY (`sqms2_Text_id_fk_524933`)
 );
 
@@ -409,7 +409,7 @@ KEY (`sqms2_Question_id_fk_783494`)
 DROP TABLE IF EXISTS `sqms2_Topic_Role`;
 		
 CREATE TABLE `sqms2_Topic_Role` (
-  `sqms2_Topic_Role_id` BIGINT(20) NULL AUTO_INCREMENT DEFAULT NULL,
+  `sqms2_Topic_Role_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `sqms2_Topic_id_fk_811732` BIGINT(20) NOT NULL,
   `Role_id_fk_928470` BIGINT(20) NOT NULL,
   PRIMARY KEY (`sqms2_Topic_Role_id`)
@@ -475,7 +475,7 @@ ALTER TABLE `Role_LIAMUSER` ADD FOREIGN KEY (Role_id) REFERENCES `Role` (`Role_i
 ALTER TABLE `Role_LIAMUSER` ADD FOREIGN KEY (Role_id) REFERENCES `Role` (`Role_id`);
 ALTER TABLE `Role_LIAMUSER` ADD FOREIGN KEY (Role_id) REFERENCES `Role` (`Role_id`);
 ALTER TABLE `Role_LIAMUSER` ADD FOREIGN KEY (Role_id) REFERENCES `Role` (`Role_id`);
-ALTER TABLE `sqms2_SyllabusElement` ADD FOREIGN KEY (state_id) REFERENCES `state` (`state_id`);
+ALTER TABLE `sqms2_SyllabusChapter` ADD FOREIGN KEY (state_id) REFERENCES `state` (`state_id`);
 ALTER TABLE `sqms2_Answer` ADD FOREIGN KEY (state_id) REFERENCES `state` (`state_id`);
 ALTER TABLE `sqms2_Question_ExamSetVersion` ADD FOREIGN KEY (sqms2_ExamSetVersion_id_fk_264577) REFERENCES `sqms2_ExamSetVersion` (`sqms2_ExamSetVersion_id`);
 ALTER TABLE `sqms2_Question_ExamSetVersion` ADD FOREIGN KEY (sqms2_Question_id_fk_615560) REFERENCES `sqms2_Question` (`sqms2_Question_id`);
@@ -484,21 +484,21 @@ ALTER TABLE `sqms2_Syllabus_desc` ADD FOREIGN KEY (sqms2_Syllabus_id_fk_783731) 
 ALTER TABLE `sqms2_Syllabus_desc` ADD FOREIGN KEY (sqms2_Text_id_fk_178796) REFERENCES `sqms2_text` (`sqms2_Text_id`);
 ALTER TABLE `sqms2_Syllabus_Topic` ADD FOREIGN KEY (sqms2_Syllabus_id_fk_345197) REFERENCES `sqms2_Syllabus` (`sqms2_Syllabus_id`);
 ALTER TABLE `sqms2_Syllabus_Topic` ADD FOREIGN KEY (sqms2_Topic_id_fk_945295) REFERENCES `sqms2_Topic` (`sqms2_Topic_id`);
-ALTER TABLE `sqms2_SyllabusElement_Question` ADD FOREIGN KEY (sqms2_SyllabusElement_id_fk_920241) REFERENCES `sqms2_SyllabusElement` (`sqms2_SyllabusElement_id`);
-ALTER TABLE `sqms2_SyllabusElement_Question` ADD FOREIGN KEY (sqms2_Question_id_fk_285826) REFERENCES `sqms2_Question` (`sqms2_Question_id`);
+ALTER TABLE `sqms2_SyllabusChapter_Question` ADD FOREIGN KEY (sqms2_SyllabusChapter_id_fk_920241) REFERENCES `sqms2_SyllabusChapter` (`sqms2_SyllabusChapter_id`);
+ALTER TABLE `sqms2_SyllabusChapter_Question` ADD FOREIGN KEY (sqms2_Question_id_fk_285826) REFERENCES `sqms2_Question` (`sqms2_Question_id`);
 ALTER TABLE `sqms2_Question_Answer` ADD FOREIGN KEY (sqms2_Question_id_fk_735802) REFERENCES `sqms2_Question` (`sqms2_Question_id`);
 ALTER TABLE `sqms2_Question_Answer` ADD FOREIGN KEY (sqms2_Answer_id_fk_995603) REFERENCES `sqms2_Answer` (`sqms2_Answer_id`);
 ALTER TABLE `sqms2_Question_ExamSetVersion_Answer` ADD FOREIGN KEY (sqms2_Question_ExamSetVersion_id_fk_186326) REFERENCES `sqms2_Question_ExamSetVersion` (`sqms2_Question_ExamSetVersion_id`);
 ALTER TABLE `sqms2_Question_ExamSetVersion_Answer` ADD FOREIGN KEY (sqms2_Answer_id_fk_507266) REFERENCES `sqms2_Answer` (`sqms2_Answer_id`);
 ALTER TABLE `sqms2_ExamSetVersion` ADD FOREIGN KEY (state_id) REFERENCES `state` (`state_id`);
-ALTER TABLE `sqms2_Syllabus_SyllabusElement` ADD FOREIGN KEY (sqms2_Syllabus_id_fk_870666) REFERENCES `sqms2_Syllabus` (`sqms2_Syllabus_id`);
-ALTER TABLE `sqms2_Syllabus_SyllabusElement` ADD FOREIGN KEY (sqms2_SyllabusElement_id_fk_327935) REFERENCES `sqms2_SyllabusElement` (`sqms2_SyllabusElement_id`);
+ALTER TABLE `sqms2_Syllabus_SyllabusChapter` ADD FOREIGN KEY (sqms2_Syllabus_id_fk_870666) REFERENCES `sqms2_Syllabus` (`sqms2_Syllabus_id`);
+ALTER TABLE `sqms2_Syllabus_SyllabusChapter` ADD FOREIGN KEY (sqms2_SyllabusChapter_id_fk_327935) REFERENCES `sqms2_SyllabusChapter` (`sqms2_SyllabusChapter_id`);
 ALTER TABLE `sqms2_Answer_Text` ADD FOREIGN KEY (sqms2_Answer_id_fk_154388) REFERENCES `sqms2_Answer` (`sqms2_Answer_id`);
 ALTER TABLE `sqms2_Answer_Text` ADD FOREIGN KEY (sqms2_Text_id_fk_842740) REFERENCES `sqms2_text` (`sqms2_Text_id`);
 ALTER TABLE `sqms2_Topic_Question` ADD FOREIGN KEY (sqms2_Topic_id_fk_824630) REFERENCES `sqms2_Topic` (`sqms2_Topic_id`);
 ALTER TABLE `sqms2_Topic_Question` ADD FOREIGN KEY (sqms2_Question_id_fk_664094) REFERENCES `sqms2_Question` (`sqms2_Question_id`);
-ALTER TABLE `sqms2_SyllabusElement_desc` ADD FOREIGN KEY (sqms2_SyllabusElement_id_fk_886795) REFERENCES `sqms2_SyllabusElement` (`sqms2_SyllabusElement_id`);
-ALTER TABLE `sqms2_SyllabusElement_desc` ADD FOREIGN KEY (sqms2_Text_id_fk_524933) REFERENCES `sqms2_text` (`sqms2_Text_id`);
+ALTER TABLE `sqms2_SyllabusChapter_desc` ADD FOREIGN KEY (sqms2_SyllabusChapter_id_fk_886795) REFERENCES `sqms2_SyllabusChapter` (`sqms2_SyllabusChapter_id`);
+ALTER TABLE `sqms2_SyllabusChapter_desc` ADD FOREIGN KEY (sqms2_Text_id_fk_524933) REFERENCES `sqms2_text` (`sqms2_Text_id`);
 ALTER TABLE `sqms2_Text_Text` ADD FOREIGN KEY (sqms2_Text_id_fk_508677) REFERENCES `sqms2_text` (`sqms2_Text_id`);
 ALTER TABLE `sqms2_Text_Text` ADD FOREIGN KEY (sqms2_Text_id_fk_899589) REFERENCES `sqms2_text` (`sqms2_Text_id`);
 ALTER TABLE `sqms2_Question_Text` ADD FOREIGN KEY (sqms2_Text_id_fk_559100) REFERENCES `sqms2_text` (`sqms2_Text_id`);
@@ -512,13 +512,13 @@ ALTER TABLE `sqms2_Topic_Role` ADD FOREIGN KEY (Role_id_fk_928470) REFERENCES `R
 ALTER TABLE `sqms2_Syllabus` ENGINE=InnoDB AUTO_INCREMENT=90034785 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Syllabus_desc` ENGINE=InnoDB AUTO_INCREMENT=80034995 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_text` ENGINE=InnoDB AUTO_INCREMENT=70034123 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-ALTER TABLE `sqms2_Syllabus_SyllabusElement` ENGINE=InnoDB AUTO_INCREMENT=60034345 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-ALTER TABLE `sqms2_SyllabusElement` ENGINE=InnoDB AUTO_INCREMENT=50034898 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `sqms2_Syllabus_SyllabusChapter` ENGINE=InnoDB AUTO_INCREMENT=60034345 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `sqms2_SyllabusChapter` ENGINE=InnoDB AUTO_INCREMENT=50034898 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Text_Text` ENGINE=InnoDB AUTO_INCREMENT=40034221 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-ALTER TABLE `sqms2_SyllabusElement_desc` ENGINE=InnoDB AUTO_INCREMENT=30034956 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `sqms2_SyllabusChapter_desc` ENGINE=InnoDB AUTO_INCREMENT=30034956 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Topic` ENGINE=InnoDB AUTO_INCREMENT=20034856 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Syllabus_Topic` ENGINE=InnoDB AUTO_INCREMENT=10034772 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-ALTER TABLE `sqms2_SyllabusElement_Question` ENGINE=InnoDB AUTO_INCREMENT=95034435 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+ALTER TABLE `sqms2_SyllabusChapter_Question` ENGINE=InnoDB AUTO_INCREMENT=95034435 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Question` ENGINE=InnoDB AUTO_INCREMENT=85034964 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Question_Text` ENGINE=InnoDB AUTO_INCREMENT=75034123 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ALTER TABLE `sqms2_Question_Answer` ENGINE=InnoDB AUTO_INCREMENT=6503445 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -543,19 +543,19 @@ ALTER TABLE `sqms2_Topic_Role` ENGINE=InnoDB AUTO_INCREMENT=3322321 DEFAULT CHAR
 -- ('','','');
 -- INSERT INTO `sqms2_text` (`sqms2_Text_id`,`sqms2_Text`,`sqms2_text_Info`,`sqms2_language_iso_short`) VALUES
 -- ('','','','');
--- INSERT INTO `sqms2_Syllabus_SyllabusElement` (`sqms2_Syllabus_SyllabusElement_id`,`sqms2_Syllabus_id_fk_870666`,`sqms2_SyllabusElement_id_fk_327935`) VALUES
+-- INSERT INTO `sqms2_Syllabus_SyllabusChapter` (`sqms2_Syllabus_SyllabusChapter_id`,`sqms2_Syllabus_id_fk_870666`,`sqms2_SyllabusChapter_id_fk_327935`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_SyllabusElement` (`sqms2_SyllabusElement_id`,`sqms2_SyllabusElement_titel`,`sqms2_SyllabusElement_Info`,`sqms2_SyllabusElement_Order`,`sqms2_SyllabusElement_Severity`) VALUES
+-- INSERT INTO `sqms2_SyllabusChapter` (`sqms2_SyllabusChapter_id`,`sqms2_SyllabusChapter_titel`,`sqms2_SyllabusChapter_Info`,`sqms2_SyllabusChapter_ChapterNumber`,`sqms2_SyllabusChapter_Severity`) VALUES
 -- ('','','','','');
 -- INSERT INTO `sqms2_Text_Text` (`sqms2_Text_Text_id`,`sqms2_Text_id_fk_508677`,`sqms2_Text_id_fk_899589`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_SyllabusElement_desc` (`sqms2_SyllabusElement_desc_id`,`sqms2_SyllabusElement_id_fk_886795`,`sqms2_Text_id_fk_524933`) VALUES
+-- INSERT INTO `sqms2_SyllabusChapter_desc` (`sqms2_SyllabusChapter_desc_id`,`sqms2_SyllabusChapter_id_fk_886795`,`sqms2_Text_id_fk_524933`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_Topic` (`sqms2_Topic_id`,`sqms2_Topic_title`,`sqms2_Topic_Info`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_Syllabus_Topic` (`sqms2_Syllabus_Topic_id`,`sqms2_Syllabus_id_fk_345197`,`sqms2_Topic_id_fk_945295`) VALUES
 -- ('','','');
--- INSERT INTO `sqms2_SyllabusElement_Question` (`sqms2_SyllabusElement_Question_id`,`sqms2_SyllabusElement_id_fk_920241`,`sqms2_Question_id_fk_285826`) VALUES
+-- INSERT INTO `sqms2_SyllabusChapter_Question` (`sqms2_SyllabusChapter_Question_id`,`sqms2_SyllabusChapter_id_fk_920241`,`sqms2_Question_id_fk_285826`) VALUES
 -- ('','','');
 -- INSERT INTO `sqms2_Question` (`sqms2_Question_id`,`sqms2_Question_Info`,`_LIAMUSER_ID`,`sqms2_Question_Version`,`sqms2_Question_type`) VALUES
 -- ('','','','','');
@@ -589,9 +589,9 @@ INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7463,'update','',0,2247,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7464,'inactive','{\"sqms2_Syllabus_titel\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Info\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_from\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Valid_to\":{\"mode_form\":\"ro\"},\"sqms2_Syllabus_Version\":{\"mode_form\":\"ro\"}}',0,2247,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7465,'new','',1,2248,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7466,'active','{\"sqms2_SyllabusElement_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusElement_Info\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusElement_Order\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusElement_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7466,'active','{\"sqms2_SyllabusChapter_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Info\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_ChapterNumber\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7467,'update','',0,2248,NULL,NULL);
-INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7468,'inactive','{\"sqms2_SyllabusElement_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusElement_Info\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusElement_Order\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusElement_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
+INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7468,'inactive','{\"sqms2_SyllabusChapter_titel\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Info\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_ChapterNumber\":{\"mode_form\":\"ro\"},\"sqms2_SyllabusChapter_Severity\":{\"mode_form\":\"ro\"}}',0,2248,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7469,'new','',1,2249,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7470,'active','{\"sqms2_Question_Info\":{\"mode_form\":\"ro\"},\"_LIAMUSER_ID\":{\"mode_form\":\"ro\"},\"sqms2_Question_Version\":{\"mode_form\":\"ro\"},\"sqms2_Question_type\":{\"mode_form\":\"ro\"}}',0,2249,NULL,NULL);
 INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id`,`script_IN`,`script_OUT`) VALUES (7471,'update','',0,2249,NULL,NULL);
@@ -617,7 +617,7 @@ INSERT INTO `state` (`state_id`,`name`,`form_data`,`entrypoint`,`statemachine_id
 */
 INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2246,'sqms2_Answer',NULL,NULL);
 INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2247,'sqms2_Syllabus','','{\n  \"sqms2_Syllabus_Version\": {\"mode_form\": \"hi\"}\n}');
-INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2248,'sqms2_SyllabusElement',NULL,NULL);
+INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2248,'sqms2_SyllabusChapter',NULL,NULL);
 INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2249,'sqms2_Question',NULL,NULL);
 INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2250,'sqms2_text',NULL,NULL);
 INSERT INTO `state_machines` (`id`,`tablename`,`transition_script`,`form_data`) VALUES (2251,'sqms2_Topic',NULL,NULL);

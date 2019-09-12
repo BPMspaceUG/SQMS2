@@ -4,5 +4,5 @@ CHANGE COLUMN `sqms2_Question_id_fk_783494` `sqms2_Question_id_fk_783494` BIGINT
 ALTER TABLE `bpmspace_sqms2_v1`.`sqms2_question` 
 AUTO_INCREMENT = 85647689 ;
 
-ALTER TABLE `bpmspace_sqms2_v1`.`sqms2_syllabuselement_question` 
+ALTER TABLE `bpmspace_sqms2_v1`.`sqms2_syllabuschapter_question` 
 AUTO_INCREMENT = 19344784 ;
