@@ -1,13 +1,15 @@
--- MySQL dump 10.16  Distrib 10.1.38-MariaDB, for debian-linux-gnu (x86_64)
+CREATE DATABASE  IF NOT EXISTS `bpmspace_sqms2_v1` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `bpmspace_sqms2_v1`;
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: bpmspace_sqms2_v1
+-- Host: 127.0.0.1    Database: bpmspace_sqms2_v1
 -- ------------------------------------------------------
--- Server version	5.7.23
+-- Server version	5.5.5-10.1.33-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,50 +18,47 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary table structure for view `_edges`
+-- Temporary view structure for view `_edges`
 --
 
 DROP TABLE IF EXISTS `_edges`;
 /*!50001 DROP VIEW IF EXISTS `_edges`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `_edges` (
-  `EdgeType` tinyint NOT NULL,
-  `EdgeID` tinyint NOT NULL,
-  `EdgePartner` tinyint NOT NULL,
-  `EdgeStateID` tinyint NOT NULL,
-  `ObjectID` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `_edges` AS SELECT 
+ 1 AS `EdgeType`,
+ 1 AS `EdgeID`,
+ 1 AS `EdgePartner`,
+ 1 AS `EdgeStateID`,
+ 1 AS `ObjectID`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `_nodes`
+-- Temporary view structure for view `_nodes`
 --
 
 DROP TABLE IF EXISTS `_nodes`;
 /*!50001 DROP VIEW IF EXISTS `_nodes`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `_nodes` (
-  `ObjectType` tinyint NOT NULL,
-  `ObjectID` tinyint NOT NULL,
-  `ObjectStateID` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `_nodes` AS SELECT 
+ 1 AS `ObjectType`,
+ 1 AS `ObjectID`,
+ 1 AS `ObjectStateID`*/;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `_orphans`
+-- Temporary view structure for view `_orphans`
 --
 
 DROP TABLE IF EXISTS `_orphans`;
 /*!50001 DROP VIEW IF EXISTS `_orphans`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `_orphans` (
-  `ObjectType` tinyint NOT NULL,
-  `ObjectID` tinyint NOT NULL,
-  `ObjectStateID` tinyint NOT NULL
-) ENGINE=MyISAM */;
+/*!50001 CREATE VIEW `_orphans` AS SELECT 
+ 1 AS `ObjectType`,
+ 1 AS `ObjectID`,
+ 1 AS `ObjectStateID`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -75,6 +74,26 @@ CREATE TABLE `role` (
   `ConfigDiff` longtext,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5912 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `role_liamuser`
+--
+
+DROP TABLE IF EXISTS `role_liamuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_liamuser` (
+  `Role_User_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `Role_id` bigint(20) NOT NULL,
+  `User_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`Role_User_id`),
+  KEY `Role_id` (`Role_id`),
+  CONSTRAINT `role_liamuser_ibfk_1` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`),
+  CONSTRAINT `role_liamuser_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`),
+  CONSTRAINT `role_liamuser_ibfk_3` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`),
+  CONSTRAINT `role_liamuser_ibfk_4` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -518,7 +537,7 @@ CREATE TABLE `sqms2_topic_role` (
   KEY `Role_id_fk_928470` (`Role_id_fk_928470`),
   KEY `state_id_a8ee9313` (`state_id`),
   CONSTRAINT `sqms2_topic_role_ibfk_1` FOREIGN KEY (`sqms2_Topic_id_fk_811732`) REFERENCES `sqms2_topic` (`sqms2_Topic_id`),
-  CONSTRAINT `sqms2_topic_role_ibfk_2` FOREIGN KEY (`Role_id_fk_928470`) REFERENCES `role` (`Role_id`),
+  CONSTRAINT `sqms2_topic_role_ibfk_2` FOREIGN KEY (`Role_id_fk_928470`) REFERENCES `role` (`role_id`),
   CONSTRAINT `state_id_a8ee9313` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3322321 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -633,10 +652,13 @@ CREATE TABLE `state_rules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping routines for database 'bpmspace_sqms2_v1'
+--
+
+--
 -- Final view structure for view `_edges`
 --
 
-/*!50001 DROP TABLE IF EXISTS `_edges`*/;
 /*!50001 DROP VIEW IF EXISTS `_edges`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -655,7 +677,6 @@ CREATE TABLE `state_rules` (
 -- Final view structure for view `_nodes`
 --
 
-/*!50001 DROP TABLE IF EXISTS `_nodes`*/;
 /*!50001 DROP VIEW IF EXISTS `_nodes`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -674,7 +695,6 @@ CREATE TABLE `state_rules` (
 -- Final view structure for view `_orphans`
 --
 
-/*!50001 DROP TABLE IF EXISTS `_orphans`*/;
 /*!50001 DROP VIEW IF EXISTS `_orphans`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -698,4 +718,4 @@ CREATE TABLE `state_rules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-13 11:56:22
+-- Dump completed on 2019-09-23  9:15:19
