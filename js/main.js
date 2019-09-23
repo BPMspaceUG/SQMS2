@@ -41,12 +41,6 @@ class LiteEvent {
         return this;
     }
 }
-class GUI {
-}
-GUI.getID = function () {
-    function chr4() { return Math.random().toString(16).slice(-4); }
-    return 'i' + chr4() + chr4() + chr4() + chr4() + chr4() + chr4() + chr4() + chr4();
-};
 class DB {
     static request(command, params, callback) {
         let me = this;
@@ -100,12 +94,16 @@ class DB {
     }
 }
 DB.API_URL = 'api.php';
+DB.getID = function () {
+    function chr4() { return Math.random().toString(16).slice(-4); }
+    return 'i' + chr4() + chr4() + chr4() + chr4() + chr4() + chr4() + chr4() + chr4();
+};
 class Modal {
     constructor(heading, content, footer = '', isBig = false) {
         this.options = {
             btnTextClose: 'Close'
         };
-        this.DOM_ID = GUI.getID();
+        this.DOM_ID = DB.getID();
         this.heading = heading;
         this.content = content;
         this.footer = footer;
@@ -305,31 +303,24 @@ class RawTable {
         t.resetFilter();
     }
     createRow(data, callback) {
-        DB.request('create', { table: this.tablename, row: data }, function (r) { callback(r); });
+        DB.request('create', { table: this.tablename, row: data }, r => { callback(r); });
     }
     updateRow(RowID, new_data, callback) {
         let data = new_data;
         data[this.PriColname] = RowID;
-        DB.request('update', { table: this.tablename, row: new_data }, function (response) {
-            callback(response);
-        });
+        DB.request('update', { table: this.tablename, row: new_data }, r => { callback(r); });
     }
     transitRow(RowID, TargetStateID = null, trans_data = {}, callback) {
         let data = trans_data;
         data[this.PriColname] = RowID;
         if (TargetStateID)
             data['state_id'] = TargetStateID;
-        DB.request('makeTransition', { table: this.tablename, row: data }, function (response) {
-            callback(response);
-        });
+        DB.request('makeTransition', { table: this.tablename, row: data }, r => { callback(r); });
     }
     loadRow(RowID, callback) {
         let data = { table: this.tablename, limit: 1, filter: {} };
         data.filter = '{"=": ["' + this.PriColname + '", ' + RowID + ']}';
-        DB.request('read', data, function (response) {
-            const row = response.records[0];
-            callback(row);
-        });
+        DB.request('read', data, r => { const row = r.records[0]; callback(row); });
     }
     loadRows(callback) {
         let me = this;
@@ -341,11 +332,7 @@ class RawTable {
         const offset = me.PageIndex * me.PageLimit;
         if (me.PageLimit && me.PageLimit)
             data['limit'] = me.PageLimit + (offset == 0 ? '' : ',' + offset);
-        DB.request('read', data, function (response) {
-            me.Rows = response.records;
-            me.actRowCount = response.count;
-            callback(response);
-        });
+        DB.request('read', data, r => { me.Rows = r.records; me.actRowCount = r.count; callback(r); });
     }
     getNrOfRows() { return this.actRowCount; }
     getTablename() { return this.tablename; }
@@ -403,7 +390,7 @@ class Table extends RawTable {
         };
         this.onSelectionChanged = new LiteEvent();
         this.onEntriesModified = new LiteEvent();
-        this.GUID = GUI.getID();
+        this.GUID = DB.getID();
         this.selType = SelType;
         this.selectedRow = undefined;
         this.TableType = this.getConfig().table_type;
@@ -697,11 +684,9 @@ class Table extends RawTable {
     htmlHeaders(colnames) {
         let t = this;
         let th = '';
-        if (t.GUIOptions.showControlColumn) {
+        if (t.GUIOptions.showControlColumn && !t.ReadOnly) {
             th = `<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;"></th>`;
             if (t.TableType !== TableType.obj && t.selType !== SelectType.Single) {
-                th = '<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;">' +
-                    '<a href="' + location.hash + '/' + t.getTablename() + '/create"><i class="fa fa-link text-success"></i></a>';
                 const cols = [];
                 colnames.map(col => {
                     if (t.Columns[col].field_type == 'foreignkey')
@@ -709,7 +694,10 @@ class Table extends RawTable {
                 });
                 const colM = cols[1];
                 const objTable2 = t.Columns[colM].foreignKey.table;
-                th += '<a class="ml-2" href="' + location.hash + '/' + t.getTablename() + '/create/' + objTable2 + '/create"><i class="fa fa-plus text-success"></i></a></th>';
+                th = `<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;">
+          <a href="${location.hash + '/' + t.getTablename() + '/create/' + objTable2 + '/create'}"><i class="fa fa-plus text-success"></i></a>
+          <a href="${location.hash + '/' + t.getTablename() + '/create'}" class="ml-2"><i class="fa fa-link text-success"></i></a>
+        </th>`;
             }
             else if (t.TableType === TableType.obj && t.selType === SelectType.Single) {
                 th = '<th class="border-0 align-middle text-center" style="max-width:50px;width:50px;"><a href="' + location.hash + '/' + t.getTablename() +
@@ -771,14 +759,15 @@ class Table extends RawTable {
             let isSelected = false;
             if (t.selectedRow)
                 isSelected = (t.selectedRow[pcname] == RowID);
-            if (t.GUIOptions.showControlColumn) {
-                const path = location.hash;
+            if (t.GUIOptions.showControlColumn && !t.ReadOnly) {
+                const path = location.hash.split('/');
+                const loc = (path.length === 2) ? '#' : path.join('/');
                 data_string = `<td class="controllcoulm align-middle">
           ${(t.selType == SelectType.Single ? (isSelected ?
                     '<i class="far fa-check-circle"></i>' : '<span class="modRow"><i class="far fa-circle"></i></span>')
                     : (t.TableType == TableType.obj ?
-                        `<a href="#/${t.getTablename()}/${RowID}"><i class="far fa-edit"></i></a>` :
-                        `<a href="#/${t.getTablename()}/${RowID}"><i class="fas fa-link"></i></a>`))}
+                        `<a href="${loc}/${t.getTablename()}/${RowID}"><i class="far fa-edit"></i></a>` :
+                        `<a href="${loc}/${t.getTablename()}/${RowID}"><i class="fas fa-link"></i></a>`))}
         </td>`;
             }
             sortedColumnNames.forEach(function (col) {
@@ -979,7 +968,7 @@ class Table extends RawTable {
 class FormGenerator {
     constructor(originTable, originRowID, rowData, GUID) {
         this.editors = {};
-        this.GUID = GUID || GUI.getID();
+        this.GUID = GUID || DB.getID();
         this.oTable = originTable;
         this.oRowID = originRowID;
         this.data = rowData;
@@ -1035,8 +1024,12 @@ class FormGenerator {
                 if (isObject(x)) {
                     ID = x[Object.keys(x)[0]];
                     const vals = recflattenObj(x);
-                    v = vals.join(' | ');
-                    v = v.length > 55 ? v.substring(0, 55) + "\u2026" : v;
+                    if (vals.join().replace(/,/g, '').length === 0)
+                        v = null;
+                    else {
+                        v = vals.join(' | ');
+                        v = v.length > 55 ? v.substring(0, 55) + "\u2026" : v;
+                    }
                 }
             }
             const getSelection = (cont, isReadOnly, custfilter) => {
@@ -1051,18 +1044,21 @@ class FormGenerator {
                         }
                     }
                 }
+                cont = cont.replace(/<[^>]*>?/gm, '');
                 if (isReadOnly)
-                    return '<span class="d-block text-muted" style="margin-top: .4rem;">' + cont + '</span>';
+                    return `<span class="d-block text-muted" style="margin-top: .4rem;">${cont}</span>`;
                 else
-                    return '<a class="d-block text-decoration-none" style="margin-top: .4rem;" onclick="loadFKTable(this, \'' +
-                        el.fk_table + '\', \'' + (custfilter ? encodeURI(custfilter) : '') + '\')" href="javascript:void(0);">' + cont + '</a>';
+                    return `<a class="d-block text-decoration-none" style="margin-top:.4rem;"
+          onclick="loadFKTable(this, '${el.fk_table}', '${custfilter ? encodeURI(custfilter) : ''} ')"
+          href="javascript:void(0);">${cont}</a>`;
             };
-            result += `<div><input type="hidden" name="${key}" value="${ID != 0 ? ID : ''}" class="inputFK${el.mode_form != 'hi' ? ' rwInput' : ''}">`;
+            result += `<div><input type="hidden" name="${key}" value="${(ID && ID != 0) ? ID : ''}" class="inputFK${el.mode_form != 'hi' ? ' rwInput' : ''}">`;
+            console.log(v);
             result += (v ? getSelection(v, (el.mode_form === 'ro'), el.customfilter) : getSelection('Nothing selected', (el.mode_form === 'ro'), el.customfilter));
             result += `</div>`;
         }
         else if (el.field_type == 'reversefk') {
-            const tmpGUID = GUI.getID();
+            const tmpGUID = DB.getID();
             const extTablename = el.revfk_tablename;
             const extTableColSelf = el.revfk_colname1;
             const extTableColExt = el.revfk_colname2;
@@ -1101,12 +1097,12 @@ class FormGenerator {
             result += `<div id="${tmpGUID}"><p class="text-muted mt-2"><span class="spinner-grow spinner-grow-sm"></span> Loading Elements...</p></div>`;
         }
         else if (el.field_type == 'htmleditor') {
-            const newID = GUI.getID();
+            const newID = DB.getID();
             this.editors[key] = { mode: el.mode_form, id: newID, editor: 'quill' };
             result += `<div><div class="htmleditor" id="${newID}"></div></div>`;
         }
         else if (el.field_type == 'codeeditor') {
-            const newID = GUI.getID();
+            const newID = DB.getID();
             this.editors[key] = { mode: el.mode_form, id: newID, editor: 'codemirror' };
             result += `<textarea class="codeeditor" id="${newID}"></textarea>`;
         }
@@ -1289,26 +1285,31 @@ function recflattenObj(x) {
     }
 }
 function loadFKTable(element, tablename, customfilter) {
-    const randID = GUI.getID();
     const hiddenInput = element.parentNode.getElementsByClassName('inputFK')[0];
-    element.outerHTML = '<div id="' + randID + '"></div>';
     hiddenInput.value = null;
-    let tmpTable = null;
+    const randID = DB.getID();
+    element.outerHTML = '<p id="' + randID + '">Loading...</p>';
     try {
-        tmpTable = new Table(tablename, SelectType.Single);
+        const tmpTable = new Table(tablename, SelectType.Single);
+        if (customfilter)
+            tmpTable.setFilter(decodeURI(customfilter));
+        tmpTable.loadRows(rows => {
+            if (rows["count"] == 0) {
+                document.getElementById(randID).outerHTML = `<p class="text-muted" style="margin-top:.4rem;">
+          <span class="mr-3">No Entries found</span>
+          <a class="btn btn-sm btn-success" href="${location.hash + '/' + tmpTable.getTablename() + '/create'}">Create</a></p>`;
+            }
+            else {
+                tmpTable.renderHTML(randID);
+            }
+        });
+        tmpTable.SelectionHasChanged.on(function () {
+            const selRowID = tmpTable.getSelectedRowID();
+            hiddenInput.value = '' || selRowID;
+        });
     }
     catch (e) {
-        document.getElementById(randID).innerHTML = '<p class="text-muted mt-2">No Access to this Table!</p>';
+        element.innerHTML = '<p class="text-muted mt-2">No Access to this Table!</p>';
         return;
     }
-    if (customfilter) {
-        tmpTable.setFilter(decodeURI(customfilter));
-    }
-    tmpTable.loadRows(rows => {
-        tmpTable.renderHTML(randID);
-    });
-    tmpTable.SelectionHasChanged.on(function () {
-        const selRowID = tmpTable.getSelectedRowID();
-        hiddenInput.value = '' || selRowID;
-    });
 }

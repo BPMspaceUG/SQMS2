@@ -30,9 +30,11 @@
       return null;
     }
     public static function getColsByTablename($tablename, $data = null) {
+      $cols = [];
       if (is_null($data))
         $data = json_decode(Config::getConfig(), true);
-      $cols = $data[$tablename]["columns"];
+      if (!is_null($data) && array_key_exists($tablename, $data))
+        $cols = $data[$tablename]["columns"];
       return $cols;
     }
     public static function getColnamesByTablename($tablename) {
@@ -108,7 +110,7 @@
       return (!preg_match('/[^A-Za-z0-9_]/', $colname));
     }
     public static function getVirtualSelects($tablename, $data = null) {
-      $res = array();
+      $res = [];
       $cols = Config::getColsByTablename($tablename, $data);
       // Collect only virtual Columns
       foreach ($cols as $colname => $col) {
@@ -185,8 +187,11 @@
       return $res;
     }
     public static function getStdFilter($tablename) {
+      $res = null;
       $data = json_decode(Config::getConfig(), true);
-      return $data[$tablename]["stdfilter"];
+      if (array_key_exists($tablename, $data))
+        $res = $data[$tablename]["stdfilter"];
+      return $res;
     }
   }
 
@@ -243,12 +248,6 @@
       while($singleRow = $stmt->fetch(PDO::FETCH_NUM)) {
         //-----------------------------------
         // Loop Cell
-
-        // TODO: Improve this with Link
-        /*
-        if ($tablename == '_nodes')
-          $singleRow[] = "http://localhost/APMS_test/bpmspace_sqms2_v1/api.php?table=_edges";
-        */
         foreach($singleRow as $i => $value) {
           $meta = $stmt->getColumnMeta($i);
           //--- Make a good Path
@@ -256,12 +255,14 @@
           $parts = explode('/', $strPath);
 
           array_shift($parts); // Remove first element of Path (= Origin-Table)
+
           if ($tablename == '_nodes' ||  $tablename == '_orphans')
             array_unshift($parts, $singleRow[1]);
           else if ($tablename == '_edges') {
             array_unshift($parts, $singleRow[2]);
             array_unshift($parts, $singleRow[1]);
           }
+
           array_unshift($parts, $singleRow[0]); // Prepend ID
 
           $parts[] = $meta["name"]; // Append Colname
@@ -273,7 +274,7 @@
       }
       // Deliver
       if ($tablename != '_nodes' && $tablename != '_edges' && $tablename != '_orphans') {
-        $result = null;
+        $result = [];
         foreach ($tree as $el) {
           $result[] = $el;
         }
@@ -408,53 +409,33 @@
     }
     public function read($param) {
       //--------------------- Check Params
-      $validParams = ['table', 'limit', 'sort', 'filter', 'search', 'path'];      
+      $validParams = ['table', 'limit', 'sort', 'filter', 'search', 'view'];
       $hasValidParams = $this->validateParamStruct($validParams, $param);
       if (!$hasValidParams) die(fmtError('Invalid parameters! (allowed are: '.implode(', ', $validParams).')'));
       // Parameters and default values
       @$tablename = isset($param["table"]) ? $param["table"] : null;
-      @$path = isset($param["path"]) ? $param["path"] : null;
+      @$view = isset($param["view"]) ? $param["view"] : null;
       @$limit = isset($param["limit"]) ? $param["limit"] : null;
       @$sort = isset($param["sort"]) ? $param["sort"] : null;
       @$filter = isset($param["filter"]) ? $param["filter"] : null; // additional Filter
       @$search = isset($param["search"]) ? $param["search"] : null; // all columns: [like this] OR [like this] OR ...
 
+      //--- Table / View
+      if (is_null($tablename) && is_null($view)) die(fmtError('Table/View is not set!'));      
+      if (!Config::isValidTablename($tablename) || !Config::isValidTablename($view)) die(fmtError('Invalid Table/View Name!'));
+      if (!Config::doesTableExist($tablename) && is_null($view)) die(fmtError('Table does not exist!'));
+      if (!is_null($view) && !is_null($tablename)) die(fmtError('Only Table OR View can be set!'));
 
-      // ===> PATH
-
-      if (!is_null($path)) {
-
-        // Ask the Path [tname/id]
-        $parts = explode('/', $path);
-
-        $id = end($parts);
-        $tname = prev($parts);
-        
-        /*$result = [
-          "path" => $path,
-          "tablename" => $tname,
-          "id" => $id,
-          "edges" => "http://localhost/APMS_test/bpmspace_sqms2_v1/api.php?path=test/123"
-        ];*/
-
-        $tablename = $tname;
-      }
-
-        //return json_encode($result, true);
-      //}
-
-
-
-      //--- Table
-      if (is_null($tablename)) die(fmtError('Table is not set!'));
-      if (!Config::isValidTablename($tablename)) die(fmtError('Invalid Tablename!'));
-      if (!Config::doesTableExist($tablename)) die(fmtError('Table does not exist!'));
       //================================================
-      //-- Check Rights
-      if (!is_null($this->token)){
-        $allowedTablenames = array_keys($this->getConfigByRoleID($this->token->uid));
-        if (!in_array($tablename, $allowedTablenames)) die(fmtError('No access to this Table!'));        
+      //-- Check Rights (only for Table!)
+      if (!is_null($tablename)) {
+        if (!is_null($this->token)){
+          $allowedTablenames = array_keys($this->getConfigByRoleID($this->token->uid));
+          if (!in_array($tablename, $allowedTablenames)) die(fmtError('No access to this Table!'));        
+        }
       }
+      if (!is_null($view)) $tablename = $view; // Same Select as normal Table
+
       // Build a new Read Query Object
       $rq = new ReadQuery($tablename);
       //--- Limit
@@ -500,10 +481,12 @@
         //--> Set Sorting
         $rq->setSorting($sortColumn, $sortDir);
       }
-      //--- Virtual-Columns      
-      $vc = Config::getVirtualSelects($tablename);
-      foreach ($vc as $col => $sel) {
-        $rq->addSelect("$sel AS `$col`");
+      //--- Virtual-Columns
+      if (is_null($view)) {
+        $vc = Config::getVirtualSelects($tablename);
+        foreach ($vc as $col => $sel) {
+          $rq->addSelect("$sel AS `$col`");
+        }
       }
       //--- Filter      
       $rq->setFilter('{"=":[1,1]}'); // default Minimum (1=1 --> always true)
@@ -513,7 +496,7 @@
       
       //--- Search (Having & all columns)
       if (!is_null($search)) {
-        $search = "'%".$search."%'";
+        $search = "%".$search."%";
         $els = [];
         //-- Search real cols + virtCols + joins
         $cols = array_merge(
@@ -523,9 +506,13 @@
         );
         foreach ($cols as $colname) {
           $els[] = '{"like":["'.$colname.'","'.$search.'"]}';
-        }      
+        }
         $term = '{"or":['. implode(',', $els) .']}';
         $rq->setHaving($term);
+        /*
+        var_dump($rq->getStatement());
+        var_dump($rq->getValues());
+        */
       }
       //--- add Custom Filter
       if (!is_null($filter))
@@ -568,11 +555,18 @@
       //$rq->addJoin('connections/testtableA/state/state_machines.testnode', 'testnode.testnode_id'); // 4th level
 
       $pdo = DB::getInstance()->getConnection();
+
       // Retrieve Number of Entries
+      $count = 0;
       $stmtCnt = $pdo->prepare($rq->getCountStmtWOLimits());
-      $stmtCnt->execute($rq->getValues());
-      $row = $stmtCnt->fetch();
-      $count = (int)$row[0];
+      if ($stmtCnt->execute($rq->getValues(true))) {
+        $row = $stmtCnt->fetch();
+        $count = (int)$row[0];
+      }
+      else {
+        die(fmtError($stmtCnt->errorInfo()[2] .' -> '. $stmtCnt->queryString ));
+      }
+
       // Retrieve Entries
       $stmt = $pdo->prepare($rq->getStatement());
       if ($stmt->execute($rq->getValues())) {
@@ -583,7 +577,7 @@
       }
       else {
         // Error -> Return Error
-        die(fmtError($stmt->errorInfo()[2] . ' -> ' . $stmt->queryString));
+        die(fmtError($stmt->errorInfo()[2] /*.' -> '. $stmt->queryString */ ));
       }
     }
     // Stored Procedure can be Read and Write (GET and POST)

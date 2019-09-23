@@ -10,17 +10,18 @@ export default (props) => {
   // Get actual Table & ID
   const actTable = path[path.length - 2];
   const t = new Table(actTable);
-  const textCommand = t.TableType !== 'obj' ? 'Add Relation' : 'Create';
+  const textCommand = t.TableType !== 'obj' ? 'Relate' : 'Create';
+  let fCreate = null;
 
   // Legend:
   // [ -- ] Relation
   // [ o  ] Object
 
   // Possibilities:
-  // 1. o      -> Create new Object
-  // 2. --     -> Create new Relation
-  // 3. o--    -> Create new Relation between existing Objects
-  // 4. o--o   -> Create new Object and new Relation coming from an existing Object
+  // 1. /o      -> Create, Create new Object
+  // 2. /--     -> Relate, Create new Relation
+  // 3. o/--    -> Relate, Create new Relation coming from existing Object (fixed Obj)
+  // 4. o/--/o   -> Create & Relate, Create new Object and new Relation coming from an existing Object
 
   //--- Set Title  
   window.document.title = textCommand + ' ' + t.getTableAlias();
@@ -41,6 +42,7 @@ export default (props) => {
   let newObj = mergeDeep({}, defFormObj, diffFormCreate);
   // Custom Form
   newObj = mergeDeep({}, newObj, customCreateParams);
+
   //--------------------------------------------------------
   // HIDE Reverse Foreign Keys (==> Create!) => can't be related - Object doesn't exist yet
   for (const key of Object.keys(newObj)) {
@@ -51,48 +53,81 @@ export default (props) => {
   //=> Case 3
   // is add Relation and Coming from an Object? => then preselect object
   if (path.length > 2 && t.TableType !== 'obj') {
-    let key = null;
-    const tbl = path[path.length-4];
+    //---------------------------
+    // RELATION
+    //---------------------------
+    let fixedKey = null;
+
+    const origTbl = path[path.length-4];
+    const origObjID = path[path.length-3];
+
+    let cnt = 0;
     for (const colname of Object.keys(t.Columns)) {
       const col = t.Columns[colname];
-      if (col.field_type == 'foreignkey' && col.foreignKey.table == tbl) {
-        key = colname;
-        break;
+      if (col.field_type == 'foreignkey' && col.foreignKey.table == origTbl) {
+        fixedKey = colname;
       }
+
+      if (cnt === 2 && t.TableType === '1_n') {
+
+        const sIDselected = t.Config.stateIdSel;
+        if (sIDselected != 0) {
+          t.resetLimit();
+          // 1. Filter all relevant Edges which are [unselected]
+          t.setFilter('{"nin":["`'+t.getTablename()+'`.state_id","'+sIDselected+'"]}');
+          t.loadRows(resp => {
+            const rec = resp.records || [];
+            let unselectedObjIDs = [];
+            for (const row of rec) {
+              const pkey = Object.keys(row)[2];
+              const obj = row[pkey];
+              const objID = obj[Object.keys(obj)[0]];
+              unselectedObjIDs.push(objID);
+            }
+            unselectedObjIDs = Array.from(new Set(unselectedObjIDs))
+            console.log("List of unselected Objects:", unselectedObjIDs);
+            // 2. For every unselected ObjectID - check if it is selected
+            t.setFilter('{"and":[{"in":["' + colname + '", "' + unselectedObjIDs.join(',') + '"]},{"=":["`'+t.getTablename()+'`.state_id",'+sIDselected+']}]}');
+            t.loadRows(resp => {
+              const rec = resp.records || [];
+              let selectedObjIDs = [];
+              for (const row of rec) {
+                const pkey = Object.keys(row)[2];
+                const obj = row[pkey];
+                const objID = obj[Object.keys(obj)[0]];
+                selectedObjIDs.push(objID);
+              }
+              selectedObjIDs = Array.from(new Set(selectedObjIDs))
+              console.log("List of selected (from the unsel. Obj) Objects:", selectedObjIDs);
+              // 3. Now Check difference between Arrays          
+              const freeObjIDs = unselectedObjIDs.filter(x => !selectedObjIDs.includes(x));
+              console.log("List of free Objects", freeObjIDs);
+              // 4. Set Filter at Table
+              const pColname = t.Columns[colname].foreignKey.col_id;
+              if (freeObjIDs.length > 0) {
+                newObj[colname].customfilter = '{"in":["'+pColname+'","'+freeObjIDs.join(',')+'"]}';
+              } else {
+                newObj[colname].customfilter = '{"=":[1,2]}'; // NO Results
+              }
+              document.getElementById('formcreate').innerHTML = x();
+            });          
+          })
+        }
+
+      }
+      cnt++;
     }
-    const origObjID = path[path.length-3];
-    newObj[key].value = origObjID;
-    newObj[key].mode_form = 'ro';
-
-    // TODO: Read the existing Relations from the edges Table
-    //console.log('Relation Filter here.');
-    // 1. Step Load existing Objects
-    /*
-    const tmpEdges = new Table('_edges');
-    tmpEdges.setFilter('{"and":[{"=":["ObjectID",'+origObjID+']},{"=":["EdgeStateID",7502]}]}');
-    tmpEdges.loadRows(rows => {
-      const FreeObjects = [];
-      const edgeType = rows.records['sqms2_syllabuselement_desc'];
-      const edgeIDs = Object.keys(edgeType);
-      edgeIDs.forEach(edgeID => {
-        FreeObjects.push(edgeType[edgeID][0].ObjectID);
-      })
-      // Filter the Objects with this List
-      const filter = '{"in":["sqms2_Text_id", "' + FreeObjects.join(',') + '"]}';
-      console.log(filter);
-      newObj[key].customfilter = filter;
-      const fCreate = new FormGenerator(t, undefined, newObj, null);
-      const HTML = fCreate.getHTML();
-      console.log(newObj)
-      document.getElementById('formcreate').innerHTML = HTML;
-    });
-    */
-
-
+    
+    // Fix the origin Object    
+    newObj[fixedKey].value = origObjID;
+    newObj[fixedKey].mode_form = 'ro';
   }
 
-  const fCreate = new FormGenerator(t, undefined, newObj, null);
-  const HTML = fCreate.getHTML();
+  function x() {
+    fCreate = new FormGenerator(t, undefined, newObj, null);
+    return fCreate.getHTML();
+  }
+  const HTML = x();
 
   //---------------------------------------------------
   // After HTML is placed in DOM
@@ -135,17 +170,90 @@ export default (props) => {
               resM.show();
             }
             // Check if Element was created
-            if (msg.element_id) {
-              // Success?
-              if (msg.element_id > 0) {
+            if (msg.element_id && msg.element_id > 0) {
                 //-------------------------------------------------------->>>>
                 console.info( (t.TableType === 'obj' ? 'Object' : 'Relation') + ' created! ID:', msg.element_id);
 
-                // Wenn die Tabelle vor mir eine Relationstabelle ist,
-                // dann erzeuge instant eine neue Relation und springe ins erste Obj.
-                // origObj/1234  / tbl(rel)/create / newObj/create
-
                 if (path.length > 2) {
+
+                  // 1. Copy, remove last command (because it was already created) and Reverse path
+                  const reversedPath = path.slice();
+                  reversedPath.pop();
+                  reversedPath.pop()
+                  reversedPath.reverse();
+                  //console.log(reversedPath)
+                  // 2. Collect a list of commands for all tables [o][r][o][r][o]
+                  let objsToCreate = [];
+                  const relsToCreate = [];
+                  let originID = null, originTablename = null;;
+                  for (let i=0; i<reversedPath.length/2; i++) {
+                    const cmd = reversedPath[2*i];
+                    const Tablename = reversedPath[2*i+1];
+                    console.log(cmd, '->', Tablename);
+                    // Until the end of the new path is reached
+                    if (cmd != 'create') {
+                      originID = cmd;
+                      originTablename = Tablename;
+                      break;
+                    }
+                    // Check if relation or object --> correct order
+                    const tmpTable = new Table(Tablename);
+                    if (tmpTable.getTableType() !== 'obj')
+                      relsToCreate.push(Tablename);
+                    else 
+                      objsToCreate.push(Tablename);
+                  }
+
+                  function connectObjects(obj, rels) {
+                    // 5. Create all Relations
+                    for (let j=0; j<obj.length-1; j++) {
+                      //-----> Create Relations
+                      const tmpRelTable = new Table(rels[j]);
+                      const colnames = Object.keys(tmpRelTable.Columns);
+                      const data = {};
+                      data[colnames[2]] = obj[j].id;
+                      data[colnames[1]] = obj[j+1].id;
+                      console.log(rels[j], '-->', data);
+                      DB.request('create', {table: rels[j], row: data}, r => {
+                        rels[j] = {t: rels[j], id: parseInt(r[1].element_id)};
+                        // Last Relation
+                        if (j === rels.length-1) {
+                          console.log("Created Relations", rels);
+                          console.log('Finished!');
+                          // TODO: Jump to last knot
+                          document.location.assign('#/'+originTablename+'/'+originID);
+                        }
+                      });
+                    }
+                  }
+
+                  // 3. Create the path
+                  if (objsToCreate.length === 0 && relsToCreate.length > 0) {
+                    objsToCreate = [{t: t.getTablename(), id: parseInt(msg.element_id)}];
+                    objsToCreate.push({t: originTablename, id: parseInt(originID)});
+                    connectObjects(objsToCreate, relsToCreate);
+                  }
+                  else {
+                    for (let i=0; i<objsToCreate.length; i++) {              
+                      //-----> Create Objects
+                      DB.request('create', {table: objsToCreate[i], row: {}}, r => {
+                        objsToCreate[i] = {t: objsToCreate[i], id: parseInt(r[1].element_id)};
+                        // Last Element
+                        if (i === objsToCreate.length-1) {
+                          // Insert already created Object at beginning
+                          objsToCreate = [{t: t.getTablename(), id: parseInt(msg.element_id)}].concat(objsToCreate);
+                          console.log("Created Objects", objsToCreate);
+                          objsToCreate.push({t: originTablename, id: parseInt(originID)});
+                          connectObjects(objsToCreate, relsToCreate);
+                        }
+                      });
+                    }
+                  }
+
+
+                  // 7. Finish and jump to first Object or knot
+                  return
+
                   const relCmd = path[path.length-3];
                   const relTablename = path[path.length-4];
                   const relTable = new Table(relTablename);
@@ -180,7 +288,7 @@ export default (props) => {
                 // Redirect
                 document.location.assign(modifyPathOfNewElement);
                 return;
-              }
+
             }
             else {
               // ElementID is defined but 0 => the transscript aborted
@@ -205,14 +313,24 @@ export default (props) => {
     //---
   }, 10);
 
+// sqms2_syllabus/90034798/sqms2_syllabus_syllabuschapter/create/sqms2_syllabuschapter/create/sqms2_syllabuschapter_question/create/sqms2_question/create/sqms2_question_answer/create/sqms2_answer/create/sqms2_answer_text/create/sqms2_text/create
+
 
   // Path
   const guiPath = [];
   const count = path.length / 2;
+
   function getPart(table, id) {
     const _t = new Table(table);
-    return `<a class="text-decoration-none" href="#/${table}/${id}">${_t.getTableIcon() + ' ' + _t.getTableAlias()}:${id}</a>`;
+    if (_t.getTableType() !== 'obj')
+      return `<span class="${id == 'create' ? 'text-success' : 'text-primary'}">
+        <i class="fa fa-link" title="${_t.getTablename()}" style="font-size:.75em;"></i></span>`;
+    // Object
+    if (id == 'create')
+      return `<span class="text-success">${_t.getTableIcon()+' '+_t.getTableAlias()}</span>`;
+    return `<span class="text-primary" title="${id}">${_t.getTableIcon()+' '+_t.getTableAlias()}</span>`;
   }
+
   for (let i = 0; i < count; i++)
     guiPath.push(getPart(path[2*i], path[2*i+1]));      
   const guiFullPath = guiPath.join('<span class="mx-1">&rarr;</span>');
@@ -226,6 +344,7 @@ export default (props) => {
     }
     backPath = '#/' + copiedPath.join('/');
   }
+
   //--------------
   return `<div>
     <h2>${guiFullPath}</h2>
