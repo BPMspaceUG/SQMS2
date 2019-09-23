@@ -1,4 +1,4 @@
-<?php
+<?php 
 //-- Database
     define('DB_USER', '');
     define('DB_PASS', '');
