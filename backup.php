@@ -9,6 +9,7 @@ $user = DB_USER;
 $pass = DB_PASS;
 $host = DB_HOST;
 
+echo "Starting Backup...";
 $dir = __DIR__ . '/sqldump/'.$database.'_structure.sql';  
 exec("mysqldump --user={$user} --password={$pass} --protocol tcp --no-data --host={$host} {$database} --result-file={$dir} 2>&1", $output);
 $dir = __DIR__ . '/sqldump/'.$database.'_statemachine.sql';
