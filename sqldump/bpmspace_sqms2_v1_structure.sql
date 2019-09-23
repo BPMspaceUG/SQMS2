@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `bpmspace_sqms2_v1` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `bpmspace_sqms2_v1`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.33-MariaDB, for Win32 (AMD64)
 --
--- Host: 127.0.0.1    Database: bpmspace_sqms2_v1
+-- Host: localhost    Database: bpmspace_sqms2_v1
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.33-MariaDB
+-- Server version	10.1.33-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,47 +16,50 @@ USE `bpmspace_sqms2_v1`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Temporary view structure for view `_edges`
+-- Temporary table structure for view `_edges`
 --
 
 DROP TABLE IF EXISTS `_edges`;
 /*!50001 DROP VIEW IF EXISTS `_edges`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `_edges` AS SELECT 
- 1 AS `EdgeType`,
- 1 AS `EdgeID`,
- 1 AS `EdgePartner`,
- 1 AS `EdgeStateID`,
- 1 AS `ObjectID`*/;
+/*!50001 CREATE TABLE `_edges` (
+  `EdgeType` tinyint NOT NULL,
+  `EdgeID` tinyint NOT NULL,
+  `EdgePartner` tinyint NOT NULL,
+  `EdgeStateID` tinyint NOT NULL,
+  `ObjectID` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `_nodes`
+-- Temporary table structure for view `_nodes`
 --
 
 DROP TABLE IF EXISTS `_nodes`;
 /*!50001 DROP VIEW IF EXISTS `_nodes`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `_nodes` AS SELECT 
- 1 AS `ObjectType`,
- 1 AS `ObjectID`,
- 1 AS `ObjectStateID`*/;
+/*!50001 CREATE TABLE `_nodes` (
+  `ObjectType` tinyint NOT NULL,
+  `ObjectID` tinyint NOT NULL,
+  `ObjectStateID` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `_orphans`
+-- Temporary table structure for view `_orphans`
 --
 
 DROP TABLE IF EXISTS `_orphans`;
 /*!50001 DROP VIEW IF EXISTS `_orphans`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `_orphans` AS SELECT 
- 1 AS `ObjectType`,
- 1 AS `ObjectID`,
- 1 AS `ObjectStateID`*/;
+/*!50001 CREATE TABLE `_orphans` (
+  `ObjectType` tinyint NOT NULL,
+  `ObjectID` tinyint NOT NULL,
+  `ObjectStateID` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -652,13 +653,10 @@ CREATE TABLE `state_rules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping routines for database 'bpmspace_sqms2_v1'
---
-
---
 -- Final view structure for view `_edges`
 --
 
+/*!50001 DROP TABLE IF EXISTS `_edges`*/;
 /*!50001 DROP VIEW IF EXISTS `_edges`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -677,6 +675,7 @@ CREATE TABLE `state_rules` (
 -- Final view structure for view `_nodes`
 --
 
+/*!50001 DROP TABLE IF EXISTS `_nodes`*/;
 /*!50001 DROP VIEW IF EXISTS `_nodes`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -695,6 +694,7 @@ CREATE TABLE `state_rules` (
 -- Final view structure for view `_orphans`
 --
 
+/*!50001 DROP TABLE IF EXISTS `_orphans`*/;
 /*!50001 DROP VIEW IF EXISTS `_orphans`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -718,4 +718,4 @@ CREATE TABLE `state_rules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-23  9:15:19
+-- Dump completed on 2019-09-23 13:50:51
