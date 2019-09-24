@@ -1288,7 +1288,7 @@
                 "col_order": 4,
                 "mode_form": "rw",
                 "field_type": "enum",
-                "col_options": "[{\u0022name\u0022:\u0022DE\u0022,\u0022value\u0022:\u0022DE\u0022},{\u0022name\u0022:\u0022EN\u0022,\u0022value\u0022:\u0022EN\u0022},{\u0022name\u0022:\u0022FR\u0022,\u0022value\u0022:\u0022FR\u0022},{\u0022name\u0022:\u0022SP\u0022,\u0022value\u0022:\u0022SP\u0022},{\u0022name\u0022:\u0022IT\u0022,\u0022value\u0022:\u0022IT\u0022}]"
+                "col_options": "[{\u0022name\u0022:\u0022EN\u0022,\u0022value\u0022:\u0022EN\u0022},{\u0022name\u0022:\u0022DE\u0022,\u0022value\u0022:\u0022DE\u0022},{\u0022name\u0022:\u0022FR\u0022,\u0022value\u0022:\u0022FR\u0022},{\u0022name\u0022:\u0022SP\u0022,\u0022value\u0022:\u0022SP\u0022},{\u0022name\u0022:\u0022IT\u0022,\u0022value\u0022:\u0022IT\u0022}]"
             },
             "state_id": {
                 "column_alias": "State",
@@ -1300,7 +1300,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "sqms2_topic_question": {
         "table_alias": "Question",

@@ -1,4 +1,7 @@
 <?php
+// for Windows, set path to mysqldump executable file as environment variable
+// for example C:\xampp\mysql\bin
+
 require_once(__DIR__.'/config.SECRET.inc.php');
 
 ini_set('display_errors', 1);
