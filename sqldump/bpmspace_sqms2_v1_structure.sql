@@ -90,10 +90,10 @@ CREATE TABLE `role_liamuser` (
   `User_id` bigint(20) NOT NULL,
   PRIMARY KEY (`Role_User_id`),
   KEY `Role_id` (`Role_id`),
-  CONSTRAINT `role_liamuser_ibfk_1` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`),
-  CONSTRAINT `role_liamuser_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`),
-  CONSTRAINT `role_liamuser_ibfk_3` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`),
-  CONSTRAINT `role_liamuser_ibfk_4` FOREIGN KEY (`Role_id`) REFERENCES `role` (`Role_id`)
+  CONSTRAINT `role_liamuser_ibfk_1` FOREIGN KEY (`Role_id`) REFERENCES `role` (`role_id`),
+  CONSTRAINT `role_liamuser_ibfk_2` FOREIGN KEY (`Role_id`) REFERENCES `role` (`role_id`),
+  CONSTRAINT `role_liamuser_ibfk_3` FOREIGN KEY (`Role_id`) REFERENCES `role` (`role_id`),
+  CONSTRAINT `role_liamuser_ibfk_4` FOREIGN KEY (`Role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -718,4 +718,4 @@ CREATE TABLE `state_rules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-23 16:56:29
+-- Dump completed on 2019-09-24 10:16:06
