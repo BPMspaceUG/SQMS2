@@ -414,7 +414,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": ""
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_examsetversion": {
         "table_alias": "Examsetversion",
@@ -559,6 +560,15 @@
                 "mode_form": "hi",
                 "field_type": "state"
             },
+            "sqms2_titleofanswers": {
+                "column_alias": "Titleofanswers",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 7,
+                "mode_form": "rw",
+                "field_type": "rawhtml"
+            },
             "virtualCol": {
                 "field_type": "reversefk",
                 "column_alias": "Questiontexts",
@@ -586,7 +596,8 @@
                 "revfk_colname2": "sqms2_Answer_id_fk_995603"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "sqms2_question_answer": {
         "table_alias": "Q-A",
@@ -686,6 +697,15 @@
                 "mode_form": "hi",
                 "field_type": "state"
             },
+            "sqms2_correct": {
+                "column_alias": "Correct",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "switch"
+            },
             "virtualCol": {
                 "field_type": "reversefk",
                 "column_alias": "Answertexts",
@@ -700,7 +720,8 @@
                 "revfk_colname2": "sqms2_Text_id_fk_842740"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "sqms2_question_examsetversion": {
         "table_alias": "Q-EV",
@@ -1300,7 +1321,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "sqms2_topic_question": {
         "table_alias": "Question",
@@ -1479,7 +1501,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
@@ -1529,7 +1551,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "state_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
@@ -1611,7 +1633,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "state_rules_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
