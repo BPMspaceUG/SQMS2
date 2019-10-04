@@ -217,8 +217,8 @@
         "table_icon": ""
     },
     "role_user": {
-        "table_alias": "User",
-        "table_type": "obj",
+        "table_alias": "R-U",
+        "table_type": "1_n",
         "order": 3,
         "mode": "rw",
         "stdfilter": "",
@@ -260,7 +260,8 @@
                 "field_type": "number"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-square\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_syllabuschapter": {
         "table_alias": "Syllabuschapter",

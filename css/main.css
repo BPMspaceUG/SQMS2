@@ -46,8 +46,8 @@ body {overflow-x: hidden;}
 .CodeMirror {border: 1px solid #ced4da; font-size: .85em;}
 
 /* StateEngine */
-.btnState {cursor: pointer; color: white !important; white-space: nowrap; display: inline-block; }
-.btnGrid {padding: .25em .5em; margin-top: -.5em; font-size: .75em; width: 100%; max-width: 100px;}
+.btnState {cursor: pointer; color: white !important; white-space: nowrap; }
+.btnGrid {padding: .25em .5em; margin-top: -.5em; font-size: .75em; width: 100%; max-width: 100px; }
 
 .btnEnabled:hover {color: white !important; background-color: #333 !important;}
 .btnDisabled:focus, .btnDisabled:active:focus, .btnDisabled.active:focus {
@@ -55,31 +55,31 @@ body {overflow-x: hidden;}
 .btnDisabled:hover {background-color: none !important; cursor: default;}
 
 /* State-Colors */
-.state7461 {background-color: hsl(275, 50%, 15%); color: white;}
-.state7462 {background-color: hsl(275, 50%, 20%); color: white;}
-.state7463 {background-color: hsl(275, 50%, 25%); color: white;}
-.state7464 {background-color: hsl(275, 50%, 30%); color: white;}
-.state7511 {background-color: hsl(275, 50%, 35%); color: white;}
-.state7465 {background-color: hsl(315, 50%, 15%); color: white;}
-.state7466 {background-color: hsl(315, 50%, 20%); color: white;}
-.state7467 {background-color: hsl(315, 50%, 25%); color: white;}
-.state7468 {background-color: hsl(315, 50%, 30%); color: white;}
+.state7461 {background-color: hsl(19, 50%, 15%); color: white;}
+.state7462 {background-color: hsl(19, 50%, 20%); color: white;}
+.state7463 {background-color: hsl(19, 50%, 25%); color: white;}
+.state7464 {background-color: hsl(19, 50%, 30%); color: white;}
+.state7511 {background-color: hsl(19, 50%, 35%); color: white;}
+.state7465 {background-color: hsl(84, 50%, 15%); color: white;}
+.state7466 {background-color: hsl(84, 50%, 20%); color: white;}
+.state7467 {background-color: hsl(84, 50%, 25%); color: white;}
+.state7468 {background-color: hsl(84, 50%, 30%); color: white;}
 .state7485 {background-color: #328332; color: white;}
 .state7486 {background-color: #8b0000; color: white;}
-.state7481 {background-color: hsl(76, 50%, 15%); color: white;}
-.state7482 {background-color: hsl(76, 50%, 20%); color: white;}
-.state7483 {background-color: hsl(76, 50%, 25%); color: white;}
-.state7484 {background-color: hsl(76, 50%, 30%); color: white;}
-.state7469 {background-color: hsl(166, 50%, 15%); color: white;}
-.state7470 {background-color: hsl(166, 50%, 20%); color: white;}
-.state7471 {background-color: hsl(166, 50%, 25%); color: white;}
-.state7472 {background-color: hsl(166, 50%, 30%); color: white;}
+.state7481 {background-color: hsl(292, 50%, 15%); color: white;}
+.state7482 {background-color: hsl(292, 50%, 20%); color: white;}
+.state7483 {background-color: hsl(292, 50%, 25%); color: white;}
+.state7484 {background-color: hsl(292, 50%, 30%); color: white;}
+.state7469 {background-color: hsl(208, 50%, 15%); color: white;}
+.state7470 {background-color: hsl(208, 50%, 20%); color: white;}
+.state7471 {background-color: hsl(208, 50%, 25%); color: white;}
+.state7472 {background-color: hsl(208, 50%, 30%); color: white;}
 .state7487 {background-color: #328332; color: white;}
 .state7488 {background-color: #8b0000; color: white;}
-.state7457 {background-color: hsl(69, 50%, 15%); color: white;}
-.state7458 {background-color: hsl(69, 50%, 20%); color: white;}
-.state7459 {background-color: hsl(69, 50%, 25%); color: white;}
-.state7460 {background-color: hsl(69, 50%, 30%); color: white;}
+.state7457 {background-color: hsl(65, 50%, 15%); color: white;}
+.state7458 {background-color: hsl(65, 50%, 20%); color: white;}
+.state7459 {background-color: hsl(65, 50%, 25%); color: white;}
+.state7460 {background-color: hsl(65, 50%, 30%); color: white;}
 .state7489 {background-color: #328332; color: white;}
 .state7490 {background-color: #8b0000; color: white;}
 .state7491 {background-color: #328332; color: white;}
@@ -98,15 +98,15 @@ body {overflow-x: hidden;}
 .state7504 {background-color: #8b0000; color: white;}
 .state7505 {background-color: #328332; color: white;}
 .state7506 {background-color: #8b0000; color: white;}
-.state7473 {background-color: hsl(319, 50%, 15%); color: white;}
-.state7474 {background-color: hsl(319, 50%, 20%); color: white;}
-.state7475 {background-color: hsl(319, 50%, 25%); color: white;}
-.state7476 {background-color: hsl(319, 50%, 30%); color: white;}
+.state7473 {background-color: hsl(107, 50%, 15%); color: white;}
+.state7474 {background-color: hsl(107, 50%, 20%); color: white;}
+.state7475 {background-color: hsl(107, 50%, 25%); color: white;}
+.state7476 {background-color: hsl(107, 50%, 30%); color: white;}
 .state7507 {background-color: #328332; color: white;}
 .state7508 {background-color: #8b0000; color: white;}
 .state7509 {background-color: #328332; color: white;}
 .state7510 {background-color: #8b0000; color: white;}
-.state7477 {background-color: hsl(196, 50%, 15%); color: white;}
-.state7478 {background-color: hsl(196, 50%, 20%); color: white;}
-.state7479 {background-color: hsl(196, 50%, 25%); color: white;}
-.state7480 {background-color: hsl(196, 50%, 30%); color: white;}
+.state7477 {background-color: hsl(24, 50%, 15%); color: white;}
+.state7478 {background-color: hsl(24, 50%, 20%); color: white;}
+.state7479 {background-color: hsl(24, 50%, 25%); color: white;}
+.state7480 {background-color: hsl(24, 50%, 30%); color: white;}
