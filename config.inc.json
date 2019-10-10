@@ -1,4 +1,18 @@
 {
+    "dashboard": {
+        "table_alias": "Dashboard",
+        "table_icon": "\u003Ci class=\u0022fas fa-tachometer-alt\u0022\u003E\u003C\/i\u003E",
+        "href": "#",
+        "order": "1",
+        "mode": "ro",
+        "in_menu": true,
+        "se_active": false,
+        "is_virtual": true,
+        "columns": [],
+        "table_type": "obj",
+        "showKids": false,
+        "virtualcontent": "return \u0027\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\u0027;"
+    },
     "role": {
         "table_alias": "Role",
         "table_type": "obj",
@@ -40,19 +54,51 @@
         },
         "table_icon": ""
     },
-    "dashboard": {
-        "table_alias": "Dashboard",
-        "table_icon": "\u003Ci class=\u0022fas fa-tachometer-alt\u0022\u003E\u003C\/i\u003E",
-        "href": "#",
-        "order": "1",
-        "mode": "ro",
-        "in_menu": true,
-        "se_active": false,
-        "is_virtual": true,
-        "columns": [],
+    "role_liamuser": {
+        "table_alias": "Liamuser",
         "table_type": "obj",
-        "showKids": false,
-        "virtualcontent": "return \u0027\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\u0027;"
+        "order": 2,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "Role_User_id,DESC",
+        "in_menu": false,
+        "se_active": false,
+        "stateIdSel": 0,
+        "columns": {
+            "Role_User_id": {
+                "column_alias": "User id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 1,
+                "mode_form": "hi",
+                "field_type": "number"
+            },
+            "Role_id": {
+                "column_alias": "Role id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "role",
+                    "col_id": "Role_id",
+                    "col_subst": "*"
+                }
+            },
+            "User_id": {
+                "column_alias": "User id",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "number"
+            }
+        },
+        "table_icon": ""
     },
     "sqms2_syllabus": {
         "table_alias": "Syllabus",
@@ -170,52 +216,6 @@
         },
         "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
     },
-    "role_liamuser": {
-        "table_alias": "Liamuser",
-        "table_type": "obj",
-        "order": 2,
-        "mode": "rw",
-        "stdfilter": "",
-        "stdsorting": "Role_User_id,DESC",
-        "in_menu": false,
-        "se_active": false,
-        "stateIdSel": 0,
-        "columns": {
-            "Role_User_id": {
-                "column_alias": "User id",
-                "is_primary": true,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "col_order": 1,
-                "mode_form": "hi",
-                "field_type": "number"
-            },
-            "Role_id": {
-                "column_alias": "Role id",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "col_order": 2,
-                "mode_form": "rw",
-                "field_type": "foreignkey",
-                "foreignKey": {
-                    "table": "role",
-                    "col_id": "Role_id",
-                    "col_subst": "*"
-                }
-            },
-            "User_id": {
-                "column_alias": "User id",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "col_order": 3,
-                "mode_form": "rw",
-                "field_type": "number"
-            }
-        },
-        "table_icon": ""
-    },
     "role_user": {
         "table_alias": "R-U",
         "table_type": "1_n",
@@ -260,8 +260,7 @@
                 "field_type": "number"
             }
         },
-        "table_icon": "",
-        "showKids": false
+        "table_icon": ""
     },
     "sqms2_syllabuschapter": {
         "table_alias": "Syllabuschapter",
@@ -415,8 +414,7 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "",
-        "showKids": false
+        "table_icon": ""
     },
     "sqms2_examsetversion": {
         "table_alias": "Examsetversion",
@@ -720,8 +718,7 @@
                 "revfk_colname2": "sqms2_Text_id_fk_842740"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E",
-        "showKids": false
+        "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E"
     },
     "sqms2_question_examsetversion": {
         "table_alias": "Q-EV",
@@ -1321,8 +1318,7 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E",
-        "showKids": false
+        "table_icon": "\u003Ci class=\u0022fa fa-language\u0022\u003E\u003C\/i\u003E"
     },
     "sqms2_topic_question": {
         "table_alias": "Question",
