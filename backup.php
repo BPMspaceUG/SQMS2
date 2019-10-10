@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 $database = DB_NAME;
-$user = DB_USER;	
+$user = DB_USER;	 
 $pass = DB_PASS;
 $host = DB_HOST;
 
