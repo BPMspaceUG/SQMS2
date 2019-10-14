@@ -1,27 +1,27 @@
 {
-  "id": "1d049809-8a59-495e-87d3-b937db15a9ba",
+  "id": "87d98f80-3488-4d85-8143-73bd3afa330b",
   "version": "2.0",
   "name": "SQMS2",
-  "url": "http://localhost",
+  "url": "http://localhost/_WORK/APMS_test/",
   "tests": [{
-    "id": "cbc02591-ba37-43f2-862e-efa4ea08fcc5",
-    "name": "Create 3 Topics",
+    "id": "59943738-270e-4bb1-b826-e4ae6e0cc068",
+    "name": "1) Create 3 Topics",
     "commands": [{
-      "id": "5d6897b2-09eb-4e03-aa2b-e7373abcd8f6",
+      "id": "5f367ad8-720e-4812-a363-3377bd7a60d8",
       "comment": "",
       "command": "open",
-      "target": "/APMS_test/bpmspace_sqms2_v1/",
+      "target": "bpmspace_sqms2_v1/",
       "targets": [],
       "value": ""
     }, {
-      "id": "2ec584f7-d54c-4e60-9cef-351f850d567d",
+      "id": "b69c7dcf-cf85-4056-a702-7a393e29357a",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1070x763",
+      "target": "1024x768",
       "targets": [],
       "value": ""
     }, {
-      "id": "ee8741e7-0141-4e2e-83c0-2dcddce6ff1c",
+      "id": "11766d34-3e07-405e-9737-741b9efbeea3",
       "comment": "",
       "command": "click",
       "target": "linkText=Topic",
@@ -35,7 +35,7 @@
       ],
       "value": ""
     }, {
-      "id": "0ecbcbf0-fd81-4b7c-8adc-5b274bed9051",
+      "id": "5c8d19b0-9d1f-4bf7-b8c2-58eab977a885",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -50,7 +50,7 @@
       ],
       "value": ""
     }, {
-      "id": "b500c11b-a5ec-4336-a660-0af7a496f796",
+      "id": "fc11f0df-dde7-4f6b-9e80-2dcb5f537a7c",
       "comment": "",
       "command": "type",
       "target": "id=inp_sqms2_Topic_title",
@@ -59,12 +59,12 @@
         ["name=sqms2_Topic_title", "name"],
         ["css=#inp_sqms2_Topic_title", "css:finder"],
         ["xpath=//textarea[@id='inp_sqms2_Topic_title']", "xpath:attributes"],
-        ["xpath=//form[@id='i2761cfc621e85ccec2b8cac8b1a8cf0b']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form[@id='ifbaa4a286628f8687b3585a994f89c95']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "Topic 1"
     }, {
-      "id": "0102b846-551b-43ec-b904-2cd3f6836976",
+      "id": "8ae53b4d-51b1-4129-bb80-3777560db787",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -79,7 +79,7 @@
       ],
       "value": ""
     }, {
-      "id": "2ca9d6a0-fbc8-4561-bc2f-c3f9db544c46",
+      "id": "31fa29b8-a5e6-4279-931a-3fc8dbe05aad",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
@@ -94,7 +94,7 @@
       ],
       "value": ""
     }, {
-      "id": "e6671aee-9966-4164-be52-bb939b497c0e",
+      "id": "005a9d94-5066-45ec-8ac4-d35fc38eab13",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -109,7 +109,7 @@
       ],
       "value": ""
     }, {
-      "id": "f27cd4c8-d64f-41f9-9018-46cede1e69ae",
+      "id": "ebd966c4-ce7c-4a5d-a811-1b2f4b245a1f",
       "comment": "",
       "command": "type",
       "target": "id=inp_sqms2_Topic_title",
@@ -118,12 +118,12 @@
         ["name=sqms2_Topic_title", "name"],
         ["css=#inp_sqms2_Topic_title", "css:finder"],
         ["xpath=//textarea[@id='inp_sqms2_Topic_title']", "xpath:attributes"],
-        ["xpath=//form[@id='i7371d74854a13735a2b8cf3b3ff86b4b']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form[@id='i1ae80fe8700456082c58eb68539785ef']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "Topic 2"
     }, {
-      "id": "a46c63a8-e65b-43cb-b620-a6367f84762c",
+      "id": "f53a9e64-3cfc-4a45-b129-4ee6a9e456ef",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -138,7 +138,7 @@
       ],
       "value": ""
     }, {
-      "id": "ab0c555f-7330-4cb7-bcdf-1aaa39c1ffa2",
+      "id": "d7b675c5-ca84-4b78-a7b1-74cd339f1eb7",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
@@ -153,7 +153,7 @@
       ],
       "value": ""
     }, {
-      "id": "6e60f548-97c8-45d2-980a-745389bec3b5",
+      "id": "faa393fd-e008-4f66-9596-89e07a971d01",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -168,19 +168,7 @@
       ],
       "value": ""
     }, {
-      "id": "9f25dfd4-58db-4e9b-a719-7d668d2ad5b9",
-      "comment": "",
-      "command": "click",
-      "target": "css=.link-sqms2_syllabus > .ml-2",
-      "targets": [
-        ["css=.link-sqms2_syllabus > .ml-2", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]/span", "xpath:idRelative"],
-        ["xpath=//a[2]/span", "xpath:position"],
-        ["xpath=//span[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "ff9919cd-823c-4f94-aa6e-7f4409386fbf",
+      "id": "f26887c3-2b83-4d0e-b027-62b27b02afde",
       "comment": "",
       "command": "type",
       "target": "id=inp_sqms2_Topic_title",
@@ -189,12 +177,12 @@
         ["name=sqms2_Topic_title", "name"],
         ["css=#inp_sqms2_Topic_title", "css:finder"],
         ["xpath=//textarea[@id='inp_sqms2_Topic_title']", "xpath:attributes"],
-        ["xpath=//form[@id='i6d3d4abc895b939c95a8cf1822a8d288']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form[@id='i98d814dfeda87e8dd3880808d93b9d18']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "Topic 3"
     }, {
-      "id": "cda4ffc7-2f39-4267-82bb-221e0a3ce7bf",
+      "id": "10950f12-4f29-44bb-a6db-1240f1b3440f",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -209,7 +197,7 @@
       ],
       "value": ""
     }, {
-      "id": "6fd8fc0f-e885-4414-9697-89d1e1284eaf",
+      "id": "e94adc8b-6920-4d44-b0eb-04e6c2467831",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
@@ -224,65 +212,46 @@
       ],
       "value": ""
     }, {
-      "id": "60ac4108-f26d-4385-ba58-512a969c172c",
+      "id": "a6302c47-1e72-4f32-90a5-89979d4ffb06",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "7b7d4786-38a3-4d16-9fa0-40724063c8d9",
+    "name": "2) Create 3 Syllabi",
+    "commands": [{
+      "id": "a16ede81-c729-4ff7-bd36-01e551e09447",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "93fd2dbe-2e02-4504-ba1c-9e03da0fea63",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2eab981e-c9cd-4003-b969-9243d54204b8",
       "comment": "",
       "command": "click",
-      "target": "id=page-content-wrapper",
+      "target": "linkText=Syllabus",
       "targets": [
-        ["id=page-content-wrapper", "id"],
-        ["css=#page-content-wrapper", "css:finder"],
-        ["xpath=//div[@id='page-content-wrapper']", "xpath:attributes"],
-        ["xpath=//div[@id='wrapper']/div[2]", "xpath:idRelative"],
-        ["xpath=//main/div/div[2]", "xpath:position"]
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "cbcf47a0-a3b0-4aca-b1cb-83b72a61b37f",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "40.100006103515625,29.466659545898438"
-    }, {
-      "id": "08ccdd1e-fa39-4fa8-a733-e99189eb9893",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "40.100006103515625,29.466659545898438"
-    }, {
-      "id": "458fd337-1179-49ee-95eb-a35b5503765a",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "40.100006103515625,29.466659545898438"
-    }, {
-      "id": "f47c8d61-657e-40e0-90e2-d77a166b255f",
+      "id": "703f0688-c8da-484b-8ef7-3bd4ad18dc3d",
       "comment": "",
       "command": "click",
       "target": "linkText=Create",
@@ -297,22 +266,7 @@
       ],
       "value": ""
     }, {
-      "id": "b7a1733d-0a74-46da-8728-5d53caddb058",
-      "comment": "",
-      "command": "mouseOver",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "a44db39d-d4c4-4dfa-84ec-befb0fc65bd2",
+      "id": "3327f4d3-8ad3-480a-bcc0-7cf42b2ba652",
       "comment": "",
       "command": "type",
       "target": "id=inp_sqms2_Syllabus_titel",
@@ -321,12 +275,57 @@
         ["name=sqms2_Syllabus_titel", "name"],
         ["css=#inp_sqms2_Syllabus_titel", "css:finder"],
         ["xpath=//textarea[@id='inp_sqms2_Syllabus_titel']", "xpath:attributes"],
-        ["xpath=//form[@id='i7e588ce16e7bc368a92765886b0db828']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form[@id='ib71809b2f2a86596c76ab6f559547e08']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "Syllabus 1"
     }, {
-      "id": "09fc43f8-d01b-4129-9dc1-ada55d186ac0",
+      "id": "6d567830-a7b2-404a-9606-2a1a260c0407",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c06683c8-9f35-4ecb-b136-273cf657995b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[8]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8530c0e6-9e3d-4ec8-81ee-f4d811069df2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
+        ["xpath=//form/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5498183-3689-453e-9327-439e49a773c0",
       "comment": "",
       "command": "type",
       "target": "id=inp_sqms2_Syllabus_titel",
@@ -335,482 +334,57 @@
         ["name=sqms2_Syllabus_titel", "name"],
         ["css=#inp_sqms2_Syllabus_titel", "css:finder"],
         ["xpath=//textarea[@id='inp_sqms2_Syllabus_titel']", "xpath:attributes"],
-        ["xpath=//form[@id='i7e588ce16e7bc368a92765886b0db828']/div/div/textarea", "xpath:idRelative"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": "Syllabus 1"
-    }, {
-      "id": "9cc487d4-6508-43e3-b506-38ffe0319d93",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "24.54998779296875,25.4666748046875"
-    }, {
-      "id": "6a98b0b7-0a99-45c8-9bf2-596173da95eb",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "24.54998779296875,25.4666748046875"
-    }, {
-      "id": "2796d9ba-b699-481a-994f-0976627dbf09",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "24.54998779296875,25.4666748046875"
-    }, {
-      "id": "ef4970ce-3e8f-4dad-9c65-30923a366e9e",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "89798be8-c710-4c99-8d48-5eeac08684c2",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i88d8d7c86d93bc286b430c3ce0e4c498']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034789/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "46.41668701171875,18.48333740234375"
-    }, {
-      "id": "65c42b9b-567b-4f96-9dc2-484a2cf78b84",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i88d8d7c86d93bc286b430c3ce0e4c498']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034789/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "46.41668701171875,18.48333740234375"
-    }, {
-      "id": "301bb61b-4201-4559-82c3-26bea6f31235",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i88d8d7c86d93bc286b430c3ce0e4c498']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034789/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "46.41668701171875,18.48333740234375"
-    }, {
-      "id": "af98abdc-3023-42fd-b059-d1f8e14c6390",
-      "comment": "",
-      "command": "click",
-      "target": "css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i88d8d7c86d93bc286b430c3ce0e4c498 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i88d8d7c86d93bc286b430c3ce0e4c498']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034789/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "a7e73a14-84d4-4916-889e-0251474c9b8c",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i18b8485d80cd9338d40814c80319806a']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "75.5,11.066665649414062"
-    }, {
-      "id": "6c9be201-1d02-4ff3-b31b-ed02e0ab2d55",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i18b8485d80cd9338d40814c80319806a']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "75.5,11.066665649414062"
-    }, {
-      "id": "bae287ba-5e5f-4e1a-999e-0cbfee0a6e6c",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i18b8485d80cd9338d40814c80319806a']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "75.5,11.066665649414062"
-    }, {
-      "id": "f20608ba-e82b-4ed9-aab6-a036039182c9",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i18b8485d80cd9338d40814c80319806a']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "0163a58d-a1eb-4d37-984a-e0766ac6964d",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=tr:nth-child(3) .far",
-      "targets": [
-        ["css=tr:nth-child(3) .far", "css:finder"],
-        ["xpath=//div[@id='i8b8e558803b4125865dd454768b89658']/div/table/tbody/tr[3]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[3]/td/span/i", "xpath:position"]
-      ],
-      "value": "6.5,8.7166748046875"
-    }, {
-      "id": "0f74717d-a47e-427f-b565-0cf10250c0b5",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=tr:nth-child(3) .far",
-      "targets": [
-        ["css=tr:nth-child(3) .far", "css:finder"],
-        ["xpath=//div[@id='i8b8e558803b4125865dd454768b89658']/div/table/tbody/tr[3]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[3]/td/span/i", "xpath:position"]
-      ],
-      "value": "6.5,8.7166748046875"
-    }, {
-      "id": "8e430f3f-f6a6-4a66-8d90-2855ec933571",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=tr:nth-child(3) .far",
-      "targets": [
-        ["css=tr:nth-child(3) .far", "css:finder"],
-        ["xpath=//div[@id='i8b8e558803b4125865dd454768b89658']/div/table/tbody/tr[3]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[3]/td/span/i", "xpath:position"]
-      ],
-      "value": "6.5,8.7166748046875"
-    }, {
-      "id": "61f2db39-0e1d-4679-a894-ecfab28382e9",
-      "comment": "",
-      "command": "click",
-      "target": "css=tr:nth-child(3) .far",
-      "targets": [
-        ["css=tr:nth-child(3) .far", "css:finder"],
-        ["xpath=//div[@id='i8b8e558803b4125865dd454768b89658']/div/table/tbody/tr[3]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[3]/td/span/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "946b8a0e-3da5-487b-afd1-6cacce3e15f4",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "43.316650390625,18.066650390625"
-    }, {
-      "id": "204beedb-f91c-4874-9dd9-750936b530f1",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "43.316650390625,18.066650390625"
-    }, {
-      "id": "b91a986f-fc1d-455a-bfe8-e7b4dcc24f3e",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "43.316650390625,18.066650390625"
-    }, {
-      "id": "8738acbe-2dfb-4022-be7f-0e620ab5bd7f",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "66ef3fd8-32f4-4835-8937-8b077f2c7181",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034789')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "39.33331298828125,23.066650390625"
-    }, {
-      "id": "9b85e26b-62e7-4ecd-a95e-62defa1e1506",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034789')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "39.33331298828125,23.066650390625"
-    }, {
-      "id": "ecc8125a-3989-4209-812f-6c3bf8386839",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034789')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "39.33331298828125,23.066650390625"
-    }, {
-      "id": "f4e64f7a-7edb-43fb-9b00-0b23b9b5984e",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034789')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "09263d55-b1c5-4f2d-9ace-59a058977a47",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": "105,24.199996948242188"
-    }, {
-      "id": "e41c0d62-df32-4ae8-bb77-adf991baa82b",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": "105,24.199996948242188"
-    }, {
-      "id": "664ba875-4309-4d8e-bceb-dba9ab5702cc",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": "105,24.199996948242188"
-    }, {
-      "id": "548f268b-e9e1-4002-ad60-73909eda0dc8",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "86f2b987-f35a-4026-83cc-4553adbe515e",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "30.5,18.466659545898438"
-    }, {
-      "id": "3c4ddc9a-038b-4d5c-8339-6496f5389d19",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "30.5,18.466659545898438"
-    }, {
-      "id": "bee5e04c-8883-4a55-b10f-84d82b1d70c6",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "30.5,18.466659545898438"
-    }, {
-      "id": "3488ffa1-7566-4b9e-bff3-de886afcde05",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "4f0a6046-349c-487d-89a3-bc48c3421343",
-      "comment": "",
-      "command": "type",
-      "target": "id=inp_sqms2_Syllabus_titel",
-      "targets": [
-        ["id=inp_sqms2_Syllabus_titel", "id"],
-        ["name=sqms2_Syllabus_titel", "name"],
-        ["css=#inp_sqms2_Syllabus_titel", "css:finder"],
-        ["xpath=//textarea[@id='inp_sqms2_Syllabus_titel']", "xpath:attributes"],
-        ["xpath=//form[@id='i6b18323821c6726805583b53d1083446']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form[@id='idc880e48dfc89188038852482098f948']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "Syllabus 2"
     }, {
-      "id": "801dc3bd-be23-4747-831f-1d25e1fe3011",
+      "id": "ad2e2772-e75c-41ba-a951-470cd98ab211",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fac47cc1-3b65-40fe-84f7-197041ee3070",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[8]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "99aa3c1d-ad6b-4130-bbdd-dca5ab121094",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
+        ["xpath=//form/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "29dd1881-cc8c-4ac1-bbb0-886243800a8f",
       "comment": "",
       "command": "type",
       "target": "id=inp_sqms2_Syllabus_titel",
@@ -819,1181 +393,121 @@
         ["name=sqms2_Syllabus_titel", "name"],
         ["css=#inp_sqms2_Syllabus_titel", "css:finder"],
         ["xpath=//textarea[@id='inp_sqms2_Syllabus_titel']", "xpath:attributes"],
-        ["xpath=//form[@id='i6b18323821c6726805583b53d1083446']/div/div/textarea", "xpath:idRelative"],
-        ["xpath=//textarea", "xpath:position"]
-      ],
-      "value": "Syllabus 2"
-    }, {
-      "id": "401a56e7-8fd8-4964-943b-b1883bc421bf",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "45.54998779296875,12.4666748046875"
-    }, {
-      "id": "edf17b06-7da9-4547-b26f-216a97c17adb",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "45.54998779296875,12.4666748046875"
-    }, {
-      "id": "1fac0ec5-997a-4812-908d-c940f5d1f419",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "45.54998779296875,12.4666748046875"
-    }, {
-      "id": "73f3de21-eeba-4826-979c-22e5a1982e58",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "55595828-20ea-441d-b5f6-c442f1cc93c2",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "id=page-content-wrapper",
-      "targets": [
-        ["id=page-content-wrapper", "id"],
-        ["css=#page-content-wrapper", "css:finder"],
-        ["xpath=//div[@id='page-content-wrapper']", "xpath:attributes"],
-        ["xpath=//div[@id='wrapper']/div[2]", "xpath:idRelative"],
-        ["xpath=//main/div/div[2]", "xpath:position"]
-      ],
-      "value": "274,526"
-    }, {
-      "id": "7fac81b7-c911-4d38-97ee-1bba91818bbe",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "id=page-content-wrapper",
-      "targets": [
-        ["id=page-content-wrapper", "id"],
-        ["css=#page-content-wrapper", "css:finder"],
-        ["xpath=//div[@id='page-content-wrapper']", "xpath:attributes"],
-        ["xpath=//div[@id='wrapper']/div[2]", "xpath:idRelative"],
-        ["xpath=//main/div/div[2]", "xpath:position"]
-      ],
-      "value": "274,526"
-    }, {
-      "id": "c59501fa-e349-4c1b-9561-ca5a2ecb721a",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "id=page-content-wrapper",
-      "targets": [
-        ["id=page-content-wrapper", "id"],
-        ["css=#page-content-wrapper", "css:finder"],
-        ["xpath=//div[@id='page-content-wrapper']", "xpath:attributes"],
-        ["xpath=//div[@id='wrapper']/div[2]", "xpath:idRelative"],
-        ["xpath=//main/div/div[2]", "xpath:position"]
-      ],
-      "value": "274,526"
-    }, {
-      "id": "82825f77-d376-406b-b9a7-722b5d89e88e",
-      "comment": "",
-      "command": "click",
-      "target": "id=page-content-wrapper",
-      "targets": [
-        ["id=page-content-wrapper", "id"],
-        ["css=#page-content-wrapper", "css:finder"],
-        ["xpath=//div[@id='page-content-wrapper']", "xpath:attributes"],
-        ["xpath=//div[@id='wrapper']/div[2]", "xpath:idRelative"],
-        ["xpath=//main/div/div[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "39ed0cfe-e9f0-41b2-85e7-e7be27f4c07f",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ia8789ca911186052b708e0c869684fc8']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034790/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "36.41668701171875,22.48333740234375"
-    }, {
-      "id": "ffd20dfc-b2be-4bfb-8a48-14a1a37512ce",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ia8789ca911186052b708e0c869684fc8']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034790/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "36.41668701171875,22.48333740234375"
-    }, {
-      "id": "7a650c8f-643d-4408-a510-bb726809aabf",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ia8789ca911186052b708e0c869684fc8']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034790/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "36.41668701171875,22.48333740234375"
-    }, {
-      "id": "cbe1ebce-6445-49d7-8870-9cdf1f9fad65",
-      "comment": "",
-      "command": "click",
-      "target": "css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ia8789ca911186052b708e0c869684fc8 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ia8789ca911186052b708e0c869684fc8']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034790/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "fb3f6d5b-6434-45be-9bbd-411827b488f6",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i20b85ef868c3c98e4c5794d7f84fd711']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "59.5,14.066665649414062"
-    }, {
-      "id": "d64a91f1-45eb-4f6c-b289-5e8fb5ace7bf",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i20b85ef868c3c98e4c5794d7f84fd711']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "59.5,14.066665649414062"
-    }, {
-      "id": "e1c99bdc-0b99-4265-9f5e-d4c1703e03d2",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i20b85ef868c3c98e4c5794d7f84fd711']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "59.5,14.066665649414062"
-    }, {
-      "id": "473702b2-c72a-4882-ad9a-8430e5d232f7",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i20b85ef868c3c98e4c5794d7f84fd711']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "84bedd68-6e3b-49b9-8634-ef311ca30457",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i2978a5b42f6986aff81c57f2d0a8fad8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "5.5,6.9166717529296875"
-    }, {
-      "id": "15211130-5ffb-462b-80b2-2a6f0e7d2800",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i2978a5b42f6986aff81c57f2d0a8fad8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "5.5,6.9166717529296875"
-    }, {
-      "id": "8f70fa18-4bd7-4822-b377-13502f81401b",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i2978a5b42f6986aff81c57f2d0a8fad8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "5.5,6.9166717529296875"
-    }, {
-      "id": "fc6b78f9-b314-4e57-ba17-519ea5ccc9cb",
-      "comment": "",
-      "command": "click",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i2978a5b42f6986aff81c57f2d0a8fad8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "723f2513-db01-4965-8953-105c2d4178f0",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "27.316650390625,23.066650390625"
-    }, {
-      "id": "f514092f-ec91-4fb4-8291-3cdabeb131a9",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "27.316650390625,23.066650390625"
-    }, {
-      "id": "bd2d5b38-e442-4561-9765-f4cd683aabc2",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "27.316650390625,23.066650390625"
-    }, {
-      "id": "45733e22-b915-420f-9552-a1d70c73142e",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "a00a8a47-e349-4256-a64e-962770300691",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "29.33331298828125,21.066650390625"
-    }, {
-      "id": "1b082de5-5016-4d4f-9df1-3bb7166399db",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "29.33331298828125,21.066650390625"
-    }, {
-      "id": "8a3f7b8c-f51b-45d1-b464-d64c2d9d4d0b",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "29.33331298828125,21.066650390625"
-    }, {
-      "id": "d084c154-53d7-4eba-9840-8120c15bd49e",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "9c1d5997-c26b-4e46-a1bb-eaeefe49e32a",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=.ml-2 > .fa",
-      "targets": [
-        ["css=.ml-2 > .fa", "css:finder"],
-        ["xpath=//div[@id='i59b80baa6b48428106583e5868780bc8']/div/table/thead/tr/th/a[2]/i", "xpath:idRelative"],
-        ["xpath=//th/a[2]/i", "xpath:position"]
-      ],
-      "value": "7.29998779296875,5.383331298828125"
-    }, {
-      "id": "05a5cb64-f337-4ca2-8bef-81d90ee7ed10",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=.ml-2 > .fa",
-      "targets": [
-        ["css=.ml-2 > .fa", "css:finder"],
-        ["xpath=//div[@id='i59b80baa6b48428106583e5868780bc8']/div/table/thead/tr/th/a[2]/i", "xpath:idRelative"],
-        ["xpath=//th/a[2]/i", "xpath:position"]
-      ],
-      "value": "7.29998779296875,5.383331298828125"
-    }, {
-      "id": "ed3b5359-c24a-4b39-a214-32b372534fc7",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=.ml-2 > .fa",
-      "targets": [
-        ["css=.ml-2 > .fa", "css:finder"],
-        ["xpath=//div[@id='i59b80baa6b48428106583e5868780bc8']/div/table/thead/tr/th/a[2]/i", "xpath:idRelative"],
-        ["xpath=//th/a[2]/i", "xpath:position"]
-      ],
-      "value": "7.29998779296875,5.383331298828125"
-    }, {
-      "id": "f085de5f-14e9-41bb-8232-c2807242a839",
-      "comment": "",
-      "command": "click",
-      "target": "css=.ml-2 > .fa",
-      "targets": [
-        ["css=.ml-2 > .fa", "css:finder"],
-        ["xpath=//div[@id='i59b80baa6b48428106583e5868780bc8']/div/table/thead/tr/th/a[2]/i", "xpath:idRelative"],
-        ["xpath=//th/a[2]/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "62eb12e2-6e73-4d9f-a070-950927aa613b",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i0a9856e81213165caf187d08f17b0ec8']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "46.5,12.066665649414062"
-    }, {
-      "id": "14ad833a-65dd-4032-bae0-ebc9e53882b6",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i0a9856e81213165caf187d08f17b0ec8']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "46.5,12.066665649414062"
-    }, {
-      "id": "0f869eb7-0b4a-45f5-80ba-dda6d0a22613",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i0a9856e81213165caf187d08f17b0ec8']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "46.5,12.066665649414062"
-    }, {
-      "id": "1b02c3b0-df55-4269-9854-46227de82451",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i0a9856e81213165caf187d08f17b0ec8']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "a2040cb8-f570-4ab5-8e95-2a621dbc1666",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=tr:nth-child(2) .far",
-      "targets": [
-        ["css=tr:nth-child(2) .far", "css:finder"],
-        ["xpath=//div[@id='i680fe1382968aa5896486a383bb8fe52']/div/table/tbody/tr[2]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[2]/td/span/i", "xpath:position"]
-      ],
-      "value": "8.5,7.8166656494140625"
-    }, {
-      "id": "7cab283b-9d5c-4bbd-9474-5170528b97a7",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=tr:nth-child(2) .far",
-      "targets": [
-        ["css=tr:nth-child(2) .far", "css:finder"],
-        ["xpath=//div[@id='i680fe1382968aa5896486a383bb8fe52']/div/table/tbody/tr[2]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[2]/td/span/i", "xpath:position"]
-      ],
-      "value": "8.5,7.8166656494140625"
-    }, {
-      "id": "24d44b38-8975-486b-a127-32dd2e91c285",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=tr:nth-child(2) .far",
-      "targets": [
-        ["css=tr:nth-child(2) .far", "css:finder"],
-        ["xpath=//div[@id='i680fe1382968aa5896486a383bb8fe52']/div/table/tbody/tr[2]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[2]/td/span/i", "xpath:position"]
-      ],
-      "value": "8.5,7.8166656494140625"
-    }, {
-      "id": "2c78d221-4821-4c40-bda1-470dbe3e1cd5",
-      "comment": "",
-      "command": "click",
-      "target": "css=tr:nth-child(2) .far",
-      "targets": [
-        ["css=tr:nth-child(2) .far", "css:finder"],
-        ["xpath=//div[@id='i680fe1382968aa5896486a383bb8fe52']/div/table/tbody/tr[2]/td/span/i", "xpath:idRelative"],
-        ["xpath=//tr[2]/td/span/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "5a76a552-4af1-4070-acbf-98ce7a973ec1",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "29.316650390625,16.066650390625"
-    }, {
-      "id": "7ca75b83-e161-4cb2-a320-22f53468e011",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "29.316650390625,16.066650390625"
-    }, {
-      "id": "198839b6-58a0-4f20-acb4-d39f7fbe096e",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "29.316650390625,16.066650390625"
-    }, {
-      "id": "fa1b205d-a0a8-4f0b-a3a2-4b769afd0fe4",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "72e2d7a9-d59a-4a24-a40e-adf4a375387d",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "38.33331298828125,18.066650390625"
-    }, {
-      "id": "cd7d1bca-5b44-47ea-a3ea-3cf8f39027c8",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "38.33331298828125,18.066650390625"
-    }, {
-      "id": "5035ba56-c232-43aa-b74c-75fcb87dd342",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "38.33331298828125,18.066650390625"
-    }, {
-      "id": "b81b70d5-f8f8-4962-a97d-d427886854af",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034790')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "44b61cff-27fd-4593-8518-4b236fbb6bbb",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=.form-group:nth-child(6) > .col-sm-2",
-      "targets": [
-        ["css=.form-group:nth-child(6) > .col-sm-2", "css:finder"],
-        ["xpath=//form[@id='i646730ebcc2828f1f7d8fd28f0313721']/div[6]/label", "xpath:idRelative"],
-        ["xpath=//div[6]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Topic')]", "xpath:innerText"]
-      ],
-      "value": "109,102.48333740234375"
-    }, {
-      "id": "c92d2319-73fa-44f6-b8fa-90ebf1195dcd",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=.form-group:nth-child(6) > .col-sm-2",
-      "targets": [
-        ["css=.form-group:nth-child(6) > .col-sm-2", "css:finder"],
-        ["xpath=//form[@id='i646730ebcc2828f1f7d8fd28f0313721']/div[6]/label", "xpath:idRelative"],
-        ["xpath=//div[6]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Topic')]", "xpath:innerText"]
-      ],
-      "value": "109,102.48333740234375"
-    }, {
-      "id": "0f539f77-e481-41d0-ab33-3236e545f13f",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=.form-group:nth-child(6) > .col-sm-2",
-      "targets": [
-        ["css=.form-group:nth-child(6) > .col-sm-2", "css:finder"],
-        ["xpath=//form[@id='i646730ebcc2828f1f7d8fd28f0313721']/div[6]/label", "xpath:idRelative"],
-        ["xpath=//div[6]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Topic')]", "xpath:innerText"]
-      ],
-      "value": "109,102.48333740234375"
-    }, {
-      "id": "adb4625b-8b98-4b1b-a313-00a067de9d26",
-      "comment": "",
-      "command": "click",
-      "target": "css=.form-group:nth-child(6) > .col-sm-2",
-      "targets": [
-        ["css=.form-group:nth-child(6) > .col-sm-2", "css:finder"],
-        ["xpath=//form[@id='i646730ebcc2828f1f7d8fd28f0313721']/div[6]/label", "xpath:idRelative"],
-        ["xpath=//div[6]/label", "xpath:position"],
-        ["xpath=//label[contains(.,'Topic')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "f2271e56-cc1b-4c33-930f-cfaa94952d16",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=h2",
-      "targets": [
-        ["css=h2", "css:finder"],
-        ["xpath=//div[@id='app']/div/h2", "xpath:idRelative"],
-        ["xpath=//h2", "xpath:position"],
-        ["xpath=//h2[contains(.,' Syllabusnew')]", "xpath:innerText"]
-      ],
-      "value": "519,3.5"
-    }, {
-      "id": "52d4d86a-31f3-4619-b4a5-409d1583cdcf",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=h2",
-      "targets": [
-        ["css=h2", "css:finder"],
-        ["xpath=//div[@id='app']/div/h2", "xpath:idRelative"],
-        ["xpath=//h2", "xpath:position"],
-        ["xpath=//h2[contains(.,' Syllabusnew')]", "xpath:innerText"]
-      ],
-      "value": "519,3.5"
-    }, {
-      "id": "8ce298bf-95e1-478a-9130-f84ad221872e",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=h2",
-      "targets": [
-        ["css=h2", "css:finder"],
-        ["xpath=//div[@id='app']/div/h2", "xpath:idRelative"],
-        ["xpath=//h2", "xpath:position"],
-        ["xpath=//h2[contains(.,' Syllabusnew')]", "xpath:innerText"]
-      ],
-      "value": "519,3.5"
-    }, {
-      "id": "7b5b5e30-9d24-4b57-a5c3-f4fbb411ec6c",
-      "comment": "",
-      "command": "click",
-      "target": "css=h2",
-      "targets": [
-        ["css=h2", "css:finder"],
-        ["xpath=//div[@id='app']/div/h2", "xpath:idRelative"],
-        ["xpath=//h2", "xpath:position"],
-        ["xpath=//h2[contains(.,' Syllabusnew')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "eb64155b-be21-4cd5-b894-dbbbfde40cbd",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": "104,21.199996948242188"
-    }, {
-      "id": "e9da68fb-c8f2-41f9-8f03-6e7a7c289385",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": "104,21.199996948242188"
-    }, {
-      "id": "57f9b35e-a334-4c15-9fae-0dcfacb50a0a",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": "104,21.199996948242188"
-    }, {
-      "id": "9af2ff16-1673-4bc7-8bf4-e410736b07d3",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "96a357d6-900b-41bb-823b-8e0288d6236a",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "48.5,27.466659545898438"
-    }, {
-      "id": "d0c4aad9-e22b-4d5d-9d40-b24fa9242527",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "48.5,27.466659545898438"
-    }, {
-      "id": "13380c56-c269-4d94-881b-d5667560556d",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "48.5,27.466659545898438"
-    }, {
-      "id": "7fe0e307-84be-4875-adfb-9f0dcf982683",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
-        ["xpath=//form/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "50d8e829-e743-4b07-b250-73a378120a12",
-      "comment": "",
-      "command": "type",
-      "target": "id=inp_sqms2_Syllabus_titel",
-      "targets": [
-        ["id=inp_sqms2_Syllabus_titel", "id"],
-        ["name=sqms2_Syllabus_titel", "name"],
-        ["css=#inp_sqms2_Syllabus_titel", "css:finder"],
-        ["xpath=//textarea[@id='inp_sqms2_Syllabus_titel']", "xpath:attributes"],
-        ["xpath=//form[@id='i4ad35e63cd9866d8eb7831fcddf8c52f']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//form[@id='if8786d1832d150e1a6753347043107b6']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
       "value": "Syllabus 3"
     }, {
-      "id": "d34dcc2f-21ba-4299-a61b-1d5ed80ab0f3",
+      "id": "a9dfd756-22d4-4eee-a424-099ba8a8a72c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb19f513-6b1a-4391-b195-96dbdfaa848c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[8]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7bc6e27b-b2f7-40b5-b14c-93f3262d1a99",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "328d6319-0640-4d64-803c-04ffe3eb5555",
+    "name": "1.1) Activate Topics",
+    "commands": [{
+      "id": "14f570ae-59f2-4ec0-bf25-54a810ad5c0a",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fabce268-5967-4c5b-9593-ec2f3f21e4bc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0ae2ca8d-100d-4f1b-955e-1741c55c8e61",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Topic",
+      "targets": [
+        ["linkText=Topic", "linkText"],
+        ["css=.link-sqms2_topic", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[4]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_topic')]", "xpath:href"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Topic')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "84ef2ebe-70ad-46d3-9a45-6f6819877928",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .far",
+      "targets": [
+        ["css=tr:nth-child(1) .far", "css:finder"],
+        ["xpath=//div[@id='i6858f6a809d3b7ed1becbb581079deab']/div/table/tbody/tr/td/a/i", "xpath:idRelative"],
+        ["xpath=//td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36aa7e41-5ddb-471e-a6da-e94a350c48fe",
       "comment": "",
       "command": "type",
-      "target": "id=inp_sqms2_Syllabus_titel",
+      "target": "id=inp_sqms2_Topic_title",
       "targets": [
-        ["id=inp_sqms2_Syllabus_titel", "id"],
-        ["name=sqms2_Syllabus_titel", "name"],
-        ["css=#inp_sqms2_Syllabus_titel", "css:finder"],
-        ["xpath=//textarea[@id='inp_sqms2_Syllabus_titel']", "xpath:attributes"],
-        ["xpath=//form[@id='i4ad35e63cd9866d8eb7831fcddf8c52f']/div/div/textarea", "xpath:idRelative"],
+        ["id=inp_sqms2_Topic_title", "id"],
+        ["name=sqms2_Topic_title", "name"],
+        ["css=#inp_sqms2_Topic_title", "css:finder"],
+        ["xpath=//textarea[@id='inp_sqms2_Topic_title']", "xpath:attributes"],
+        ["xpath=//form[@id='i9bbdf41b46885a385c78b4c89f4b5428']/div/div/textarea", "xpath:idRelative"],
         ["xpath=//textarea", "xpath:position"]
       ],
-      "value": "Syllabus 3"
+      "value": "Topic three"
     }, {
-      "id": "5351f12b-408b-4d12-afb9-27dbff346fcb",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "39.54998779296875,31.4666748046875"
-    }, {
-      "id": "9da8d278-2fb7-4145-9cf6-dbeeaf92cfb2",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "39.54998779296875,31.4666748046875"
-    }, {
-      "id": "7cb980ee-e321-405d-b547-bce6334b27e5",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": "39.54998779296875,31.4666748046875"
-    }, {
-      "id": "9d1ef41e-997a-4559-8ccc-614efa3a6498",
+      "id": "b579f66f-173f-490e-a1ac-c914212eae72",
       "comment": "",
       "command": "click",
-      "target": "linkText=Create",
+      "target": "linkText=active",
       "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "91025280-91ac-4a98-8511-b2c2017e7a47",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i6088d818cbb8b278e2d7ed2f3b08efd3']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "70.41668701171875,21.48333740234375"
-    }, {
-      "id": "5d9e238f-6892-4d55-abfd-6aa23a07b059",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i6088d818cbb8b278e2d7ed2f3b08efd3']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "70.41668701171875,21.48333740234375"
-    }, {
-      "id": "a7955278-a00b-42eb-99fa-5ea3a14c6f2c",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i6088d818cbb8b278e2d7ed2f3b08efd3']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "70.41668701171875,21.48333740234375"
-    }, {
-      "id": "c09ad6ae-cdce-4e42-a437-fface5698e2f",
-      "comment": "",
-      "command": "click",
-      "target": "css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)",
-      "targets": [
-        ["css=#i6088d818cbb8b278e2d7ed2f3b08efd3 > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='i6088d818cbb8b278e2d7ed2f3b08efd3']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "78212482-6ec9-4f10-9b7c-461d038d392c",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='if0715ebea8686b3855d96d3845a8cf88']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "94.5,11.066665649414062"
-    }, {
-      "id": "2f5460d4-5826-417f-b16a-7ffbf4dbe594",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='if0715ebea8686b3855d96d3845a8cf88']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "94.5,11.066665649414062"
-    }, {
-      "id": "c0bb21bd-1f0c-44c0-8738-d3aa5b765d28",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='if0715ebea8686b3855d96d3845a8cf88']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": "94.5,11.066665649414062"
-    }, {
-      "id": "99d0c019-6182-404a-aaad-ca0e397db821",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='if0715ebea8686b3855d96d3845a8cf88']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "866be838-cfad-4da4-9bdd-7134729d8ad4",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='ia5a8be1870b8d9534411c95629f8f0b8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "3.5,8.916671752929688"
-    }, {
-      "id": "c9046c02-6c03-4731-bc4a-afb670d2884c",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='ia5a8be1870b8d9534411c95629f8f0b8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "3.5,8.916671752929688"
-    }, {
-      "id": "caedebbb-4e8c-410b-aa41-b4ad6776da03",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='ia5a8be1870b8d9534411c95629f8f0b8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "3.5,8.916671752929688"
-    }, {
-      "id": "c1536469-d619-4caa-a464-a74955c9f38f",
-      "comment": "",
-      "command": "click",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='ia5a8be1870b8d9534411c95629f8f0b8']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "5f1dc4ab-209e-4e4a-8b97-1beb3b3c62c6",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
+        ["linkText=active", "linkText"],
+        ["css=.btnEnabled", "css:finder"],
+        ["xpath=//a[contains(text(),'active')]", "xpath:link"],
+        ["xpath=//span[@id='nextstates']/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[9]", "xpath:href"],
         ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+        ["xpath=//a[contains(.,'active')]", "xpath:innerText"]
       ],
-      "value": "31.33331298828125,31.066665649414062"
+      "value": ""
     }, {
-      "id": "75a57bda-7147-43be-823a-a2fca994fc82",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "31.33331298828125,31.066665649414062"
-    }, {
-      "id": "35f85d3b-f301-44c4-b481-de73cec0c650",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "31.33331298828125,31.066665649414062"
-    }, {
-      "id": "47e218d4-b566-477d-81ae-e985eaf18eb4",
+      "id": "a4d2f709-718a-4fbd-908a-570fa2bf75b5",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
@@ -2001,114 +515,129 @@
         ["linkText=Back", "linkText"],
         ["css=.btn-light", "css:finder"],
         ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_topic')])[2]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "b9fb6609-30cd-4f94-8e2c-e5aa6324bbcc",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ieac798d80c4849982544e7d83b48ad5f']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "40.41668701171875,10.48333740234375"
-    }, {
-      "id": "23fc1035-79ed-4ea6-ac83-69cfc35dfa20",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ieac798d80c4849982544e7d83b48ad5f']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "40.41668701171875,10.48333740234375"
-    }, {
-      "id": "a1697968-8574-45fe-9eea-fc779711658c",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)",
-      "targets": [
-        ["css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ieac798d80c4849982544e7d83b48ad5f']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": "40.41668701171875,10.48333740234375"
-    }, {
-      "id": "b6953e7e-e2a4-4304-a160-56e5a50a6334",
+      "id": "776d39c9-bd7a-4729-b3e2-1617131037f2",
       "comment": "",
       "command": "click",
-      "target": "css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)",
+      "target": "css=.state7478",
       "targets": [
-        ["css=#ieac798d80c4849982544e7d83b48ad5f > .btn:nth-child(3)", "css:finder"],
-        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
-        ["xpath=//div[@id='ieac798d80c4849982544e7d83b48ad5f']/a[2]", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034791/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
-        ["xpath=//div[6]/div/div/a[2]", "xpath:position"]
+        ["css=.state7478", "css:finder"],
+        ["xpath=//div[@id='icdf81208272806f7dfbf349884b81f78']/div/table/tbody/tr/td[3]/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'active')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "f56e18c1-7ba3-405b-9a02-5194ebc8600d",
+      "id": "b2440ff6-cdbf-42a9-ac0d-34917fc215b1",
       "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Nothing selected",
+      "command": "click",
+      "target": "linkText=update",
       "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i1b2c8f182f28cb788a1846b48c55a468']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
+        ["linkText=update", "linkText"],
+        ["css=.state7479", "css:finder"],
+        ["xpath=//a[contains(text(),'update')]", "xpath:link"],
+        ["xpath=//div[@id='icdf81208272806f7dfbf349884b81f78']/div/table/tbody/tr/td[3]/div/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, 'javascript:void(0)')])[2]", "xpath:href"],
+        ["xpath=//td[3]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'update')]", "xpath:innerText"]
       ],
-      "value": "76.5,7.0666656494140625"
+      "value": ""
     }, {
-      "id": "32fbc57c-3076-41c4-951f-9ff05aac3c3b",
+      "id": "191a5da9-64c2-4cfd-a9d9-ad6f33c65347",
       "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Nothing selected",
+      "command": "click",
+      "target": "css=.state7479",
       "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i1b2c8f182f28cb788a1846b48c55a468']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
+        ["css=.state7479", "css:finder"],
+        ["xpath=//div[@id='icdf81208272806f7dfbf349884b81f78']/div/table/tbody/tr/td[3]/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'update')]", "xpath:innerText"]
       ],
-      "value": "76.5,7.0666656494140625"
+      "value": ""
     }, {
-      "id": "44760e32-424f-4edd-953b-984520fd181a",
+      "id": "ef6c64ad-b10a-4e44-9b8b-4729da123b7c",
       "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Nothing selected",
+      "command": "click",
+      "target": "linkText=active",
       "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i1b2c8f182f28cb788a1846b48c55a468']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
+        ["linkText=active", "linkText"],
+        ["css=.state7478", "css:finder"],
+        ["xpath=//a[contains(text(),'active')]", "xpath:link"],
+        ["xpath=//div[@id='icdf81208272806f7dfbf349884b81f78']/div/table/tbody/tr/td[3]/div/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, 'javascript:void(0)')])[2]", "xpath:href"],
+        ["xpath=//td[3]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'active')]", "xpath:innerText"]
       ],
-      "value": "76.5,7.0666656494140625"
+      "value": ""
     }, {
-      "id": "7dc36691-45c8-465a-91e9-bb522039fded",
+      "id": "53285bb8-1d86-4b65-b87c-7eb1fbd832dd",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "b88c1c07-c5ee-4c83-8d1d-95091b4e19de",
+    "name": "2.1) Relate Syllabi with Topics + Mistake",
+    "commands": [{
+      "id": "11e140d1-66ea-4b92-bdb1-4d7654dbb4a1",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bac88c67-594f-4012-92a4-8e2ef46c9429",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eafbb791-88f9-4f54-b5b7-12243b9ec2b2",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d3a7b5a1-cbc6-4f3d-91e0-d3c9ee67c4ec",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4891548d-69c6-4889-99be-7319bf15b252",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(9) .btn:last-child",
+      "targets": [
+        ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
+        ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "20445534-0254-403f-9092-815bd8a0feee",
       "comment": "",
       "command": "click",
       "target": "linkText=Nothing selected",
@@ -2117,103 +646,25 @@
         ["css=.text-decoration-none", "css:finder"],
         ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
         ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i1b2c8f182f28cb788a1846b48c55a468']/div[2]/div/div/a", "xpath:idRelative"],
+        ["xpath=//form[@id='i3b68dad8943511786bf8e6856895b308']/div[2]/div/div/a", "xpath:idRelative"],
         ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
         ["xpath=//div[2]/div/div/a", "xpath:position"],
         ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "e8796147-4a63-4f37-bfd9-68ea529ac887",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i10988439752876b5e7eb3de8480d8b9d']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "9.5,10.916671752929688"
-    }, {
-      "id": "cee132dd-3460-4fa7-824a-893167337b07",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i10988439752876b5e7eb3de8480d8b9d']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "9.5,10.916671752929688"
-    }, {
-      "id": "20b52049-7644-4ca4-af95-1f6ad637e87c",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "css=tr:nth-child(1) .far",
-      "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i10988439752876b5e7eb3de8480d8b9d']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
-      ],
-      "value": "9.5,10.916671752929688"
-    }, {
-      "id": "5d804c92-67b3-4079-8497-e9eda43637ae",
+      "id": "3f164c7d-9483-433d-9a4e-e0925e049215",
       "comment": "",
       "command": "click",
-      "target": "css=tr:nth-child(1) .far",
+      "target": "css=tr:nth-child(3) .far",
       "targets": [
-        ["css=tr:nth-child(1) .far", "css:finder"],
-        ["xpath=//div[@id='i10988439752876b5e7eb3de8480d8b9d']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
-        ["xpath=//td/span/i", "xpath:position"]
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='ida881d9d1fa8b38865cd9a2b9ab8b5a8']/div/table/tbody/tr[3]/td/span/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/span/i", "xpath:position"]
       ],
       "value": ""
     }, {
-      "id": "654cf2de-b9d6-427d-bcc7-7969cad134c0",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "42.316650390625,21.066665649414062"
-    }, {
-      "id": "7f6d4207-4b4c-425e-a107-4fb579292860",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "42.316650390625,21.066665649414062"
-    }, {
-      "id": "8d668f46-2e4d-49a8-be2b-3809041b0f59",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Relate",
-      "targets": [
-        ["linkText=Relate", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
-      ],
-      "value": "42.316650390625,21.066665649414062"
-    }, {
-      "id": "002ea191-4bf9-4bb2-8231-a8bca46cec6d",
+      "id": "6f668ebb-0782-492c-9a24-2947e5a5fcdd",
       "comment": "",
       "command": "click",
       "target": "linkText=Relate",
@@ -2228,52 +679,7 @@
       ],
       "value": ""
     }, {
-      "id": "ae2ee5bc-7b54-48c7-97f0-9922176dc520",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "19.33331298828125,24.066665649414062"
-    }, {
-      "id": "d1699d0d-5fc6-40b5-a43f-1ebebd438d78",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "19.33331298828125,24.066665649414062"
-    }, {
-      "id": "8fce4149-dfd3-4ecc-8ad8-aa06e2dfb7a6",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "19.33331298828125,24.066665649414062"
-    }, {
-      "id": "d1549196-a028-4ae6-a726-0ea2dd845469",
+      "id": "8086270e-8c68-4743-8b3d-5bbda3055a74",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
@@ -2282,58 +688,13 @@
         ["css=.btn-light", "css:finder"],
         ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
         ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034791')]", "xpath:href"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/4')]", "xpath:href"],
         ["xpath=//span[2]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
-      "id": "685e43d1-221e-4ce0-b30b-2cd402147f90",
-      "comment": "",
-      "command": "mouseDownAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "16.683349609375,20.383331298828125"
-    }, {
-      "id": "b3a516d9-160d-497e-a012-c2446718ac82",
-      "comment": "",
-      "command": "mouseMoveAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "16.683349609375,20.383331298828125"
-    }, {
-      "id": "c56161c5-74b5-457d-9ebc-a7e493ee8d1c",
-      "comment": "",
-      "command": "mouseUpAt",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": "16.683349609375,20.383331298828125"
-    }, {
-      "id": "025af647-4b4c-4290-bcb9-2adaec684fa5",
+      "id": "8f823fb1-8589-4fdc-96ae-d0825cab2654",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
@@ -2346,17 +707,1053 @@
         ["xpath=//span[3]/a", "xpath:position"],
         ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
       ],
+      "value": ""
+    }, {
+      "id": "226ee434-4fcb-4b72-af03-8fa5abc792f6",
+      "comment": "-- Start to relate Syllabus 2",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .far",
+      "targets": [
+        ["css=tr:nth-child(2) .far", "css:finder"],
+        ["xpath=//div[@id='iff0f44c8aeb87d582218a67cae18df48']/div/table/tbody/tr[2]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[2]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b7eaa5d1-9514-41f0-9be4-f45b105efc4b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(9) .btn:last-child",
+      "targets": [
+        ["css=#i94cad787e18e2b099788b4d62453909c > .btn:nth-child(3)", "css:finder"],
+        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
+        ["xpath=//div[@id='i94cad787e18e2b099788b4d62453909c']/a[2]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034802/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
+        ["xpath=//div[9]/div/div/a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49a295fa-0e41-4e74-b287-0024207faca5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Nothing selected",
+      "targets": [
+        ["linkText=Nothing selected", "linkText"],
+        ["css=.text-decoration-none", "css:finder"],
+        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
+        ["xpath=//form[@id='ie0584548c59509f5606ad1920ee8e2f8']/div[2]/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e8cee394-4e4c-4890-979b-c49524c642e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .far",
+      "targets": [
+        ["css=tr:nth-child(1) .far", "css:finder"],
+        ["xpath=//div[@id='id8765c6837d9865800e83ce84e682d38']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
+        ["xpath=//td/span/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "535d32eb-427c-4921-8379-d475249eaa6d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Relate",
+      "targets": [
+        ["linkText=Relate", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9ec72900-e13f-49c0-82d4-1cadc323c234",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034802')]", "xpath:href"],
+        ["xpath=//span[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "07a717a3-3cad-4a14-93f3-b3def1bf29a8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ml-2 > .fa",
+      "targets": [
+        ["css=.ml-2 > .fa", "css:finder"],
+        ["xpath=//div[@id='ib9681d186c88f8084ab475f89e38bf4c']/div/table/thead/tr/th/a[2]/i", "xpath:idRelative"],
+        ["xpath=//th/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d305a62f-2122-4d3e-b599-d3d20ee14d7d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Nothing selected",
+      "targets": [
+        ["linkText=Nothing selected", "linkText"],
+        ["css=.text-decoration-none", "css:finder"],
+        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
+        ["xpath=//form[@id='id9ce13b858f84ff858dc2498ac38b057']/div[2]/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "888f05c7-e4fe-4747-918f-03e1a551d1bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .far",
+      "targets": [
+        ["css=tr:nth-child(2) .far", "css:finder"],
+        ["xpath=//div[@id='iaab72fdff5798376b35d4488f8b81ae3']/div/table/tbody/tr[2]/td/span/i", "xpath:idRelative"],
+        ["xpath=//tr[2]/td/span/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d2ade7f-ebf9-4317-8caf-ffbbe281e790",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Relate",
+      "targets": [
+        ["linkText=Relate", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8cb8882a-cacd-4dd3-842c-6d8fdc133519",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034802')]", "xpath:href"],
+        ["xpath=//span[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a011ce93-3d78-4988-9694-c4a9c492d38a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[12]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7caabb7c-554c-4049-8dcc-4c77ce4b1737",
+      "comment": "-- Start to relate Syllabus 3",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .far",
+      "targets": [
+        ["css=tr:nth-child(1) .far", "css:finder"],
+        ["xpath=//div[@id='ic8ee4d48e2adbe584fb86568a1a85967']/div/table/tbody/tr/td/a/i", "xpath:idRelative"],
+        ["xpath=//td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e44e40d9-8250-48f5-9e0f-2f0e9fed787e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(9) .btn:last-child",
+      "targets": [
+        ["css=#i512651c839eff968ae0827184b981018 > .btn:nth-child(3)", "css:finder"],
+        ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
+        ["xpath=//div[@id='i512651c839eff968ae0827184b981018']/a[2]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034803/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
+        ["xpath=//div[9]/div/div/a[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2f83e84f-878a-4115-b20a-bb520e9a34fb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Nothing selected",
+      "targets": [
+        ["linkText=Nothing selected", "linkText"],
+        ["css=.text-decoration-none", "css:finder"],
+        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
+        ["xpath=//form[@id='iee983c2805af09a86f85cadd51489cc8']/div[2]/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a907384-a621-433c-9f5f-048f2d1ead3c",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .far",
+      "targets": [
+        ["css=tr:nth-child(1) .far", "css:finder"],
+        ["xpath=//div[@id='ib3c70478daaab94260e80c188cf82641']/div/table/tbody/tr/td/span/i", "xpath:idRelative"],
+        ["xpath=//td/span/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "73fadff3-de8d-4240-90e9-e9ec14fa055d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Relate",
+      "targets": [
+        ["linkText=Relate", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Relate')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Relate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a7bc901-7a26-4601-a812-d6745a2e6f34",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034803')]", "xpath:href"],
+        ["xpath=//span[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9cc9deb6-a801-4507-80ef-8136c354a5e6",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "f25f34fc-4a2d-4b47-969d-82ef97a2fdea",
+    "name": "2.2) S1 - Create first Description",
+    "commands": [{
+      "id": "11a2bf0d-e526-47c1-aaef-546b7b1a6720",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "365490be-e8fa-4777-859f-e848d55436dc",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0b19293-f0c7-409a-a3e2-c581c84ea37a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "00a4350b-208b-4587-8886-3a316650a3f4",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "83218f64-4f53-43e9-b70c-27015f565ea9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(7) .btn:first-child",
+      "targets": [
+        ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
+        ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f92b868c-fa83-4cf8-b477-bd7b869ed172",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='i5688f3d85a68e8983f0869e8e343fbb6']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>Syllabus description 1.1 en</p>"
+    }, {
+      "id": "51d71d28-7c22-49ea-b1f0-469380f45a28",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c96cc8f8-bc65-4b50-89a9-d25a6eb11d5b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d688c2c9-4d94-4806-a2ef-c0838c2e104b",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "4900aa0d-ff11-429c-8a55-509a41d54040",
+    "name": "2.2.1) S1 - Create additional Description",
+    "commands": [{
+      "id": "d44cd78f-d9fe-4341-847d-ea8a5faa7c28",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a08a30e1-bfce-47bc-97be-c10f88e10b50",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "615f4a5a-87a3-46a0-bc32-1dfe3d0c5768",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4412a9bd-3790-42e6-bdfc-ee296ff45601",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d72980b-05a4-4890-a3b8-cb695d1326dc",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(1) > .text-success",
+      "targets": [
+        ["css=a:nth-child(1) > .text-success", "css:finder"],
+        ["xpath=//div[@id='i90381966111947c74228543813aa3733']/div/table/thead/tr/th/a/i", "xpath:idRelative"],
+        ["xpath=//th/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a84a8844-06c4-4114-beaa-cc93c1f14834",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='i2b6d9f6803f846e7e418bade9f6802d8']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>Syllabus Beschreibung 1.1 de</p>"
+    }, {
+      "id": "28002298-4368-4b0d-b1bf-9e45c97484b3",
+      "comment": "",
+      "command": "click",
+      "target": "id=inp_sqms2_language_iso_short",
+      "targets": [
+        ["id=inp_sqms2_language_iso_short", "id"],
+        ["name=sqms2_language_iso_short", "name"],
+        ["css=#inp_sqms2_language_iso_short", "css:finder"],
+        ["xpath=//select[@id='inp_sqms2_language_iso_short']", "xpath:attributes"],
+        ["xpath=//form[@id='i0038a568e028d0c1fc285b88b3338108']/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9b2fbd6d-9b34-4e9a-ae7e-5ab9dd5125e1",
+      "comment": "",
+      "command": "select",
+      "target": "id=inp_sqms2_language_iso_short",
+      "targets": [],
+      "value": "label=DE"
+    }, {
+      "id": "d70bd2a8-7729-422f-8d98-fe5cfa582d85",
+      "comment": "",
+      "command": "click",
+      "target": "css=#inp_sqms2_language_iso_short > option:nth-child(2)",
+      "targets": [
+        ["css=#inp_sqms2_language_iso_short > option:nth-child(2)", "css:finder"],
+        ["xpath=//option[@value='DE']", "xpath:attributes"],
+        ["xpath=//select[@id='inp_sqms2_language_iso_short']/option[2]", "xpath:idRelative"],
+        ["xpath=//div/select/option[2]", "xpath:position"],
+        ["xpath=//option[contains(.,'DE')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c60420a-478f-495f-b59e-e001f7ba9ce3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "52a7d222-5386-498d-9c05-20bbbfda4b93",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f77cb173-b2de-4382-af71-2872a426bd3c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "51ca87fe-7da1-4f9d-ba3a-44f91ba4a76f",
+    "name": "2.3) S2 - Create first Description",
+    "commands": [{
+      "id": "e1c9c7a8-0f09-4f91-b6f0-540638e368da",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e5cb19b-9b13-4842-9d1c-ee3b77e48a15",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e1a77959-da35-4195-85ac-db1568b09564",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd1becd0-c69e-4ea5-985d-c7a3850361f5",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ef07f0e2-f15a-4d56-9c02-894300b3456b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(7) .btn:first-child",
+      "targets": [
+        ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
+        ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4fad555-5554-4583-8aad-4b874aa40546",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='i5688f3d85a68e8983f0869e8e343fbb6']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>Syllabus description 2.1 en</p>"
+    }, {
+      "id": "8e0af640-eadc-4fdb-9a0c-c023236fa6ab",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad66c4fd-a93e-41dc-a79f-50809dd25bde",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7b310f9e-e6ac-4fac-96c6-84558b5d4d59",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "644c748d-4813-4215-be6f-41b7d59bd45b",
+    "name": "2.3.1) S2 - Create additional Description",
+    "commands": [{
+      "id": "61eca1a9-b537-492a-a8f2-795f2826b2ac",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6674dcd0-5653-4d36-bac9-80ef78eda528",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6e65b5cf-4405-4ad8-acee-1b451df9d44c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1b7866a3-21b1-4b71-bf6f-c5caae7fbaa3",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(2) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0227cd7e-768c-4d8d-84b0-5345af6f0c69",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(1) > .text-success",
+      "targets": [
+        ["css=a:nth-child(1) > .text-success", "css:finder"],
+        ["xpath=//div[@id='i90381966111947c74228543813aa3733']/div/table/thead/tr/th/a/i", "xpath:idRelative"],
+        ["xpath=//th/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "688ad6ea-1758-4890-b3e1-e53422071094",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='i2b6d9f6803f846e7e418bade9f6802d8']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>Syllabus Beschreibung 2.2 de</p>"
+    }, {
+      "id": "beb8c772-301b-4666-8d87-eda13cc38487",
+      "comment": "",
+      "command": "click",
+      "target": "id=inp_sqms2_language_iso_short",
+      "targets": [
+        ["id=inp_sqms2_language_iso_short", "id"],
+        ["name=sqms2_language_iso_short", "name"],
+        ["css=#inp_sqms2_language_iso_short", "css:finder"],
+        ["xpath=//select[@id='inp_sqms2_language_iso_short']", "xpath:attributes"],
+        ["xpath=//form[@id='i0038a568e028d0c1fc285b88b3338108']/div[2]/div/select", "xpath:idRelative"],
+        ["xpath=//div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9dd7c1f-62ac-49ed-b624-20e1aef649b2",
+      "comment": "",
+      "command": "select",
+      "target": "id=inp_sqms2_language_iso_short",
+      "targets": [],
+      "value": "label=DE"
+    }, {
+      "id": "16ce42ef-fbcb-426a-8a4d-48ddef1761a9",
+      "comment": "",
+      "command": "click",
+      "target": "css=#inp_sqms2_language_iso_short > option:nth-child(2)",
+      "targets": [
+        ["css=#inp_sqms2_language_iso_short > option:nth-child(2)", "css:finder"],
+        ["xpath=//option[@value='DE']", "xpath:attributes"],
+        ["xpath=//select[@id='inp_sqms2_language_iso_short']/option[2]", "xpath:idRelative"],
+        ["xpath=//div/select/option[2]", "xpath:position"],
+        ["xpath=//option[contains(.,'DE')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "29ea4aaf-aa6b-44ad-9fce-0e3f225b8e06",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8cc5143a-fac1-4c2c-a457-e332556f5e35",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "92bb3fe6-8419-4d1f-a772-f9e378deda92",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "cad258b7-05b5-4397-aea7-bb76a9bfab46",
+    "name": "2.4) S1 - Create first Chapter",
+    "commands": [{
+      "id": "8b82f439-defd-4c59-902a-9d08855cc4f0",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ba57f964-b7f4-4060-ac95-f9a67e2cb240",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "795ee939-aa14-4292-bb6a-1629ab67dd00",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a3f1034f-9f43-417d-bdf5-4fe040d47a07",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "493303a9-c40d-4201-a80e-e23a94f60537",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_titel",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_titel", "id"],
+        ["name=sqms2_SyllabusChapter_titel", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_titel", "css:finder"],
+        ["xpath=//textarea[@id='inp_sqms2_SyllabusChapter_titel']", "xpath:attributes"],
+        ["xpath=//form[@id='i45bba2b80f487e78bc88a573cc88f158']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Syllabus Chapter 1.1"
+    }, {
+      "id": "84d3bf56-039c-4638-a9be-4beae4a3e659",
+      "comment": "",
+      "command": "click",
+      "target": "id=inp_sqms2_SyllabusChapter_ChapterNumber",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_ChapterNumber", "id"],
+        ["name=sqms2_SyllabusChapter_ChapterNumber", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_ChapterNumber", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_ChapterNumber']", "xpath:attributes"],
+        ["xpath=//form[@id='i45bba2b80f487e78bc88a573cc88f158']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "83c1c6cb-c961-4781-a44f-a36eceb49461",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_ChapterNumber",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_ChapterNumber", "id"],
+        ["name=sqms2_SyllabusChapter_ChapterNumber", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_ChapterNumber", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_ChapterNumber']", "xpath:attributes"],
+        ["xpath=//form[@id='i45bba2b80f487e78bc88a573cc88f158']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "8d122a04-dc0b-4003-9781-1a0c523264d1",
+      "comment": "",
+      "command": "click",
+      "target": "id=inp_sqms2_SyllabusChapter_Severity",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_Severity", "id"],
+        ["name=sqms2_SyllabusChapter_Severity", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_Severity", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_Severity']", "xpath:attributes"],
+        ["xpath=//form[@id='i45bba2b80f487e78bc88a573cc88f158']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3db81372-c3ad-4d6c-baf6-bd3d1fbf092a",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_Severity",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_Severity", "id"],
+        ["name=sqms2_SyllabusChapter_Severity", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_Severity", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_Severity']", "xpath:attributes"],
+        ["xpath=//form[@id='i45bba2b80f487e78bc88a573cc88f158']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "5"
+    }, {
+      "id": "5fc4c5d6-8d9f-47ec-a745-3e303f17eeae",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "64683e43-f551-4ae8-99a3-b5b7c3d0d372",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(8) .btn:first-child",
+      "targets": [
+        ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
+        ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
+        ["xpath=//div[9]/div/div/a[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a01909e0-009d-4aa7-8363-7008d2a18e0f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d2c7b13-7bee-481b-876a-26e25707fe83",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "d9842bae-8269-4530-9b5c-43eb3d5d3dc5",
+    "name": "2.4.1) S1 - Create additional Chapter",
+    "commands": [{
+      "id": "51af629c-53a0-415b-b5ba-9ec35e45107a",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "81f5efcb-6f27-4f24-bbab-3af02b6a5aec",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "11893b42-85dd-47a2-8452-ea12cdaded1c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b40d6180-4c91-4a63-a04f-d072d2d9299d",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "37698ac6-fd3d-4988-8681-d13060060417",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(8) th a",
+      "targets": [
+        ["css=.form-group:nth-child(8) > .col-sm-10", "css:finder"],
+        ["xpath=//form[@id='i9f08f75a1407a7b641c8ec48ababe172']/div[8]/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e39c10b-1cb7-4505-b055-88f2cfd75bb1",
+      "comment": "",
+      "command": "click",
+      "target": "id=inp_sqms2_SyllabusChapter_titel",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_titel", "id"],
+        ["name=sqms2_SyllabusChapter_titel", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_titel", "css:finder"],
+        ["xpath=//textarea[@id='inp_sqms2_SyllabusChapter_titel']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9b33c03-a9ac-4635-adcd-06f3c28c3ae6",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_titel",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_titel", "id"],
+        ["name=sqms2_SyllabusChapter_titel", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_titel", "css:finder"],
+        ["xpath=//textarea[@id='inp_sqms2_SyllabusChapter_titel']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Chapter 2"
+    }, {
+      "id": "07563102-22bb-4b56-ab76-dee7003a8632",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_ChapterNumber",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_ChapterNumber", "id"],
+        ["name=sqms2_SyllabusChapter_ChapterNumber", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_ChapterNumber", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_ChapterNumber']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "4003afc9-9d97-43c4-b790-d062955f4ad4",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_Severity",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_Severity", "id"],
+        ["name=sqms2_SyllabusChapter_Severity", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_Severity", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_Severity']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "5"
+    }, {
+      "id": "4571dd4e-2636-4c35-860a-94109204a75c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "70809574-fdb5-4a37-bc9c-9ff02d1ccfd8",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "90427246-983d-44ea-ad75-409d740cc66a",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }],
   "suites": [{
-    "id": "3c7a694a-bfbe-4bd6-a1ec-aba757875af1",
+    "id": "8255a0eb-6633-405a-bff0-d20a682fac65",
     "name": "Default Suite",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["cbc02591-ba37-43f2-862e-efa4ea08fcc5"]
+    "tests": ["59943738-270e-4bb1-b826-e4ae6e0cc068"]
   }],
-  "urls": ["http://localhost/"],
+  "urls": ["http://localhost/", "http://localhost/_WORK/APMS_test/"],
   "plugins": []
 }
