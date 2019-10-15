@@ -629,7 +629,7 @@
       "id": "4891548d-69c6-4889-99be-7319bf15b252",
       "comment": "",
       "command": "click",
-      "target": "css=.row:nth-child(9) .btn:last-child",
+      "target": "css=.form-group:nth-child(6) .btn:last-child",
       "targets": [
         ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
         ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
@@ -723,7 +723,7 @@
       "id": "b7eaa5d1-9514-41f0-9be4-f45b105efc4b",
       "comment": "",
       "command": "click",
-      "target": "css=.row:nth-child(9) .btn:last-child",
+      "target": "css=.form-group:nth-child(6) .btn:last-child",
       "targets": [
         ["css=#i94cad787e18e2b099788b4d62453909c > .btn:nth-child(3)", "css:finder"],
         ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
@@ -887,7 +887,7 @@
       "id": "e44e40d9-8250-48f5-9e0f-2f0e9fed787e",
       "comment": "",
       "command": "click",
-      "target": "css=.row:nth-child(9) .btn:last-child",
+      "target": "css=.form-group:nth-child(6) .btn:last-child",
       "targets": [
         ["css=#i512651c839eff968ae0827184b981018 > .btn:nth-child(3)", "css:finder"],
         ["xpath=(//a[contains(text(),'Relate')])[3]", "xpath:link"],
@@ -1007,7 +1007,7 @@
       "id": "83218f64-4f53-43e9-b70c-27015f565ea9",
       "comment": "",
       "command": "click",
-      "target": "css=.row:nth-child(7) .btn:first-child",
+      "target": "css=.form-group:nth-child(4) .btn:first-child",
       "targets": [
         ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
         ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
@@ -1200,244 +1200,6 @@
       "value": ""
     }]
   }, {
-    "id": "51ca87fe-7da1-4f9d-ba3a-44f91ba4a76f",
-    "name": "2.3) S2 - Create first Description",
-    "commands": [{
-      "id": "e1c9c7a8-0f09-4f91-b6f0-540638e368da",
-      "comment": "",
-      "command": "open",
-      "target": "bpmspace_sqms2_v1/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "3e5cb19b-9b13-4842-9d1c-ee3b77e48a15",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1024x768",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "e1a77959-da35-4195-85ac-db1568b09564",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "bd1becd0-c69e-4ea5-985d-c7a3850361f5",
-      "comment": "-- Start to relate Syllabus 1",
-      "command": "click",
-      "target": "css=tr:nth-child(2) .far",
-      "targets": [
-        ["css=tr:nth-child(3) .far", "css:finder"],
-        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
-        ["xpath=//tr[3]/td/a/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "ef07f0e2-f15a-4d56-9c02-894300b3456b",
-      "comment": "",
-      "command": "click",
-      "target": "css=.row:nth-child(7) .btn:first-child",
-      "targets": [
-        ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
-        ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
-        ["xpath=//div[9]/div/div/a[2]/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "c4fad555-5554-4583-8aad-4b874aa40546",
-      "comment": "",
-      "command": "editContent",
-      "target": "css=.ql-editor",
-      "targets": [
-        ["css=.ql-editor", "css:finder"],
-        ["xpath=//div[@id='i5688f3d85a68e8983f0869e8e343fbb6']/div", "xpath:idRelative"],
-        ["xpath=//div/div/div[2]/div", "xpath:position"]
-      ],
-      "value": "<p>Syllabus description 2.1 en</p>"
-    }, {
-      "id": "8e0af640-eadc-4fdb-9a0c-c023236fa6ab",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "ad66c4fd-a93e-41dc-a79f-50809dd25bde",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "7b310f9e-e6ac-4fac-96c6-84558b5d4d59",
-      "comment": "",
-      "command": "close",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }]
-  }, {
-    "id": "644c748d-4813-4215-be6f-41b7d59bd45b",
-    "name": "2.3.1) S2 - Create additional Description",
-    "commands": [{
-      "id": "61eca1a9-b537-492a-a8f2-795f2826b2ac",
-      "comment": "",
-      "command": "open",
-      "target": "bpmspace_sqms2_v1/",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "6674dcd0-5653-4d36-bac9-80ef78eda528",
-      "comment": "",
-      "command": "setWindowSize",
-      "target": "1024x768",
-      "targets": [],
-      "value": ""
-    }, {
-      "id": "6e65b5cf-4405-4ad8-acee-1b451df9d44c",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Syllabus",
-      "targets": [
-        ["linkText=Syllabus", "linkText"],
-        ["css=.link-sqms2_syllabus", "css:finder"],
-        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
-        ["xpath=//a[2]", "xpath:position"],
-        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "1b7866a3-21b1-4b71-bf6f-c5caae7fbaa3",
-      "comment": "-- Start to relate Syllabus 1",
-      "command": "click",
-      "target": "css=tr:nth-child(2) .far",
-      "targets": [
-        ["css=tr:nth-child(3) .far", "css:finder"],
-        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
-        ["xpath=//tr[3]/td/a/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "0227cd7e-768c-4d8d-84b0-5345af6f0c69",
-      "comment": "",
-      "command": "click",
-      "target": "css=a:nth-child(1) > .text-success",
-      "targets": [
-        ["css=a:nth-child(1) > .text-success", "css:finder"],
-        ["xpath=//div[@id='i90381966111947c74228543813aa3733']/div/table/thead/tr/th/a/i", "xpath:idRelative"],
-        ["xpath=//th/a/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "688ad6ea-1758-4890-b3e1-e53422071094",
-      "comment": "",
-      "command": "editContent",
-      "target": "css=.ql-editor",
-      "targets": [
-        ["css=.ql-editor", "css:finder"],
-        ["xpath=//div[@id='i2b6d9f6803f846e7e418bade9f6802d8']/div", "xpath:idRelative"],
-        ["xpath=//div/div/div[2]/div", "xpath:position"]
-      ],
-      "value": "<p>Syllabus Beschreibung 2.2 de</p>"
-    }, {
-      "id": "beb8c772-301b-4666-8d87-eda13cc38487",
-      "comment": "",
-      "command": "click",
-      "target": "id=inp_sqms2_language_iso_short",
-      "targets": [
-        ["id=inp_sqms2_language_iso_short", "id"],
-        ["name=sqms2_language_iso_short", "name"],
-        ["css=#inp_sqms2_language_iso_short", "css:finder"],
-        ["xpath=//select[@id='inp_sqms2_language_iso_short']", "xpath:attributes"],
-        ["xpath=//form[@id='i0038a568e028d0c1fc285b88b3338108']/div[2]/div/select", "xpath:idRelative"],
-        ["xpath=//div/select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "c9dd7c1f-62ac-49ed-b624-20e1aef649b2",
-      "comment": "",
-      "command": "select",
-      "target": "id=inp_sqms2_language_iso_short",
-      "targets": [],
-      "value": "label=DE"
-    }, {
-      "id": "16ce42ef-fbcb-426a-8a4d-48ddef1761a9",
-      "comment": "",
-      "command": "click",
-      "target": "css=#inp_sqms2_language_iso_short > option:nth-child(2)",
-      "targets": [
-        ["css=#inp_sqms2_language_iso_short > option:nth-child(2)", "css:finder"],
-        ["xpath=//option[@value='DE']", "xpath:attributes"],
-        ["xpath=//select[@id='inp_sqms2_language_iso_short']/option[2]", "xpath:idRelative"],
-        ["xpath=//div/select/option[2]", "xpath:position"],
-        ["xpath=//option[contains(.,'DE')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "29ea4aaf-aa6b-44ad-9fce-0e3f225b8e06",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Create",
-      "targets": [
-        ["linkText=Create", "linkText"],
-        ["css=.btn-success", "css:finder"],
-        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
-        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "8cc5143a-fac1-4c2c-a457-e332556f5e35",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "92bb3fe6-8419-4d1f-a772-f9e378deda92",
-      "comment": "",
-      "command": "close",
-      "target": "",
-      "targets": [],
-      "value": ""
-    }]
-  }, {
     "id": "cad258b7-05b5-4397-aea7-bb76a9bfab46",
     "name": "2.4) S1 - Create first Chapter",
     "commands": [{
@@ -1478,6 +1240,13 @@
         ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
         ["xpath=//tr[3]/td/a/i", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "9c156bcf-7f92-4767-b961-074eafd88cd3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(5) .btn:first-child",
+      "targets": [],
       "value": ""
     }, {
       "id": "493303a9-c40d-4201-a80e-e23a94f60537",
@@ -1565,17 +1334,6 @@
       ],
       "value": ""
     }, {
-      "id": "64683e43-f551-4ae8-99a3-b5b7c3d0d372",
-      "comment": "",
-      "command": "click",
-      "target": "css=.row:nth-child(8) .btn:first-child",
-      "targets": [
-        ["css=#i9ff84b9277e82d97377e3f0877be9e08 .fa-link", "css:finder"],
-        ["xpath=//div[@id='i9ff84b9277e82d97377e3f0877be9e08']/a[2]/i", "xpath:idRelative"],
-        ["xpath=//div[9]/div/div/a[2]/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "a01909e0-009d-4aa7-8363-7008d2a18e0f",
       "comment": "",
       "command": "click",
@@ -1644,7 +1402,7 @@
       "id": "37698ac6-fd3d-4988-8681-d13060060417",
       "comment": "",
       "command": "click",
-      "target": "css=.form-group:nth-child(8) th a",
+      "target": "css=.form-group:nth-child(5) th a",
       "targets": [
         ["css=.form-group:nth-child(8) > .col-sm-10", "css:finder"],
         ["xpath=//form[@id='i9f08f75a1407a7b641c8ec48ababe172']/div[8]/div", "xpath:idRelative"],
@@ -1739,6 +1497,354 @@
       "value": ""
     }, {
       "id": "90427246-983d-44ea-ad75-409d740cc66a",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "25368928-796f-4a10-be62-81a76712b811",
+    "name": "2.4.2) S1 - Create additional Chapter",
+    "commands": [{
+      "id": "0d36f36b-3961-423a-94c9-e9a1b43bd6a8",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dfd671fe-6ea7-4047-9d79-3b52830e1595",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f91e0370-d3d8-4779-84a0-f2a718454d68",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Syllabus",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c68f4f4-0dfb-4fb0-87a3-017ce1d4da2a",
+      "comment": "-- Start to relate Syllabus 1",
+      "command": "click",
+      "target": "css=tr:nth-child(3) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd6fa4ee-17ac-4582-a67b-5a71755e2c0e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-group:nth-child(5) th a",
+      "targets": [
+        ["css=.form-group:nth-child(8) > .col-sm-10", "css:finder"],
+        ["xpath=//form[@id='i9f08f75a1407a7b641c8ec48ababe172']/div[8]/div", "xpath:idRelative"],
+        ["xpath=//div[8]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "645d3496-dbbe-47ec-90cc-2fb862b2ca1e",
+      "comment": "",
+      "command": "click",
+      "target": "id=inp_sqms2_SyllabusChapter_titel",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_titel", "id"],
+        ["name=sqms2_SyllabusChapter_titel", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_titel", "css:finder"],
+        ["xpath=//textarea[@id='inp_sqms2_SyllabusChapter_titel']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "765087dd-0808-4c00-8abc-005c45f40232",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_titel",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_titel", "id"],
+        ["name=sqms2_SyllabusChapter_titel", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_titel", "css:finder"],
+        ["xpath=//textarea[@id='inp_sqms2_SyllabusChapter_titel']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div/div/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Chapter 3"
+    }, {
+      "id": "1842a476-ca22-4859-a10d-8feafd340931",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_ChapterNumber",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_ChapterNumber", "id"],
+        ["name=sqms2_SyllabusChapter_ChapterNumber", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_ChapterNumber", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_ChapterNumber']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "3"
+    }, {
+      "id": "065ff505-28d9-4e95-a4d8-2ec0827cf8da",
+      "comment": "",
+      "command": "type",
+      "target": "id=inp_sqms2_SyllabusChapter_Severity",
+      "targets": [
+        ["id=inp_sqms2_SyllabusChapter_Severity", "id"],
+        ["name=sqms2_SyllabusChapter_Severity", "name"],
+        ["css=#inp_sqms2_SyllabusChapter_Severity", "css:finder"],
+        ["xpath=//input[@id='inp_sqms2_SyllabusChapter_Severity']", "xpath:attributes"],
+        ["xpath=//form[@id='i60688a78957a972864be06989328f558']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "5"
+    }, {
+      "id": "ac5794a5-437a-4e48-a59a-71c9b3145072",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a6d12c5-3e5e-4b99-9134-f96850c9360d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e82958b7-995b-4946-ae7d-2726a51e901c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "cc80eda5-ee19-444a-8745-c9a85aaf7b7f",
+    "name": "3) Create (additional) Question",
+    "commands": [{
+      "id": "3db5b776-f8bc-472a-b2f0-0bc9cd63df95",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "22025471-73d4-47a6-9fcc-1d8f575cf777",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "018af798-88f9-4abb-a021-8a07a358f5d0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Question",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8379606c-c50b-4bea-a918-96e813eabe20",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
+        ["xpath=//form/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "79a7f251-896f-4314-bcf5-b99e5070bea8",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='id538a76857a80493c8982becc3210a98']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>What ist this?</p>"
+    }, {
+      "id": "d59243ae-2fce-450c-8f5b-71e5698bf7e0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ce80556-e23f-421e-81d3-eef6eddb9040",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_question')])[8]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f0ed40c2-10ea-4794-a835-18a23aa71dda",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "83783c6f-4128-434d-beb3-b1953876e5aa",
+    "name": "3.1) Create first Answer",
+    "commands": [{
+      "id": "fa342b91-17ec-4a89-a49e-038fddc10684",
+      "comment": "",
+      "command": "open",
+      "target": "bpmspace_sqms2_v1/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a85f6248-7b35-41a2-aa1a-b7a6af070d5a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1024x768",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "46426f09-2990-4b0a-a899-4e5e1cae58ea",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Question",
+      "targets": [
+        ["linkText=Syllabus", "linkText"],
+        ["css=.link-sqms2_syllabus", "css:finder"],
+        ["xpath=//div[@id='sidebar-links']/a[2]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus')]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Syllabus')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2758ca3-8485-499f-863f-385cf54355ee",
+      "comment": "-- Start to relate the last Question",
+      "command": "click",
+      "target": "css=tr:nth-child(1) .far",
+      "targets": [
+        ["css=tr:nth-child(3) .far", "css:finder"],
+        ["xpath=//div[@id='i890831a98e487b78c9e97df82c684b25']/div/table/tbody/tr[3]/td/a/i", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/a/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94c96157-45d3-49f3-89bd-c7c7500af587",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/form/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '#/sqms2_syllabus/create')]", "xpath:href"],
+        ["xpath=//form/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "77364003-2878-4d04-b087-06c96088c924",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='id538a76857a80493c8982becc3210a98']/div", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>This is an answer!</p>"
+    }, {
+      "id": "c886b7b2-1a77-431d-94ff-211b9ed3d603",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Create",
+      "targets": [
+        ["linkText=Create", "linkText"],
+        ["css=.btn-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Create')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/')])[8]", "xpath:href"],
+        ["xpath=//div/div/div/div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Create')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d2d9d7d-f473-4a7d-bd51-a76de3753b24",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Back",
+      "targets": [
+        ["linkText=Back", "linkText"],
+        ["css=.btn-light", "css:finder"],
+        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
+        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '#/sqms2_question')])[8]", "xpath:href"],
+        ["xpath=//span[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eabe84b2-3c14-4fff-9652-c0ff11f92aa5",
       "comment": "",
       "command": "close",
       "target": "",

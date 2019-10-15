@@ -55,25 +55,25 @@ body {overflow-x: hidden;}
 .btnDisabled:hover {background-color: none !important; cursor: default;}
 
 /* State-Colors */
-.state7461 {background-color: hsl(265, 50%, 15%); color: white;}
-.state7462 {background-color: hsl(265, 50%, 20%); color: white;}
-.state7463 {background-color: hsl(265, 50%, 25%); color: white;}
-.state7464 {background-color: hsl(265, 50%, 30%); color: white;}
-.state7511 {background-color: hsl(265, 50%, 35%); color: white;}
-.state7465 {background-color: hsl(199, 50%, 15%); color: white;}
-.state7466 {background-color: hsl(199, 50%, 20%); color: white;}
-.state7467 {background-color: hsl(199, 50%, 25%); color: white;}
-.state7468 {background-color: hsl(199, 50%, 30%); color: white;}
+.state7461 {background-color: hsl(78, 50%, 15%); color: white;}
+.state7462 {background-color: hsl(78, 50%, 20%); color: white;}
+.state7463 {background-color: hsl(78, 50%, 25%); color: white;}
+.state7464 {background-color: hsl(78, 50%, 30%); color: white;}
+.state7511 {background-color: hsl(78, 50%, 35%); color: white;}
+.state7465 {background-color: hsl(132, 50%, 15%); color: white;}
+.state7466 {background-color: hsl(132, 50%, 20%); color: white;}
+.state7467 {background-color: hsl(132, 50%, 25%); color: white;}
+.state7468 {background-color: hsl(132, 50%, 30%); color: white;}
 .state7485 {background-color: #328332; color: white;}
 .state7486 {background-color: #8b0000; color: white;}
-.state7481 {background-color: hsl(66, 50%, 15%); color: white;}
-.state7482 {background-color: hsl(66, 50%, 20%); color: white;}
-.state7483 {background-color: hsl(66, 50%, 25%); color: white;}
-.state7484 {background-color: hsl(66, 50%, 30%); color: white;}
-.state7469 {background-color: hsl(140, 50%, 15%); color: white;}
-.state7470 {background-color: hsl(140, 50%, 20%); color: white;}
-.state7471 {background-color: hsl(140, 50%, 25%); color: white;}
-.state7472 {background-color: hsl(140, 50%, 30%); color: white;}
+.state7481 {background-color: hsl(126, 50%, 15%); color: white;}
+.state7482 {background-color: hsl(126, 50%, 20%); color: white;}
+.state7483 {background-color: hsl(126, 50%, 25%); color: white;}
+.state7484 {background-color: hsl(126, 50%, 30%); color: white;}
+.state7469 {background-color: hsl(289, 50%, 15%); color: white;}
+.state7470 {background-color: hsl(289, 50%, 20%); color: white;}
+.state7471 {background-color: hsl(289, 50%, 25%); color: white;}
+.state7472 {background-color: hsl(289, 50%, 30%); color: white;}
 .state7487 {background-color: #328332; color: white;}
 .state7488 {background-color: #8b0000; color: white;}
 .state7457 {background-color: hsl(2, 50%, 15%); color: white;}
@@ -98,15 +98,15 @@ body {overflow-x: hidden;}
 .state7504 {background-color: #8b0000; color: white;}
 .state7505 {background-color: #328332; color: white;}
 .state7506 {background-color: #8b0000; color: white;}
-.state7473 {background-color: hsl(273, 50%, 15%); color: white;}
-.state7474 {background-color: hsl(273, 50%, 20%); color: white;}
-.state7475 {background-color: hsl(273, 50%, 25%); color: white;}
-.state7476 {background-color: hsl(273, 50%, 30%); color: white;}
+.state7473 {background-color: hsl(257, 50%, 15%); color: white;}
+.state7474 {background-color: hsl(257, 50%, 20%); color: white;}
+.state7475 {background-color: hsl(257, 50%, 25%); color: white;}
+.state7476 {background-color: hsl(257, 50%, 30%); color: white;}
 .state7507 {background-color: #328332; color: white;}
 .state7508 {background-color: #8b0000; color: white;}
 .state7509 {background-color: #328332; color: white;}
 .state7510 {background-color: #8b0000; color: white;}
-.state7477 {background-color: hsl(0, 50%, 15%); color: white;}
-.state7478 {background-color: hsl(0, 50%, 20%); color: white;}
-.state7479 {background-color: hsl(0, 50%, 25%); color: white;}
-.state7480 {background-color: hsl(0, 50%, 30%); color: white;}
+.state7477 {background-color: hsl(203, 50%, 15%); color: white;}
+.state7478 {background-color: hsl(203, 50%, 20%); color: white;}
+.state7479 {background-color: hsl(203, 50%, 25%); color: white;}
+.state7480 {background-color: hsl(203, 50%, 30%); color: white;}

@@ -128,33 +128,6 @@
                 "mode_form": "hi",
                 "field_type": "state"
             },
-            "sqms2_Syllabus_Examversion_Planned_Duration": {
-                "column_alias": "Exam Duration",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "col_order": 8,
-                "mode_form": "rw",
-                "field_type": "number"
-            },
-            "sqms2_Syllabus_Course_Duration": {
-                "column_alias": "Course Duration",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "col_order": 9,
-                "mode_form": "rw",
-                "field_type": "number"
-            },
-            "sqms2_Syllabus_ExamQuestions_Total": {
-                "column_alias": "Total Questions",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "col_order": 10,
-                "mode_form": "rw",
-                "field_type": "number"
-            },
             "virtualCol": {
                 "field_type": "reversefk",
                 "column_alias": "Description",
@@ -195,7 +168,8 @@
                 "revfk_colname2": "sqms2_Topic_id_fk_945295"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "role_liamuser": {
         "table_alias": "Liamuser",
