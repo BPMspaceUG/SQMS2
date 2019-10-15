@@ -168,8 +168,7 @@
                 "revfk_colname2": "sqms2_Topic_id_fk_945295"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E",
-        "showKids": false
+        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
     },
     "role_liamuser": {
         "table_alias": "Liamuser",
