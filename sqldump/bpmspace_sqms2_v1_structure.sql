@@ -131,7 +131,7 @@ CREATE TABLE `sqms2_answer` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_answer_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_6430a55a` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=55038866 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=55038867 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `sqms2_answer_text` (
   CONSTRAINT `sqms2_answer_text_ibfk_1` FOREIGN KEY (`sqms2_Answer_id_fk_154388`) REFERENCES `sqms2_answer` (`sqms2_Answer_id`),
   CONSTRAINT `sqms2_answer_text_ibfk_2` FOREIGN KEY (`sqms2_Text_id_fk_842740`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `state_id_2da22e8a` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=45034543 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=45034544 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +196,7 @@ CREATE TABLE `sqms2_question` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_question_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_c8e133bc` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=85647721 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=85647722 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +218,7 @@ CREATE TABLE `sqms2_question_answer` (
   CONSTRAINT `sqms2_question_answer_ibfk_1` FOREIGN KEY (`sqms2_Question_id_fk_735802`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `sqms2_question_answer_ibfk_2` FOREIGN KEY (`sqms2_Answer_id_fk_995603`) REFERENCES `sqms2_answer` (`sqms2_Answer_id`),
   CONSTRAINT `state_id_0f4d6485` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6503533 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6503534 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +284,7 @@ CREATE TABLE `sqms2_question_text` (
   CONSTRAINT `sqms2_question_text_ibfk_1` FOREIGN KEY (`sqms2_Text_id_fk_559100`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `sqms2_question_text_ibfk_2` FOREIGN KEY (`sqms2_Question_id_fk_783494`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `state_id_1438cb88` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=75034161 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=75034162 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,11 +302,14 @@ CREATE TABLE `sqms2_syllabus` (
   `sqms2_Syllabus_Valid_to` date DEFAULT NULL,
   `sqms2_Syllabus_Version` int(11) DEFAULT '1',
   `state_id` bigint(20) DEFAULT '5',
+  `sqms2_ExamVersionPlannedDuration` int(11) DEFAULT '45',
+  `sqms2_CourseDuration` int(11) DEFAULT '720',
+  `sqms2_Exam_QuestionsTotal` int(11) DEFAULT '30',
   PRIMARY KEY (`sqms2_Syllabus_id`),
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_syllabus_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_0bc4d1a1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=90034807 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=90034811 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,7 +331,7 @@ CREATE TABLE `sqms2_syllabus_desc` (
   CONSTRAINT `sqms2_syllabus_desc_ibfk_1` FOREIGN KEY (`sqms2_Syllabus_id_fk_783731`) REFERENCES `sqms2_syllabus` (`sqms2_Syllabus_id`),
   CONSTRAINT `sqms2_syllabus_desc_ibfk_2` FOREIGN KEY (`sqms2_Text_id_fk_178796`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `state_id_ade6fcec` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=80035055 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=80035057 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +353,7 @@ CREATE TABLE `sqms2_syllabus_syllabuschapter` (
   CONSTRAINT `sqms2_syllabus_syllabuschapter_ibfk_1` FOREIGN KEY (`sqms2_Syllabus_id_fk_870666`) REFERENCES `sqms2_syllabus` (`sqms2_Syllabus_id`),
   CONSTRAINT `sqms2_syllabus_syllabuschapter_ibfk_2` FOREIGN KEY (`sqms2_SyllabusChapter_id_fk_327935`) REFERENCES `sqms2_syllabuschapter` (`sqms2_SyllabusChapter_id`),
   CONSTRAINT `state_id_e8dbebbc` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -372,7 +375,7 @@ CREATE TABLE `sqms2_syllabus_topic` (
   CONSTRAINT `sqms2_syllabus_topic_ibfk_1` FOREIGN KEY (`sqms2_Syllabus_id_fk_345197`) REFERENCES `sqms2_syllabus` (`sqms2_Syllabus_id`),
   CONSTRAINT `sqms2_syllabus_topic_ibfk_2` FOREIGN KEY (`sqms2_Topic_id_fk_945295`) REFERENCES `sqms2_topic` (`sqms2_Topic_id`),
   CONSTRAINT `state_id_8e195a84` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10034819 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10034823 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -393,7 +396,7 @@ CREATE TABLE `sqms2_syllabuschapter` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_syllabuschapter_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_6c68c041` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,7 +460,7 @@ CREATE TABLE `sqms2_text` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_text_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_8c14317f` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=70034326 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=70034330 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -498,7 +501,7 @@ CREATE TABLE `sqms2_topic` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_topic_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_ed734481` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=20034881 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=20034884 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -720,4 +723,4 @@ CREATE TABLE `state_rules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-15 14:58:37
+-- Dump completed on 2019-10-15 15:14:48
