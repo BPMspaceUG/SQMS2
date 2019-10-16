@@ -1215,7 +1215,6 @@ class FormGenerator {
                     fixedGutter: true
                 });
                 editor.setValue(t.data[key].value || '');
-                editor.setSize(null, 111);
                 t.editors[key]['objCodemirror'] = editor;
             }
             cnt++;

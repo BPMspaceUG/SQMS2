@@ -1092,7 +1092,7 @@
                 "foreignKey": {
                     "table": "sqms2_topic",
                     "col_id": "sqms2_Topic_id",
-                    "col_subst": "sqms2_Topic_title"
+                    "col_subst": "sqms2_Topic_title, state_id"
                 }
             },
             "state_id": {
@@ -1553,7 +1553,7 @@
                 "show_in_grid": true,
                 "col_order": 3,
                 "mode_form": "rw",
-                "field_type": "textarea"
+                "field_type": "codeeditor"
             },
             "form_data": {
                 "column_alias": "Data",
@@ -1562,7 +1562,7 @@
                 "show_in_grid": true,
                 "col_order": 4,
                 "mode_form": "rw",
-                "field_type": "textarea"
+                "field_type": "codeeditor"
             }
         },
         "table_icon": ""
@@ -1635,7 +1635,7 @@
                 "show_in_grid": true,
                 "col_order": 6,
                 "mode_form": "rw",
-                "field_type": "textarea"
+                "field_type": "codeeditor"
             },
             "script_OUT": {
                 "column_alias": "Script OUT",
@@ -1644,7 +1644,7 @@
                 "show_in_grid": true,
                 "col_order": 7,
                 "mode_form": "rw",
-                "field_type": "textarea"
+                "field_type": "codeeditor"
             }
         },
         "table_icon": ""
@@ -1704,7 +1704,7 @@
                 "show_in_grid": true,
                 "col_order": 4,
                 "mode_form": "rw",
-                "field_type": "textarea"
+                "field_type": "codeeditor"
             }
         },
         "table_icon": ""

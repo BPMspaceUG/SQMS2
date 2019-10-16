@@ -31,10 +31,6 @@ export default (props) => {
       }
     }
   }
-  function renderStateButtons() {
-
-  }
-
 
   // Get Row by ID
   function initForm() {
