@@ -1559,7 +1559,7 @@
         ["xpath=//div[@id='id538a76857a80493c8982becc3210a98']/div", "xpath:idRelative"],
         ["xpath=//div/div/div[2]/div", "xpath:position"]
       ],
-      "value": "<p>What ist this?</p>"
+      "value": "<p>What is this?</p>"
     }, {
       "id": "d59243ae-2fce-450c-8f5b-71e5698bf7e0",
       "comment": "",
