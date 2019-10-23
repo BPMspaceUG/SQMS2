@@ -195,7 +195,8 @@
                 "revfk_colname2": "sqms2_Topic_id_fk_945295"
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "role_liamuser": {
         "table_alias": "Liamuser",
@@ -972,7 +973,7 @@
                 "foreignKey": {
                     "table": "sqms2_text",
                     "col_id": "sqms2_Text_id",
-                    "col_subst": "sqms2_Text"
+                    "col_subst": "sqms2_Text, state_id"
                 }
             },
             "state_id": {
@@ -985,7 +986,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": ""
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_syllabus_syllabuschapter": {
         "table_alias": "S-SE",
@@ -1045,7 +1047,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": ""
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_syllabus_topic": {
         "table_alias": "S-T",
