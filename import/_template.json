@@ -1,0 +1,37 @@
+{
+    "Topic": [{
+            "ID": 123,
+            "title": "topic 1",
+            "Syllabus": [{
+                "ID": 34567,
+                "fromdate": "2018-06-01",
+                "todate": "2019-06-01",
+                "SyllabusDescription": [{"ID": 345123, "Lang": "en", "Text": "<hmtl>"}],
+                "SyllabusChapter": [{
+                    "ID": 1234565432,
+                    "SyllabusChapterDescription": [
+                        {"ID": 345678, "Lang": "en", "Text": "<hmtl>"},
+                        {"ID": 345679, "Lang": "de", "Text": "<hmtl>"}
+                    ],
+                    "Question": [{
+                        "ID": 43584,
+                        "QuestionText": [
+                            {"ID": 345678,"Lang": "en","Text": "<hmtl>"}
+                        ],
+                        "Answer": [{
+                            "ID": 78439576,
+                            "Correct": true,
+                            "AnswerText": [
+                                {"ID": 345678, "Lang": "en", "Text": "<hmtl>"}
+                            ]
+                        }]
+                    }]
+                }]
+            }]
+        },
+        {
+            "ID": 123,
+            "title": "topic 2"
+        }
+    ]
+}
