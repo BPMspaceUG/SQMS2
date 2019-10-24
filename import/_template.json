@@ -1,37 +1,39 @@
 {
     "Topic": [{
-            "ID": 123,
-            "title": "topic 1",
-            "Syllabus": [{
-                "ID": 34567,
-                "fromdate": "2018-06-01",
-                "todate": "2019-06-01",
-                "SyllabusDescription": [{"ID": 345123, "Lang": "en", "Text": "<hmtl>"}],
-                "SyllabusChapter": [{
-                    "ID": 1234565432,
-                    "SyllabusChapterDescription": [
-                        {"ID": 345678, "Lang": "en", "Text": "<hmtl>"},
-                        {"ID": 345679, "Lang": "de", "Text": "<hmtl>"}
+        "sqms2_Topic_id": 3453453,
+        "sqms2_Topic_title": "Topic 1",
+        "Syllabus": [{
+            "sqms2_Syllabus_id": 34567,
+            "sqms2_Syllabus_titel": "Syllabus A - Topic 1",
+            "sqms2_Syllabus_Valid_from": "2018-06-01",
+            "sqms2_Syllabus_Valid_to": "2019-06-01",
+            "SyllabusDescription": [
+                {"sqms2_Text_id": 345123, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Syllabus-Description.</p>"},
+                {"sqms2_Text_id": 345124, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Syllabus-Beschreibung.</p>"}
+            ],
+            "SyllabusChapter": [{
+                "sqms2_SyllabusChapter_id": 1234565432,
+                "sqms2_SyllabusChapter_titel": "Chapter 1 - Syllabus A - Topic 1",
+                "sqms2_SyllabusChapter_ChapterNumber": 1,
+                "sqms2_SyllabusChapter_Severity": 100,
+                "SyllabusChapterDescription": [
+                    {"sqms2_Text_id": 345678, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Description of a Chapter</p>"},
+                    {"sqms2_Text_id": 345679, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Beschreibung eines Kapitel</p>"}
+                ],
+                "Question": [{
+                    "sqms2_Question_id": 85647749,
+                    "QuestionText": [
+                        {"sqms2_Text_id": 345680, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Why not?</p>"}
                     ],
-                    "Question": [{
-                        "ID": 43584,
-                        "QuestionText": [
-                            {"ID": 345678,"Lang": "en","Text": "<hmtl>"}
-                        ],
-                        "Answer": [{
-                            "ID": 78439576,
-                            "Correct": true,
-                            "AnswerText": [
-                                {"ID": 345678, "Lang": "en", "Text": "<hmtl>"}
-                            ]
-                        }]
+                    "Answer": [{
+                        "sqms2_Answer_id": 78439576,
+                        "sqms2_correct": true,
+                        "AnswerText": [
+                            {"sqms2_Text_id": 345680, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>I don't know.</p>"}
+                        ]
                     }]
                 }]
             }]
-        },
-        {
-            "ID": 123,
-            "title": "topic 2"
-        }
-    ]
+        }]
+    }]
 }
