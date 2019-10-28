@@ -3,7 +3,10 @@
     // Includes
     require_once(__DIR__."/../src/RequestHandler.inc.php");
 
-    $fname = __DIR__."/_template.json";
+    //================>
+    $fname = __DIR__."/withIDs.json";
+
+
     $content = file_get_contents($fname);
     $data = json_decode($content, true);
 
@@ -16,53 +19,70 @@
         $id = $row[$pcol];
         if (count($res) == 2)
             $id = $res[1]["element_id"];
-        echo $id."\n"; // Debugging
+        echo $table." -> ".$id."\n"; // for Debugging
         return (int)$id;
     }
+    function relate($table, $objID1, $objID2) {
+        $colnames = array_keys(Config::getColsByTablename($table));
+        $edgeID = create($table, [$colnames[1] => $objID1, $colnames[2] => $objID2]);
+        return [$edgeID, $objID1, $objID2];
+    }
+    function multiRelate($obj, $objID, $newRelName, $newObjName) {
+        $res = [];
+        if (array_key_exists($newObjName, $obj)) {
+            foreach ($obj[$newObjName] as $x) {
+                $res[] = relate($newRelName, $objID, create($newObjName, $x));
+            }
+        }
+        return $res;
+    }
+
+    /*
+    function test($arr, &$res, $k) {
+        if (is_array($arr)) {
+            if (!is_numeric($k)) $res[] = $k;
+            foreach ($arr as $key => $value) {
+                test($value, $res, $key);
+            }
+        }
+    }
+    $x = [];
+    $res = test($data["sqms2_topic"], $x, "sqms2_topic");    
+    var_dump($x);
+    die();
+    */
 
 
-    //=== MAIN
-    
-    foreach ($data["Topic"] as $t) {
-        //---(Topic)
-        $a = create("sqms2_topic", $t);
-        // [+]
-        if (array_key_exists("Syllabus", $t)) {
-            foreach ($t["Syllabus"] as $s) {
-                //---(Syllabus)
-                $b = create("sqms2_syllabus", $s);
-                create("sqms2_syllabus_topic", ["sqms2_Syllabus_id_fk_345197" => $b, "sqms2_Topic_id_fk_945295" => $a]);
-                // [+]
-                if (array_key_exists("SyllabusDescription", $s)) {
-                    foreach ($s["SyllabusDescription"] as $sd) {
-                        //---(SyllabusDescription)
-                        $c = create("sqms2_text", $sd);
-                        create("sqms2_syllabus_desc", ["sqms2_Syllabus_id_fk_783731" => $b, "sqms2_Text_id_fk_178796" => $c]);
+    foreach ($data["sqms2_topic"] as $t) {
+        // [+]---(Syllabus)
+        if (array_key_exists("sqms2_syllabus", $t)) foreach ($t["sqms2_syllabus"] as $s) {
+            // Syllabus --- Topic
+            $s_t = relate("sqms2_syllabus_topic", create("sqms2_syllabus", $s), create("sqms2_topic", $t));
+
+            // [+]---(SyllabusDescription)
+            multiRelate($s, $s_t[1], "sqms2_syllabus_desc", "sqms2_text");
+
+            // [+]---(SyllabusChapter)
+            if (array_key_exists("sqms2_syllabuschapter", $s)) foreach ($s["sqms2_syllabuschapter"] as $sc) {
+                $s_sc = relate("sqms2_syllabus_syllabuschapter", $s_t[1], create("sqms2_syllabuschapter", $sc));
+                // [+]---(SyllabusChapterDescription)
+                multiRelate($sc, $s_sc[2], "sqms2_syllabuschapter_desc", "sqms2_text");
+                // [+]---(Question)
+                if (array_key_exists("sqms2_question", $sc)) foreach ($sc["sqms2_question"] as $qu) {
+                    $sc_q = relate("sqms2_syllabuschapter_question", $s_sc[2], create("sqms2_question", $qu));
+                    // [+]---(QuestionText)
+                    multiRelate($qu, $sc_q[2], "sqms2_question_text", "sqms2_text");
+                    
+                    // [+]---(Answer)
+                    //TODO: multiRelate($qu, $sc_q[2], "sqms2_question_answer", "sqms2_answer");
+
+                    if (array_key_exists("sqms2_answer", $qu)) foreach ($qu["sqms2_answer"] as $an) { 
+                        $q_a = relate("sqms2_question_answer", $sc_q[2], create("sqms2_answer", $an));
+                        // [+]---(AnswerText)
+                        multiRelate($an, $q_a[2], "sqms2_answer_text", "sqms2_text");
                     }
-                }
-                // [+]
-                if (array_key_exists("SyllabusChapter", $s)) {
-                    foreach ($s["SyllabusChapter"] as $sc) {
-                        //---(SyllabusChapter)
-                        $d = create("sqms2_syllabuschapter", $sc);
-                        create("sqms2_syllabus_syllabuschapter", ["sqms2_Syllabus_id_fk_870666" => $b, "sqms2_SyllabusChapter_id_fk_327935" => $d]);
-                        // [+]
-                        if (array_key_exists("SyllabusChapterDescription", $sc)) {
-                            foreach ($sc["SyllabusChapterDescription"] as $scd) {
-                                //---(SyllabusChapterDescription)
-                                $e = create("sqms2_text", $scd);
-                                create("sqms2_syllabuschapter_desc", ["sqms2_SyllabusChapter_id_fk_886795" => $d, "sqms2_Text_id_fk_524933"=> $e]);
-                            }
-                        }
-                        // [+]
-                        if (array_key_exists("Question", $sc)) {
-                            foreach ($sc["Question"] as $q) {
-                                //---(Question)
-                                $f = create("sqms2_question", $q);
-                                create("sqms2_syllabuschapter_question", ["sqms2_SyllabusChapter_id_fk_920241" => $d, "sqms2_Question_id_fk_285826"=> $f]);
-                            }
-                        }
-                    }
+
+
                 }
             }
         }

@@ -1,0 +1,46 @@
+{
+    "sqms2_topic": [{
+        "sqms2_Topic_id": 3453453,
+        "sqms2_Topic_title": "Topic 1",
+        "sqms2_syllabus": [{
+            "sqms2_Syllabus_id": 34567,
+            "sqms2_Syllabus_titel": "Syllabus A - Topic 1",
+            "sqms2_Syllabus_Valid_from": "2018-06-01",
+            "sqms2_Syllabus_Valid_to": "2019-06-01",
+            "sqms2_text": [
+                {"sqms2_Text_id": 345676, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Syllabus-Description.</p>"},
+                {"sqms2_Text_id": 345677, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Syllabus-Beschreibung.</p>"}
+            ],
+            "sqms2_syllabuschapter": [{
+                "sqms2_SyllabusChapter_id": 1234565432,
+                "sqms2_SyllabusChapter_titel": "Chapter 1 - Syllabus A - Topic 1",
+                "sqms2_SyllabusChapter_ChapterNumber": 1,
+                "sqms2_SyllabusChapter_Severity": 100,
+                "sqms2_text": [
+                    {"sqms2_Text_id": 345678, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Description of a Chapter</p>"},
+                    {"sqms2_Text_id": 345679, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Beschreibung eines Kapitel</p>"}
+                ],
+                "sqms2_question": [{
+                    "sqms2_Question_id": 85647749,
+                    "sqms2_text": [
+                        {"sqms2_Text_id": 345680, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Whats your favorite food?</p>"}
+                    ],
+                    "sqms2_answer": [{
+                        "sqms2_Answer_id": 78439576,
+                        "sqms2_correct": true,
+                        "sqms2_text": [
+                            {"sqms2_Text_id": 345681, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Pizza.</p>"}
+                        ]
+                    },{
+                        "sqms2_Answer_id": 78439577,
+                        "sqms2_correct": false,
+                        "sqms2_text": [
+                            {"sqms2_Text_id": 345682, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Spaghetti.</p>"}
+                        ]
+                    }
+                    ]
+                }]
+            }]
+        }]
+    }]
+}

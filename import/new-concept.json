@@ -1,0 +1,16 @@
+{
+    "sqms2_syllabus_topic": [{
+        "sqms2_syllabus": {
+            "sqms2_Syllabus_id": 123,
+            "sqms2_syllabus_desc": [
+                {}, {}]
+        },
+        "sqms2_topic": {"sqms2_Topic_id": 789},
+        "status": "verbunden"
+    },
+    {
+        "sqms2_syllabus": {"sqms2_Syllabus_id": 123},
+        "sqms2_topic": {"sqms2_Topic_id": 790},
+        "status": "halbverbunden"
+    }]
+}
