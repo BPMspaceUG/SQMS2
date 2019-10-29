@@ -1,0 +1,33 @@
+{
+    "sqms2_question": [{
+        "sqms2_Question_id": 9000000,
+        "sqms2_text": [
+            {"sqms2_Text_id": 500000, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Was ist flüssiger als Wasser?</p>"},
+            {"sqms2_Text_id": 500003, "sqms2_language_iso_short": "en", "sqms2_Text": "<p>Whats more fluid than water?</p>"}
+        ],
+        "sqms2_answer": [{
+            "sqms2_Answer_id": 23000000,
+            "sqms2_correct": true,
+            "sqms2_text": [{"sqms2_Text_id": 500001, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Meine Hausaufgaben. Die sind nämlich überflüssig.</p>"}]
+        }, {
+            "sqms2_Answer_id": 23000001,
+            "sqms2_correct": true,
+            "sqms2_text": [{"sqms2_Text_id": 500002, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Kohlenwasserstoffverbindungen z.B. n-Pentan.</p>"}]
+        }]
+    }, 
+    {
+        "sqms2_Question_id": 9000001,
+        "sqms2_text": [
+            {"sqms2_Text_id": 500010, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Ist SQMS cool?</p>"}
+        ],
+        "sqms2_answer": [{
+            "sqms2_Answer_id": 23000002,
+            "sqms2_correct": true,
+            "sqms2_text": [{"sqms2_Text_id": 500012, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Ja.</p>"}]
+        }, {
+            "sqms2_Answer_id": 23000003,
+            "sqms2_correct": false,
+            "sqms2_text": [{"sqms2_Text_id": 500013, "sqms2_language_iso_short": "de", "sqms2_Text": "<p>Nein.</p>"}]
+        }]
+    }]
+}

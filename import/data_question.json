@@ -1,0 +1,9 @@
+{
+    "sqms2_question": [{
+        "sqms2_text": [{"sqms2_Text": "<p>Does the Import work?</p>", "sqms2_language_iso_short": "en"}],
+        "sqms2_answer": [
+            {"sqms2_text": [{"sqms2_Text": "<p>Yes, it works! :D</p>", "sqms2_language_iso_short": "en"}], "sqms2_correct": true},
+            {"sqms2_text": [{"sqms2_Text": "<p>No, it does not work :(</p>", "sqms2_language_iso_short": "en"}]
+        }]
+    }]
+}

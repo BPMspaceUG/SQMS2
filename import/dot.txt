@@ -1,4 +1,0 @@
-Topic -> Syllabus -> SyllabusChapter -> Question -> Answer -> Text
-Syllabus -> Text
-SyllabusChapter  -> Text
-Question -> Text

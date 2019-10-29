@@ -51,8 +51,8 @@
         "is_virtual": true,
         "columns": [],
         "table_type": "obj",
-        "showKids": false,
-        "virtualcontent": "return \u0027\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\u0027;"
+        "showKids": true,
+        "virtualcontent": "return `\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\n\u003Cp\u003EImport Data: \u003Ca href=\u0022import\u0022\u003EImport\u003C\/a\u003E\u003C\/p\u003E`;"
     },
     "sqms2_syllabus": {
         "table_alias": "Syllabus",

@@ -1,15 +1,20 @@
 <?php
-    header('Content-Type: plain');
     // Includes
     require_once(__DIR__."/../src/RequestHandler.inc.php");
 
-    //================>
-    $fname = __DIR__."/withIDs.json";
+    //======DEFINITION==========
+    $fname = __DIR__."/data_full_+IDs.json";
 
-
-    $content = file_get_contents($fname);
-    $data = json_decode($content, true);
-
+    $metaEdges = [
+        "sqms2_syllabus_topic" => ["sqms2_syllabus", "sqms2_topic"],
+        "sqms2_syllabus_syllabuschapter" => ["sqms2_syllabus", "sqms2_syllabuschapter"],
+        "sqms2_syllabuschapter_question" => ["sqms2_syllabuschapter", "sqms2_question"],
+        "sqms2_question_answer" => ["sqms2_question", "sqms2_answer"],
+        "sqms2_syllabus_desc" => ["sqms2_syllabus", "sqms2_text"],
+        "sqms2_syllabuschapter_desc" => ["sqms2_syllabuschapter", "sqms2_text"],
+        "sqms2_question_text" => ["sqms2_question", "sqms2_text"],
+        "sqms2_answer_text" => ["sqms2_answer", "sqms2_text"]
+    ];
 
     function create($table, $row) {
         $pcol = array_keys($row)[0];
@@ -19,7 +24,6 @@
         $id = $row[$pcol];
         if (count($res) == 2)
             $id = $res[1]["element_id"];
-        echo $table." -> ".$id."\n"; // for Debugging
         return (int)$id;
     }
     function relate($table, $objID1, $objID2) {
@@ -36,54 +40,49 @@
         }
         return $res;
     }
-
-    /*
-    function test($arr, &$res, $k) {
-        if (is_array($arr)) {
-            if (!is_numeric($k)) $res[] = $k;
-            foreach ($arr as $key => $value) {
-                test($value, $res, $key);
-            }
+    function getEdgeName($from, $to) {
+        global $metaEdges;
+        foreach ($metaEdges as $key => $value) {
+            if ($value[0] == $from && $value[1] == $to)
+                return $key;
         }
+        return null;
     }
-    $x = [];
-    $res = test($data["sqms2_topic"], $x, "sqms2_topic");    
-    var_dump($x);
-    die();
-    */
-
-
-    foreach ($data["sqms2_topic"] as $t) {
-        // [+]---(Syllabus)
-        if (array_key_exists("sqms2_syllabus", $t)) foreach ($t["sqms2_syllabus"] as $s) {
-            // Syllabus --- Topic
-            $s_t = relate("sqms2_syllabus_topic", create("sqms2_syllabus", $s), create("sqms2_topic", $t));
-
-            // [+]---(SyllabusDescription)
-            multiRelate($s, $s_t[1], "sqms2_syllabus_desc", "sqms2_text");
-
-            // [+]---(SyllabusChapter)
-            if (array_key_exists("sqms2_syllabuschapter", $s)) foreach ($s["sqms2_syllabuschapter"] as $sc) {
-                $s_sc = relate("sqms2_syllabus_syllabuschapter", $s_t[1], create("sqms2_syllabuschapter", $sc));
-                // [+]---(SyllabusChapterDescription)
-                multiRelate($sc, $s_sc[2], "sqms2_syllabuschapter_desc", "sqms2_text");
-                // [+]---(Question)
-                if (array_key_exists("sqms2_question", $sc)) foreach ($sc["sqms2_question"] as $qu) {
-                    $sc_q = relate("sqms2_syllabuschapter_question", $s_sc[2], create("sqms2_question", $qu));
-                    // [+]---(QuestionText)
-                    multiRelate($qu, $sc_q[2], "sqms2_question_text", "sqms2_text");
-                    
-                    // [+]---(Answer)
-                    //TODO: multiRelate($qu, $sc_q[2], "sqms2_question_answer", "sqms2_answer");
-
-                    if (array_key_exists("sqms2_answer", $qu)) foreach ($qu["sqms2_answer"] as $an) { 
-                        $q_a = relate("sqms2_question_answer", $sc_q[2], create("sqms2_answer", $an));
-                        // [+]---(AnswerText)
-                        multiRelate($an, $q_a[2], "sqms2_answer_text", "sqms2_text");
+    function walk($x, $k) {
+        global $stack;
+        if (is_array($x)) {
+            // 🌱 Twig = Edge
+            foreach ($x as $key => $value)
+                walk($value, $k);
+        }
+        elseif (is_object($x)) {
+            // 🍂 Leaf = Object
+            $arr = (array)$x;
+            foreach ($arr as $key => $value)
+                walk($value, $key);
+            //--- Create Objects
+            $newObjID = create($k, $arr);
+            $x->primarykey9842739845742380850234850834058043 = $newObjID;
+            echo "<b>  o  $k [$newObjID]</b><br>";
+            //--- Relations
+            foreach ($arr as $key => $channel) {
+                if (is_array($channel)) {
+                    $edge = getEdgeName($k, $key);
+                    echo "<b> --- $edge (".count($channel).")</b><br>";
+                    foreach ($channel as $conn) {
+                        $toID = $conn->primarykey9842739845742380850234850834058043;
+                        $ed = relate($edge, $newObjID, $toID)[0];
+                        echo "     $newObjID -> $toID [$ed]<br>";
                     }
-
-
                 }
             }
         }
     }
+
+    //===> IMPORT
+
+    $content = file_get_contents($fname);
+    $data = json_decode($content);
+    echo "<pre>";
+    walk($data->{"sqms2_syllabus"}, "sqms2_syllabus");
+    echo "</pre>";
