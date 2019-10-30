@@ -2,9 +2,7 @@
     // Includes
     require_once(__DIR__."/../src/RequestHandler.inc.php");
 
-    //======DEFINITION==========
-    $fname = __DIR__."/data_full_+IDs.json";
-
+    //====== DEFINITION ==========
     $metaEdges = [
         "sqms2_syllabus_topic" => ["sqms2_syllabus", "sqms2_topic"],
         "sqms2_syllabus_syllabuschapter" => ["sqms2_syllabus", "sqms2_syllabuschapter"],
@@ -16,6 +14,7 @@
         "sqms2_answer_text" => ["sqms2_answer", "sqms2_text"]
     ];
 
+    //====== METHODS ==========
     function create($table, $row) {
         $pcol = array_keys($row)[0];
         $resp = api(["cmd"=>"create", "param"=>["table"=>$table,"row"=>$row]]);
@@ -31,15 +30,6 @@
         $edgeID = create($table, [$colnames[1] => $objID1, $colnames[2] => $objID2]);
         return [$edgeID, $objID1, $objID2];
     }
-    function multiRelate($obj, $objID, $newRelName, $newObjName) {
-        $res = [];
-        if (array_key_exists($newObjName, $obj)) {
-            foreach ($obj[$newObjName] as $x) {
-                $res[] = relate($newRelName, $objID, create($newObjName, $x));
-            }
-        }
-        return $res;
-    }
     function getEdgeName($from, $to) {
         global $metaEdges;
         foreach ($metaEdges as $key => $value) {
@@ -48,7 +38,7 @@
         }
         return null;
     }
-    function walk($x, $k) {
+    function walk($x, $k = null) {
         global $stack;
         if (is_array($x)) {
             // 🌱 Twig = Edge
@@ -60,6 +50,11 @@
             $arr = (array)$x;
             foreach ($arr as $key => $value)
                 walk($value, $key);
+            // Import complete!
+            if (is_null($k)) {
+                echo "Import finished!";
+                return;
+            }
             //--- Create Objects
             $newObjID = create($k, $arr);
             $x->primarykey9842739845742380850234850834058043 = $newObjID;
@@ -78,11 +73,14 @@
             }
         }
     }
+    function importData($content) {
+        $jsonData = json_decode($content);
+        walk($jsonData);
+    }
 
     //===> IMPORT
 
-    $content = file_get_contents($fname);
-    $data = json_decode($content);
+    $content = file_get_contents(__DIR__."/data_full_+IDs.json");
     echo "<pre>";
-    walk($data->{"sqms2_syllabus"}, "sqms2_syllabus");
+    importData($content);
     echo "</pre>";
