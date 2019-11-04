@@ -1,9 +1,28 @@
 {
     "sqms2_question": [{
-        "sqms2_text": [{"sqms2_Text": "<p>Does the Import work?</p>", "sqms2_language_iso_short": "en"}],
+        "sqms2_text": [
+            {"sqms2_Text": "<p>Does the Import work?</p>", "sqms2_language_iso_short": "en"},
+            {"sqms2_Text": "<p>Funktioniert der Import?</p>", "sqms2_language_iso_short": "de"},
+            {"sqms2_Text": "<p>L'importation fonctionne-t-elle ?</p>", "sqms2_language_iso_short": "fr"},
+            {"sqms2_Text": "<p>¿Funciona la importación?</p>", "sqms2_language_iso_short": "sp"},
+            {"sqms2_Text": "<p>L'importazione funziona?</p>", "sqms2_language_iso_short": "it"}
+        ],
         "sqms2_answer": [
-            {"sqms2_text": [{"sqms2_Text": "<p>Yes, it works! :D</p>", "sqms2_language_iso_short": "en"}], "sqms2_correct": true},
-            {"sqms2_text": [{"sqms2_Text": "<p>No, it does not work :(</p>", "sqms2_language_iso_short": "en"}]
+            {"sqms2_text": [
+                {"sqms2_Text": "<p>Yes, it works!</p>", "sqms2_language_iso_short": "en"},
+                {"sqms2_Text": "<p>Yes, it works!  -- This Text should not be added! --</p>", "sqms2_language_iso_short": "en"},
+                {"sqms2_Text": "<p>Ja, es funktioniert!</p>", "sqms2_language_iso_short": "de"},
+                {"sqms2_Text": "<p>Oui, ça marche !</p>", "sqms2_language_iso_short": "fr"},
+                {"sqms2_Text": "<p>Sí, funciona!</p>", "sqms2_language_iso_short": "sp"},
+                {"sqms2_Text": "<p>Sì, funziona!</p>", "sqms2_language_iso_short": "it"}
+            ], "sqms2_correct": true},
+            {"sqms2_text": [
+                {"sqms2_Text": "<p>No, it does not work.</p>", "sqms2_language_iso_short": "en"},
+                {"sqms2_Text": "<p>Nein, es funktioniert nicht.</p>", "sqms2_language_iso_short": "de"},
+                {"sqms2_Text": "<p>Non, ça ne marche pas.</p>", "sqms2_language_iso_short": "fr"},
+                {"sqms2_Text": "<p>No, no funciona.</p>", "sqms2_language_iso_short": "sp"},
+                {"sqms2_Text": "<p>No, non funziona.</p>", "sqms2_language_iso_short": "it"}
+            ]
         }]
     }]
 }

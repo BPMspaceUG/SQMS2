@@ -2,10 +2,20 @@
     // Includes
     require_once(__DIR__."/../src/RequestHandler.inc.php");
 
+    // TODO: The Import has to work via the Path!!!
+    // So for example we can give the following structure:    
+    // cmd = [question/85647895] / [answer/create] / [text/create]
+    /* param = [
+        0: {should be empty...execpt we wanna update something},
+        1: {"correct": true},
+        2: {"text": "this is a correct answer."}
+    ]
+    */
+
+
 
     class DataImporter {
         private $metaEdges = null;
-        private $importData = null;
         private $log = null;
 
         private function create($table, $row) {
@@ -30,6 +40,7 @@
             }
             return null;
         }
+        /*
         private function walk($x, $k = null) {
             if (is_array($x)) {
                 // 🌱 Twig = Edge
@@ -43,41 +54,80 @@
                     $this->walk($value, $key);
                 // Import complete!
                 if (is_null($k)) {
-                    $this->log .= "Import finished!";
+                    $this->log .= "\nImport finished!";
                     return;
                 }
-                //--- Create Objects
-                $newObjID = $this->create($k, $arr);
-                $x->primarykey9842739845742380850234850834058043 = $newObjID;
-                $this->log .=  "<b>  o  $k [$newObjID]</b><br>";
+
+                //$this->log .= var_export($arr, true);
+
                 //--- Relations
                 foreach ($arr as $key => $channel) {
                     if (is_array($channel)) {
+                        //--- Create Node
+                        // TODO: Clear all arrays from arr
+                        $newObjID = $this->create($k, $arr);
+                        $this->log .=  "<b style=\"color:red;\">• $k [$newObjID]</b>\n";
+                        //--- Relate everything else
                         $edge = $this->getEdgeName($k, $key);
-                        $this->log .=  "<b> --- $edge (".count($channel).")</b><br>";
+                        //$this->log .= "<b> --- $edge (".count($channel).")</b>";
                         foreach ($channel as $conn) {
-                            $toID = $conn->primarykey9842739845742380850234850834058043;
+                            // Create Sub-Object
+                            $toID = $this->create($key, (array)$conn);
                             $ed = $this->relate($edge, $newObjID, $toID)[0];
-                            $this->log .=  "     $newObjID -> $toID [$ed]<br>";
+                            $this->log .= "<b style=\"color:orange;\">└─• $key [$toID] EdgeID: $ed</b>\n";
                         }
+                    } else {
+                        //$this->log .=  "$key\n";
                     }
                 }
             }
         }
+        */
 
-        public function __construct($metaStructData) {
-            $this->metaEdges = $metaStructData;
-            // TODO: Read out meta structure
+        // TODO: This function should give back all paths!
+        private function walk($x, $k=null, $layer=-1, &$path=[]) {
+            if (is_array($x)) {
+                // 🌱 Twig = Edge
+                $layer++;                
+                foreach ($x as $key => $value)
+                    $this->walk($value, $k, $layer, $path);
+                }
+            else if (is_object($x)) {
+                // 🍂 Leaf = Object
+                $arr = (array)$x;
+                if (!is_null($k)) {
+                    // NODE
+                    $leaf = $k."/create";
+                    // TODO: Create and modify Path
+                    $path[$layer] = $leaf;
+                    echo implode('/', $path)."\n";
+                }
+                foreach ($arr as $key => $value)
+                    $this->walk($value, $key, $layer, $path);
+            }
+        }
 
+        public function __construct() {
+            // Read out meta structure
+            $config = json_decode(Config::getConfig(), true);
+            foreach ($config as $tablename => $table) {
+                if ($table["table_type"] !== "obj") {
+                    // Relation
+                    $colnames = array_keys($table["columns"]);
+                    @$objA = $table["columns"][$colnames[1]]["foreignKey"]["table"];
+                    @$objB = $table["columns"][$colnames[2]]["foreignKey"]["table"];
+                    // Both ForeignKeys have to have tables
+                    if (!is_null($objA) && !is_null($objB))
+                        $this->metaEdges[$tablename] = [$objA, $objB];
+                }
+            }
             
         }
-        public function loadFile($filePath) {
-            $content = file_get_contents($filePath);
-            $this->importData = json_decode($content);
-        }
-        public function import() {
+        public function importFile($filePath) {
             $this->log = "";
-            $this->walk($this->importData);
+            $content = file_get_contents($filePath);
+            $importData = json_decode($content);
+            $this->walk($importData);
         }
         public function getLog() {
             return $this->log;
@@ -86,8 +136,7 @@
 
 
     //===> IMPORT
-    $metaStruct = json_decode(file_get_contents(__DIR__."/../meta_structure.json"), true);
-    $import = new DataImporter($metaStruct);
-    $import->loadFile(__DIR__."/data_full.json");
-    $import->import();
-    echo $import->getLog();
+    echo "<pre>";
+    $import = new DataImporter(); // data_full data_question
+    $import->importFile(__DIR__."/data_question.json");
+    //echo '<pre>'.$import->getLog().'</pre>';
