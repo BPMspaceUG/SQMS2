@@ -1,0 +1,39 @@
+{
+    "sqms2_syllabus": [{
+        "sqms2_Syllabus_titel": "Syllabus A - Topic 1",
+        "sqms2_Syllabus_Valid_from": "2018-06-01",
+        "sqms2_Syllabus_Valid_to": "2019-06-01",
+        "sqms2_topic": [{
+            "sqms2_Topic_title": "Topic 1"
+        }],
+        "sqms2_text": [
+            {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Syllabus-Description.</p>"},
+            {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Syllabus-Beschreibung.</p>"}
+        ],
+        "sqms2_syllabuschapter": [{
+            "sqms2_SyllabusChapter_titel": "Chapter 1 - Syllabus A - Topic 1",
+            "sqms2_SyllabusChapter_ChapterNumber": 1,
+            "sqms2_SyllabusChapter_Severity": 100,
+            "sqms2_text": [
+                {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Description of a Chapter</p>"},
+                {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Beschreibung eines Kapitel</p>"}
+            ],
+            "sqms2_question": [{
+                "sqms2_text": [
+                    {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Whats your favorite food?</p>"}
+                ],
+                "sqms2_answer": [{
+                    "sqms2_correct": true,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Pizza.</p>"}
+                    ]
+                },{
+                    "sqms2_correct": false,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Spaghetti.</p>"}
+                    ]
+                }]
+            }]
+        }]
+    }]
+}

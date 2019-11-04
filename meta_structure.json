@@ -1,0 +1,10 @@
+{
+    "sqms2_syllabus_topic": ["sqms2_syllabus", "sqms2_topic"],
+    "sqms2_syllabus_syllabuschapter": ["sqms2_syllabus", "sqms2_syllabuschapter"],
+    "sqms2_syllabuschapter_question": ["sqms2_syllabuschapter", "sqms2_question"],
+    "sqms2_question_answer": ["sqms2_question", "sqms2_answer"],
+    "sqms2_syllabus_desc": ["sqms2_syllabus", "sqms2_text"],
+    "sqms2_syllabuschapter_desc": ["sqms2_syllabuschapter", "sqms2_text"],
+    "sqms2_question_text": ["sqms2_question", "sqms2_text"],
+    "sqms2_answer_text": ["sqms2_answer", "sqms2_text"]
+}
