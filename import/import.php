@@ -12,18 +12,27 @@
     ]
     */
 
-
-
     class DataImporter {
         private $metaEdges = null;
-        private $log = null;
 
-        private function create($table, $row) {
-            $pcol = array_keys($row)[0];
-            $resp = api(["cmd"=>"create", "param"=>["table"=>$table,"row"=>$row]]);
+        private static function array_insert(&$array, $position, $insert) {
+            if (is_int($position)) {
+                array_splice($array, $position, 0, $insert);
+            } else {
+                $pos   = array_search($position, array_keys($array));
+                $array = array_merge(
+                    array_slice($array, 0, $pos),
+                    $insert,
+                    array_slice($array, $pos)
+                );
+            }
+        }
+        private function create($table, $row, $pathStr = "") {
+            @$pcol = array_keys($row)[0];
+            $resp = api(["cmd"=>"create", "param"=>["table"=>$table, "path"=>$pathStr, "row"=>$row]]);
             $res = json_decode($resp, true);
             // If exists, return the ID
-            $id = $row[$pcol];
+            @$id = $row[$pcol];
             if (count($res) == 2)
                 $id = $res[1]["element_id"];
             return (int)$id;
@@ -40,67 +49,69 @@
             }
             return null;
         }
-        /*
-        private function walk($x, $k = null) {
-            if (is_array($x)) {
-                // 🌱 Twig = Edge
-                foreach ($x as $key => $value)
-                    $this->walk($value, $k);
-            }
-            elseif (is_object($x)) {
-                // 🍂 Leaf = Object
-                $arr = (array)$x;
-                foreach ($arr as $key => $value)
-                    $this->walk($value, $key);
-                // Import complete!
-                if (is_null($k)) {
-                    $this->log .= "\nImport finished!";
-                    return;
-                }
+        private function createAndRelate($path, $leafData) {
+            // Checks:
+            // 1. Path count always has to be a even number and be > 1!
+            // 2. Special case at length = 2
+            if (count($path) % 2 !== 0 || count($path) < 2) {
+                return null;
+            } elseif (count($path) === 2) {
+                // Starting Element => Just create
+                $newID = $this->create($path[0], $leafData);
+                return [null, null, $newID];
+            } else {
+                // Create AND relate
+                $tblFrom = $path[count($path)-4];
+                $tblTo = $path[count($path)-2];
+                $tblEdge = $this->getEdgeName($tblFrom, $tblTo);
+                $idFrom = $path[count($path)-3];
 
-                //$this->log .= var_export($arr, true);
+                // Insert the Relation-Table in the Path
+                self::array_insert($path, count($path)-2, [$tblEdge, "create"]);
+                $newPath = implode('/', $path);
 
-                //--- Relations
-                foreach ($arr as $key => $channel) {
-                    if (is_array($channel)) {
-                        //--- Create Node
-                        // TODO: Clear all arrays from arr
-                        $newObjID = $this->create($k, $arr);
-                        $this->log .=  "<b style=\"color:red;\">• $k [$newObjID]</b>\n";
-                        //--- Relate everything else
-                        $edge = $this->getEdgeName($k, $key);
-                        //$this->log .= "<b> --- $edge (".count($channel).")</b>";
-                        foreach ($channel as $conn) {
-                            // Create Sub-Object
-                            $toID = $this->create($key, (array)$conn);
-                            $ed = $this->relate($edge, $newObjID, $toID)[0];
-                            $this->log .= "<b style=\"color:orange;\">└─• $key [$toID] EdgeID: $ed</b>\n";
-                        }
-                    } else {
-                        //$this->log .=  "$key\n";
-                    }
-                }
+                // 1. create Element with path
+                $idTo = $this->create($tblTo, $leafData, $newPath);
+                // 2. Get Edge Name (nm-Table)                
+                return $this->relate($tblEdge, $idFrom, $idTo);
             }
         }
-        */
-
-        // TODO: This function should give back all paths!
         private function walk($x, $k=null, $layer=-1, &$path=[]) {
             if (is_array($x)) {
                 // 🌱 Twig = Edge
                 $layer++;                
                 foreach ($x as $key => $value)
                     $this->walk($value, $k, $layer, $path);
-                }
+            }
             else if (is_object($x)) {
                 // 🍂 Leaf = Object
                 $arr = (array)$x;
                 if (!is_null($k)) {
-                    // NODE
+                    // Clone Array and remove all sub arrays for multidimensional array
+                    $array = (array)clone(object)$arr;
+                    foreach($array as $ki => $a) {
+                        if (is_array($a)) { unset($array[$ki]); }
+                    }
+                    // Clear all parts after actual layer
+                    $path = array_slice($path, 0, $layer+1);
+                    // Build the create Path
                     $leaf = $k."/create";
-                    // TODO: Create and modify Path
+                    $path[$layer] = $leaf;                    
+                    $pathStr = implode('/', $path);
+                    // CREATE and relate Object
+                    $res = $this->createAndRelate(explode('/', $pathStr), $array);
+                    $objID = $res[2]; // the new ID
+                    // Modify Path
+                    $leaf = $k."/".$objID;
                     $path[$layer] = $leaf;
-                    echo implode('/', $path)."\n";
+                    // Debug-Log:
+                    if ($objID != 0) {
+                        echo "[".count($path).'] <span style="color:green;">'.implode('/', $path)."</span>\n";
+                    }
+                    else {
+                        // Error
+                        echo "[".count($path).'] <span style="color:red;">'.implode('/', $path)."</span> <b>ERROR</b>\n";
+                    }                         
                 }
                 foreach ($arr as $key => $value)
                     $this->walk($value, $key, $layer, $path);
@@ -124,13 +135,9 @@
             
         }
         public function importFile($filePath) {
-            $this->log = "";
             $content = file_get_contents($filePath);
             $importData = json_decode($content);
             $this->walk($importData);
-        }
-        public function getLog() {
-            return $this->log;
         }
     }
 
@@ -138,5 +145,4 @@
     //===> IMPORT
     echo "<pre>";
     $import = new DataImporter(); // data_full data_question
-    $import->importFile(__DIR__."/data_question.json");
-    //echo '<pre>'.$import->getLog().'</pre>';
+    $import->importFile(__DIR__."/data_full.json");

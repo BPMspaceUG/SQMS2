@@ -1,5 +1,6 @@
 {
-    "sqms2_syllabus": [{
+    "sqms2_syllabus": [
+    {
         "sqms2_Syllabus_titel": "Syllabus A - Topic 1",
         "sqms2_Syllabus_Valid_from": "2018-06-01",
         "sqms2_Syllabus_Valid_to": "2019-06-01",
@@ -35,5 +36,75 @@
                 }]
             }]
         }]
-    }]
+    },
+    {
+        "sqms2_Syllabus_titel": "Syllabus B - Topic 2",
+        "sqms2_Syllabus_Valid_from": "2018-04-01",
+        "sqms2_Syllabus_Valid_to": "2019-04-01",
+        "sqms2_topic": [{
+            "sqms2_Topic_title": "Topic 2"
+        }],
+        "sqms2_text": [
+            {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>This is a description</p>"},
+            {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>This is another description which should NOT be imported!</p>"},
+            {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Das ist eine Beschreibung.</p>"}
+        ],
+        "sqms2_syllabuschapter": [{
+            "sqms2_SyllabusChapter_titel": "Introduction",
+            "sqms2_SyllabusChapter_ChapterNumber": 1,
+            "sqms2_SyllabusChapter_Severity": 10,
+            "sqms2_text": [
+                {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>In the Introduction the Topic is introduced!</p>"},
+                {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>In der Einleitung wird das Thema vorgestellt!</p>"}
+            ],
+            "sqms2_question": [{
+                "sqms2_text": [
+                    {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>What is the meaning of life?</p>"}
+                ],
+                "sqms2_answer": [{
+                    "sqms2_correct": true,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>42.</p>"},
+                        {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>42.</p>"},
+                        {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>42.</p>"},
+                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>42.</p>"}
+                    ]
+                },{
+                    "sqms2_correct": false,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Politics.</p>"},
+                        {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Politik.</p>"},
+                        {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>politica.</p>"},
+                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>politique.</p>"}
+                    ]
+                }]
+            }]
+        },{
+            "sqms2_SyllabusChapter_titel": "Applications",
+            "sqms2_SyllabusChapter_ChapterNumber": 2,
+            "sqms2_SyllabusChapter_Severity": 90,
+            "sqms2_text": [
+                {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Here are some of the applications mentioned.</p>"},
+                {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Hier werden einige Anwendungen vorgestellt.</p>"}
+            ],
+            "sqms2_question": [{
+                "sqms2_text": [
+                    {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Whats your favorite food?</p>"}
+                ],
+                "sqms2_answer": [{
+                    "sqms2_correct": true,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Pizza.</p>"}
+                    ]
+                },{
+                    "sqms2_correct": false,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Spaghetti.</p>"}
+                    ]
+                }]
+            }]
+        }
+    ]
+    }
+]
 }
