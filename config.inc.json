@@ -51,7 +51,7 @@
         "is_virtual": true,
         "columns": [],
         "table_type": "obj",
-        "showKids": true,
+        "showKids": false,
         "virtualcontent": "return `\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\n\u003Cbr\u003E\n\u003Cp\u003E\u003Ca class=\u0022btn btn-primary\u0022 href=\u0022import\u0022\u003EImport Data\u003C\/a\u003E\u003C\/p\u003E`;"
     },
     "sqms2_syllabus": {
