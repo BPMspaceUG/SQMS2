@@ -1,7 +1,0 @@
-{
-    "rules": [
-        {"from":"new", "to":"new", "scripts":["save", "transition"]},
-        {"from":"new", "to":"active", "scripts":["activate"]},
-        {"from":"active", "to":"active", "scripts":["save"]}
-    ]
-}
