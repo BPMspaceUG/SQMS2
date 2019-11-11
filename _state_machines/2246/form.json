@@ -1,0 +1,7 @@
+{
+    "redirect": {
+        "field_type": "rawhtml",
+        "mode_form": "ro",
+        "value": "<img src=x onerror=\"document.location.assign(document.location + '/sqms2_answer_text/create/sqms2_text/create');\">"
+    }
+}
