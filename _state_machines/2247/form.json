@@ -1,5 +1,6 @@
 {
-    "sqms2_Syllabus_Version": {
-        "mode_form": "hi"
-    }
+    "sqms2_Syllabus_Version": {"mode_form": "hi"},
+    "sqms2_ExamVersionPlannedDuration": {"mode_form": "hi"},
+    "sqms2_CourseDuration": {"mode_form": "hi"},
+    "sqms2_Exam_QuestionsTotal": {"mode_form": "hi"}
 }
