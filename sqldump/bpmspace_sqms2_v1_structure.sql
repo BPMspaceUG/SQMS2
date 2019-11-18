@@ -196,7 +196,7 @@ CREATE TABLE `sqms2_question` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_question_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_c8e133bc` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=85647975 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=85647977 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -284,7 +284,7 @@ CREATE TABLE `sqms2_question_text` (
   CONSTRAINT `sqms2_question_text_ibfk_1` FOREIGN KEY (`sqms2_Text_id_fk_559100`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `sqms2_question_text_ibfk_2` FOREIGN KEY (`sqms2_Question_id_fk_783494`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `state_id_1438cb88` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=75034691 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=75034693 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `sqms2_syllabus` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_syllabus_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_0bc4d1a1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=34617 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=34620 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -460,7 +460,7 @@ CREATE TABLE `sqms2_text` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_text_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_8c14317f` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=70036332 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=70036334 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -721,4 +721,4 @@ CREATE TABLE `state_rules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-11 16:44:32
+-- Dump completed on 2019-11-18 16:54:28

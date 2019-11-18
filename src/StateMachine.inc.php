@@ -136,7 +136,7 @@
     }
     private function createNewState($statename, $isEP) {
       $newStateID = -1;
-      $query = "INSERT INTO state (name, statemachine_id, entrypoint) VALUES (?,?,?,?)";
+      $query = "INSERT INTO state (name, statemachine_id, entrypoint) VALUES (?,?,?)";
       $stmt = $this->db->prepare($query);
       $stmt->execute(array($statename, $this->ID, $isEP));
       $newStateID = $this->db->lastInsertId();

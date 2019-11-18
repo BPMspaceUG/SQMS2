@@ -1553,7 +1553,7 @@
                 "show_in_grid": true,
                 "col_order": 3,
                 "mode_form": "rw",
-                "field_type": "codeeditor"
+                "field_type": "textarea"
             }
         },
         "table_icon": ""
@@ -1617,7 +1617,7 @@
                 "show_in_grid": true,
                 "col_order": 6,
                 "mode_form": "rw",
-                "field_type": "codeeditor"
+                "field_type": "textarea"
             },
             "script_OUT": {
                 "column_alias": "Script OUT",
@@ -1626,7 +1626,7 @@
                 "show_in_grid": true,
                 "col_order": 7,
                 "mode_form": "rw",
-                "field_type": "codeeditor"
+                "field_type": "textarea"
             }
         },
         "table_icon": ""
@@ -1686,7 +1686,7 @@
                 "show_in_grid": true,
                 "col_order": 4,
                 "mode_form": "rw",
-                "field_type": "codeeditor"
+                "field_type": "textarea"
             }
         },
         "table_icon": ""
