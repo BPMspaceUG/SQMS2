@@ -122,7 +122,7 @@
                 "column_alias": "Version",
                 "is_primary": false,
                 "is_virtual": false,
-                "show_in_grid": true,
+                "show_in_grid": false,
                 "show_in_form": false,
                 "col_order": 6,
                 "mode_form": "hi",
@@ -347,7 +347,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 3,
                 "mode_form": "ro",
                 "field_type": "textarea"
@@ -393,7 +393,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_syllabuschapter_desc",
                 "revfk_colname1": "sqms2_SyllabusChapter_id_fk_886795",
-                "revfk_colname2": "sqms2_Text_id_fk_524933"
+                "revfk_colname2": "sqms2_Text_id_fk_524933",
+                "show_in_form": true
             },
             "virtualColx": {
                 "field_type": "reversefk",
@@ -406,7 +407,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_syllabuschapter_question",
                 "revfk_colname1": "sqms2_SyllabusChapter_id_fk_920241",
-                "revfk_colname2": "sqms2_Question_id_fk_285826"
+                "revfk_colname2": "sqms2_Question_id_fk_285826",
+                "show_in_form": true
             }
         },
         "table_icon": "\u003Ci class=\u0022fa fa-boxes\u0022\u003E\u003C\/i\u003E"
@@ -575,7 +577,7 @@
                 "is_primary": true,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 1,
                 "mode_form": "ro",
                 "field_type": "number"
@@ -585,7 +587,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 2,
                 "mode_form": "ro",
                 "field_type": "textarea"
@@ -595,7 +597,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 3,
                 "mode_form": "ro",
                 "field_type": "number"
@@ -605,7 +607,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 4,
                 "mode_form": "ro",
                 "field_type": "number"
@@ -615,7 +617,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 5,
                 "mode_form": "ro",
                 "field_type": "enum",
@@ -626,7 +628,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 6,
                 "mode_form": "ro",
                 "field_type": "state"
@@ -642,7 +644,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_question_text",
                 "revfk_colname2": "sqms2_Text_id_fk_559100",
-                "revfk_colname1": "sqms2_Question_id_fk_783494"
+                "revfk_colname1": "sqms2_Question_id_fk_783494",
+                "show_in_form": true
             },
             "virtualColx": {
                 "field_type": "reversefk",
@@ -655,7 +658,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_question_answer",
                 "revfk_colname1": "sqms2_Question_id_fk_735802",
-                "revfk_colname2": "sqms2_Answer_id_fk_995603"
+                "revfk_colname2": "sqms2_Answer_id_fk_995603",
+                "show_in_form": true
             }
         },
         "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E"
@@ -740,7 +744,7 @@
                 "is_primary": true,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 1,
                 "mode_form": "ro",
                 "field_type": "number"
@@ -750,7 +754,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 2,
                 "mode_form": "ro",
                 "field_type": "textarea"
@@ -760,7 +764,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 3,
                 "mode_form": "ro",
                 "field_type": "state"
@@ -796,7 +800,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_answer_text",
                 "revfk_colname1": "sqms2_Answer_id_fk_154388",
-                "revfk_colname2": "sqms2_Text_id_fk_842740"
+                "revfk_colname2": "sqms2_Text_id_fk_842740",
+                "show_in_form": true
             }
         },
         "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E"
@@ -1393,7 +1398,7 @@
                 "is_primary": true,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 1,
                 "mode_form": "ro",
                 "field_type": "number"
@@ -1413,7 +1418,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 3,
                 "mode_form": "ro",
                 "field_type": "textarea"
@@ -1434,7 +1439,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 5,
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1606,7 +1611,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": false,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 3,
                 "mode_form": "ro",
                 "field_type": "textarea"
