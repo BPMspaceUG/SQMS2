@@ -142,8 +142,8 @@
                 "column_alias": "Planned Duration",
                 "is_primary": false,
                 "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": false,
+                "show_in_grid": false,
+                "show_in_form": true,
                 "col_order": 8,
                 "mode_form": "rw",
                 "field_type": "number"
@@ -152,8 +152,8 @@
                 "column_alias": "Course Duration",
                 "is_primary": false,
                 "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": false,
+                "show_in_grid": false,
+                "show_in_form": true,
                 "col_order": 9,
                 "mode_form": "rw",
                 "field_type": "number"
@@ -162,8 +162,8 @@
                 "column_alias": "Questions Total",
                 "is_primary": false,
                 "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": false,
+                "show_in_grid": false,
+                "show_in_form": true,
                 "col_order": 10,
                 "mode_form": "rw",
                 "field_type": "number"
@@ -179,7 +179,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_syllabus_desc",
                 "revfk_colname1": "sqms2_Syllabus_id_fk_783731",
-                "revfk_colname2": "sqms2_Text_id_fk_178796"
+                "revfk_colname2": "sqms2_Text_id_fk_178796",
+                "show_in_form": true
             },
             "virtualColx": {
                 "field_type": "reversefk",
@@ -192,7 +193,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_syllabus_syllabuschapter",
                 "revfk_colname1": "sqms2_Syllabus_id_fk_870666",
-                "revfk_colname2": "sqms2_SyllabusChapter_id_fk_327935"
+                "revfk_colname2": "sqms2_SyllabusChapter_id_fk_327935",
+                "show_in_form": true
             },
             "virtualColxx": {
                 "field_type": "reversefk",
@@ -205,7 +207,8 @@
                 "virtual_select": "",
                 "revfk_tablename": "sqms2_syllabus_topic",
                 "revfk_colname1": "sqms2_Syllabus_id_fk_345197",
-                "revfk_colname2": "sqms2_Topic_id_fk_945295"
+                "revfk_colname2": "sqms2_Topic_id_fk_945295",
+                "show_in_form": true
             }
         },
         "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
