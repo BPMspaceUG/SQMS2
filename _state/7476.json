@@ -1,1 +1,8 @@
-{"sqms2_Text":{"mode_form":"ro"},"sqms2_language_iso_short":{"mode_form":"ro"}}
+{
+    "sqms2_Text": {
+        "mode_form": "ro"
+    },
+    "sqms2_language_iso_short": {
+        "mode_form": "ro"
+    }
+}

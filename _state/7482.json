@@ -1,1 +1,17 @@
-{"sqms2_ExamSetVersion_title":{"mode_form":"ro"},"sqms2_ExamSetVersion_History":{"mode_form":"ro"},"sqms2_ExamSetVersion_Version":{"mode_form":"ro"},"sqms2_ExamSetVersion_Set":{"mode_form":"ro"},"sqms2_ExamSetVersion_SampleSet":{"mode_form":"ro"}}
+{
+    "sqms2_ExamSetVersion_title": {
+        "mode_form": "ro"
+    },
+    "sqms2_ExamSetVersion_History": {
+        "mode_form": "ro"
+    },
+    "sqms2_ExamSetVersion_Version": {
+        "mode_form": "ro"
+    },
+    "sqms2_ExamSetVersion_Set": {
+        "mode_form": "ro"
+    },
+    "sqms2_ExamSetVersion_SampleSet": {
+        "mode_form": "ro"
+    }
+}

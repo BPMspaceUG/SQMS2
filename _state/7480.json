@@ -1,1 +1,5 @@
-{"sqms2_Topic_title":{"mode_form":"ro"}}
+{
+    "sqms2_Topic_title": {
+        "show_in_form": true
+    }
+}
