@@ -211,7 +211,8 @@
                 "show_in_form": true
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
+        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E",
+        "showKids": false
     },
     "role_liamuser": {
         "table_alias": "Liamuser",
@@ -475,7 +476,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": ""
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_examsetversion": {
         "table_alias": "Examsetversion",
@@ -484,7 +486,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_ExamSetVersion_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": true,
         "stateIdSel": 0,
         "columns": {
@@ -660,6 +662,19 @@
                 "revfk_colname1": "sqms2_Question_id_fk_735802",
                 "revfk_colname2": "sqms2_Answer_id_fk_995603",
                 "show_in_form": true
+            },
+            "virtualColxx": {
+                "field_type": "reversefk",
+                "column_alias": "ExamSetVersions",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 3,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_colname1": "sqms2_ExamSetVersion_id_fk_264577",
+                "revfk_tablename": "sqms2_question_examsetversion",
+                "revfk_colname2": "sqms2_Question_id_fk_615560"
             }
         },
         "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E"
@@ -813,7 +828,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Question_ExamSetVersion_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": true,
         "stateIdSel": "7489",
         "columns": {
@@ -877,7 +892,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Question_ExamSetVersion_Answer_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": true,
         "stateIdSel": "7491",
         "columns": {

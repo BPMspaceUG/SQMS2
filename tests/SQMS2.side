@@ -637,22 +637,6 @@
       ],
       "value": ""
     }, {
-      "id": "20445534-0254-403f-9092-815bd8a0feee",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='i3b68dad8943511786bf8e6856895b308']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
       "id": "3f164c7d-9483-433d-9a4e-e0925e049215",
       "comment": "",
       "command": "click",
@@ -733,22 +717,6 @@
       ],
       "value": ""
     }, {
-      "id": "49a295fa-0e41-4e74-b287-0024207faca5",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='ie0584548c59509f5606ad1920ee8e2f8']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
       "id": "e8cee394-4e4c-4890-979b-c49524c642e8",
       "comment": "",
       "command": "click",
@@ -798,22 +766,6 @@
         ["css=.ml-2 > .fa", "css:finder"],
         ["xpath=//div[@id='ib9681d186c88f8084ab475f89e38bf4c']/div/table/thead/tr/th/a[2]/i", "xpath:idRelative"],
         ["xpath=//th/a[2]/i", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "d305a62f-2122-4d3e-b599-d3d20ee14d7d",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='id9ce13b858f84ff858dc2498ac38b057']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -894,22 +846,6 @@
         ["xpath=//div[@id='i512651c839eff968ae0827184b981018']/a[2]", "xpath:idRelative"],
         ["xpath=(//a[contains(@href, '#/sqms2_syllabus/90034803/sqms2_syllabus_topic/create')])[2]", "xpath:href"],
         ["xpath=//div[9]/div/div/a[2]", "xpath:position"]
-      ],
-      "value": ""
-    }, {
-      "id": "2f83e84f-878a-4115-b20a-bb520e9a34fb",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Nothing selected",
-      "targets": [
-        ["linkText=Nothing selected", "linkText"],
-        ["css=.text-decoration-none", "css:finder"],
-        ["xpath=//a[contains(text(),'Nothing selected')]", "xpath:link"],
-        ["xpath=//a[@onclick=\"loadFKTable(this, 'sqms2_topic', ' ')\"]", "xpath:attributes"],
-        ["xpath=//form[@id='iee983c2805af09a86f85cadd51489cc8']/div[2]/div/div/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, 'javascript:void(0);')]", "xpath:href"],
-        ["xpath=//div[2]/div/div/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Nothing selected')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
