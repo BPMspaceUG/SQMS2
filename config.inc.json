@@ -55,7 +55,7 @@
         "columns": [],
         "table_type": "obj",
         "showKids": false,
-        "virtualcontent": "return `\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\n\u003Cbr\u003E\n\u003Cp\u003E\u003Ca class=\u0022btn btn-primary\u0022 href=\u0022import\u0022\u003EImport Data\u003C\/a\u003E\u003C\/p\u003E`;"
+        "virtualcontent": "return `\u003Ch1\u003ESQMS2 Dashboard\u003C\/h1\u003E\n\u003Cbr\u003E\n\u003Cp\u003E\n\u003Ca class=\u0022btn btn-primary\u0022 href=\u0022import\u0022\u003EImport Data\u003C\/a\u003E\n\u003Ca class=\u0022btn btn-primary\u0022 href=\u0022examset\u0022\u003EExam Set Wizard\u003C\/a\u003E\n\u003C\/p\u003E`;"
     },
     "sqms2_syllabus": {
         "table_alias": "Syllabus",
@@ -211,8 +211,7 @@
                 "show_in_form": true
             }
         },
-        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E",
-        "showKids": false
+        "table_icon": "\u003Ci class=\u0022fa fa-box\u0022\u003E\u003C\/i\u003E"
     },
     "role_liamuser": {
         "table_alias": "Liamuser",
@@ -476,91 +475,6 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "",
-        "showKids": false
-    },
-    "sqms2_examsetversion": {
-        "table_alias": "Examsetversion",
-        "table_type": "obj",
-        "order": 5,
-        "mode": "rw",
-        "stdfilter": "",
-        "stdsorting": "sqms2_ExamSetVersion_id,DESC",
-        "in_menu": true,
-        "se_active": true,
-        "stateIdSel": 0,
-        "columns": {
-            "sqms2_ExamSetVersion_id": {
-                "column_alias": "ExamSetVersion id",
-                "is_primary": true,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 1,
-                "mode_form": "ro",
-                "field_type": "number"
-            },
-            "sqms2_ExamSetVersion_title": {
-                "column_alias": "Title",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 2,
-                "mode_form": "rw",
-                "field_type": "textarea"
-            },
-            "sqms2_ExamSetVersion_History": {
-                "column_alias": "History",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 3,
-                "mode_form": "rw",
-                "field_type": "textarea"
-            },
-            "sqms2_ExamSetVersion_Version": {
-                "column_alias": "Version",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 4,
-                "mode_form": "rw",
-                "field_type": "number"
-            },
-            "sqms2_ExamSetVersion_Set": {
-                "column_alias": "ExamSetVersion Set",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 5,
-                "mode_form": "rw",
-                "field_type": "number"
-            },
-            "sqms2_ExamSetVersion_SampleSet": {
-                "column_alias": "SampleSet",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 6,
-                "mode_form": "rw",
-                "field_type": "switch"
-            },
-            "state_id": {
-                "column_alias": "State id",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 7,
-                "mode_form": "ro",
-                "field_type": "state"
-            }
-        },
         "table_icon": ""
     },
     "sqms2_question": {
@@ -679,70 +593,6 @@
         },
         "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E"
     },
-    "sqms2_question_answer": {
-        "table_alias": "Q-A",
-        "table_type": "1_n",
-        "order": 7,
-        "mode": "rw",
-        "stdfilter": "",
-        "stdsorting": "sqms2_Question_Answer_id,DESC",
-        "in_menu": false,
-        "se_active": true,
-        "stateIdSel": "7487",
-        "columns": {
-            "sqms2_Question_Answer_id": {
-                "column_alias": "Answer id",
-                "is_primary": true,
-                "is_virtual": false,
-                "show_in_grid": false,
-                "show_in_form": true,
-                "col_order": 1,
-                "mode_form": "ro",
-                "field_type": "number"
-            },
-            "sqms2_Question_id_fk_735802": {
-                "column_alias": "Question",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 2,
-                "mode_form": "rw",
-                "field_type": "foreignkey",
-                "foreignKey": {
-                    "table": "sqms2_question",
-                    "col_id": "sqms2_Question_id",
-                    "col_subst": "*"
-                }
-            },
-            "sqms2_Answer_id_fk_995603": {
-                "column_alias": "Answer",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": 3,
-                "mode_form": "rw",
-                "field_type": "foreignkey",
-                "foreignKey": {
-                    "table": "sqms2_answer",
-                    "col_id": "sqms2_Answer_id",
-                    "col_subst": "sqms2_titleofanswers, sqms2_correct, state_id"
-                }
-            },
-            "state_id": {
-                "column_alias": "State",
-                "is_primary": false,
-                "is_virtual": false,
-                "show_in_grid": true,
-                "show_in_form": true,
-                "col_order": "1",
-                "mode_form": "ro",
-                "field_type": "state"
-            }
-        },
-        "table_icon": ""
-    },
     "sqms2_answer": {
         "table_alias": "Answer",
         "table_type": "obj",
@@ -821,6 +671,70 @@
         },
         "table_icon": "\u003Ci class=\u0022fa fa-exclamation\u0022\u003E\u003C\/i\u003E"
     },
+    "sqms2_question_answer": {
+        "table_alias": "Q-A",
+        "table_type": "1_n",
+        "order": 7,
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_Question_Answer_id,DESC",
+        "in_menu": false,
+        "se_active": true,
+        "stateIdSel": "7487",
+        "columns": {
+            "sqms2_Question_Answer_id": {
+                "column_alias": "Answer id",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "show_in_form": true,
+                "col_order": 1,
+                "mode_form": "ro",
+                "field_type": "number"
+            },
+            "sqms2_Question_id_fk_735802": {
+                "column_alias": "Question",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_question",
+                    "col_id": "sqms2_Question_id",
+                    "col_subst": "*"
+                }
+            },
+            "sqms2_Answer_id_fk_995603": {
+                "column_alias": "Answer",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "foreignkey",
+                "foreignKey": {
+                    "table": "sqms2_answer",
+                    "col_id": "sqms2_Answer_id",
+                    "col_subst": "sqms2_titleofanswers, sqms2_correct, state_id"
+                }
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": "1",
+                "mode_form": "ro",
+                "field_type": "state"
+            }
+        },
+        "table_icon": ""
+    },
     "sqms2_question_examsetversion": {
         "table_alias": "Q-EV",
         "table_type": "1_n",
@@ -828,7 +742,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Question_ExamSetVersion_id,DESC",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": true,
         "stateIdSel": "7489",
         "columns": {
@@ -892,7 +806,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Question_ExamSetVersion_Answer_id,DESC",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": true,
         "stateIdSel": "7491",
         "columns": {
@@ -1589,6 +1503,90 @@
             }
         },
         "table_icon": ""
+    },
+    "sqms2_examsetversion": {
+        "table_alias": "Exam-Set",
+        "table_type": "obj",
+        "order": "30",
+        "mode": "rw",
+        "stdfilter": "",
+        "stdsorting": "sqms2_ExamSetVersion_id,DESC",
+        "in_menu": true,
+        "se_active": true,
+        "stateIdSel": 0,
+        "columns": {
+            "sqms2_ExamSetVersion_id": {
+                "column_alias": "ID",
+                "is_primary": true,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": false,
+                "col_order": 1,
+                "mode_form": "ro",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_title": {
+                "column_alias": "Title",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": 2,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_ExamSetVersion_History": {
+                "column_alias": "History",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "show_in_form": true,
+                "col_order": 3,
+                "mode_form": "rw",
+                "field_type": "textarea"
+            },
+            "sqms2_ExamSetVersion_Version": {
+                "column_alias": "Version",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": 4,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_Set": {
+                "column_alias": "ExamSetVersion Set",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": 5,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_ExamSetVersion_SampleSet": {
+                "column_alias": "SampleSet",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": true,
+                "col_order": 6,
+                "mode_form": "rw",
+                "field_type": "switch"
+            },
+            "state_id": {
+                "column_alias": "State",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": true,
+                "show_in_form": false,
+                "col_order": 7,
+                "mode_form": "ro",
+                "field_type": "state"
+            }
+        },
+        "table_icon": "\u003Ci class=\u0022fab fa-buromobelexperte\u0022\u003E\u003C\/i\u003E"
     },
     "sqms2_topic": {
         "table_alias": "Topic",

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exam Set Wizard | SQMS2</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container py-3">
+        <h4 class="my-4 text-primary">Exam Set Wizard 🧙</h4>
+
+        <section id="step1" class="card p-3 mb-3 border-success">
+            <p>1. Select a Syllabus</p>
+            <select class="custom-select" id="lstSyllabus"></select>
+            <hr>
+            <button id="btnStep1" class="btn btn-success w-25 mx-auto">Create 3 Exam Sets</button>
+        </section>
+
+        <section id="step2" style="display:none;" class="card p-3 mb-3 border-success">
+            <p>2. Select Questions from Syllabus (drag or press ctrl to multi-select)</p>
+            <select class="custom-select" id="lstQuestion" multiple></select>
+        </section>
+
+        <section id="step3" style="display:none;" class="card p-3 mb-3">
+            <p>3. Select Answers from Questions</p>
+            <p class="font-weight-bold text-primary">What is the Question?</p>
+            <div class="row">
+                <div class="col text-success">
+                    <p>1. Richtige Antwort<br>
+                    3. Richtige Antwort</p>
+                </div>
+                <div class="col text-danger">
+                    <p>2. Falsche Antwort<br>
+                    5. Falsche Antwort</p>
+                </div>
+            </div>
+            <table class="table table-borderless table-sm">
+                <thead>
+                    <tr>
+                    <th scope="col">Exam Set Version</th>
+                    <th scope="col">Answer 1</th>
+                    <th scope="col">Answer 2</th>
+                    <th scope="col">Answer 3</th>
+                    <th scope="col">Answer 4</th>
+                    <th scope="col">Answer 5</th>
+                    <th scope="col">Answer 6</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>Scrum Foundation - LIVE</td>
+                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
+                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
+                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
+                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
+                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
+                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- JS -->
+    <script>
+        function stripHtml(html) {
+            const tmp = document.createElement("DIV");
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || "";
+        }
+        function appendList(id, eID, eTitle) {
+            const opt = document.createElement('option');
+            opt.setAttribute('value', eID);
+            opt.innerText = eTitle;
+            // Append to List                
+            document.getElementById(id).appendChild(opt);
+        }
+
+        // Load all Syllabi
+        fetch('../api.php?table=sqms2_syllabus&filter={"in":["state_id","7462,7463"]}').then(resp => resp.json()).then(res => {
+            for (const row of res['records'])
+                appendList('lstSyllabus', row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
+        });
+        // On Button click
+        document.getElementById('btnStep1').addEventListener('click', () => {
+            const e = document.getElementById('lstSyllabus');
+            const Syllabus = e.options[e.selectedIndex];
+            for (const i of [1,2,3]) {
+                // create one object
+                fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
+                table: "sqms2_examsetversion",
+                row:{
+                    sqms2_ExamSetVersion_title: Syllabus.text + " - SAMPLE SET " + i,
+                    sqms2_ExamSetVersion_SampleSet: 1
+                }}})}).then(resp => resp.json()).then(res => {});
+            }
+            // next Step
+            //alert("Created 3 Exam Set Versions");
+            document.getElementById('step1').style.display = "none";
+            document.getElementById('step2').style.display = "block";
+
+
+            // Prepare Step 2
+            // 1. Read out all syllabuschapters from syllabus
+            fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",'+Syllabus.value+']}').then(resp => resp.json()).then(res => {
+                for (const row of res['records']) {
+                    const SCid = row.sqms2_SyllabusChapter_id_fk_327935.sqms2_SyllabusChapter_id;
+                    // 2. Read out all questions from chapters
+                    fetch('../api.php?table=sqms2_syllabuschapter_question&filter={"=":["sqms2_SyllabusChapter_id",'+SCid+']}').then(resp => resp.json()).then(res => {
+                        for (const row of res['records']) {
+                            const quest = row.sqms2_Question_id_fk_285826;
+                            // 3. Read out questiontexts
+                            fetch('../api.php?table=sqms2_question_text&filter={"=":["sqms2_Question_id",'+quest.sqms2_Question_id+']}').then(resp => resp.json()).then(res => {
+                                for (const row of res['records']) {
+                                    const Questiontext = row.sqms2_Text_id_fk_559100;
+                                    const text = stripHtml(Questiontext.sqms2_Text);
+                                    appendList('lstQuestion', quest.sqms2_Question_id, text);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+        })
+    </script>
+</body>
+</html>
