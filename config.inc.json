@@ -742,7 +742,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Question_ExamSetVersion_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": true,
         "stateIdSel": "7489",
         "columns": {
@@ -797,16 +797,17 @@
                 "field_type": "state"
             }
         },
-        "table_icon": ""
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_question_examsetversion_answer": {
-        "table_alias": "Answer",
-        "table_type": "n_m",
+        "table_alias": "QEV-A",
+        "table_type": "1_n",
         "order": 9,
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Question_ExamSetVersion_Answer_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": true,
         "stateIdSel": "7491",
         "columns": {
@@ -861,7 +862,8 @@
                 "field_type": "state"
             }
         },
-        "table_icon": ""
+        "table_icon": "",
+        "showKids": false
     },
     "sqms2_question_text": {
         "table_alias": "Q-T",
@@ -1542,7 +1544,7 @@
                 "show_in_grid": false,
                 "show_in_form": true,
                 "col_order": 3,
-                "mode_form": "rw",
+                "mode_form": "ro",
                 "field_type": "textarea"
             },
             "sqms2_ExamSetVersion_Version": {
@@ -1552,11 +1554,11 @@
                 "show_in_grid": true,
                 "show_in_form": true,
                 "col_order": 4,
-                "mode_form": "rw",
+                "mode_form": "ro",
                 "field_type": "number"
             },
             "sqms2_ExamSetVersion_Set": {
-                "column_alias": "ExamSetVersion Set",
+                "column_alias": "Set",
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,

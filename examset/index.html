@@ -12,21 +12,26 @@
     <div class="container py-3">
         <h4 class="my-4 text-primary">Exam Set Wizard 🧙</h4>
 
+        <!-- 1. SYLLABUS -->
         <section id="step1" class="card p-3 mb-3 border-success">
             <p>1. Select a Syllabus</p>
             <select class="custom-select" id="lstSyllabus"></select>
             <hr>
-            <button id="btnStep1" class="btn btn-success w-25 mx-auto">Create 3 Exam Sets</button>
+            <button id="btnStep1" class="btn btn-success w-25 mx-auto">&rarr; Create 3 Exam Sets</button>
         </section>
 
+        <!-- 2. QUESTIONS -->
         <section id="step2" style="display:none;" class="card p-3 mb-3 border-success">
             <p>2. Select Questions from Syllabus (drag or press ctrl to multi-select)</p>
             <select class="custom-select" id="lstQuestion" multiple></select>
+            <hr>
+            <button id="btnStep2" class="btn btn-success w-25 mx-auto">&rarr; Create Entries in sqms2_question_examsetversion</button>
         </section>
 
+        <!-- 2. ANSWERS -->
         <section id="step3" style="display:none;" class="card p-3 mb-3">
             <p>3. Select Answers from Questions</p>
-            <p class="font-weight-bold text-primary">What is the Question?</p>
+            <p><span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary">What is the Question?</span></p>
             <div class="row">
                 <div class="col text-success">
                     <p>1. Richtige Antwort<br>
@@ -49,7 +54,7 @@
                     <th scope="col">Answer 6</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tblSets">
                     <tr>
                     <td>Scrum Foundation - LIVE</td>
                     <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
@@ -61,6 +66,8 @@
                     </tr>
                 </tbody>
             </table>
+            <hr>
+            <button id="btnStep3next" class="btn btn-success w-25 mx-auto">&rarr; Create Entry in sqms2_question_examsetversion_answer</button>
         </section>
     </div>
 
@@ -84,7 +91,8 @@
             for (const row of res['records'])
                 appendList('lstSyllabus', row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
         });
-        // On Button click
+
+        // [1] -> [2]
         document.getElementById('btnStep1').addEventListener('click', () => {
             const e = document.getElementById('lstSyllabus');
             const Syllabus = e.options[e.selectedIndex];
@@ -101,8 +109,6 @@
             //alert("Created 3 Exam Set Versions");
             document.getElementById('step1').style.display = "none";
             document.getElementById('step2').style.display = "block";
-
-
             // Prepare Step 2
             // 1. Read out all syllabuschapters from syllabus
             fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",'+Syllabus.value+']}').then(resp => resp.json()).then(res => {
@@ -124,8 +130,30 @@
                     });
                 }
             });
+        });
+    
+        // [2] -> [3]
+        document.getElementById('btnStep2').addEventListener('click', () => {
+            const selected = document.querySelectorAll('#lstQuestion option:checked');
+            const questions = Array.from(selected).map(
+                el => {return {id: parseInt(el.value), name: el.innerText}; }
+            );
+            console.log(questions);
 
-        })
+            // 1 Question at a Time
+            document.getElementById('txtActQuest').innerText = 1;
+            document.getElementById('txtCntQuest').innerText = questions.length;
+            document.getElementById('txtQuestion').innerText = questions[0].name;
+
+            document.getElementById('step2').style.display = "none";
+            document.getElementById('step3').style.display = "block";
+        });
+
+        // [3] -> Finish
+        document.getElementById('btnStep3next').addEventListener('click', () => {
+            
+        });
+
     </script>
 </body>
 </html>

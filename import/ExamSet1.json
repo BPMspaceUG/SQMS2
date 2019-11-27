@@ -1,0 +1,173 @@
+{
+    x = "sqms2_examsetversion": [{
+        "sqms2_ExamSetVersion_title": "TEST-SET 1",
+        "sqms2_ExamSetVersion_Set": 1,
+        "sqms2_ExamSetVersion_SampleSet": true
+    }],
+    "sqms2_question_examsetversion": [
+        y = {"sqms2_Question_id_fk_615560": 85647991, "sqms2_ExamSetVersion_id_fk_264577": x},
+        z = {"sqms2_Question_id_fk_615560": 85647990, "sqms2_ExamSetVersion_id_fk_264577": x}
+    ],
+    "sqms2_question_examsetversion_answer": [
+        {"sqms2_ExamSetVersion_id_fk_264577": y, "sqms2_Answer_id_fk_507266": 78440009},
+        {"sqms2_ExamSetVersion_id_fk_264577": y, "sqms2_Answer_id_fk_507266": 78440008}
+    ]
+}
+
+// Graph v1 :
+// Das müsste funktionieren
+{
+    "__1__": {"table": "sqms2_examsetversion", "row": {
+        "sqms2_ExamSetVersion_title": "TEST-SET 1", "sqms2_ExamSetVersion_Set": 1, "sqms2_ExamSetVersion_SampleSet": true
+    }},
+    "__2__": {"table": "sqms2_question_examsetversion", "row": {
+        "sqms2_Question_id_fk_615560": 85647991, "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"}
+    }},
+    "__3__": {"table": "sqms2_question_examsetversion", "row": {
+        "sqms2_Question_id_fk_615560": 85647990, "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"}
+    }},
+    "__4__": {"table": "sqms2_question_examsetversion_answer", "row": {
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__2__"}, "sqms2_Answer_id_fk_507266": 78440009
+    }},
+    "__5__": {"table": "sqms2_question_examsetversion_answer", "row":{
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__2__"}, "sqms2_Answer_id_fk_507266": 78440008
+    }},
+    "__6__": {"table": "sqms2_question_examsetversion_answer", "row":{
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__3__"}, "sqms2_Answer_id_fk_507266": 78440007
+    }},
+    "__7__": {"table": "sqms2_question_examsetversion_answer", "row":{
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__3__"}, "sqms2_Answer_id_fk_507266": 78440006
+    }}
+}
+
+// Graph v2:
+// Etwas mehr vereinfacht => sollte immer noch funktionieren
+{
+    // __1__ = Sonderfall
+    "__1__": {"table": "sqms2_examsetversion", "row": {
+        "sqms2_ExamSetVersion_title": "TEST-SET 1", "sqms2_ExamSetVersion_Set": 1, "sqms2_ExamSetVersion_SampleSet": true
+    }},
+
+    "__2__": {"table": "sqms2_question_examsetversion", "row": {
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"}, "sqms2_Question_id_fk_615560": 85647991
+    }},
+    "_a": {"table": "sqms2_question_examsetversion_answer", "row": {
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__2__"}, "sqms2_Answer_id_fk_507266": [78440009, 78440008]
+    }},
+
+    "__3__": {"table": "sqms2_question_examsetversion", "row": {
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"}, "sqms2_Question_id_fk_615560": 85647990
+    }},
+    "_b": {"table": "sqms2_question_examsetversion_answer", "row":{
+        "sqms2_ExamSetVersion_id_fk_264577": {"link": "__3__"}, "sqms2_Answer_id_fk_507266": [78440007, 78440006]
+    }}
+}
+
+// Graph v3:
+// Noch mehr vereinfacht => sollte immer noch gehen
+{
+    // __1__ = Sonderfall
+    "__1__": {"table": "sqms2_examsetversion", "row": {
+        "sqms2_ExamSetVersion_title": "TEST-SET 1", "sqms2_ExamSetVersion_Set": 1, "sqms2_ExamSetVersion_SampleSet": true
+    }},
+
+    "x": {"table": "sqms2_question_examsetversion_answer", "row": {
+        "sqms2_ExamSetVersion_id_fk_264577": {
+            "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"}, "sqms2_Question_id_fk_615560": 85647991
+        },
+        "sqms2_Answer_id_fk_507266": [78440009, 78440008]
+    }},
+    "y": {"table": "sqms2_question_examsetversion_answer", "row":{
+        "sqms2_ExamSetVersion_id_fk_264577": {
+            "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"}, "sqms2_Question_id_fk_615560": 85647990
+        }, "sqms2_Answer_id_fk_507266": [78440007, 78440006]
+    }}
+}
+
+// Graph v4:
+// Noch viel mehr vereinfacht => sollte immer noch gehen
+{
+    "objects": [
+        {
+            "id": "examset1",
+            "table": "sqms2_examsetversion",
+            "row": {
+                "sqms2_ExamSetVersion_title": "TEST-SET 1", "sqms2_ExamSetVersion_Set": 1, "sqms2_ExamSetVersion_SampleSet": true
+            }
+        }
+    ],
+    "relations": [
+        {"table": "sqms2_question_examsetversion_answer", "row": {
+            "sqms2_ExamSetVersion_id_fk_264577": {
+                "sqms2_ExamSetVersion_id_fk_264577": {"objectID": "examset1"},
+                "sqms2_Question_id_fk_615560": 85647991
+            },
+            "sqms2_Answer_id_fk_507266": [78440009, 78440008]
+        }},
+        {"table": "sqms2_question_examsetversion_answer", "row":{
+            "sqms2_ExamSetVersion_id_fk_264577": {
+                "sqms2_ExamSetVersion_id_fk_264577": {"objectID": "examset1"},
+                "sqms2_Question_id_fk_615560": 85647990
+            }, "sqms2_Answer_id_fk_507266": [78440007, 78440006]
+        }}
+    ]
+}
+
+
+
+
+
+
+
+
+
+{
+    [1,2,3] => [6,7,8]
+    [1] => [1]
+}
+
+
+
+
+
+//--------------------------OLD:
+
+// Graph v2:
+// Auch Fehlerhaft wegen ARRAYS!!! => ergibt 2 verschiedene Arraytypen
+{
+    "__1__": {
+        "table": "sqms2_examsetversion",
+        "row": {"sqms2_ExamSetVersion_title": "TEST-SET 1", "sqms2_ExamSetVersion_Set": 1, "sqms2_ExamSetVersion_SampleSet": true}
+    },
+    "__2__": {
+        "table": "sqms2_question_examsetversion",
+        "row": {
+            "sqms2_ExamSetVersion_id_fk_264577": {"link": "__1__"},
+            "sqms2_Question_id_fk_615560": [85647991, 85647990]
+        }
+    },
+    "__3__": {
+        "table": "sqms2_question_examsetversion_answer",
+        "row": {
+            "sqms2_ExamSetVersion_id_fk_264577": {"link": "__2__"},
+            "sqms2_Answer_id_fk_507266": [78440008, 78440009]
+        }
+    }
+}
+
+// Graph v3:
+// ERRRRRROOOOORRR!!!!! (Welche Answer zu welcher Frage?)
+{
+    "table": "sqms2_question_examsetversion_answer",
+    "row": {
+        "sqms2_ExamSetVersion_id_fk_264577": {
+            "sqms2_ExamSetVersion_id_fk_264577": {
+                "sqms2_ExamSetVersion_title": "TEST-SET 1",
+                "sqms2_ExamSetVersion_Set": 1,
+                "sqms2_ExamSetVersion_SampleSet": true
+            },
+            "sqms2_Question_id_fk_615560": [85647991, 85647990]
+        },
+        "sqms2_Answer_id_fk_507266": [78440008, 78440009]
+    }
+}
