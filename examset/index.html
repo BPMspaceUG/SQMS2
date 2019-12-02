@@ -131,24 +131,36 @@
                 appendList('lstSyllabus', row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
         });
 
+<<<<<<< HEAD
 
         //--- Selected Syllabus [1] -> [2]
+=======
+        const gSets = [];
+
+        // [1] -> [2]
+>>>>>>> 59d981fcde74f028e69b0e940a53729f9750cf0b
         document.getElementById('btnStep1').addEventListener('click', () => {
             const e = document.getElementById('lstSyllabus');
             const Syllabus = e.options[e.selectedIndex];
             for (const i of [1,2,3]) {
+                // Params
+                const setname = Syllabus.text + " - SAMPLE SET " + i;
                 // create one object
                 fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
                 table: "sqms2_examsetversion",
                 row:{
-                    sqms2_ExamSetVersion_title: Syllabus.text + " - SAMPLE SET " + i,
+                    sqms2_ExamSetVersion_title: setname,
                     sqms2_ExamSetVersion_SampleSet: 1
                 }}})}).then(resp => resp.json()).then(res => {});
+                // append to Array
+                gSets.push({name: setname});
             }
             // next Step
+
             //alert("Created 3 Exam Set Versions");
             document.getElementById('step1').style.display = "none";
             document.getElementById('step2').style.display = "block";
+
             // Prepare Step 2
             // 1. Read out all syllabuschapters from syllabus
             fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",'+Syllabus.value+']}').then(resp => resp.json()).then(res => {
@@ -174,7 +186,12 @@
             });
         });
     
+<<<<<<< HEAD
         //--- Selected Questions [2] -> [3]
+=======
+
+        // [2] -> [3] Load Questions and Sets
+>>>>>>> 59d981fcde74f028e69b0e940a53729f9750cf0b
         document.getElementById('btnStep2').addEventListener('click', () => {
             idxQuestion = 0;
             Array.from(document.querySelectorAll('#lstQuestion option:checked')).map(el => {
@@ -184,10 +201,26 @@
 
             loadQuestion();
 
+            // Load all Sets
+            console.log(gSets);
+            const tbl = document.getElementById('tblSets');
+            for (const i of gSets) {
+                const rowSet = document.createElement("tr");
+                for (const j of [0,1,2,3,4,5,6]) {
+                    // Col
+                    const col = document.createElement("td");
+                    col.innerHTML = j == 0 ? i.name : col.innerText = 'Answer';
+                    rowSet.appendChild(col);
+                }
+                tbl.appendChild(rowSet);
+            }
+
+
             document.getElementById('step2').style.display = "none";
             document.getElementById('step3').style.display = "block";
         });
 
+<<<<<<< HEAD
         //--- Finish [3] -> [4]
         document.getElementById('btnStep3next').addEventListener('click', () => {
             idxQuestion++;
@@ -201,6 +234,12 @@
                 console.log("Create Entries in sqms2_question_examsetversion_answer", selQuestions);
                 loadQuestion();
             }                
+=======
+        // [3] -> Next Question / Finish
+        document.getElementById('btnStep3next').addEventListener('click', () => {
+            // TODO: Use a global variable
+            const qID = document.getElementById('txtActQuest').innerText; // index
+>>>>>>> 59d981fcde74f028e69b0e940a53729f9750cf0b
         });
 
     </script>
