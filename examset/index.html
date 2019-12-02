@@ -28,19 +28,13 @@
             <button id="btnStep2" class="btn btn-success w-25 mx-auto">&rarr; Create Entries in sqms2_question_examsetversion</button>
         </section>
 
-        <!-- 2. ANSWERS -->
+        <!-- 3. ANSWERS -->
         <section id="step3" style="display:none;" class="card p-3 mb-3">
             <p>3. Select Answers from Questions</p>
             <p><span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary">What is the Question?</span></p>
             <div class="row">
-                <div class="col text-success">
-                    <p>1. Richtige Antwort<br>
-                    3. Richtige Antwort</p>
-                </div>
-                <div class="col text-danger">
-                    <p>2. Falsche Antwort<br>
-                    5. Falsche Antwort</p>
-                </div>
+                <div class="col text-success" id="lstAnswCorr"></div>
+                <div class="col text-danger" id="lstAnswWron"></div>
             </div>
             <table class="table table-borderless table-sm">
                 <thead>
@@ -69,6 +63,12 @@
             <hr>
             <button id="btnStep3next" class="btn btn-success w-25 mx-auto">&rarr; Create Entry in sqms2_question_examsetversion_answer</button>
         </section>
+
+        <!-- 4. FINISHED -->
+        <section id="step4" style="display:none;" class="card p-3 mb-3">
+            <p>4. Wizard complete!</p>
+        </section>
+
     </div>
 
     <!-- JS -->
@@ -86,13 +86,53 @@
             document.getElementById(id).appendChild(opt);
         }
 
+        //=======================================================
+        let idxQuestion = 0;
+        const allQuestions = [];
+        const selQuestions = [];
+
+        loadQuestion = function() {            
+            document.getElementById('txtActQuest').innerText = idxQuestion + 1;
+            document.getElementById('txtCntQuest').innerText = selQuestions.length;
+            document.getElementById('txtQuestion').innerText = selQuestions[idxQuestion].name;
+
+            const qid = selQuestions[idxQuestion].id;
+            const corrAnswers = [];
+            const wrngAnswers = [];
+
+            // Load Answers to Question
+            fetch('../api.php?table=sqms2_question_answer&filter={"=":["sqms2_Question_id",'+qid+']}').then(resp=>resp.json()).then(res=>{
+                for (const row of res['records']) {
+                    const a = row.sqms2_Answer_id_fk_995603;
+                    fetch('../api.php?table=sqms2_answer_text&filter={"=":["sqms2_Answer_id",'+a.sqms2_Answer_id+']}').then(resp=>resp.json()).then(res2=>{
+                        for (const row of res2['records']) {
+                            const t = row.sqms2_Text_id_fk_842740;
+                            if (t.sqms2_language_iso_short == 'EN') { // Language
+                                const txt = stripHtml(t.sqms2_Text);
+                                if (a.sqms2_correct === 1) {
+                                    corrAnswers.push({id: a.sqms2_Answer_id, name: txt});
+                                    document.getElementById('lstAnswCorr').innerHTML += a.sqms2_Answer_id + ')&nbsp;<b>' + txt + '<b><br>';
+                                }
+                                else {
+                                    wrngAnswers.push({id: a.sqms2_Answer_id, name: txt});
+                                    document.getElementById('lstAnswWron').innerHTML += a.sqms2_Answer_id + ')&nbsp;<b>' + txt + '</b><br>'; 
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            console.log(corrAnswers, wrngAnswers);
+        }
         // Load all Syllabi
         fetch('../api.php?table=sqms2_syllabus&filter={"in":["state_id","7462,7463"]}').then(resp => resp.json()).then(res => {
             for (const row of res['records'])
                 appendList('lstSyllabus', row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
         });
 
-        // [1] -> [2]
+
+        //--- Selected Syllabus [1] -> [2]
         document.getElementById('btnStep1').addEventListener('click', () => {
             const e = document.getElementById('lstSyllabus');
             const Syllabus = e.options[e.selectedIndex];
@@ -123,6 +163,8 @@
                                 for (const row of res['records']) {
                                     const Questiontext = row.sqms2_Text_id_fk_559100;
                                     const text = stripHtml(Questiontext.sqms2_Text);
+                                    // Append to List
+                                    allQuestions.push({id: quest.sqms2_Question_id, name: text});
                                     appendList('lstQuestion', quest.sqms2_Question_id, text);
                                 }
                             });
@@ -132,26 +174,33 @@
             });
         });
     
-        // [2] -> [3]
+        //--- Selected Questions [2] -> [3]
         document.getElementById('btnStep2').addEventListener('click', () => {
-            const selected = document.querySelectorAll('#lstQuestion option:checked');
-            const questions = Array.from(selected).map(
-                el => {return {id: parseInt(el.value), name: el.innerText}; }
-            );
-            console.log(questions);
+            idxQuestion = 0;
+            Array.from(document.querySelectorAll('#lstQuestion option:checked')).map(el => {
+                selQuestions.push({id: parseInt(el.value), name: el.innerText});
+            });
+            console.log("Create Entries in sqms2_question_examsetversion", selQuestions);
 
-            // 1 Question at a Time
-            document.getElementById('txtActQuest').innerText = 1;
-            document.getElementById('txtCntQuest').innerText = questions.length;
-            document.getElementById('txtQuestion').innerText = questions[0].name;
+            loadQuestion();
 
             document.getElementById('step2').style.display = "none";
             document.getElementById('step3').style.display = "block";
         });
 
-        // [3] -> Finish
+        //--- Finish [3] -> [4]
         document.getElementById('btnStep3next').addEventListener('click', () => {
-            
+            idxQuestion++;
+            if (idxQuestion >= selQuestions.length) {
+                //alert("Wizard finished!");
+                document.getElementById('step3').style.display = "none";
+                document.getElementById('step4').style.display = "block";
+            }
+            else {
+                // TODO: Write Link sqms2_question_examsetversion_answer
+                console.log("Create Entries in sqms2_question_examsetversion_answer", selQuestions);
+                loadQuestion();
+            }                
         });
 
     </script>

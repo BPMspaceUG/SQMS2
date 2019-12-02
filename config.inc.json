@@ -797,8 +797,7 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "",
-        "showKids": false
+        "table_icon": ""
     },
     "sqms2_question_examsetversion_answer": {
         "table_alias": "QEV-A",
@@ -862,8 +861,7 @@
                 "field_type": "state"
             }
         },
-        "table_icon": "",
-        "showKids": false
+        "table_icon": ""
     },
     "sqms2_question_text": {
         "table_alias": "Q-T",
