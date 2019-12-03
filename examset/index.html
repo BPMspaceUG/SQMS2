@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Exam Set Wizard | SQMS2</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        section p:first-of-type {color:gray; border-bottom: 1px solid whitesmoke;}
+    </style>
 </head>
 <body>
 
@@ -13,7 +16,7 @@
         <h4 class="my-4 text-primary">Exam Set Wizard 🧙</h4>
 
         <!-- 1. SYLLABUS -->
-        <section id="step1" class="card p-3 mb-3 border-success">
+        <section id="step1" class="card p-3 mb-3">
             <p>1. Select a Syllabus</p>
             <select class="custom-select" id="lstSyllabus"></select>
             <hr>
@@ -21,7 +24,7 @@
         </section>
 
         <!-- 2. QUESTIONS -->
-        <section id="step2" style="display:none;" class="card p-3 mb-3 border-success">
+        <section id="step2" style="display:none;" class="card p-3 mb-3">
             <p>2. Select Questions from Syllabus (drag or press ctrl to multi-select)</p>
             <select class="custom-select" id="lstQuestion" multiple></select>
             <hr>
@@ -31,8 +34,8 @@
         <!-- 3. ANSWERS -->
         <section id="step3" style="display:none;" class="card p-3 mb-3">
             <p>3. Select Answers from Questions</p>
-            <p><span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary">What is the Question?</span></p>
-            <div class="row">
+            <p>❔ <span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary">What is the Question?</span></p>
+            <div class="row mb-3">
                 <div class="col text-success" id="lstAnswCorr"></div>
                 <div class="col text-danger" id="lstAnswWron"></div>
             </div>
@@ -48,17 +51,7 @@
                     <th scope="col">Answer 6</th>
                     </tr>
                 </thead>
-                <tbody id="tblSets">
-                    <tr>
-                    <td>Scrum Foundation - LIVE</td>
-                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
-                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
-                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
-                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
-                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
-                    <td><select class="custom-select custom-select-sm"><option selected></option><option>1</option><option>2</option><option>3</option></select></td>
-                    </tr>
-                </tbody>
+                <tbody id="tblSets"></tbody>
             </table>
             <hr>
             <button id="btnStep3next" class="btn btn-success w-25 mx-auto">&rarr; Create Entry in sqms2_question_examsetversion_answer</button>
@@ -66,10 +59,13 @@
 
         <!-- 4. FINISHED -->
         <section id="step4" style="display:none;" class="card p-3 mb-3">
-            <p>4. Wizard complete!</p>
+            <p>4. Finish</p>
+            <h4>Wizard complete!</h4>
         </section>
 
     </div>
+
+
 
     <!-- JS -->
     <script>
@@ -78,44 +74,59 @@
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || "";
         }
-        function appendList(id, eID, eTitle) {
+        function appendList(element, eID, eTitle) {
             const opt = document.createElement('option');
             opt.setAttribute('value', eID);
             opt.innerText = eTitle;
             // Append to List                
-            document.getElementById(id).appendChild(opt);
+            element.appendChild(opt);
         }
-
         //=======================================================
         let idxQuestion = 0;
         const allQuestions = [];
-        const selQuestions = [];
+        const selQuestions = [];        
+        const gSets = [];
+
 
         loadQuestion = function() {            
             document.getElementById('txtActQuest').innerText = idxQuestion + 1;
             document.getElementById('txtCntQuest').innerText = selQuestions.length;
             document.getElementById('txtQuestion').innerText = selQuestions[idxQuestion].name;
 
+            // INIT
             const qid = selQuestions[idxQuestion].id;
             const corrAnswers = [];
             const wrngAnswers = [];
+            document.getElementById('lstAnswCorr').innerHTML = "";
+            document.getElementById('lstAnswWron').innerHTML = "";
+            const all = document.getElementsByClassName('answerbox');
+            for (let i=0;i<all.length;i++) all[i].innerHTML = '<option selected></option>';
 
-            // Load Answers to Question
+            // Fetch Q-A
             fetch('../api.php?table=sqms2_question_answer&filter={"=":["sqms2_Question_id",'+qid+']}').then(resp=>resp.json()).then(res=>{
                 for (const row of res['records']) {
                     const a = row.sqms2_Answer_id_fk_995603;
+                    // Fetch A-T
                     fetch('../api.php?table=sqms2_answer_text&filter={"=":["sqms2_Answer_id",'+a.sqms2_Answer_id+']}').then(resp=>resp.json()).then(res2=>{
                         for (const row of res2['records']) {
                             const t = row.sqms2_Text_id_fk_842740;
                             if (t.sqms2_language_iso_short == 'EN') { // Language
-                                const txt = stripHtml(t.sqms2_Text);
+
+                                const id = a.sqms2_Answer_id;
+                                const name = stripHtml(t.sqms2_Text);
+
                                 if (a.sqms2_correct === 1) {
-                                    corrAnswers.push({id: a.sqms2_Answer_id, name: txt});
-                                    document.getElementById('lstAnswCorr').innerHTML += a.sqms2_Answer_id + ')&nbsp;<b>' + txt + '<b><br>';
+                                    corrAnswers.push({id, name});
+                                    document.getElementById('lstAnswCorr').innerHTML += id+')&nbsp;<b>'+name+'<b><br>';
                                 }
                                 else {
-                                    wrngAnswers.push({id: a.sqms2_Answer_id, name: txt});
-                                    document.getElementById('lstAnswWron').innerHTML += a.sqms2_Answer_id + ')&nbsp;<b>' + txt + '</b><br>'; 
+                                    wrngAnswers.push({id, name});
+                                    document.getElementById('lstAnswWron').innerHTML += id+')&nbsp;<b>'+name+'</b><br>'; 
+                                }
+                                // all
+                                const all = document.getElementsByClassName('answerbox');
+                                for (let i=0;i<all.length;i++) {
+                                    appendList(all[i], id, id);
                                 }
                             }
                         }
@@ -125,20 +136,15 @@
 
             console.log(corrAnswers, wrngAnswers);
         }
+
+
         // Load all Syllabi
         fetch('../api.php?table=sqms2_syllabus&filter={"in":["state_id","7462,7463"]}').then(resp => resp.json()).then(res => {
             for (const row of res['records'])
-                appendList('lstSyllabus', row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
-        });
-
-<<<<<<< HEAD
-
-        //--- Selected Syllabus [1] -> [2]
-=======
-        const gSets = [];
+                appendList(document.getElementById('lstSyllabus'), row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
+        });        
 
         // [1] -> [2]
->>>>>>> 59d981fcde74f028e69b0e940a53729f9750cf0b
         document.getElementById('btnStep1').addEventListener('click', () => {
             const e = document.getElementById('lstSyllabus');
             const Syllabus = e.options[e.selectedIndex];
@@ -151,9 +157,10 @@
                 row:{
                     sqms2_ExamSetVersion_title: setname,
                     sqms2_ExamSetVersion_SampleSet: 1
-                }}})}).then(resp => resp.json()).then(res => {});
-                // append to Array
-                gSets.push({name: setname});
+                }}})}).then(resp => resp.json()).then(res => {
+                    // append to Array
+                    gSets.push({id: res[1].element_id, name: setname});
+                });
             }
             // next Step
 
@@ -177,7 +184,7 @@
                                     const text = stripHtml(Questiontext.sqms2_Text);
                                     // Append to List
                                     allQuestions.push({id: quest.sqms2_Question_id, name: text});
-                                    appendList('lstQuestion', quest.sqms2_Question_id, text);
+                                    appendList(document.getElementById('lstQuestion'), quest.sqms2_Question_id, text);
                                 }
                             });
                         }
@@ -186,12 +193,8 @@
             });
         });
     
-<<<<<<< HEAD
-        //--- Selected Questions [2] -> [3]
-=======
 
         // [2] -> [3] Load Questions and Sets
->>>>>>> 59d981fcde74f028e69b0e940a53729f9750cf0b
         document.getElementById('btnStep2').addEventListener('click', () => {
             idxQuestion = 0;
             Array.from(document.querySelectorAll('#lstQuestion option:checked')).map(el => {
@@ -199,28 +202,27 @@
             });
             console.log("Create Entries in sqms2_question_examsetversion", selQuestions);
 
-            loadQuestion();
-
             // Load all Sets
-            console.log(gSets);
             const tbl = document.getElementById('tblSets');
             for (const i of gSets) {
                 const rowSet = document.createElement("tr");
                 for (const j of [0,1,2,3,4,5,6]) {
                     // Col
                     const col = document.createElement("td");
-                    col.innerHTML = j == 0 ? i.name : col.innerText = 'Answer';
+                    col.innerHTML = j == 0 ?
+                        i.name :
+                        col.innerHTML = '<select id="SetAnsID_'+i.id+'_'+j+'" class="custom-select custom-select-sm answerbox"><option selected></option></select>';
                     rowSet.appendChild(col);
                 }
                 tbl.appendChild(rowSet);
             }
 
+            loadQuestion();
 
             document.getElementById('step2').style.display = "none";
             document.getElementById('step3').style.display = "block";
         });
 
-<<<<<<< HEAD
         //--- Finish [3] -> [4]
         document.getElementById('btnStep3next').addEventListener('click', () => {
             idxQuestion++;
@@ -234,12 +236,6 @@
                 console.log("Create Entries in sqms2_question_examsetversion_answer", selQuestions);
                 loadQuestion();
             }                
-=======
-        // [3] -> Next Question / Finish
-        document.getElementById('btnStep3next').addEventListener('click', () => {
-            // TODO: Use a global variable
-            const qID = document.getElementById('txtActQuest').innerText; // index
->>>>>>> 59d981fcde74f028e69b0e940a53729f9750cf0b
         });
 
     </script>
