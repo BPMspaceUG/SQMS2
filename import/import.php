@@ -2,7 +2,11 @@
     // Includes
     require_once(__DIR__."/../src/RequestHandler.inc.php");
 
-    // TODO: The Import has to work via the Path!!!
+    // Increase Script-Time-Limits
+    ini_set('max_execution_time', 300);
+    set_time_limit(300);
+
+    // Import works via Path
     // So for example we can give the following structure:    
     // cmd = [question/85647895] / [answer/create] / [text/create]
     /* param = [
@@ -145,4 +149,4 @@
     //===> IMPORT
     echo "<pre>";
     $import = new DataImporter(); // data_full data_question
-    $import->importFile(__DIR__."/data_full.json");
+    $import->importFile(__DIR__."/test.json");
