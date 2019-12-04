@@ -1,7 +1,7 @@
 {
     "sqms2_syllabus": [
     {
-        "sqms2_Syllabus_titel": "Syllabus A - Topic 1",
+        "sqms2_Syllabus_titel": "Syllabus A",
         "sqms2_Syllabus_Valid_from": "2018-06-01",
         "sqms2_Syllabus_Valid_to": "2019-06-01",
         "sqms2_topic": [{
@@ -12,7 +12,7 @@
             {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Syllabus-Beschreibung.</p>"}
         ],
         "sqms2_syllabuschapter": [{
-            "sqms2_SyllabusChapter_titel": "Chapter 1 - Syllabus A - Topic 1",
+            "sqms2_SyllabusChapter_titel": "Chapter 1",
             "sqms2_SyllabusChapter_ChapterNumber": 1,
             "sqms2_SyllabusChapter_Severity": 100,
             "sqms2_text": [
@@ -38,7 +38,7 @@
         }]
     },
     {
-        "sqms2_Syllabus_titel": "Syllabus B - Topic 2",
+        "sqms2_Syllabus_titel": "Syllabus B",
         "sqms2_Syllabus_Valid_from": "2018-04-01",
         "sqms2_Syllabus_Valid_to": "2019-04-01",
         "sqms2_topic": [{
@@ -46,7 +46,7 @@
         }],
         "sqms2_text": [
             {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>This is a description</p>"},
-            {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>This is another description which should NOT be imported!</p>"},
+            {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>This is another english description which should NOT be imported!</p>"},
             {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Das ist eine Beschreibung.</p>"}
         ],
         "sqms2_syllabuschapter": [{
@@ -59,7 +59,11 @@
             ],
             "sqms2_question": [{
                 "sqms2_text": [
-                    {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>What is the meaning of life?</p>"}
+                    {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>What is the meaning of life?</p>"},
+                    {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Was ist der Sinn des Lebens?</p>"},
+                    {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>Qual è il significato della vita?</p>"},
+                    {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>Quel est le sens de la vie ?</p>"},
+                    {"sqms2_language_iso_short": "sp", "sqms2_Text": "<p>¿Cuál es el significado de la vida?</p>"}
                 ],
                 "sqms2_answer": [{
                     "sqms2_correct": true,
@@ -67,7 +71,8 @@
                         {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>42.</p>"},
                         {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>42.</p>"},
                         {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>42.</p>"},
-                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>42.</p>"}
+                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>42.</p>"},
+                        {"sqms2_language_iso_short": "sp", "sqms2_Text": "<p>42.</p>"}
                     ]
                 },{
                     "sqms2_correct": false,
@@ -75,9 +80,30 @@
                         {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Politics.</p>"},
                         {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Politik.</p>"},
                         {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>politica.</p>"},
-                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>politique.</p>"}
+                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>politique.</p>"},
+                        {"sqms2_language_iso_short": "sp", "sqms2_Text": "<p>política.</p>"}
                     ]
-                }]
+                },{
+                    "sqms2_correct": false,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Economics.</p>"},
+                        {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Ökonomie.</p>"},
+                        {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>economia.</p>"},
+                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>économiques.</p>"},
+                        {"sqms2_language_iso_short": "sp", "sqms2_Text": "<p>economía.</p>"}
+                    ]
+                },{
+                    "sqms2_correct": false,
+                    "sqms2_text": [
+                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Religion.</p>"},
+                        {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Religion.</p>"},
+                        {"sqms2_language_iso_short": "it", "sqms2_Text": "<p>La religione.</p>"},
+                        {"sqms2_language_iso_short": "fr", "sqms2_Text": "<p>Religion.</p>"},
+                        {"sqms2_language_iso_short": "sp", "sqms2_Text": "<p>Religión.</p>"}
+                    ]
+                }
+            
+                ]
             }]
         },{
             "sqms2_SyllabusChapter_titel": "Applications",
@@ -88,21 +114,26 @@
                 {"sqms2_language_iso_short": "de", "sqms2_Text": "<p>Hier werden einige Anwendungen vorgestellt.</p>"}
             ],
             "sqms2_question": [{
-                "sqms2_text": [
-                    {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Whats your favorite food?</p>"}
-                ],
-                "sqms2_answer": [{
-                    "sqms2_correct": true,
-                    "sqms2_text": [
-                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Pizza.</p>"}
-                    ]
-                },{
-                    "sqms2_correct": false,
-                    "sqms2_text": [
-                        {"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Spaghetti.</p>"}
-                    ]
-                }]
-            }]
+                "sqms2_text": [{"sqms2_language_iso_short": "en", "sqms2_Text": "<p>Whats your favorite food?</p>"}],
+                "sqms2_answer": [
+                    {"sqms2_correct": 1, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>Pizza.</p>"}]},
+                    {"sqms2_correct": 0, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>Spaghetti.</p>"}]},
+                    {"sqms2_correct": 0, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>Schnitzel.</p>"}]},
+                    {"sqms2_correct": 0, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>Thai-Curry.</p>"}]},
+                    {"sqms2_correct": 0, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>Cake.</p>"}]}
+                ]
+            },
+            {
+                "sqms2_text": [{"sqms2_language_iso_short": "en", "sqms2_Text": "<p>What is your favorite product?</p>"}],
+                "sqms2_answer": [
+                    {"sqms2_correct": true, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>SQMS.</p>"}]},
+                    {"sqms2_correct": false, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>APMS.</p>"}]},
+                    {"sqms2_correct": false, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>COMS.</p>"}]},
+                    {"sqms2_correct": false, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>LIAM.</p>"}]},
+                    {"sqms2_correct": false, "sqms2_text": [{"sqms2_language_iso_short":"en", "sqms2_Text": "<p>ASMS.</p>"}]}
+                ]
+            }
+        ]
         }
     ]
     }
