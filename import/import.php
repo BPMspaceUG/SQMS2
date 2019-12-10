@@ -42,7 +42,11 @@
             return (int)$id;
         }
         private function relate($table, $objID1, $objID2) {
+            // TODO If already exists
+            //if (!$table) return ;
             $colnames = array_keys(Config::getColsByTablename($table));
+            //api(["cmd"=>"read","param"=>["table"=>$table,"filter"=>'{"=":[""]}']]);
+            //var_dump($table);
             $edgeID = $this->create($table, [$colnames[1] => $objID1, $colnames[2] => $objID2]);
             return [$edgeID, $objID1, $objID2];
         }
@@ -149,4 +153,4 @@
     //===> IMPORT
     echo "<pre>";
     $import = new DataImporter(); // data_full data_question
-    $import->importFile(__DIR__."/test.json");
+    $import->importFile(__DIR__."/generated_demo_full.json");
