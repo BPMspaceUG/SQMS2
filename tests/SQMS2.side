@@ -663,34 +663,11 @@
       ],
       "value": ""
     }, {
-      "id": "8086270e-8c68-4743-8b3d-5bbda3055a74",
+      "id": "02411a4f-d64a-46b8-9d53-f20779c8d9a2",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/4')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "8f823fb1-8589-4fdc-96ae-d0825cab2654",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[10]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
+      "targets": [],
       "value": ""
     }, {
       "id": "226ee434-4fcb-4b72-af03-8fa5abc792f6",
@@ -743,21 +720,6 @@
       ],
       "value": ""
     }, {
-      "id": "9ec72900-e13f-49c0-82d4-1cadc323c234",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034802')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
       "id": "07a717a3-3cad-4a14-93f3-b3def1bf29a8",
       "comment": "",
       "command": "click",
@@ -795,34 +757,11 @@
       ],
       "value": ""
     }, {
-      "id": "8cb8882a-cacd-4dd3-842c-6d8fdc133519",
+      "id": "e1f16d13-9ae3-49c3-be3d-457fdf8036dd",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034802')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "a011ce93-3d78-4988-9694-c4a9c492d38a",
-      "comment": "",
-      "command": "click",
-      "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[3]/a", "xpath:idRelative"],
-        ["xpath=(//a[contains(@href, '#/sqms2_syllabus')])[12]", "xpath:href"],
-        ["xpath=//span[3]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
+      "targets": [],
       "value": ""
     }, {
       "id": "7caabb7c-554c-4049-8dcc-4c77ce4b1737",
@@ -875,22 +814,14 @@
       ],
       "value": ""
     }, {
-      "id": "8a7bc901-7a26-4601-a812-d6745a2e6f34",
+      "id": "10e5a893-0bf2-4039-9c33-c3b653825348",
       "comment": "",
       "command": "click",
       "target": "linkText=Back",
-      "targets": [
-        ["linkText=Back", "linkText"],
-        ["css=.btn-light", "css:finder"],
-        ["xpath=//a[contains(text(),'Back')]", "xpath:link"],
-        ["xpath=//div[@id='app']/div/div[2]/span[2]/a", "xpath:idRelative"],
-        ["xpath=//a[contains(@href, '#/sqms2_syllabus/90034803')]", "xpath:href"],
-        ["xpath=//span[2]/a", "xpath:position"],
-        ["xpath=//a[contains(.,'Back')]", "xpath:innerText"]
-      ],
+      "targets": [],
       "value": ""
     }, {
-      "id": "9cc9deb6-a801-4507-80ef-8136c354a5e6",
+      "id": "ba90bd62-401f-49ac-9615-6c312dfe5214",
       "comment": "",
       "command": "close",
       "target": "",

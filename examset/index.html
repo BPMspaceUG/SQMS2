@@ -81,9 +81,10 @@
         </section>
 
         <!-- 4. FINISHED -->
-        <section id="step4" style="display:none;" class="card p-3 mb-3">
+        <section id="step4" style="display:none;" class="card p-3 mb-3 text-center">
             <p>4. Finish</p>
             <h4>Wizard complete!</h4>
+            <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-primary btn-lg">Back</a>
         </section>
 
     </div>
@@ -92,18 +93,26 @@
 
     <!-- JS -->
     <script>
+        let log = (x) => console.log(x);
+
         function stripHtml(html) {
             const tmp = document.createElement("DIV");
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || "";
         }
-        function appendList(element, eID, eTitle, specialClasses = null)  {
+        function appendList(elem, eID, eTitle, specialClasses = null)  {
             const opt = document.createElement('option');
             opt.setAttribute('value', eID);
             if (specialClasses) opt.setAttribute('class', specialClasses)
             opt.innerText = eTitle;
+            opt.addEventListener('click', () => {
+                log("selected AnswerID = " + eID);
+                elem.classList.remove("bg-danger");
+                elem.classList.remove("bg-success");
+                elem.classList.add(specialClasses);
+            })
             // Append to List                
-            element.appendChild(opt);
+            elem.appendChild(opt);
         }
         //=======================================================
         let idxQuestion = 0;
@@ -111,7 +120,6 @@
         const gQuestions = [];
         const gSets = [];
         const gQuestionSets = [];
-
 
         // Load List of Questions in Lang
         loadQuestions = function(syllID, lang = 'EN') {
@@ -140,6 +148,7 @@
                 }
             });
         }
+        
         // Question and Answers drawing (GUI)
         loadQuestion = function(lang = 'EN') {
             const qid = gQuestions[idxQuestion].id;
@@ -171,7 +180,9 @@
                                 // all
                                 const all = document.getElementsByClassName('answerbox');
                                 for (let i=0;i<all.length;i++) {
-                                    appendList(all[i], id, id);
+                                    all[i].classList.remove('bg-danger');
+                                    all[i].classList.remove('bg-success');
+                                    appendList(all[i], id, id, a.sqms2_correct === 1 ? 'bg-success' : 'bg-danger');
                                 }
                             }
                         }
@@ -201,7 +212,6 @@
             const live = [1,1,0];
             const version = 1;
             let cntLive = 0, cntSample = 0;
-
             for (let i=0;i<live.length;i++) {
                 let setname = "";
                 let isSample = false;
@@ -217,7 +227,7 @@
                 }
                 // create one object
                 fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
-                table: "sqms2_examsetversion",
+                    table: "sqms2_examsetversion",
                     row:{
                         sqms2_ExamSetVersion_title: setname,
                         sqms2_ExamSetVersion_SampleSet: isSample ? "1" : "0",
@@ -229,11 +239,8 @@
                 });
             }
             // next Step
-
-            //alert("Created 3 Exam Set Versions");
             document.getElementById('step1').style.display = "none";
             document.getElementById('step2').style.display = "block";
-
             // Prepare Step 2
             // 1. Read out all syllabuschapters from syllabus
             loadQuestions(Syllabus.value);
@@ -277,7 +284,7 @@
                     const col = document.createElement("td");
                     col.innerHTML = j == 0 ?
                         i.name :
-                        col.innerHTML = '<select id="SetIDAnsID_'+i.id+'_'+j+'" class="custom-select custom-select-sm answerbox"><option selected></option></select>';
+                        col.innerHTML = '<select id="SetIDAnsID_'+i.id+'_'+j+'" class="custom-select custom-select-sm text-white answerbox"><option selected></option></select>';
                     rowSet.appendChild(col);
                 }
                 tbl.appendChild(rowSet);
@@ -292,10 +299,6 @@
         //--- Finish [3] -> [4]
         document.getElementById('btnStep3next').addEventListener('click', () => {
             const qid = gQuestions[idxQuestion].id; // actual Question ID
-
-            // Write Link sqms2_question_examsetversion_answer
-            //console.log("Create Entries in sqms2_question_examsetversion_answer", gQuestions);
-
             // Loop sets
             document.getElementsByClassName('getting all queSetIDs...');
             gSets.map(set => {
@@ -327,7 +330,7 @@
 
             idxQuestion++;
             if (idxQuestion >= gQuestions.length) {
-                //alert("Wizard finished!");
+                // Wizard finished!
                 document.getElementById('step3').style.display = "none";
                 document.getElementById('step4').style.display = "block";
             }

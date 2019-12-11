@@ -1,5 +1,4 @@
 {
-    "sqms2_Topic_title": {
-        "show_in_form": true
-    }
+    "sqms2_Topic_title": {"show_in_form": true, "mode_form": "ro"},
+    "sqms2_Topic_History": {"show_in_form": true, "mode_form": "ro"}
 }
