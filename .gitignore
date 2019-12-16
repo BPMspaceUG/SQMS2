@@ -1,2 +1,4 @@
-**/*.secret.*
-**/*.SECRET.*
+*.secret.*
+*.SECRET.*
+/export_SQMS1/*.secret.*
+/export_SQMS1/*.SECRET.*

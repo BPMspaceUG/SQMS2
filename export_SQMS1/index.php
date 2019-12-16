@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__.'/secret.inc.php');
+    require_once(__DIR__.'/config.SECRET.inc.php');
 
     // Param
     $SE_IGNORE = isset($_GET["se_ign"]) ? explode(",", $_GET["se_ign"]) : []; // 242
@@ -83,23 +83,17 @@
             $arrL = parseElements(qQuestions(array_column($arrL, "id")), $QE_IGNORE);
             $arrR = parseElements(qQuestions(array_column($arrR, "id")), $QE_IGNORE);
             echo '<tr><th colspan="2">Anzahl Questions (en: '.count($arrL).' / de: '.count($arrR).')</th></tr>';
-
-
             for ($i=0;$i<count($arrL);$i++) {
                 echo '<tr><td>'.@$arrL[$i]["id"].'<br><small>'.@$arrL[$i]["name"].'</small></td>';
-                echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';
-
-                
+                echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';               
                 echo '<tr><th colspan="2">Answers</th></tr>';
                 $x = parseElements(qAnswers(@[$arrL[$i]["id"]]), $AN_IGNORE);
                 $y = parseElements(qAnswers(@[$arrR[$i]["id"]]), $AN_IGNORE);
                 for ($j=0;$j<count($x);$j++) {
                     echo '<tr><td'.(@$x[$j]["correct"] == 1 ? ' style="background-color:PaleGreen;"' : ' style="background-color:LightPink;"').'>'.@$x[$j]["id"].'<br><small>'.@$x[$j]["name"].'</small></td>';
                     echo '<td'.(@$y[$j]["correct"] == 1 ? ' style="background-color:PaleGreen;"' : ' style="background-color:LightPink;"').'>'.@$y[$j]["id"].'<br><small>'.@$y[$j]["name"].'</small></td></tr>';
-                }
-                
+                }                
                 echo '<tr><th colspan="2">Question</th></tr>';
-
             }
             //------
 
