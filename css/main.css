@@ -56,25 +56,25 @@ body {overflow-x: hidden;}
 .btnDisabled:hover {background-color: none !important; cursor: default;}
 
 /* State-Colors */
-.state7461 {background-color: hsl(36, 50%, 15%); color: white;}
-.state7462 {background-color: hsl(36, 50%, 20%); color: white;}
-.state7463 {background-color: hsl(36, 50%, 25%); color: white;}
-.state7464 {background-color: hsl(36, 50%, 30%); color: white;}
-.state7511 {background-color: hsl(36, 50%, 35%); color: white;}
-.state7465 {background-color: hsl(105, 50%, 15%); color: white;}
-.state7466 {background-color: hsl(105, 50%, 20%); color: white;}
-.state7467 {background-color: hsl(105, 50%, 25%); color: white;}
-.state7468 {background-color: hsl(105, 50%, 30%); color: white;}
+.state7461 {background-color: hsl(52, 50%, 15%); color: white;}
+.state7462 {background-color: hsl(52, 50%, 20%); color: white;}
+.state7463 {background-color: hsl(52, 50%, 25%); color: white;}
+.state7464 {background-color: hsl(52, 50%, 30%); color: white;}
+.state7511 {background-color: hsl(52, 50%, 35%); color: white;}
+.state7465 {background-color: hsl(238, 50%, 15%); color: white;}
+.state7466 {background-color: hsl(238, 50%, 20%); color: white;}
+.state7467 {background-color: hsl(238, 50%, 25%); color: white;}
+.state7468 {background-color: hsl(238, 50%, 30%); color: white;}
 .state7485 {background-color: #328332; color: white;}
 .state7486 {background-color: #8b0000; color: white;}
-.state7469 {background-color: hsl(31, 50%, 15%); color: white;}
-.state7470 {background-color: hsl(31, 50%, 20%); color: white;}
-.state7471 {background-color: hsl(31, 50%, 25%); color: white;}
-.state7472 {background-color: hsl(31, 50%, 30%); color: white;}
-.state7457 {background-color: hsl(324, 50%, 15%); color: white;}
-.state7458 {background-color: hsl(324, 50%, 20%); color: white;}
-.state7459 {background-color: hsl(324, 50%, 25%); color: white;}
-.state7460 {background-color: hsl(324, 50%, 30%); color: white;}
+.state7469 {background-color: hsl(39, 50%, 15%); color: white;}
+.state7470 {background-color: hsl(39, 50%, 20%); color: white;}
+.state7471 {background-color: hsl(39, 50%, 25%); color: white;}
+.state7472 {background-color: hsl(39, 50%, 30%); color: white;}
+.state7457 {background-color: hsl(182, 50%, 15%); color: white;}
+.state7458 {background-color: hsl(182, 50%, 20%); color: white;}
+.state7459 {background-color: hsl(182, 50%, 25%); color: white;}
+.state7460 {background-color: hsl(182, 50%, 30%); color: white;}
 .state7487 {background-color: #328332; color: white;}
 .state7488 {background-color: #8b0000; color: white;}
 .state7489 {background-color: #328332; color: white;}
@@ -95,19 +95,19 @@ body {overflow-x: hidden;}
 .state7504 {background-color: #8b0000; color: white;}
 .state7505 {background-color: #328332; color: white;}
 .state7506 {background-color: #8b0000; color: white;}
-.state7473 {background-color: hsl(351, 50%, 15%); color: white;}
-.state7474 {background-color: hsl(351, 50%, 20%); color: white;}
-.state7475 {background-color: hsl(351, 50%, 25%); color: white;}
-.state7476 {background-color: hsl(351, 50%, 30%); color: white;}
+.state7473 {background-color: hsl(225, 50%, 15%); color: white;}
+.state7474 {background-color: hsl(225, 50%, 20%); color: white;}
+.state7475 {background-color: hsl(225, 50%, 25%); color: white;}
+.state7476 {background-color: hsl(225, 50%, 30%); color: white;}
 .state7507 {background-color: #328332; color: white;}
 .state7508 {background-color: #8b0000; color: white;}
 .state7509 {background-color: #328332; color: white;}
 .state7510 {background-color: #8b0000; color: white;}
-.state7481 {background-color: hsl(256, 50%, 15%); color: white;}
-.state7482 {background-color: hsl(256, 50%, 20%); color: white;}
-.state7483 {background-color: hsl(256, 50%, 25%); color: white;}
-.state7484 {background-color: hsl(256, 50%, 30%); color: white;}
-.state7477 {background-color: hsl(24, 50%, 15%); color: white;}
-.state7478 {background-color: hsl(24, 50%, 20%); color: white;}
-.state7479 {background-color: hsl(24, 50%, 25%); color: white;}
-.state7480 {background-color: hsl(24, 50%, 30%); color: white;}
+.state7481 {background-color: hsl(153, 50%, 15%); color: white;}
+.state7482 {background-color: hsl(153, 50%, 20%); color: white;}
+.state7483 {background-color: hsl(153, 50%, 25%); color: white;}
+.state7484 {background-color: hsl(153, 50%, 30%); color: white;}
+.state7477 {background-color: hsl(131, 50%, 15%); color: white;}
+.state7478 {background-color: hsl(131, 50%, 20%); color: white;}
+.state7479 {background-color: hsl(131, 50%, 25%); color: white;}
+.state7480 {background-color: hsl(131, 50%, 30%); color: white;}
