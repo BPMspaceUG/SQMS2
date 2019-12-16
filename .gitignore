@@ -1,2 +1,2 @@
-*.secret.*
-*.SECRET.*
+**/*.secret.*
+**/*.SECRET.*
