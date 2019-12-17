@@ -16,7 +16,7 @@
         or die ('Could not connect to the database server' . mysqli_connect_error());
     $con->set_charset("utf8");
 
-    if ($sl === $sr) die("❌ No Syllabi, or the same!");
+    if ($sl === $sr) die("❌ No Syllabi, or the same! (Param sl, sr)");
     // Check if left is german
     $x = parseElements("SELECT sqms_language_id AS id, null, null FROM sqms_syllabus WHERE sqms_syllabus_id = $sl");
     if ($x[0]["id"] !== LANG_de) die("❌ ERROR! Param <b>sl</b> No Syllabus set or Left Syllabus is not German!");
@@ -28,16 +28,15 @@
     function qSyllabi($arr){return "SELECT sqms_syllabus_id, name, null FROM sqms_syllabus WHERE sqms_syllabus_id IN (".implode(',', $arr).")";}
     function qSyllElements($arr){return "SELECT sqms_syllabus_element_id, name, null FROM sqms_syllabus_element WHERE sqms_syllabus_id IN (".implode(',', $arr).")";}
     function qQuestions($arr){
+        // Return questionID, question,
         return 'SELECT q.sqms_question_id, q.question, 11110000-q.id_external  FROM sqms_question as q
         JOIN sqms_syllabus_element_question as seq ON seq.sqms_question_id = q.sqms_question_id
-        WHERE seq.sqms_syllabus_element_id IN ('.implode(',', $arr).') AND q.sqms_question_id IN (
-            SELECT DISTINCT sqms_question_id, null, null FROM sqms_question_answer_exam_version where sqms_exam_version_id
-            IN (SELECT sqms_exam_version_id FROM sqms_exam_version where sqms_exam_version_name NOT LIKE "zz_%")
-        )
-        AND  q.sqms_topic_id = 1 ORDER BY q.sqms_question_id';
-
+        WHERE seq.sqms_syllabus_element_id IN ('.implode(',', $arr).')
+        ORDER BY q.sqms_question_id';
     }
-    function qAnswers($arr){return "SELECT sqms_answer_id, answer, correct FROM sqms_answer WHERE sqms_question_id IN (".implode(',', $arr).")";}
+    function qAnswers($arr){
+        return "SELECT sqms_answer_id, answer, correct FROM sqms_answer WHERE sqms_question_id IN (".implode(',', $arr).") ORDER BY sqms_answer_id";
+    }
     function parseElements($query, $ignIDs = []){
         global $con;
         if ($stmt = $con->prepare($query)) {
@@ -56,6 +55,20 @@
             return $tmp;
         }
     }
+    function specialQuery1($qID) {
+        return 'SELECT DISTINCT sqms_question.sqms_question_id, sqms_question.question, sqms_question.id_external - 11110000 AS id1, (SELECT sqms_question_id FROM sqms_question
+        WHERE sqms_question_id = id1) AS question_id_other, sqms_question.id_external - 11110000 - (SELECT sqms_question_id FROM sqms_question WHERE sqms_question_id = id1) AS check_1,
+        (SELECT question FROM sqms_question WHERE sqms_question_id = id1) AS question_text_other,
+        (SELECT sqms_question.id_external - 11110000 FROM sqms_question WHERE sqms_question_id = id1) AS question_external_other,
+        sqms_question.sqms_question_id,
+        (SELECT sqms_question.id_external - 11110000 FROM sqms_question WHERE sqms_question_id = id1) - sqms_question.sqms_question_id AS check_2
+        FROM sqms_syllabus
+        INNER JOIN sqms_syllabus_element ON sqms_syllabus_element.sqms_syllabus_id = sqms_syllabus.sqms_syllabus_id
+        INNER JOIN sqms_syllabus_element_question ON sqms_syllabus_element_question.sqms_syllabus_element_id = sqms_syllabus_element.sqms_syllabus_element_id
+        INNER JOIN sqms_question ON sqms_syllabus_element_question.sqms_question_id = sqms_question.sqms_question_id
+        WHERE sqms_question.sqms_question_id IN (SELECT DISTINCT sqms_question_id FROM v_sqms_used_questions WHERE v_sqms_used_questions.language_ID = 1)
+        AND sqms_question.sqms_question_id = '.$qID.';';
+    }
     // TODO: Chapter bei Question mit angeben in ID mit dash (chapterId-questionID)
 ?>
 <!DOCTYPE html>
@@ -72,6 +85,7 @@
     </style>
 </head>
 <body>
+    <p style="margin-bottom: 3em; color: grey;">Params: sr, sl, se_ign, qe_ign, an_ign</p>
     <table>
         <?php
             // Syllabus IDs via Parameter
@@ -93,20 +107,63 @@
                 echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';
             }
             //------
+            // auslesen welche (deutschen) Fragen mit Chapter 1-n verbunden sind
             $arrL = parseElements(qQuestions(array_column($arrL, "id")), $QE_IGNORE);
-            $arrR = parseElements(qQuestions(array_column($arrR, "id")), $QE_IGNORE);
-            echo '<tr><th colspan="2">Anzahl Questions (en: '.@count($arrL).' / de: '.@count($arrR).')</th></tr>';
+            $newQ = 'SELECT DISTINCT sqms_question_id, null, null FROM v_sqms_used_questions';
+            $res1 = parseElements($newQ);
+            $usedQuestions = [];
+            foreach ($res1 as $q)
+                $usedQuestions[] = $q["id"];
+            // loop fragen
+            foreach ($arrL as $question) {
+                if (in_array($question["id"], $usedQuestions)) {
+                    $x = $con->query(specialQuery1($question["id"]));
+                    $row = $x->fetch_array(MYSQLI_NUM);
+                    echo '<table style="width:100%; font-weight: bold;">';
+                    echo '<tr><td style="width:100px;">'.$row[0].'</td><td>' . $row[1] . '</td></tr>';
+                    echo '<tr><td style="width:100px;">'.$row[3].'</td><td>' . $row[5] . '</td></tr>';
+                    echo "</table>";
+
+                    //---- Answers [DE]
+                    $x = parseElements(qAnswers([$question["id"]]), $AN_IGNORE);                    
+                    echo '<table style="width:50%; float:left; margin-bottom: 5em;">';            
+                    for ($j=0;$j<count($x);$j++) {
+                        echo '<tr><td'.(@$x[$j]["correct"] == 1 ?
+                        ' style="color: green; border-color:green;"' :
+                        ' style="color: red; border-color:red;"').'>'.@$x[$j]["id"].'<br><small>'.@$x[$j]["name"].'</small></td>';
+                    }
+                    echo "</table>";
+
+                    //---- Answers [EN]
+                    echo '<table style="width:50%; float:right; margin-bottom: 5em;">';
+                    $y = parseElements(qAnswers([$row[3]]), $AN_IGNORE);
+                    if ($y) {
+                        for ($j=0;$j<count($y);$j++) {
+                            echo '<tr><td'.(@$y[$j]["correct"] == 1 ?
+                            ' style="color: green; border-color:green;"' :
+                            ' style="color: red; border-color:red;"').'>'.@$y[$j]["id"].'<br><small>'.@$y[$j]["name"].'</small></td>';
+                        }
+                    }
+                    echo "</table>";
+                    echo '<div style="clear:both;"></div>';
+                    //echo '<td'.(@$y[$j]["correct"] == 1 ? ' style="color: green; border-color:green;"' : ' style="color: red; border-color:red;"').'>'.@$y[$j]["id"].'<br><small>'.@$y[$j]["name"].'</small></td></tr>';
+
+                }
+                else {
+                    continue;
+                }
+                //echo "<br>";
+            }
+
+
+
+            die();
+            //$arrR = parseElements(qQuestions(array_column($arrR, "id")), $QE_IGNORE);
+            echo '<tr><th colspan="2">Number of Questions ('.@count($arrL).' / '.@count($arrR).')</th></tr>';
             for ($i=0;$i<@count($arrL);$i++) {
                 echo '<tr><td>'.@$arrL[$i]["id"].'<br><small>'.@$arrL[$i]["name"].'</small></td>';
-                echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';               
-                echo '<tr><th colspan="2">Answers</th></tr>';
-                $x = parseElements(qAnswers(@[$arrL[$i]["id"]]), $AN_IGNORE);
-                $y = parseElements(qAnswers(@[$arrR[$i]["id"]]), $AN_IGNORE);
-                for ($j=0;$j<count($x);$j++) {
-                    echo '<tr><td'.(@$x[$j]["correct"] == 1 ? ' style="background-color:PaleGreen;"' : ' style="background-color:LightPink;"').'>'.@$x[$j]["id"].'<br><small>'.@$x[$j]["name"].'</small></td>';
-                    echo '<td'.(@$y[$j]["correct"] == 1 ? ' style="background-color:PaleGreen;"' : ' style="background-color:LightPink;"').'>'.@$y[$j]["id"].'<br><small>'.@$y[$j]["name"].'</small></td></tr>';
-                }                
-                echo '<tr><th colspan="2">Question</th></tr>';
+                echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';     
+               echo '<tr><th colspan="2">Question</th></tr>';
             }
         ?>
     </table>    
