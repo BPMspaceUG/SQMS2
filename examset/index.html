@@ -38,6 +38,8 @@
                 </div>
             </div>
             <select class="custom-select" id="lstQuestion" multiple></select>
+            <div id="tblQuestions">
+            </div>
             <hr>
             <button id="btnStep2" class="btn btn-success w-25 mx-auto">&rarr; Next</button>
         </section>
@@ -57,11 +59,8 @@
                 </div>
             </div>
 
-            <p>❔ <span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary">What is the Question?</span></p>
-            <div class="row mb-3">
-                <div class="col text-success" id="lstAnswCorr"></div>
-                <div class="col text-danger" id="lstAnswWron"></div>
-            </div>
+            <p>❔ <span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary"></span></p>
+            <div class="mb-3" id="lstAnswers"></div>
             <table class="table table-borderless table-sm">
                 <thead>
                     <tr>
@@ -92,37 +91,76 @@
 
 
     <!-- JS -->
+    <script src="../js/main.js"></script>
     <script>
-        let log = (x) => console.log(x);
-
         function stripHtml(html) {
             const tmp = document.createElement("DIV");
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || "";
         }
-        function appendList(elem, eID, eTitle, specialClasses = null)  {
+        function appendList(elem, eID, eTitle, specialClasses = null) {
             const opt = document.createElement('option');
             opt.setAttribute('value', eID);
             if (specialClasses) opt.setAttribute('class', specialClasses)
             opt.innerText = eTitle;
             opt.addEventListener('click', () => {
-                log("selected AnswerID = " + eID);
-                elem.classList.remove("bg-danger");
-                elem.classList.remove("bg-success");
+                elem.classList.remove("text-danger");
+                elem.classList.remove("text-success");
                 elem.classList.add(specialClasses);
             })
             // Append to List                
             elem.appendChild(opt);
         }
+        function getDomElement(elemType, elemID) {
+            const id = elemType + '-' + elemID;
+            let el = document.getElementById(id);
+            if (!el) {
+                el = document.createElement('div');
+                el.setAttribute('id', id);
+            }
+            return el;
+        }
+        function writeAnswer(answerID, answerText, isCorrect = null) {
+            const el = getDomElement('answer', answerID);
+            if (isCorrect !== null) el.setAttribute('class', isCorrect ? 'text-success' : 'text-danger');
+            el.innerHTML = '<small class="mr-2">' + answerID + '</small>' + stripHtml(answerText);
+            return el;
+        }
+        function writeQuestion(questionID, questionText) {
+            const el = getDomElement('question', questionID);
+            el.innerHTML = '<small class="mr-2">' + questionID + '</small>' + stripHtml(questionText);
+            return el;
+        }
+        
         //=======================================================
+
+        const errLangQuestionNA = '***Questiontext in this Language is not available***';
+        const errLangAnswerNA = '***Answertext in this Language is not available***';
         let idxQuestion = 0;
         let SyllabusID = null;
         const gQuestions = [];
         const gSets = [];
         const gQuestionSets = [];
+        const gAnswerIDs = [];
 
+        loadLanguageQandA = (lang='EN') => {
+            // Fetch QuestionText
+            const filter1 = `{"and":[ {"in":["sqms2_Question_id","${gQuestions[idxQuestion].id}"]},{"=":["sqms2_language_iso_short","${lang}"]}]}`;
+            fetch('../api.php?table=sqms2_question_text&filter=' + filter1).then(r=>r.json()).then(res=>{
+                writeQuestion(gQuestions[idxQuestion].id, errLangQuestionNA);
+                for (const row of res['records'])
+                    writeQuestion(row.sqms2_Question_id_fk_783494.sqms2_Question_id, row.sqms2_Text_id_fk_559100.sqms2_Text);
+            });
+            // Fetch A-T
+            const filter2 = `{"and":[ {"in":["sqms2_Answer_id","${gAnswerIDs.join(',')}"]},{"=":["sqms2_language_iso_short","${lang}"]}]}`;
+            fetch('../api.php?table=sqms2_answer_text&filter=' + filter2).then(r=>r.json()).then(res=>{
+                gAnswerIDs.forEach(el => writeAnswer(el, errLangAnswerNA));
+                for (const row of res['records'])
+                    writeAnswer(row.sqms2_Answer_id_fk_154388.sqms2_Answer_id, row.sqms2_Text_id_fk_842740.sqms2_Text);
+            });
+        }
         // Load List of Questions in Lang
-        loadQuestions = function(syllID, lang = 'EN') {
+        loadQuestions = (syllID, lang = 'EN') => {
             document.getElementById('lstQuestion').innerHTML = "";          
             fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",'+syllID+']}').then(resp => resp.json()).then(res => {
                 for (const row of res['records']) {
@@ -148,66 +186,49 @@
                 }
             });
         }
-        
         // Question and Answers drawing (GUI)
-        loadQuestion = function(lang = 'EN') {
+        loadQuestion = () => {
             const qid = gQuestions[idxQuestion].id;
             //--- Init + Clear
+            document.getElementById('txtQuestion').innerHTML = "";
+            document.getElementById('lstAnswers').innerHTML = "";
             document.getElementById('txtActQuest').innerText = idxQuestion + 1;
             document.getElementById('txtCntQuest').innerText = gQuestions.length;
-            document.getElementById('txtQuestion').innerText = gQuestions[idxQuestion].name;
-            document.getElementById('lstAnswCorr').innerHTML = "";
-            document.getElementById('lstAnswWron').innerHTML = "";
-            const all = document.getElementsByClassName('answerbox');
-            for (let i=0;i<all.length;i++) all[i].innerHTML = '<option selected></option>';
+            const QuestionElement = writeQuestion(qid, gQuestions[idxQuestion].name);
+            document.getElementById('txtQuestion').appendChild(QuestionElement);
+            //============================================= ANSWERS
+            gAnswerIDs.length = 0; // clear array
+            // Clear all Answer-Boxes
+            const allAnswerBoxes = document.getElementsByClassName('answerbox');
+            for (let i=0;i<allAnswerBoxes.length;i++) allAnswerBoxes[i].innerHTML = '<option selected></option>';
             //--- Fetch Q-A
-            fetch('../api.php?table=sqms2_question_answer&filter={"=":["sqms2_Question_id",'+qid+']}').then(resp=>resp.json()).then(res=>{
+            fetch('../api.php?table=sqms2_question_answer&filter={"=":["sqms2_Question_id",'+qid+']}').then(r=>r.json()).then(res=>{
+                // Loop all answers and create DOM Containers
                 for (const row of res['records']) {
                     const a = row.sqms2_Answer_id_fk_995603;
-                    // Fetch A-T
-                    fetch('../api.php?table=sqms2_answer_text&filter={"=":["sqms2_Answer_id",'+a.sqms2_Answer_id+']}').then(resp=>resp.json()).then(res2=>{
-                        for (const row of res2['records']) {
-                            const t = row.sqms2_Text_id_fk_842740;
-                            if (t.sqms2_language_iso_short == lang) { // Language
-                                // Set params
-                                const id = a.sqms2_Answer_id;
-                                const name = stripHtml(t.sqms2_Text);
-                                // Right / Wrong?
-                                if (a.sqms2_correct === 1)
-                                    document.getElementById('lstAnswCorr').innerHTML += id+')&nbsp;<b>'+name+'<b><br>';
-                                else 
-                                    document.getElementById('lstAnswWron').innerHTML += id+')&nbsp;<b>'+name+'</b><br>'; 
-                                // all
-                                const all = document.getElementsByClassName('answerbox');
-                                for (let i=0;i<all.length;i++) {
-                                    all[i].classList.remove('bg-danger');
-                                    all[i].classList.remove('bg-success');
-                                    appendList(all[i], id, id, a.sqms2_correct === 1 ? 'bg-success' : 'bg-danger');
-                                }
-                            }
-                        }
-                    });
+                    gAnswerIDs.push(a.sqms2_Answer_id);
+                    const AnswerElement = writeAnswer(a.sqms2_Answer_id, errLangAnswerNA, a.sqms2_correct === 1);
+                    document.getElementById('lstAnswers').appendChild(AnswerElement);
+                    for (let i=0;i<allAnswerBoxes.length;i++) appendList(allAnswerBoxes[i], a.sqms2_Answer_id, a.sqms2_Answer_id, a.sqms2_correct === 1 ? 'text-success' : 'text-danger');
                 }
             });
         }
+        
+        changeQuestLang = el => loadQuestions(SyllabusID, el.value);
+        changeAnswLang = el => loadLanguageQandA(el.value);
 
-        changeQuestLang = function(el) { loadQuestions(SyllabusID, el.value) }
-        changeAnswLang = function(el) { loadQuestion(el.value) }
-
-        // Load all Syllabi
-        fetch('../api.php?table=sqms2_syllabus&filter={"in":["state_id","7462,7463"]}').then(resp => resp.json()).then(res => {
+        //==============================================> INIT (Load all active + update Syllabi)
+        fetch('../api.php?table=sqms2_syllabus&filter={"in":["state_id","7462,7463"]}').then(r=>r.json()).then(res => {
             for (const row of res['records'])
                 appendList(document.getElementById('lstSyllabus'), row.sqms2_Syllabus_id, row.sqms2_Syllabus_titel);
         });
 
-        //==============================================
-
-        // [1] -> [2]
+        //==============================================> EVENTS / STEPS
+        // FIRST [1] -> [2] Create ExamVersion Sets
         document.getElementById('btnStep1').addEventListener('click', () => {
             const e = document.getElementById('lstSyllabus');
             const Syllabus = e.options[e.selectedIndex];
             SyllabusID = Syllabus.value;
-
             // Params -> 1 Sample, 2 Live
             const live = [1,1,0];
             const version = 1;
@@ -232,8 +253,8 @@
                         sqms2_ExamSetVersion_title: setname,
                         sqms2_ExamSetVersion_SampleSet: isSample ? "1" : "0",
                         sqms2_ExamSetVersion_Set: isSample ? cntSample : cntLive
-
-                }}})}).then(resp => resp.json()).then(res => {
+                    }}})}
+                ).then(r=>r.json()).then(res => {
                     // append to Array
                     gSets.push({id: res[1].element_id, name: setname});
                 });
@@ -244,16 +265,13 @@
             // Prepare Step 2
             // 1. Read out all syllabuschapters from syllabus
             loadQuestions(Syllabus.value);
-
         });
-    
-        // [2] -> [3] Load Questions and Sets
+        // SECOND [2] -> [3] Create Sets-Questions
         document.getElementById('btnStep2').addEventListener('click', () => {
             idxQuestion = 0;
             Array.from(document.querySelectorAll('#lstQuestion option:checked')).map(el => {
                 gQuestions.push({id: parseInt(el.value), name: el.innerText});
             });
-
             // Create for each Set for each Question...
             gSets.forEach(set => {
                 gQuestions.forEach(que => {
@@ -266,13 +284,10 @@
                         }
                     }})}).then(resp => resp.json()).then(res => {
                         const x = {id: res[1].element_id, idS: parseInt(set.id), idQ: parseInt(que.id)};
-                        //console.log(x);
                         gQuestionSets.push(x);
                     });
                 });
             });
-
-
             // Load all Sets
             const tbl = document.getElementById('tblSets');
             for (const i of gSets) {
@@ -289,23 +304,20 @@
                 }
                 tbl.appendChild(rowSet);
             }
-
             loadQuestion();
 
             document.getElementById('step2').style.display = "none";
             document.getElementById('step3').style.display = "block";
         });
-
-        //--- Finish [3] -> [4]
+        // THIRD [3] -> [4] Create Questions-Answers Subsets, Finish
         document.getElementById('btnStep3next').addEventListener('click', () => {
-            const qid = gQuestions[idxQuestion].id; // actual Question ID
             // Loop sets
             document.getElementsByClassName('getting all queSetIDs...');
             gSets.map(set => {
                 const setID = set.id;
                 let qsID = null;
                 for (const qs of gQuestionSets) {
-                    if (qs.idS == setID && qs.idQ == qid)
+                    if (qs.idS == setID && qs.idQ == gQuestions[idxQuestion].id)
                         qsID = qs.id;
                 }
                 // Get AnswerIDs for each set
@@ -318,16 +330,14 @@
                         // create a Link
                         fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
                             table: "sqms2_question_examsetversion_answer",
-                            row:{
+                            row: {
                                 sqms2_Question_ExamSetVersion_id_fk_186326: qsID,
                                 sqms2_Answer_id_fk_507266: AnswerID
                             }
                         }})}).then(resp => resp.json()).then(res => {});
                     }
                 }
-            })
-
-
+            });
             idxQuestion++;
             if (idxQuestion >= gQuestions.length) {
                 // Wizard finished!
@@ -337,7 +347,7 @@
             else {
                 // Next Question please!
                 loadQuestion();
-            }     
+            }
         });
     </script>
 </body>
