@@ -7,7 +7,11 @@ export default (props) => {
   // Get actual Table & ID (last)
   const actTable = path[path.length - 2];
   const t = new Table(actTable);
+
+  // Texts
   const textCommand = t.TableType !== 'obj' ? 'Relate' : 'Create';
+  const textCancel = 'Cancel';
+
   let fCreate = null;
 
   // Legend:
@@ -22,6 +26,7 @@ export default (props) => {
 
   //--- Set Title  
   window.document.title = textCommand + ' ' + t.getTableAlias();
+
   //--- Mark actual Link
   const links = document.querySelectorAll('#sidebar-links .list-group-item');
   links.forEach(link => {
@@ -29,13 +34,33 @@ export default (props) => {
     if (link.getAttribute('href') == '#/' + props.origin) link.classList.add('active');
   });
 
+  function setFormState(allDisabled) {
+    // Btn
+    const btn = document.getElementsByClassName('btnCreate')[0];
+    if (allDisabled) {
+      btn.setAttribute('disabled', 'disabled');
+      const loader = document.createElement('span');
+      loader.classList.add('spinner-border', 'spinner-border-sm', 'mr-1');
+      btn.prepend(loader);
+    } else {
+      btn.removeAttribute('disabled');
+      btn.innerHTML = textCommand;
+    }
+    // Form
+    const els = document.getElementsByClassName('rwInput');
+    for (const el of els) {
+      allDisabled ? el.setAttribute('disabled', 'disabled') : el.removeAttribute('disabled');
+    }
+  }
+
+
   //===================================================================
   // Generate HTML from Form
   //===================================================================
   // Overwrite and merge the differences from diffForm
   const defaultForm = t.getDefaultFormObject();
   const diffForm = t.getDiffFormCreate();
-  const newObj = mergeDeep({}, defaultForm, diffForm);
+  const newObj = DB.mergeDeep({}, defaultForm, diffForm);
 
   //--------------------------------------------------------
   // TODO: Possible Now!
@@ -44,7 +69,6 @@ export default (props) => {
     if (newObj[key].field_type == 'reversefk')
       newObj[key].mode_form = 'hi';
   }
-
 
   //=> Case 3
   // is add Relation and Coming from an Object? => then preselect object
@@ -123,10 +147,7 @@ export default (props) => {
     fCreate = new FormGenerator(t, undefined, newObj, null);
     return fCreate.getHTML();
   }
-  function redirect(toPath) {
-    //console.log("--->", toPath);
-    document.location.assign(toPath);
-  }
+  function redirect(toPath) { document.location.assign(toPath); }
 
   //---------------------------------------------------
   // After HTML is placed in DOM
@@ -147,26 +168,30 @@ export default (props) => {
     for (const btn of btns) {
       btn.addEventListener('click', e => {
         e.preventDefault();
+        setFormState(true);
         // Read out all input fields with {key:value}
         let data = fCreate.getValues();
         //---> CREATE
         t.createRow(data, resp => {
-
+          setFormState(false);
           //===> Show Messages
           let counter = 0; // 0 = trans, 1 = in -- but only at Create!
           resp.forEach(msg => {
             if (msg.show_message) {
-              const stateTo = t.renderStateButton(msg['_entry-point-state']['id'], false);
+              const stateIDTo = msg['_entry-point-state']['id'];
+              const SB = new StateButton(stateIDTo);
+              SB.setTable(t);
+              const stateTo = SB.getElement().outerHTML;
               const tmplTitle = 
-                counter === 0 ? `Transition <span class="text-muted ml-2">Create &rarr; ${stateTo}</span>` :
-                counter === 1 ? `IN <span class="text-muted ml-2">&rarr; ${stateTo}</span>` :
+                counter === 0 ? `<span class="text-muted">Create &rarr; ${stateTo}</span>` :
+                counter === 1 ? `<span class="text-muted">&rarr; ${stateTo}</span>` :
                 '';
-              const resM = new Modal(tmplTitle, msg.message);
-              resM.options.btnTextClose = t.GUIOptions.modalButtonTextModifyClose;
-              resM.show();
+              // Render a Modal
+              document.getElementById('myModalTitle').innerHTML = tmplTitle;
+              document.getElementById('myModalContent').innerHTML = msg.message;
+              $('#myModal').modal({});
             }
           });
-
           //===> Element was created!!!
           if (t.hasStateMachine() && resp.length === 2 && resp[1].element_id && resp[1].element_id > 0) {
             const newElementID = parseInt(resp[1].element_id);
@@ -314,18 +339,15 @@ export default (props) => {
   }
   //------------------------------------------------------------
 
-
-
   // ===> OUTPUT
   return `<div>
     <h2>${guiFullPath}</h2>
     <hr>
-    <div class="my-3" id="formcreate">${getActualFormContent()}</div>
-    <hr>
+    <div class="container-fluid my-3" id="formcreate">${getActualFormContent()}</div>
     <div class="text-center pb-3">
-      <a class="btn btn-success btnCreate" href="#/">${textCommand}</a>
-      <span class="mx-3 text-muted">or</span>
-      <span><a class="btn btn-light" href="${backPath}">Back</a></span>
+      <button class="btn btn-success btnCreate">${textCommand}</button>
+      <span class="mx-3 text-muted"></span>
+      <span><a class="btn btn-light" href="${backPath}">${textCancel}</a></span>
     </div>
   </div>`;
 }

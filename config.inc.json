@@ -133,7 +133,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 7,
                 "mode_form": "ro",
                 "field_type": "state"
@@ -469,7 +469,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -629,7 +629,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 3,
                 "mode_form": "ro",
                 "field_type": "state"
@@ -727,7 +727,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -791,7 +791,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -855,7 +855,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -919,7 +919,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -983,7 +983,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1047,7 +1047,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1111,7 +1111,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1175,7 +1175,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1239,7 +1239,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1303,7 +1303,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1432,7 +1432,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1496,7 +1496,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": "1",
                 "mode_form": "ro",
                 "field_type": "state"
@@ -1580,7 +1580,7 @@
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
-                "show_in_form": true,
+                "show_in_form": false,
                 "col_order": 7,
                 "mode_form": "ro",
                 "field_type": "state"

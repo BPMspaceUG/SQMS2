@@ -11,7 +11,6 @@
     </style>
 </head>
 <body>
-
     <div class="container py-3">
         <h4 class="my-4 text-primary">Exam Set Wizard 🧙</h4>
 
@@ -160,6 +159,7 @@
             });
         }
         // Load List of Questions in Lang
+        // SYLLABUS --- QUESTIONS (+Text)
         loadQuestions = (syllID, lang = 'EN') => {
             document.getElementById('lstQuestion').innerHTML = "";          
             fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",'+syllID+']}').then(resp => resp.json()).then(res => {
@@ -201,6 +201,7 @@
             // Clear all Answer-Boxes
             const allAnswerBoxes = document.getElementsByClassName('answerbox');
             for (let i=0;i<allAnswerBoxes.length;i++) allAnswerBoxes[i].innerHTML = '<option selected></option>';
+
             //--- Fetch Q-A
             fetch('../api.php?table=sqms2_question_answer&filter={"=":["sqms2_Question_id",'+qid+']}').then(r=>r.json()).then(res=>{
                 // Loop all answers and create DOM Containers
@@ -209,8 +210,10 @@
                     gAnswerIDs.push(a.sqms2_Answer_id);
                     const AnswerElement = writeAnswer(a.sqms2_Answer_id, errLangAnswerNA, a.sqms2_correct === 1);
                     document.getElementById('lstAnswers').appendChild(AnswerElement);
-                    for (let i=0;i<allAnswerBoxes.length;i++) appendList(allAnswerBoxes[i], a.sqms2_Answer_id, a.sqms2_Answer_id, a.sqms2_correct === 1 ? 'text-success' : 'text-danger');
+                    for (let i=0;i<allAnswerBoxes.length;i++)
+                        appendList(allAnswerBoxes[i], a.sqms2_Answer_id, a.sqms2_Answer_id, a.sqms2_correct === 1 ? 'text-success' : 'text-danger');
                 }
+                loadLanguageQandA();
             });
         }
         

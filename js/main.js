@@ -21,18 +21,10 @@ class LiteEvent {
     constructor() {
         this.handlers = [];
     }
-    on(handler) {
-        this.handlers.push(handler);
-    }
-    off(handler) {
-        this.handlers = this.handlers.filter(h => h !== handler);
-    }
-    trigger(data) {
-        this.handlers.slice(0).forEach(h => h(data));
-    }
-    expose() {
-        return this;
-    }
+    on(handler) { this.handlers.push(handler); }
+    off(handler) { this.handlers = this.handlers.filter(h => h !== handler); }
+    trigger(data) { this.handlers.slice(0).forEach(h => h(data)); }
+    expose() { return this; }
 }
 class DB {
     static request(command, params, callback) {
@@ -55,7 +47,7 @@ class DB {
             HTTPMethod = 'GET';
             const getParamStr = Object.keys(params).map(key => {
                 const val = params[key];
-                return key + '=' + (isObject(val) ? JSON.stringify(val) : val);
+                return key + '=' + (DB.isObject(val) ? JSON.stringify(val) : val);
             }).join('&');
             url += '?' + getParamStr;
         }
@@ -92,79 +84,83 @@ class DB {
             callback(config);
         });
     }
+    static escapeHtml(string) {
+        const entityMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;' };
+        return String(string).replace(/[&<>"'`=\/]/g, s => entityMap[s]);
+    }
+    static isObject(item) {
+        return (item && typeof item === 'object' && !Array.isArray(item));
+    }
+    static mergeDeep(target, ...sources) {
+        if (!sources.length)
+            return target;
+        const source = sources.shift();
+        if (this.isObject(target) && this.isObject(source)) {
+            for (const key in source) {
+                if (this.isObject(source[key])) {
+                    if (!target[key]) {
+                        Object.assign(target, { [key]: {} });
+                    }
+                    else {
+                        target[key] = Object.assign({}, target[key]);
+                    }
+                    this.mergeDeep(target[key], source[key]);
+                }
+                else {
+                    Object.assign(target, { [key]: source[key] });
+                }
+            }
+        }
+        return this.mergeDeep(target, ...sources);
+    }
+    static recflattenObj(x) {
+        if (this.isObject(x)) {
+            let res = Object.keys(x).map(e => { return this.isObject(x[e]) ? this.recflattenObj(x[e]) : x[e]; });
+            return res;
+        }
+    }
 }
 DB.API_URL = 'api.php';
+DB.setState = (callback, tablename, rowID, rowData = {}, targetStateID = null, colname = 'state_id') => {
+    const t = new Table(tablename);
+    const data = { table: tablename, row: {} };
+    data.row = rowData;
+    data.row[t.getPrimaryColname()] = rowID;
+    if (targetStateID)
+        data.row[colname] = targetStateID;
+    DB.request('makeTransition', data, resp => {
+        callback(resp);
+        let counter = 0;
+        const messages = [];
+        resp.forEach(msg => {
+            if (msg.show_message)
+                messages.push({ type: counter, text: msg.message });
+            counter++;
+        });
+        messages.reverse();
+        const btnFrom = new StateButton(targetStateID);
+        const btnTo = new StateButton(targetStateID);
+        btnFrom.setTable(t);
+        btnTo.setTable(t);
+        for (const msg of messages) {
+            let title = '<small class="text-muted">';
+            if (msg.type == 0)
+                title += `${btnFrom.getElement().outerHTML} &rarr;`;
+            if (msg.type == 1)
+                title += `${btnFrom.getElement().outerHTML} &rarr; ${btnTo.getElement().outerHTML}`;
+            if (msg.type == 2)
+                title += `&rarr; ${btnTo.getElement().outerHTML}`;
+            title += '</small>';
+            document.getElementById('myModalTitle').innerHTML = title;
+            document.getElementById('myModalContent').innerHTML = msg.text;
+            $('#myModal').modal({});
+        }
+    });
+};
 DB.getID = function () {
     function chr4() { return Math.random().toString(16).slice(-4); }
     return 'i' + chr4() + chr4() + chr4() + chr4() + chr4() + chr4() + chr4() + chr4();
 };
-class Modal {
-    constructor(heading, content, footer = '', isBig = false) {
-        this.options = {
-            btnTextClose: 'Close'
-        };
-        this.DOM_ID = DB.getID();
-        this.heading = heading;
-        this.content = content;
-        this.footer = footer;
-        this.isBig = isBig;
-        var self = this;
-        let sizeType = '';
-        if (this.isBig)
-            sizeType = ' modal-xl';
-        let html = `<div id="${this.DOM_ID}" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog${sizeType}">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title w-75">${this.heading}</h5>
-            <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ${this.content}
-          </div>
-          <div class="modal-footer">
-            <span class="customfooter d-flex">${this.footer}</span>
-            <button type="button" class="btn btn-light closeButton" data-dismiss="modal">
-              ${this.options.btnTextClose}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-        let body = document.getElementsByTagName('body')[0];
-        let modal = document.createElement('div');
-        modal.innerHTML = html;
-        body.appendChild(modal);
-        let closeBtns = document.getElementById(this.DOM_ID).getElementsByClassName('closeButton');
-        for (let closeBtn of closeBtns) {
-            closeBtn.addEventListener("click", function () {
-                self.close();
-            });
-        }
-    }
-    setHeader(html) {
-        document.getElementById(this.DOM_ID).getElementsByClassName('modal-title')[0].innerHTML = html;
-    }
-    setFooter(html) {
-        document.getElementById(this.DOM_ID).getElementsByClassName('customfooter')[0].innerHTML = html;
-    }
-    setContent(html) {
-        document.getElementById(this.DOM_ID).getElementsByClassName('modal-body')[0].innerHTML = html;
-    }
-    show() {
-        let modal = document.getElementById(this.DOM_ID);
-        modal.classList.add('show');
-        modal.style.display = 'block';
-    }
-    close() {
-        document.getElementById(this.DOM_ID).parentElement.remove();
-    }
-    getDOMID() {
-        return this.DOM_ID;
-    }
-}
 class StateMachine {
     constructor(table, states, links) {
         this.myTable = table;
@@ -292,6 +288,85 @@ class StateMachine {
         return name;
     }
 }
+class StateButton {
+    constructor(stateid, rowid = null, statecol = 'state_id') {
+        this._table = null;
+        this._stateID = null;
+        this._rowID = null;
+        this._stateCol = null;
+        this._editable = false;
+        this._name = '';
+        this._callbackStateChange = (resp) => { };
+        this.setTable = (table) => {
+            this._table = table;
+            this._name = this._table.SM.getStateNameById(this._stateID);
+        };
+        this.setName = (name) => {
+            this._name = name;
+        };
+        this.setReadOnly = (readonly) => {
+            this._editable = !readonly;
+        };
+        this.getButton = () => {
+            const btn = document.createElement('button');
+            btn.classList.add('btn', 'btnState', 'btnGrid', 'btn-sm', 'label-state', 'btnDisabled', 'state' + this._stateID);
+            btn.setAttribute('onclick', 'return false;');
+            btn.setAttribute('title', 'State-ID: ' + this._stateID);
+            btn.innerText = this._name;
+            return btn;
+        };
+        this.getElement = () => {
+            if (!this._editable) {
+                return this.getButton();
+            }
+            else {
+                const btn = this.getButton();
+                const list = document.createElement('div');
+                const wrapper = document.createElement('div');
+                btn.classList.remove('btnDisabled');
+                btn.classList.add('dropdown-toggle', 'btnEnabled');
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    if (list.classList.contains('show'))
+                        list.classList.remove('show');
+                    else
+                        list.classList.add('show');
+                });
+                wrapper.classList.add('dropdown');
+                list.classList.add('dropdown-menu', 'p-0');
+                const t = this._table;
+                const nextstates = this._table.SM.getNextStates(this._stateID);
+                if (nextstates.length > 0) {
+                    nextstates.map(state => {
+                        const btn = document.createElement('a');
+                        btn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
+                        btn.setAttribute('href', 'javascript:void(0)');
+                        btn.innerText = state.name;
+                        btn.addEventListener("click", e => {
+                            e.preventDefault();
+                            DB.setState(resp => {
+                                if (this._callbackStateChange)
+                                    this._callbackStateChange(resp);
+                            }, this._table.getTablename(), this._rowID, {}, state.id, this._stateCol);
+                            list.classList.remove('show');
+                        });
+                        list.appendChild(btn);
+                    });
+                }
+                wrapper.appendChild(btn);
+                wrapper.appendChild(list);
+                return wrapper;
+            }
+        };
+        this._stateID = stateid;
+        this._rowID = rowid;
+        this._stateCol = statecol;
+        this._editable = (stateid && rowid);
+    }
+    setCallbackStateChange(callback) {
+        this._callbackStateChange = callback;
+    }
+}
 class RawTable {
     constructor(tablename) {
         this.Sort = '';
@@ -320,13 +395,6 @@ class RawTable {
         data[this.PriColname] = RowID;
         DB.request('update', { table: this.tablename, row: new_data }, r => { callback(r); });
     }
-    transitRow(RowID, TargetStateID = null, trans_data = {}, callback) {
-        let data = trans_data;
-        data[this.PriColname] = RowID;
-        if (TargetStateID)
-            data['state_id'] = TargetStateID;
-        DB.request('makeTransition', { table: this.tablename, row: data }, r => { callback(r); });
-    }
     loadRow(RowID, callback) {
         let data = { table: this.tablename, limit: 1, filter: {} };
         data.filter = '{"=": ["' + this.PriColname + '", ' + RowID + ']}';
@@ -342,7 +410,11 @@ class RawTable {
         const offset = me.PageIndex * me.PageLimit;
         if (me.PageLimit && me.PageLimit)
             data['limit'] = me.PageLimit + (offset == 0 ? '' : ',' + offset);
-        DB.request('read', data, r => { me.Rows = r.records; me.actRowCount = r.count; callback(r); });
+        DB.request('read', data, r => {
+            me.actRowCount = r.count;
+            me.Rows = r.records;
+            callback(r);
+        });
     }
     getNrOfRows() { return this.actRowCount; }
     getTablename() { return this.tablename; }
@@ -440,8 +512,7 @@ class Table extends RawTable {
         });
     }
     getNrOfPages() {
-        const PageLimit = this.PageLimit || this.getNrOfRows();
-        return Math.ceil(this.getNrOfRows() / PageLimit);
+        return Math.ceil(this.getNrOfRows() / this.PageLimit);
     }
     getPaginationButtons() {
         const MaxNrOfButtons = 5;
@@ -470,7 +541,7 @@ class Table extends RawTable {
     renderEditForm(Row, diffObject, ExistingModal = undefined) {
         const t = this;
         let defaultFormObj = t.getDefaultFormObject();
-        let newObj = mergeDeep({}, defaultFormObj, diffObject);
+        let newObj = DB.mergeDeep({}, defaultFormObj, diffObject);
         for (const key of Object.keys(Row)) {
             newObj[key].value = Row[key];
         }
@@ -482,41 +553,6 @@ class Table extends RawTable {
     }
     setSelectedRows(selRowData) {
         this.selectedRows = selRowData;
-    }
-    setState(data, RowID, targetStateID, callback) {
-        let t = this;
-        let actStateID = null;
-        for (const row of t.Rows) {
-            if (row[t.getPrimaryColname()] == RowID)
-                actStateID = row['state_id'];
-        }
-        t.transitRow(RowID, targetStateID, data, function (response) {
-            t.onEntriesModified.trigger();
-            let counter = 0;
-            const messages = [];
-            response.forEach(msg => {
-                if (msg.show_message)
-                    messages.push({ type: counter, text: msg.message });
-                counter++;
-            });
-            messages.reverse();
-            const htmlStateFrom = t.renderStateButton(actStateID, false);
-            const htmlStateTo = t.renderStateButton(targetStateID, false);
-            for (const msg of messages) {
-                let title = '';
-                if (msg.type == 0)
-                    title = `OUT <span class="text-muted ml-2">${htmlStateFrom} &rarr;</span>`;
-                if (msg.type == 1)
-                    title = `Transition <span class="text-muted ml-2">${htmlStateFrom} &rarr; ${htmlStateTo}</span>`;
-                if (msg.type == 2)
-                    title = `IN <span class="text-muted ml-2">&rarr; ${htmlStateTo}</span>`;
-                const resM = new Modal(title, msg.text);
-                resM.options.btnTextClose = t.GUIOptions.modalButtonTextModifyClose;
-                resM.show();
-            }
-            if (counter === 3)
-                callback();
-        });
     }
     getDefaultFormObject() {
         const me = this;
@@ -563,22 +599,6 @@ class Table extends RawTable {
             }
         }
     }
-    renderStateButton(StateID, withDropdown, altName = undefined) {
-        const name = altName || this.SM.getStateNameById(StateID);
-        const cssClass = 'state' + StateID;
-        if (withDropdown) {
-            return `<div class="dropdown">
-            <button title="State-ID: ${StateID}" class="btn dropdown-toggle btnState btnGrid btnEnabled loadStates btn-sm label-state ${cssClass}"
-              data-stateid="${StateID}" data-toggle="dropdown">${name}</button>
-            <div class="dropdown-menu p-0">
-              <p class="m-0 p-3 text-muted"><i class="fa fa-spinner fa-pulse"></i> Loading...</p>
-            </div>
-          </div>`;
-        }
-        else {
-            return `<button title="State-ID: ${StateID}" onclick="return false;" class="btn btnState btnGrid btnDisabled btn-sm label-state ${cssClass}">${name}</button>`;
-        }
-    }
     formatCellFK(colname, cellData) {
         const showColumns = this.Columns[colname].foreignKey.col_subst;
         let cols = [];
@@ -596,7 +616,7 @@ class Table extends RawTable {
             return cellContent;
         if (typeof cellContent == 'string') {
             if (cellContent.length > this.GUIOptions.maxCellLength)
-                return escapeHtml(cellContent.substr(0, this.GUIOptions.maxCellLength) + "\u2026");
+                return DB.escapeHtml(cellContent.substr(0, this.GUIOptions.maxCellLength) + "\u2026");
         }
         else if ((typeof cellContent === "object") && (cellContent !== null)) {
             let cols = this.formatCellFK(colname, cellContent);
@@ -608,8 +628,8 @@ class Table extends RawTable {
             let fTbl = new Table(fTablename);
             cols.forEach(col => {
                 let htmlCell = col;
-                if (isObject(col)) {
-                    const vals = recflattenObj(col);
+                if (DB.isObject(col)) {
+                    const vals = DB.recflattenObj(col);
                     let v = vals.join(' | ');
                     v = v.length > 55 ? v.substring(0, 55) + "\u2026" : v;
                     htmlCell = v;
@@ -632,7 +652,7 @@ class Table extends RawTable {
             }
             return `<table class="w-100 h-100 p-0 m-0 border-0" style="white-space: nowrap;"><tr data-rowid="${fTablename}:${rowID}">${content}</tr></table>`;
         }
-        return escapeHtml(cellContent);
+        return DB.escapeHtml(cellContent);
     }
     renderCell(row, col) {
         let t = this;
@@ -684,18 +704,30 @@ class Table extends RawTable {
             return parseInt(value) !== 0 ? '<i class="fa fa-check text-success "></i>' : '<i class="fa fa-times text-danger"></i>';
         }
         else if (t.Columns[col].field_type == 'state') {
-            const stateID = value;
-            const isExitNode = t.SM.isExitNode(stateID);
-            const withDropdown = !(t.ReadOnly || isExitNode);
-            return t.renderStateButton(stateID, withDropdown);
+            const RowID = row[t.getPrimaryColname()];
+            const SB = new StateButton(value, RowID, col);
+            SB.setTable(t);
+            SB.setReadOnly(t.ReadOnly || t.SM.isExitNode(value));
+            SB.setCallbackStateChange(resp => {
+                console.log("Statechange from Grid!", resp);
+                t.loadRows(() => { t.renderContent(); });
+            });
+            const tmpID = DB.getID();
+            setTimeout(() => {
+                document.getElementById(tmpID).innerHTML = '';
+                document.getElementById(tmpID).appendChild(SB.getElement());
+            }, 10);
+            return `<div id="${tmpID}"></div>`;
         }
         else if (col == 'name' && t.getTablename() == 'state') {
-            const stateID = parseInt(row['state_id']);
-            return t.renderStateButton(stateID, false, value);
+            const SB = new StateButton(row['state_id']);
+            SB.setName(value);
+            return SB.getElement().outerHTML;
         }
         else if ((col == 'state_id_FROM' || col == 'state_id_TO') && t.getTablename() == 'state_rules') {
-            const stateID = parseInt(value['state_id']);
-            return t.renderStateButton(stateID, false, value['name']);
+            const SB = new StateButton(value['state_id']);
+            SB.setName(value['name']);
+            return SB.getElement().outerHTML;
         }
         const isHTML = t.Columns[col].is_virtual || t.Columns[col].field_type == 'htmleditor';
         value = t.formatCell(col, value, isHTML, row[t.getPrimaryColname()]);
@@ -799,9 +831,11 @@ class Table extends RawTable {
                         `<a href="${loc}/${t.getTablename()}/${RowID}"><i class="fas fa-link"></i></a>`))}
         </td>`;
             }
-            sortedColumnNames.forEach(function (col) {
+            sortedColumnNames.forEach(col => {
                 if (t.Columns[col].show_in_grid) {
-                    data_string += '<td ' + (t.Columns[col].field_type === 'foreignkey' ? ' class="p-0 m-0 h-100"' : '') + '>' + t.renderCell(row, col) + '</td>';
+                    data_string += '<td ' + (t.Columns[col].field_type === 'foreignkey' ? ' class="p-0 m-0 h-100"' : '') + '>' +
+                        t.renderCell(row, col) +
+                        '</td>';
                 }
             });
             if (t.GUIOptions.showControlColumn) {
@@ -831,11 +865,11 @@ class Table extends RawTable {
     </div>`;
     }
     getFooter() {
-        let t = this;
+        const t = this;
         if (!t.Rows || t.Rows.length <= 0)
             return '<div class="tbl_footer"></div>';
+        const PaginationButtons = t.getPaginationButtons();
         let pgntn = '';
-        let PaginationButtons = t.getPaginationButtons();
         if (PaginationButtons.length > 1) {
             PaginationButtons.forEach(btnIndex => {
                 if (t.PageIndex == t.PageIndex + btnIndex) {
@@ -870,7 +904,7 @@ class Table extends RawTable {
     </div>`;
     }
     async renderContent() {
-        let t = this;
+        const t = this;
         const output = await t.getContent();
         const tableEl = document.getElementById(t.GUID);
         tableEl.innerHTML = output;
@@ -878,7 +912,7 @@ class Table extends RawTable {
         els = tableEl.getElementsByClassName('datatbl_header');
         if (els) {
             for (const el of els) {
-                el.addEventListener('click', function (e) {
+                el.addEventListener('click', e => {
                     e.preventDefault();
                     const colname = el.getAttribute('data-colname');
                     t.toggleSort(colname);
@@ -888,7 +922,7 @@ class Table extends RawTable {
         els = tableEl.getElementsByClassName('resetTableFilter');
         if (els) {
             for (const el of els) {
-                el.addEventListener('click', function (e) {
+                el.addEventListener('click', e => {
                     e.preventDefault();
                     t.isExpanded = true;
                     t.resetFilter();
@@ -902,14 +936,14 @@ class Table extends RawTable {
         els = tableEl.getElementsByClassName('modRow');
         if (els) {
             for (const el of els) {
-                el.addEventListener('click', function (e) {
+                el.addEventListener('click', e => {
                     e.preventDefault();
                     const RowData = el.parentNode.parentNode.getAttribute('data-rowid').split(':');
                     const Tablename = RowData[0];
                     const ID = RowData[1];
                     if (t.getTablename() !== Tablename) {
                         const tmpTable = new Table(Tablename);
-                        tmpTable.loadRow(ID, function (Row) {
+                        tmpTable.loadRow(ID, Row => {
                             tmpTable.setRows([Row]);
                             tmpTable.modifyRow(ID);
                         });
@@ -919,70 +953,14 @@ class Table extends RawTable {
                 });
             }
         }
-        els = tableEl.getElementsByClassName('loadStates');
-        if (els) {
-            for (const el of els) {
-                el.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const DropDownMenu = el.parentNode.querySelectorAll('.dropdown-menu')[0];
-                    const StateID = el.getAttribute('data-stateid');
-                    const RowData = el.parentNode.parentNode.parentNode.getAttribute('data-rowid').split(':');
-                    const Tablename = RowData[0];
-                    const ID = RowData[1];
-                    if (DropDownMenu.classList.contains("show"))
-                        return;
-                    if (Tablename === t.getTablename()) {
-                        const nextstates = t.SM.getNextStates(StateID);
-                        if (nextstates.length > 0) {
-                            DropDownMenu.innerHTML = '';
-                            nextstates.map(state => {
-                                const btn = document.createElement('a');
-                                btn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
-                                btn.setAttribute('href', 'javascript:void(0)');
-                                btn.innerText = state.name;
-                                btn.addEventListener("click", function (e) {
-                                    e.preventDefault();
-                                    t.setState({}, ID, state.id, function () {
-                                        t.loadRows(function () { t.renderContent(); });
-                                    });
-                                });
-                                DropDownMenu.appendChild(btn);
-                            });
-                        }
-                    }
-                    else {
-                        const tmpTable = new Table(Tablename);
-                        tmpTable.loadRow(ID, function (Row) {
-                            tmpTable.setRows([Row]);
-                            const nextstates = tmpTable.SM.getNextStates(Row['state_id']);
-                            if (nextstates.length > 0) {
-                                DropDownMenu.innerHTML = '';
-                                nextstates.map(state => {
-                                    const btn = document.createElement('a');
-                                    btn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
-                                    btn.setAttribute('href', 'javascript:void(0)');
-                                    btn.text = state.name;
-                                    btn.addEventListener("click", function () {
-                                        tmpTable.setState({}, ID, state.id, function () {
-                                            t.loadRows(function () { t.renderContent(); });
-                                        });
-                                    });
-                                    DropDownMenu.appendChild(btn);
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        }
     }
     renderFooter() {
-        let t = this;
+        const t = this;
         const parent = document.getElementById(t.GUID).parentElement;
         parent.getElementsByClassName('tbl_footer')[0].innerHTML = t.getFooter();
         const btns = parent.getElementsByClassName('page-link');
         for (const btn of btns) {
-            btn.addEventListener('click', function (e) {
+            btn.addEventListener('click', e => {
                 e.preventDefault();
                 t.setPageIndex(parseInt(btn.innerHTML) - 1);
             });
@@ -997,12 +975,8 @@ class Table extends RawTable {
             await this.renderFooter();
         }
     }
-    get SelectionHasChanged() {
-        return this.onSelectionChanged.expose();
-    }
-    get EntriesHaveChanged() {
-        return this.onEntriesModified.expose();
-    }
+    get SelectionHasChanged() { return this.onSelectionChanged.expose(); }
+    get EntriesHaveChanged() { return this.onEntriesModified.expose(); }
 }
 class FormGenerator {
     constructor(originTable, originRowID, rowData, GUID) {
@@ -1015,21 +989,27 @@ class FormGenerator {
     getElement(key, el) {
         let result = '';
         let v = el.value || '';
-        if (el.field_type == 'state')
-            return '';
+        if (el.value === 0)
+            v = 0;
         if (!el.show_in_form)
             return '';
         if (el.mode_form == 'hi')
             return '';
         if (el.mode_form == 'ro' && el.is_primary)
             return '';
-        const form_label = el.column_alias ? `<label class="col-md-3 col-lg-2 col-form-label" for="inp_${key}">${el.column_alias}</label>` : null;
+        const form_label = el.column_alias ? `<label for="inp_${key}">${el.column_alias}</label>` : null;
         if (el.field_type == 'textarea') {
             result += `<textarea name="${key}" id="inp_${key}" class="form-control${el.mode_form == 'rw' ? ' rwInput' : ''}" ${el.mode_form == 'ro' ? ' readonly' : ''}>${v}</textarea>`;
         }
         else if (el.field_type == 'text') {
-            result += `<input name="${key}" type="text" id="inp_${key}" class="form-control${el.mode_form == 'rw' ? ' rwInput' : ''}"
-        value="${escapeHtml(v)}"${el.mode_form == 'ro' ? ' readonly' : ''}/>`;
+            result += `<input
+        name="${key}"
+        type="text"
+        id="inp_${key}"
+        ${el.maxlength ? 'maxlength="' + el.maxlength + '"' : ''}
+        class="form-control${el.mode_form == 'rw' ? ' rwInput' : ''}"
+        value="${DB.escapeHtml(v)}"${el.mode_form == 'ro' ? ' readonly' : ''}
+      />`;
         }
         else if (el.field_type == 'number') {
             result += `<input name="${key}" type="number" id="inp_${key}" class="form-control${el.mode_form == 'rw' ? ' rwInput' : ''}"
@@ -1072,8 +1052,8 @@ class FormGenerator {
                 for (const colname of colnames) {
                     const pattern = '%' + colname + '%';
                     if (el.customfilter.indexOf(pattern) >= 0) {
-                        const dyn_val = rd[colname].value;
-                        el.customfilter = el.customfilter.replace(new RegExp(pattern, "g"), dyn_val);
+                        const firstCol = Object.keys(rd[colname].value)[0];
+                        el.customfilter = el.customfilter.replace(new RegExp(pattern, "g"), rd[colname].value[firstCol]);
                     }
                 }
                 el.customfilter = decodeURI(el.customfilter);
@@ -1094,7 +1074,7 @@ class FormGenerator {
             });
             const fkIsSet = !Object.values(v).every(o => o === null);
             if (fkIsSet) {
-                if (isObject(v)) {
+                if (DB.isObject(v)) {
                     const key = Object.keys(v)[0];
                     tmpTable.setSelectedRows([v]);
                     tmpTable.isExpanded = false;
@@ -1109,8 +1089,9 @@ class FormGenerator {
             tmpTable.loadRows(rows => {
                 if (rows["count"] == 0) {
                     document.getElementById(randID).outerHTML = `<p class="text-muted" style="margin-top:.4rem;">
-            <span class="mr-3">No Entries found</span>
-            <a class="btn btn-sm btn-success" href="${location.hash + '/' + tmpTable.getTablename() + '/create'}">Create</a></p>`;
+            <span class="mr-3">No Entries found</span>${tmpTable.ReadOnly ? '' :
+                        '<a class="btn btn-sm btn-success" href="' + location.hash + '/' + tmpTable.getTablename() + '/create">Create</a>'}
+          </p>`;
                 }
                 else {
                     tmpTable.renderHTML(randID);
@@ -1154,7 +1135,20 @@ class FormGenerator {
             result += `<div><div class="htmleditor" id="${newID}"></div></div>`;
         }
         else if (el.field_type == 'rawhtml') {
-            result += el.value;
+            result += `<div>${el.value}</div>`;
+        }
+        else if (el.field_type == 'state') {
+            const tmpID = DB.getID();
+            const SB = new StateButton(el.value, this.oRowID, key);
+            SB.setTable(this.oTable);
+            SB.setCallbackStateChange(resp => {
+                console.log("Statechange from Form!", resp);
+                document.location.reload();
+            });
+            setTimeout(() => {
+                document.getElementById(tmpID).appendChild(SB.getElement());
+            }, 1);
+            result += `<div id="${tmpID}"></div>`;
         }
         else if (el.field_type == 'enum') {
             result += `<select name="${key}" class="custom-select${el.mode_form == 'rw' ? ' rwInput' : ''}" id="inp_${key}"${el.mode_form == 'ro' ? ' disabled' : ''}>`;
@@ -1167,21 +1161,19 @@ class FormGenerator {
         }
         else if (el.field_type == 'switch') {
             result = '';
-            result += `<div class="custom-control custom-switch mt-2">
+            result += `<div class="custom-control custom-switch mt-1">
       <input name="${key}" type="checkbox" class="custom-control-input${el.mode_form == 'rw' ? ' rwInput' : ''}" id="inp_${key}"${el.mode_form == 'ro' ? ' disabled' : ''}${v == "1" ? ' checked' : ''}>
-      <label class="custom-control-label" for="inp_${key}">${el.column_alias}</label>
+      <label class="custom-control-label" for="inp_${key}">${el.label || ''}</label>
     </div>`;
         }
         else if (el.field_type == 'checkbox') {
             result = '';
-            result += `<div class="custom-control custom-checkbox mt-2">
+            result += `<div class="custom-control custom-checkbox mt-1">
         <input name="${key}" type="checkbox" class="custom-control-input${el.mode_form == 'rw' ? ' rwInput' : ''}" id="inp_${key}"${el.mode_form == 'ro' ? ' disabled' : ''}${v == "1" ? ' checked' : ''}>
-        <label class="custom-control-label" for="inp_${key}">${el.column_alias}</label>
+        <label class="custom-control-label" for="inp_${key}">${el.label || ''}</label>
       </div>`;
         }
-        return `<div class="form-group row">
-      ${form_label ? form_label + '<div class="col-md-9 col-lg-10 align-middle">' + result + '</div>' : '<div class="col-12">' + result + '</div>'}
-    </div>`;
+        return `<div class="${el.customclass || 'col-12'}">${form_label || ''}${result}</div>`;
     }
     getValues() {
         let result = {};
@@ -1223,16 +1215,15 @@ class FormGenerator {
         return result;
     }
     getHTML() {
-        let html = `<form id="${this.GUID}">`;
+        let html = `<form class="formcontent row" id="${this.GUID}">`;
         const data = this.data;
-        const sortedKeys = Object.keys(data).sort(function (x, y) {
+        const sortedKeys = Object.keys(data).sort((x, y) => {
             const a = data[x].orderF ? parseInt(data[x].orderF) : 0;
             const b = data[y].orderF ? parseInt(data[y].orderF) : 0;
             return a < b ? -1 : (a > b ? 1 : 0);
         });
-        for (const key of sortedKeys) {
+        for (const key of sortedKeys)
             html += this.getElement(key, data[key]);
-        }
         return html + '</form>';
     }
     initEditors() {
@@ -1275,40 +1266,5 @@ class FormGenerator {
                     e.preventDefault();
             });
         }
-    }
-}
-function escapeHtml(string) {
-    const entityMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;' };
-    return String(string).replace(/[&<>"'`=\/]/g, s => entityMap[s]);
-}
-function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
-}
-function mergeDeep(target, ...sources) {
-    if (!sources.length)
-        return target;
-    const source = sources.shift();
-    if (isObject(target) && isObject(source)) {
-        for (const key in source) {
-            if (isObject(source[key])) {
-                if (!target[key]) {
-                    Object.assign(target, { [key]: {} });
-                }
-                else {
-                    target[key] = Object.assign({}, target[key]);
-                }
-                mergeDeep(target[key], source[key]);
-            }
-            else {
-                Object.assign(target, { [key]: source[key] });
-            }
-        }
-    }
-    return mergeDeep(target, ...sources);
-}
-function recflattenObj(x) {
-    if (isObject(x)) {
-        let res = Object.keys(x).map(e => { return isObject(x[e]) ? recflattenObj(x[e]) : x[e]; });
-        return res;
     }
 }
