@@ -1,5 +1,7 @@
 <?php
-    require_once(__DIR__.'/config.SECRET.inc.php');
+    $filepath = __DIR__.'/config.SECRET.inc.php';
+    if (!file_exists($filepath)) die('🔑 Configuration-File "'.basename($filepath).'" not found!');
+    require_once($filepath);
 
     // Const
     define("LANG_de", 1);
@@ -82,6 +84,14 @@
         * {font-family: "arial"; font-size: 12px;}
         table th {padding-top: 2em;}
         table td {padding: .5em; border: 1px solid #ccc;}
+        .question {width:100%; font-weight: bold;}
+        .question td:first {width:100px;}
+        .answer {width:50%; margin-bottom: 5em;}
+        .answer td {height: 100px;}
+        .answer.left {float: left;}
+        .answer.right {float: right;}
+        .answer .correct {color: green; border-color:green;}
+        .answer .wrong {color: red; border-color:red;}
     </style>
 </head>
 <body>
@@ -119,51 +129,36 @@
                 if (in_array($question["id"], $usedQuestions)) {
                     $x = $con->query(specialQuery1($question["id"]));
                     $row = $x->fetch_array(MYSQLI_NUM);
-                    echo '<table style="width:100%; font-weight: bold;">';
-                    echo '<tr><td style="width:100px;">'.$row[0].'</td><td>' . $row[1] . '</td></tr>';
-                    echo '<tr><td style="width:100px;">'.$row[3].'</td><td>' . $row[5] . '</td></tr>';
+                    $answersL = parseElements(qAnswers([$question["id"]]), $AN_IGNORE);
+                    $answersR = parseElements(qAnswers([$row[3]]), $AN_IGNORE);
+
+                    // HTML Question
+                    echo '<table class="question">';
+                    echo '<tr><td>'.$row[0].'</td><td>'.$row[1].'</td></tr>';
+                    echo '<tr><td>'.$row[3].'</td><td>'.$row[5].'</td></tr>';
                     echo "</table>";
 
                     //---- Answers [DE]
-                    $x = parseElements(qAnswers([$question["id"]]), $AN_IGNORE);                    
-                    echo '<table style="width:50%; float:left; margin-bottom: 5em;">';            
-                    for ($j=0;$j<count($x);$j++) {
-                        echo '<tr><td'.(@$x[$j]["correct"] == 1 ?
-                        ' style="color: green; border-color:green;"' :
-                        ' style="color: red; border-color:red;"').'>'.@$x[$j]["id"].'<br><small>'.@$x[$j]["name"].'</small></td>';
-                    }
+                    echo '<table class="answer left">';
+                    for ($j=0;$j<count($answersL);$j++)
+                        echo '<tr><td class="'.(@$answersL[$j]["correct"] == 1 ? 'correct':'wrong').'">'.
+                        @$answersL[$j]["id"].'<br><small>'.@$answersL[$j]["name"].'</small></td></tr>';
                     echo "</table>";
 
                     //---- Answers [EN]
-                    echo '<table style="width:50%; float:right; margin-bottom: 5em;">';
-                    $y = parseElements(qAnswers([$row[3]]), $AN_IGNORE);
-                    if ($y) {
-                        for ($j=0;$j<count($y);$j++) {
-                            echo '<tr><td'.(@$y[$j]["correct"] == 1 ?
-                            ' style="color: green; border-color:green;"' :
-                            ' style="color: red; border-color:red;"').'>'.@$y[$j]["id"].'<br><small>'.@$y[$j]["name"].'</small></td>';
-                        }
+                    echo '<table class="answer right">';
+                    if ($answersR) {
+                        for ($j=0;$j<count($answersR);$j++)
+                            echo '<tr><td class="'.(@$answersR[$j]["correct"] == 1 ? 'correct':'wrong').'">'.
+                            @$answersR[$j]["id"].'<br><small>'.@$answersR[$j]["name"].'</small></td></tr>';
                     }
                     echo "</table>";
-                    echo '<div style="clear:both;"></div>';
-                    //echo '<td'.(@$y[$j]["correct"] == 1 ? ' style="color: green; border-color:green;"' : ' style="color: red; border-color:red;"').'>'.@$y[$j]["id"].'<br><small>'.@$y[$j]["name"].'</small></td></tr>';
 
+                    echo '<div style="clear:both;"></div>';
                 }
                 else {
                     continue;
                 }
-                //echo "<br>";
-            }
-
-
-
-            die();
-            //$arrR = parseElements(qQuestions(array_column($arrR, "id")), $QE_IGNORE);
-            echo '<tr><th colspan="2">Number of Questions ('.@count($arrL).' / '.@count($arrR).')</th></tr>';
-            for ($i=0;$i<@count($arrL);$i++) {
-                echo '<tr><td>'.@$arrL[$i]["id"].'<br><small>'.@$arrL[$i]["name"].'</small></td>';
-                echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';     
-               echo '<tr><th colspan="2">Question</th></tr>';
             }
         ?>
     </table>    
