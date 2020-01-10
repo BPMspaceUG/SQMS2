@@ -489,7 +489,7 @@
         "stateIdSel": 0,
         "columns": {
             "sqms2_Question_id": {
-                "column_alias": "Question id",
+                "column_alias": "QuestionID",
                 "is_primary": true,
                 "is_virtual": false,
                 "show_in_grid": true,
@@ -1649,7 +1649,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
@@ -1693,7 +1693,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "state_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
@@ -1772,7 +1772,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "state_rules_id,DESC",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
