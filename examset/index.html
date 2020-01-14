@@ -176,11 +176,11 @@
                         const lstQuestions = new Table('sqms2_question', 2);
                         const qidstext = qIDs.join(',');
                         lstQuestions.setFilter('{"and":[ {"in":["state_id","7470"]} , {"in":["sqms2_Question_id","'+qidstext+'"]} ]}');
+                        lstQuestions.options.showSearch = true;
                         lstQuestions.Columns.state_id.show_in_grid = false;
                         lstQuestions.setCallbackSelectionChanged(selRows => {
                             document.getElementById('qstats1').innerText = `Selected: ${selRows.length} / 30`;
                             gQuestions = selRows;
-                            console.log(gQuestions)
                         });
                         lstQuestions.loadRows(rows => {
                             lstQuestions.renderHTML('tblQuestions');
@@ -228,6 +228,8 @@
             // Load Table Syllabus
             const lstSyllabus = new Table('sqms2_syllabus', 1);
             lstSyllabus.setFilter('{"in":["state_id","7462,7463"]}');
+            lstSyllabus.ReadOnly = true;
+            lstSyllabus.options.showSearch = true;
             lstSyllabus.Columns.state_id.show_in_grid = false;
             lstSyllabus.setCallbackSelectionChanged(selRows => {
                 // reset

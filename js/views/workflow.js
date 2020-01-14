@@ -2,7 +2,6 @@ export default props => {
 
   // Variables
   const t = new Table(props.table);
-  const textCancel = gText[setLang].Cancel;
 
   // Methods
   if (t.SM) {
@@ -15,12 +14,11 @@ export default props => {
     }, 1);
     //------ HTML Output
     return `<div>
-      <h2>${t.getTableIcon() + ' ' + t.getTableAlias()}:Workflow</h2>
-      <hr>
+      <h2 class="text-info">${t.getTableIcon() + ' ' + t.getTableAlias()} Workflow</h2>
       <div id="statemachine"></div>
       <br>
       <div class="text-center pb-3">
-        <span><a class="btn btn-light" href="#/${t.getTablename()}">${textCancel}</a></span>
+        <span><a class="btn btn-light" href="#/${t.getTablename()}">${gText[setLang].Cancel}</a></span>
       </div>
     </div>`;
   }
@@ -30,6 +28,6 @@ export default props => {
     <p style="color: red;">Error: This Table does not have a Workflow!</p>
   </div>
   <div class="text-center pb-3">
-    <span><a class="btn btn-light" href="#/${t.getTablename()}">${textCancel}</a></span>
+    <span><a class="btn btn-light" href="#/${t.getTablename()}">${gText[setLang].Cancel}</a></span>
   </div>`;
 }
