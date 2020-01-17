@@ -1,1 +1,4 @@
-{}
+{
+    "sqms2_language_iso_short": {"orderF": 1,"customclass": "col-12 col-md-2", "column_alias": ""},
+    "sqms2_Text": {"orderF": 2, "customclass": "col-12 col-md-10", "column_alias": ""}
+}

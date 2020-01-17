@@ -1,7 +1,5 @@
 {
     "_LIAMUSER_ID": {"customclass": "col-12 col-md-4"},
     "sqms2_Question_Version": {"customclass": "col-12 col-md-4"},
-    "sqms2_Question_type": {"customclass": "col-12 col-md-4"},
-    "virtualCol": {"mode_form": "ro"},
-    "virtualColx": {"mode_form": "ro"}
+    "sqms2_Question_type": {"customclass": "col-12 col-md-4"}
 }

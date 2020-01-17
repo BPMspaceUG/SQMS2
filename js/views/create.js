@@ -2,33 +2,16 @@ export default (props) => {
   //---> PATH
   const path = location.hash.split('/');
   path.shift(); // Remove first element (#)
+  
   // Checks
   if (path.length % 2 !== 0) return `<div><p style="color: red;">Create: Path is invalid!</p></div>`;
+  
   // Get actual Table & ID (last)
   const actTable = path[path.length - 2];
   const t = new Table(actTable);
-  // Texts
   const textCommand = t.TableType !== 'obj' ? gText[setLang].Relate : gText[setLang].Create;
-  let fCreate = null;
 
-  // Possibilities:
-  // 1. /o      -> Create, Create new Object
-  // 2. /---     -> Relate, Create new Relation
-  // 3. o/---    -> Relate, Create new Relation coming from existing Object (fixed Obj)
-  // 4. o/---/o   -> Create & Relate, Create new Object and new Relation coming from an existing Object
-
-  //--- Set Title
-  if (t.TableType !== 'obj')
-    window.document.title = gText[setLang].titleRelate.replace('{alias}', t.getTableAlias());
-  else
-    window.document.title = gText[setLang].titleCreate.replace('{alias}', t.getTableAlias());
-
-  //--- Mark actual Link
-  const links = document.querySelectorAll('#sidebar-links .list-group-item');
-  links.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') == '#/' + props.origin) link.classList.add('active');
-  });
+  //--- Functions
   function setFormState(allDisabled) {
     // Btn
     const btn = document.getElementsByClassName('btnCreate')[0];
@@ -48,21 +31,24 @@ export default (props) => {
     }
   }
 
+  //--- Set Title
+  if (t.TableType !== 'obj')
+    window.document.title = gText[setLang].titleRelate.replace('{alias}', t.getTableAlias());
+  else
+    window.document.title = gText[setLang].titleCreate.replace('{alias}', t.getTableAlias());
+
+  //--- Mark actual Link
+  const links = document.querySelectorAll('#sidebar-links .list-group-item');
+  links.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') == '#/' + props.origin) link.classList.add('active');
+  });
+
   //===================================================================
   // Generate HTML from Form
   //===================================================================
-  // Overwrite and merge the differences from diffForm
-  const defaultForm = t.getDefaultFormObject();
-  const diffForm = t.getDiffFormCreate();
-  const newObj = DB.mergeDeep({}, defaultForm, diffForm);
-
-  //--------------------------------------------------------
-  // TODO: Possible Now!
-  // HIDE Reverse Foreign Keys (==> Create!) => can't be related - Object doesn't exist yet
-  for (const key of Object.keys(newObj)) {
-    if (newObj[key].field_type == 'reversefk')
-      newObj[key].mode_form = 'hi';
-  }
+  const combinedFormConfig = t.getFormCreate();
+  const fCreate = new Form(t, null, combinedFormConfig);
 
   //=> Case 3
   // is add Relation and Coming from an Object? => then preselect object
@@ -120,7 +106,8 @@ export default (props) => {
               } else {
                 newObj[colname].customfilter = '{"=":[1,2]}'; // NO Results
               }
-              document.getElementById('formcreate').innerHTML = getActualFormContent();
+              // Create Form
+              document.getElementById('formcreate').innerHTML = fCreate.getHTML();
             });          
           })
         }
@@ -128,7 +115,6 @@ export default (props) => {
       }
       cnt++;
     }
-
     // Fix the Origin-Key
     val[fixedPColname] = origObjID;
     newObj[fixedKey].value = val;
@@ -136,170 +122,67 @@ export default (props) => {
     newObj[fixedKey].show_in_form = false;
   }
 
-  function getActualFormContent() {
-    fCreate = new FormGenerator(t, undefined, newObj, null);
-    return fCreate.getHTML();
-  }
-  function redirect(toPath) { document.location.assign(toPath); }
-
   //---------------------------------------------------
   // After HTML is placed in DOM
   setTimeout(() => {
-    fCreate.initEditors();
     //--- Bind Buttonclick
     const btns = document.getElementsByClassName('btnCreate');
     for (const btn of btns) {
       btn.addEventListener('click', e => {
         e.preventDefault();
+        //---------------------- Create
         setFormState(true);
         // Read out all input fields with {key:value}
         let data = fCreate.getValues();
-        //---> CREATE
-        t.createRow(data, resp => {
+        // Send to Import function
+        t.importData(data, resp => {
           setFormState(false);
-          //===> Show Messages
-          let counter = 0; // 0 = trans, 1 = in -- but only at Create!
-          resp.forEach(msg => {
-            if (msg.show_message) {
-              const stateIDTo = msg['_entry-point-state']['id'];
-              const SB = new StateButton(stateIDTo);
-              SB.setTable(t);
-              const stateTo = SB.getElement().outerHTML;
-              const tmplTitle = 
-                counter === 0 ? `${gText[setLang].Create} &rarr; ${stateTo}` :
-                counter === 1 ? `&rarr; ${stateTo}` :
-                '';
+          //console.log(resp);
+
+          resp.forEach(answer => {
+            //-------------------------------------------------------------
+            // Handle Transition Feedback
+            let counter = 0;
+            const messages = [];
+            answer.forEach(msg => {
+              console.log(msg)
+              if (msg.errormsg || msg.show_message)
+                messages.push({type: counter, text: msg.errormsg || msg.message}); // for GUI
+              counter++;
+            });
+            // Re-Sort the messages => [1. Out, 2. Transition, 3. In]
+            messages.reverse();
+            // Show all Script-Result Messages
+            const targetStateID = answer[0]['_entry-point-state'].id;
+            const btnTo = new StateButton(targetStateID);
+            btnTo.setTable(t);
+            for (const msg of messages) {
+              let title = '';
+              if (msg.type == 0) title += `Create &rarr; ${btnTo.getElement().outerHTML}`;
               // Render a Modal
-              document.getElementById('myModalTitle').innerHTML = tmplTitle;
-              document.getElementById('myModalContent').innerHTML = msg.message;
+              document.getElementById('myModalTitle').innerHTML = title;
+              document.getElementById('myModalContent').innerHTML = msg.text;
               $('#myModal').modal({});
             }
+            //-------------------------------------------------------------
           });
-          //===> Element was created!!!
-          if (t.hasStateMachine() && resp.length === 2 && resp[1].element_id && resp[1].element_id > 0) {
-            const newElementID = parseInt(resp[1].element_id);
-            if (path.length > 2) {
-              let objsToCreate = [];
-              let relsToCreate = [];
-              let originID, originTablename = null;
-              // 1. Copy, remove last command (because it was already created) and Reverse path
-              const reversedPath = path.slice();
-              reversedPath.pop();
-              reversedPath.pop()
-              reversedPath.reverse();
-              // 2. Collect a list of commands for all tables [o][r][o][r][o]
-              for (let i=0; i<reversedPath.length/2; i++) {
-                const cmd = reversedPath[2*i];
-                const Tablename = reversedPath[2*i+1];
-                // Until the end of the new path is reached
-                if (cmd != 'create') {
-                  originID = cmd;
-                  originTablename = Tablename;
-                  break;
-                }
-                // Check if relation or object --> correct order
-                const tmpTable = new Table(Tablename);
-                if (tmpTable.getTableType() !== 'obj')
-                  relsToCreate.push(Tablename);
-                else 
-                  objsToCreate.push(Tablename);
-              }
-              // TODO: Modularize and put on the Top!
-              function connectObjects(obj, rels) {
-                // 5. Create all Relations
-                for (let j=0; j<obj.length-1; j++) {
-                  //-----> Create Relations
-                  const tmpRelTable = new Table(rels[j]);
-                  const colnames = Object.keys(tmpRelTable.Columns);
-                  const data = {};
-                  data[colnames[2]] = obj[j].id;
-                  data[colnames[1]] = obj[j+1].id;
-                  DB.request('create', {table: rels[j], row: data}, r => {
-                    rels[j] = {t: rels[j], id: parseInt(r[1].element_id)};
-                    // Last Relation
-                    if (j === rels.length-1) {
-                      // If origin did not exist then set last created Object as origin
-                      if (!originTablename && !originID) {
-                        originTablename = obj[obj.length - 1].t;
-                        originID = obj[obj.length - 1].id;
-                      }
-                      // Jump to last knot
-                      const strOriginalPath = path.join('/');
-                      const strLastKnot = originTablename+'/'+originID;
-                      const indexLastKnotInOgPath = strOriginalPath.lastIndexOf(strLastKnot);                          
-                      if (indexLastKnotInOgPath < 0) {
-                        redirect('#/' + strLastKnot) // Not Found (-> only create/create/create/create)
-                        return;
-                      }
-                      else {
-                        redirect('#/' + strOriginalPath.substr(0, indexLastKnotInOgPath + strLastKnot.length));
-                        return;
-                      }
-                    }
-                  });
-                }
-              }
-              // 3. Create the path
-              if (objsToCreate.length === 0 && relsToCreate.length > 0) {
-                objsToCreate = [{t: t.getTablename(), id: newElementID}];
-                objsToCreate.push({t: originTablename, id: parseInt(originID)});
-                connectObjects(objsToCreate, relsToCreate);
-              }
-              else {
-                for (let i=0; i<objsToCreate.length; i++) {
-                  //-----> Create Objects
-                  DB.request('create', {table: objsToCreate[i], row: {}}, r => {
-                    objsToCreate[i] = {t: objsToCreate[i], id: parseInt(r[1].element_id)};
-                    // Last Element
-                    if (i === objsToCreate.length-1) {
-                      // Insert already created Object at beginning
-                      objsToCreate = [{t: t.getTablename(), id: newElementID}].concat(objsToCreate);
-                      if (originTablename && originID)
-                        objsToCreate.push({t: originTablename, id: parseInt(originID)});
-                      connectObjects(objsToCreate, relsToCreate);
-                    }
-                  });
-                }
-              }
-              // 7. Finish and jump to first Object or knot
-            }
-            //=== Redirect back
-            path[path.length-1] = newElementID; // replace last element
-            // act table is Relation then jump to last object
-            if (t.TableType !== 'obj') {
-              path.pop();
-              path.pop();
-            }
-            redirect('#/' + path.join('/'));
-          }
-          else if (!t.hasStateMachine() && resp.length === 1 && resp[0].element_id && resp[0].element_id > 0) {
-            // Object created from single Foreign Key. ==> redirect one step back
-            if (path.length > 2) {
-              // TODO: maybe update the element before ;)
-              path.pop();
-              path.pop();
-              redirect('#/' + path.join('/'));
-            }
-          }
-          else {
-            // Element was _NOT_ created!
-            console.error("Could not create Element!");
-          }
+
+
         });
       });
-    }    
+    }
     //--- FOCUS First Element - TODO: check if is foreignKey || HTMLEditor
     const elem = document.getElementsByClassName('rwInput')[0];
     if (elem) {
-      const elemLen = elem.value.length;
       if (elem.selectionStart || elem.selectionStart == '0') {
+        const elemLen = elem.value.length;
         elem.selectionStart = elemLen;
         elem.selectionEnd = elemLen;
         elem.focus();
       }
     }
     //---
-  }, 10);
+  }, 10);  
   
   //---------------------------------------------------- Path
   const guiPath = [];
@@ -331,7 +214,7 @@ export default (props) => {
   // ===> OUTPUT
   return `<div>
     <h2>${guiFullPath}</h2>
-    <div class="container-fluid my-3" id="formcreate">${getActualFormContent()}</div>
+    <div class="container-fluid my-3" id="formcreate">${ fCreate.getHTML() }</div>
     <div class="text-center pb-3">
       <button class="btn btn-success btnCreate">${textCommand}</button>
       <span class="mx-3 text-muted"></span>

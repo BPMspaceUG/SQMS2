@@ -1,29 +1,11 @@
 {
-    "sqms2_Syllabus_titel": {
-        "mode_form": "ro"
-    },
-    "sqms2_Syllabus_Valid_from": {
-        "mode_form": "ro"
-    },
-    "sqms2_Syllabus_Valid_to": {
-        "mode_form": "ro"
-    },
-    "sqms2_ExamVersionPlannedDuration": {
-        "mode_form": "ro"
-    },
-    "sqms2_CourseDuration": {
-        "mode_form": "ro"
-    },
-    "sqms2_Exam_QuestionsTotal": {
-        "mode_form": "ro"
-    },
-    "virtualCol": {
-        "mode_form": "ro"
-    },
-    "virtualColx": {
-        "mode_form": "ro"
-    },
-    "virtualColxx": {
-        "mode_form": "ro"
-    }
+    "sqms2_Syllabus_titel": {"mode_form": "ro"},
+    "sqms2_Syllabus_Valid_from": {"mode_form": "ro", "customclass": "col-12 col-md-3"},
+    "sqms2_Syllabus_Valid_to": {"mode_form": "ro", "customclass": "col-12 col-md-3"},
+    "sqms2_ExamVersionPlannedDuration": {"mode_form": "ro", "customclass": "col-12 col-md-2"},
+    "sqms2_CourseDuration": {"mode_form": "ro", "customclass": "col-12 col-md-2"},
+    "sqms2_Exam_QuestionsTotal": {"mode_form": "ro", "customclass": "col-12 col-md-2"},
+    "virtualCol": {"mode_form": "ro"},
+    "virtualColx": {"mode_form": "ro"},
+    "virtualColxx": {"mode_form": "ro"}
 }

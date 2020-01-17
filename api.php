@@ -41,7 +41,7 @@
   }
   //========================================= Parameter & Handling
   try {
-    $bodyData = json_decode(file_get_contents('php://input'), true);
+    $bodyData = json_decode(file_get_contents('php://input'));
     //--> Check Methods (GET, POST, PATCH)
     if ($ReqMethod === 'GET') {
       // [GET]
@@ -54,13 +54,13 @@
     }
     else if ($ReqMethod === 'POST') {
       // [POST]
-      $command = $bodyData["cmd"]; // TODO: --> create only
-      $param = isset($bodyData["param"]) ? $bodyData["param"] : null;
+      $command = $bodyData->cmd; // create || import || makeTransition      
+      $param = property_exists($bodyData, "param") ? $bodyData->param : null;
     }
     else if ($ReqMethod === 'PATCH') {
       // [PATCH]
-      $command = 'update'; // TODO: transit
-      $param = isset($bodyData["param"]) ? $bodyData["param"] : null;
+      $command = 'update';
+      $param = property_exists($bodyData, "param") ? $bodyData->param : null;
     }
     else {
       http_response_code(405);

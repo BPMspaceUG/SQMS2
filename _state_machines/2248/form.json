@@ -1,0 +1,5 @@
+{
+    "sqms2_SyllabusChapter_titel": {"customclass": "col-12 col-md-6"},
+    "sqms2_SyllabusChapter_ChapterNumber": {"customclass": "col-12 col-md-3"},
+    "sqms2_SyllabusChapter_Severity": {"customclass": "col-12 col-md-3"}
+}

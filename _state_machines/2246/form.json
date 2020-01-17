@@ -1,7 +1,4 @@
 {
-    "redirect": {
-        "field_type": "rawhtml",
-        "show_in_form":true,
-        "value": "<img src=x onerror=\"document.location.assign(document.location + '/sqms2_answer_text/create/sqms2_text/create');\">"
-    }
+    "sqms2_correct": {"customclass": "col-12 col-md-1", "column_alias": ""},
+    "virtualCol": {"customclass": "col-12 col-md-11", "column_alias": ""}
 }
