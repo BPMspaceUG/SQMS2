@@ -267,14 +267,16 @@
                     isSample = true;
                 }
                 // create one object
-                fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
-                    table: "sqms2_examsetversion",
-                    row:{
+                fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'import', param:{
+                    sqms2_examsetversion: [{
                         sqms2_ExamSetVersion_title: setname,
                         sqms2_ExamSetVersion_SampleSet: isSample ? "1" : "0",
                         sqms2_ExamSetVersion_Set: isSample ? cntSample : cntLive
-                    }}})}
+                    }]
+                }})}
                 ).then(r=>r.json()).then(res => {
+                    res = res[0];
+                    console.log(res);
                     // append to Array
                     gSets.push({id: res[1].element_id, name: setname});
                 });
@@ -286,19 +288,17 @@
             // 1. Read out all syllabuschapters from syllabus
             loadQuestions(Syllabus.sqms2_Syllabus_id);
         });
+        //=======================================================================
         // SECOND [2] -> [3] Create Sets-Questions
         document.getElementById('btnStep2').addEventListener('click', () => {
             // Create for each Set for each Question...
             gSets.forEach(set => {
                 gQuestions.forEach(q => {
                     // create a Link
-                    fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
-                        table: "sqms2_question_examsetversion",
-                        row: {
-                            sqms2_ExamSetVersion_id_fk_264577: set.id,
-                            sqms2_Question_id_fk_615560: q.sqms2_Question_id
-                        }
+                    fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'import', param:{
+                        sqms2_question_examsetversion: [{sqms2_ExamSetVersion_id_fk_264577: set.id, sqms2_Question_id_fk_615560: q.sqms2_Question_id}]
                     }})}).then(resp => resp.json()).then(res => {
+                        res = res[0];
                         gQuestionSets.push({
                             id: res[1].element_id,
                             idS: parseInt(set.id),
@@ -328,6 +328,7 @@
             document.getElementById('step2').style.display = "none";
             document.getElementById('step3').style.display = "block";
         });        
+        //=======================================================================
         // THIRD [3] -> [4] Create Questions-Answers Subsets, Finish
         document.getElementById('btnStep3next').addEventListener('click', () => {
             // Loop sets
@@ -347,12 +348,8 @@
                     //---- Create
                     if (AnswerID) {
                         // create a Link
-                        fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'create', param:{
-                            table: "sqms2_question_examsetversion_answer",
-                            row: {
-                                sqms2_Question_ExamSetVersion_id_fk_186326: qsID,
-                                sqms2_Answer_id_fk_507266: AnswerID
-                            }
+                        fetch('../api.php', {method:'POST', body:JSON.stringify({cmd:'import', param:{
+                            sqms2_question_examsetversion_answer: [{sqms2_Question_ExamSetVersion_id_fk_186326: qsID, sqms2_Answer_id_fk_507266: AnswerID}]
                         }})}).then(resp => resp.json()).then(res => {});
                     }
                 }
