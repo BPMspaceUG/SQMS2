@@ -9,4 +9,4 @@
     //===> IMPORT
     echo "<pre>";
     $import = new DataImporter(); // data_full data_question
-    $import->importFile(__DIR__."/exported_topics_SQMS1.json"); // generated_demo_full.json");
+    $import->importFile(__DIR__."/exported_SQMS1_questions.secret.json"); // generated_demo_full.json");

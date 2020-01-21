@@ -42,7 +42,7 @@
     $res = getResult("SELECT sqms_topic_id + 872438324, name, 0, 0 FROM sqms_topic WHERE sqms_topic_id IN (SELECT distinct topic_id FROM v_sqms_used_questions WHERE v_sqms_used_questions.language_ID = 1);");
     foreach ($res as $row) 
         $output["sqms2_topic"][] = ["sqms2_Topic_id"=>(int)$row[0], "sqms2_Topic_title"=>$row[1]];
-    file_put_contents("exported_SQMS1_topics.json", json_encode($output)); // Save as JSON-File
+    file_put_contents("exported_SQMS1_topics.secret.json", json_encode($output)); // Save as JSON-File
     echo "Topics ✔️\n";
 
     //--- Export Questions
@@ -58,22 +58,32 @@
             $resEN = getResult("SELECT question, 0, 0, 0 FROM sqms_question WHERE sqms_question_id = ?;", "i", $questionIDenglish);
             $newQuestion["sqms2_text"][] = ["sqms2_Text"=>$resEN[0][0], "sqms2_language_iso_short"=>"en"];
         }
+        //var_dump($newQuestion);
         //--- Answers
-        $resAnswDE = getResult("SELECT answer, correct, FROM sqms_answer WHERE sqms_question_id = ?;", "i", $questionID);
-        var_dump($resAnswDE);
-        /*
-        foreach ([1,2] as $answ) {
-            $germanAnswerText = "Das ist eine Antwort.";
-            $newAnswer = ["sqms_text"=>[], "sqms2_correct"=>true];
-            $newAnswer["sqms_text"][] = ["sqms2_Text"=>$germanAnswerText, "sqms2_language_iso_short"=>"de"];
-            $newQuestion["sqms_answer"][] = $newAnswer;
+        $resAnswDE = getResult("SELECT answer, correct, 0, 0 FROM sqms_answer WHERE sqms_question_id = ? ORDER BY sqms_answer_id;", "i", $questionID);
+        $resAnswEN = getResult("SELECT answer, correct, 0, 0 FROM sqms_answer WHERE sqms_question_id = ? ORDER BY sqms_answer_id;", "i", $questionIDenglish);
+
+        $i = 0;
+        foreach ($resAnswDE as $answ) {
+            // german Answer
+            $germanAnswerText = $answ[0];
+            $isCorrect = (int)$answ[1] === 1;            
+            $newAnswer = ["sqms2_text"=>[], "sqms2_correct"=>$isCorrect];
+            $newAnswer["sqms2_text"][] = ["sqms2_Text"=>$germanAnswerText, "sqms2_language_iso_short"=>"de"];            
+            // append english text
+            if (isset($resAnswEN[$i])) {
+                $englishAnswerText = $resAnswEN[$i][0];
+                $newAnswer["sqms2_text"][] = ["sqms2_Text"=>$englishAnswerText, "sqms2_language_iso_short"=>"en"];
+            }
+            // append to Question
+            $newQuestion["sqms2_answer"][] = $newAnswer;
+            $i++;
         }
-        */
-        die();
         // append Question
         $output["sqms2_question"][] = $newQuestion;
+        //break;
     }
-    file_put_contents("exported_SQMS1_questions.json", json_encode($output)); // Save as JSON-File
+    file_put_contents("exported_SQMS1_questions.secret.json", json_encode($output)); // Save as JSON-File
     echo "Questions ✔️\n";
 
 
