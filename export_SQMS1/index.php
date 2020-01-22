@@ -21,10 +21,14 @@
     if ($sl === $sr) die("❌ No Syllabi, or the same! (Param sl, sr)");
     // Check if left is german
     $x = parseElements("SELECT sqms_language_id AS id, null, null FROM sqms_syllabus WHERE sqms_syllabus_id = $sl");
-    if ($x[0]["id"] !== LANG_de) die("❌ ERROR! Param <b>sl</b> No Syllabus set or Left Syllabus is not German!");
-    // Check if right is englisch    
-    $x = parseElements("SELECT sqms_language_id AS id, null, null FROM sqms_syllabus WHERE sqms_syllabus_id = $sr");
-    if ($x[0]["id"] !== LANG_en) die("❌ ERROR! Param <b>sl</b> No Syllabus set or Right Syllabus is not english!");
+    if ($x[0]["id"] !== LANG_de) {
+        die("❌ ERROR! Param <b>sl</b> No Syllabus set or Left Syllabus is not German!");
+    }
+    // Check if right is englisch
+    if (!is_null($sr)) {
+        $x = parseElements("SELECT sqms_language_id AS id, null, null FROM sqms_syllabus WHERE sqms_syllabus_id = $sr");
+        if ($x[0]["id"] !== LANG_en) die("❌ ERROR! Param <b>sl</b> No Syllabus set or Right Syllabus is not english!");
+    }
 
 
     function qSyllabi($arr){return "SELECT sqms_syllabus_id, name, null FROM sqms_syllabus WHERE sqms_syllabus_id IN (".implode(',', $arr).")";}
@@ -100,21 +104,26 @@
         <?php
             // Syllabus IDs via Parameter
             $arrL = [["id"=>$sl]];
-            $arrR = [["id"=>$sr]];
+            $arrR = is_null($sr) ? null : [["id"=>$sr]];
             //------
             echo '<tr><th colspan="2">Syllabus</th></tr>';
             for ($i=0;$i<count($arrL);$i++) {
-                echo '<tr><td>'.@$arrL[$i]["id"].'</td><td>'.@$arrR[$i]["id"].'</td></tr>';
+                echo '<tr><td>'.@$arrL[$i]["id"].'</td>';
+                if (!is_null($arrR))
+                    echo '<td>'.@$arrR[$i]["id"].'</td></tr>';
             }
             $arrL = parseElements(qSyllabi(array_column($arrL, "id")));
-            $arrR = parseElements(qSyllabi(array_column($arrR, "id")));
+            if (!is_null($arrR))
+                $arrR = parseElements(qSyllabi(array_column($arrR, "id")));
             //------
             echo '<tr><th colspan="2">SyllabusElements</th></tr>';
             $arrL = parseElements(qSyllElements(array_column($arrL, "id")), $SE_IGNORE);
-            $arrR = parseElements(qSyllElements(array_column($arrR, "id")), $SE_IGNORE);
+            if (!is_null($arrR))
+                $arrR = parseElements(qSyllElements(array_column($arrR, "id")), $SE_IGNORE);
             for ($i=0;$i<count($arrL);$i++) {
                 echo '<tr><td>'.@$arrL[$i]["id"].'<br><small>'.@$arrL[$i]["name"].'</small></td>';
-                echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';
+                if (!is_null($arrR))
+                    echo '<td>'.@$arrR[$i]["id"].'<br><small>'.@$arrR[$i]["name"].'</small></td></tr>';
             }
             //------
             // auslesen welche (deutschen) Fragen mit Chapter 1-n verbunden sind
@@ -145,14 +154,16 @@
                         @$answersL[$j]["id"].'<br><small>'.@$answersL[$j]["name"].'</small></td></tr>';
                     echo "</table>";
 
-                    //---- Answers [EN]
-                    echo '<table class="answer right">';
-                    if ($answersR) {
-                        for ($j=0;$j<count($answersR);$j++)
-                            echo '<tr><td class="'.(@$answersR[$j]["correct"] == 1 ? 'correct':'wrong').'">'.
-                            @$answersR[$j]["id"].'<br><small>'.@$answersR[$j]["name"].'</small></td></tr>';
+                    if (!is_null($arrR)) {
+                        //---- Answers [EN]
+                        echo '<table class="answer right">';
+                        if ($answersR) {
+                            for ($j=0;$j<count($answersR);$j++)
+                                echo '<tr><td class="'.(@$answersR[$j]["correct"] == 1 ? 'correct':'wrong').'">'.
+                                @$answersR[$j]["id"].'<br><small>'.@$answersR[$j]["name"].'</small></td></tr>';
+                        }
+                        echo "</table>";
                     }
-                    echo "</table>";
 
                     echo '<div style="clear:both;"></div>';
                 }
