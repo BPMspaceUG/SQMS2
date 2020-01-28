@@ -18,7 +18,6 @@
         <!-- 1. SYLLABUS -->
         <section id="step1" class="card p-3 mb-3">
             <p>1. Select a Syllabus</p>
-            <!--<select class="custom-select" id="lstSyllabus"></select>-->
             <div id="tblSyllabus"></div>
             <button id="btnStep1" class="btn btn-success w-25 mt-5 disabled">Continue</button>
         </section>
@@ -178,12 +177,12 @@
                         lstQuestions.setFilter('{"and":[ {"in":["state_id","7470"]} , {"in":["sqms2_Question_id","'+qidstext+'"]} ]}');
                         lstQuestions.options.showSearch = true;
                         lstQuestions.Columns.state_id.show_in_grid = false;
-                        lstQuestions.setCallbackSelectionChanged(selRows => {
+                        lstQuestions.onSelectionChanged(selRows => {
                             document.getElementById('qstats1').innerText = `Selected: ${selRows.length} / 30`;
                             gQuestions = selRows;
                         });
                         lstQuestions.loadRows(rows => {
-                            lstQuestions.renderHTML('tblQuestions');
+                            lstQuestions.renderHTML(document.getElementById('tblQuestions'));
                         });
                         //============================================================
                     });
@@ -231,7 +230,7 @@
             lstSyllabus.ReadOnly = true;
             lstSyllabus.options.showSearch = true;
             lstSyllabus.Columns.state_id.show_in_grid = false;
-            lstSyllabus.setCallbackSelectionChanged(selRows => {
+            lstSyllabus.onSelectionChanged(selRows => {
                 // reset
                 Syllabus = undefined;
                 const selection = selRows[0];
@@ -242,7 +241,7 @@
                     document.getElementById('btnStep1').classList.add('disabled');
             });
             lstSyllabus.loadRows(rows => {
-                lstSyllabus.renderHTML('tblSyllabus');
+                lstSyllabus.renderHTML(document.getElementById('tblSyllabus'));
             });
         });
 

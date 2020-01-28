@@ -1,8 +1,10 @@
 {
-    "sqms2_Syllabus_titel": {},
-    "sqms2_Syllabus_Valid_from": {"customclass": "col-12 col-md-3"},
-    "sqms2_Syllabus_Valid_to": {"customclass": "col-12 col-md-3"},
-    "sqms2_ExamVersionPlannedDuration": {"customclass": "col-12 col-md-2"},
-    "sqms2_CourseDuration": {"customclass": "col-12 col-md-2"},
-    "sqms2_Exam_QuestionsTotal": {"customclass": "col-12 col-md-2"}
+    "sqms2_Syllabus_titel": {"customclass": "col-12 col-md-4"},
+    "sqms2_Syllabus_Valid_from": {"customclass": "col-12 col-md-2"},
+    "sqms2_Syllabus_Valid_to": {"customclass": "col-12 col-md-2"},
+    "sqms2_ExamVersionPlannedDuration": {"customclass": "col-12 col-md-1"},
+    "sqms2_CourseDuration": {"customclass": "col-12 col-md-1"},
+    "sqms2_Exam_QuestionsTotal": {"customclass": "col-12 col-md-1"},
+    "state_id": {"customclass": "col-12 col-md-1"},
+    "virtualColxx": {"mode_form": "ro"}
 }

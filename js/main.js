@@ -1,8 +1,3 @@
-var SortOrder;
-(function (SortOrder) {
-    SortOrder["ASC"] = "ASC";
-    SortOrder["DESC"] = "DESC";
-})(SortOrder || (SortOrder = {}));
 var SelectType;
 (function (SelectType) {
     SelectType[SelectType["NoSelect"] = 0] = "NoSelect";
@@ -35,7 +30,7 @@ const gText = {
         noFinds: 'Sorry, nothing found.'
     },
     de: {
-        Create: 'Erstellen',
+        Create: 'Hinzufügen',
         Cancel: 'Abbrechen',
         Search: 'Suchen...',
         Loading: 'Laden...',
@@ -51,7 +46,7 @@ const gText = {
         noFinds: 'Keine Ergebnisse gefunden.'
     }
 };
-const setLang = 'de';
+const setLang = 'en';
 class DB {
     static request(command, params, callback) {
         let me = this;
@@ -154,41 +149,6 @@ class DB {
     }
 }
 DB.API_URL = 'api.php';
-DB.setState = (callback, tablename, rowID, rowData = {}, targetStateID = null, colname = 'state_id') => {
-    const t = new Table(tablename);
-    const data = { table: tablename, row: {} };
-    data.row = rowData;
-    data.row[t.getPrimaryColname()] = rowID;
-    if (targetStateID)
-        data.row[colname] = targetStateID;
-    DB.request('makeTransition', data, resp => {
-        callback(resp);
-        let counter = 0;
-        const messages = [];
-        resp.forEach(msg => {
-            if (msg.show_message)
-                messages.push({ type: counter, text: msg.message });
-            counter++;
-        });
-        messages.reverse();
-        const btnFrom = new StateButton(targetStateID);
-        const btnTo = new StateButton(targetStateID);
-        btnFrom.setTable(t);
-        btnTo.setTable(t);
-        for (const msg of messages) {
-            let title = '';
-            if (msg.type == 0)
-                title += `${btnFrom.getElement().outerHTML} &rarr;`;
-            if (msg.type == 1)
-                title += `${btnFrom.getElement().outerHTML} &rarr; ${btnTo.getElement().outerHTML}`;
-            if (msg.type == 2)
-                title += `&rarr; ${btnTo.getElement().outerHTML}`;
-            document.getElementById('myModalTitle').innerHTML = title;
-            document.getElementById('myModalContent').innerHTML = msg.text;
-            $('#myModal').modal({});
-        }
-    });
-};
 DB.getID = () => { const c4 = () => { return Math.random().toString(16).slice(-4); }; return 'i' + c4() + c4() + c4() + c4() + c4() + c4() + c4() + c4(); };
 class StateMachine {
     constructor(states, links) {
@@ -351,23 +311,32 @@ class StateMachine {
     }
 }
 class StateButton {
-    constructor(stateid, rowid = null, statecol = 'state_id') {
+    constructor(rowData, statecol = 'state_id') {
         this._table = null;
         this._stateID = null;
-        this._rowID = null;
-        this._stateCol = null;
         this._editable = false;
         this._name = '';
-        this._callbackStateChange = (resp) => { };
+        this.rowData = null;
+        this.modForm = null;
+        this.onSuccess = () => { };
         this.setTable = (table) => {
             this._table = table;
             this._name = this._table.SM.getStateNameById(this._stateID);
+            const RowID = this.rowData[table.getPrimaryColname()];
+            this.rowData = {};
+            this.rowData[table.getPrimaryColname()] = RowID;
+        };
+        this.setForm = (modifyForm) => {
+            this.modForm = modifyForm;
         };
         this.setName = (name) => {
             this._name = name;
         };
         this.setReadOnly = (readonly) => {
             this._editable = !readonly;
+        };
+        this.setOnSuccess = (callback) => {
+            this.onSuccess = callback;
         };
         this.getButton = () => {
             const btn = document.createElement('button');
@@ -378,6 +347,7 @@ class StateButton {
             return btn;
         };
         this.getElement = () => {
+            const self = this;
             if (!this._editable) {
                 return this.getButton();
             }
@@ -396,23 +366,63 @@ class StateButton {
                 });
                 wrapper.classList.add('dropdown');
                 list.classList.add('dropdown-menu', 'p-0');
-                const t = this._table;
                 const nextstates = this._table.SM.getNextStates(this._stateID);
                 if (nextstates.length > 0) {
                     nextstates.map(state => {
-                        const btn = document.createElement('a');
-                        btn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
-                        btn.setAttribute('href', 'javascript:void(0)');
-                        btn.innerText = state.name;
-                        btn.addEventListener("click", e => {
+                        const nextbtn = document.createElement('a');
+                        nextbtn.classList.add('dropdown-item', 'btnState', 'btnEnabled', 'state' + state.id);
+                        nextbtn.setAttribute('href', 'javascript:void(0)');
+                        nextbtn.innerText = state.name;
+                        nextbtn.addEventListener("click", e => {
                             e.preventDefault();
-                            DB.setState(resp => {
-                                if (this._callbackStateChange)
-                                    this._callbackStateChange(resp);
-                            }, this._table.getTablename(), this._rowID, {}, state.id, this._stateCol);
+                            btn.innerText = 'Loading...';
+                            btn.classList.remove('dropdown-toggle');
+                            const data = {
+                                table: self._table.getTablename(),
+                                row: self.rowData
+                            };
+                            if (self.modForm) {
+                                const newVals = self.modForm.getValues(true);
+                                const newRowDataFromForm = newVals[self._table.getTablename()][0];
+                                data.row = DB.mergeDeep({}, data.row, newRowDataFromForm);
+                            }
+                            data.row[self.stateCol] = state.id;
+                            DB.request('makeTransition', data, resp => {
+                                btn.innerText = self._name;
+                                btn.classList.add('dropdown-toggle');
+                                if (resp.length === 3) {
+                                    self.onSuccess();
+                                }
+                                let counter = 0;
+                                const messages = [];
+                                resp.forEach(msg => {
+                                    if (msg.show_message)
+                                        messages.push({ type: counter, text: msg.message });
+                                    counter++;
+                                });
+                                messages.reverse();
+                                const btnFrom = new StateButton({ state_id: self._stateID });
+                                const btnTo = new StateButton({ state_id: state.id });
+                                btnFrom.setTable(self._table);
+                                btnFrom.setReadOnly(true);
+                                btnTo.setTable(self._table);
+                                btnTo.setReadOnly(true);
+                                for (const msg of messages) {
+                                    let title = '';
+                                    if (msg.type == 0)
+                                        title += `${btnFrom.getElement().outerHTML} &rarr;`;
+                                    if (msg.type == 1)
+                                        title += `${btnFrom.getElement().outerHTML} &rarr; ${btnTo.getElement().outerHTML}`;
+                                    if (msg.type == 2)
+                                        title += `&rarr; ${btnTo.getElement().outerHTML}`;
+                                    document.getElementById('myModalTitle').innerHTML = title;
+                                    document.getElementById('myModalContent').innerHTML = msg.text;
+                                    $('#myModal').modal({});
+                                }
+                            });
                             list.classList.remove('show');
                         });
-                        list.appendChild(btn);
+                        list.appendChild(nextbtn);
                     });
                 }
                 wrapper.appendChild(btn);
@@ -420,37 +430,73 @@ class StateButton {
                 return wrapper;
             }
         };
-        this._stateID = stateid;
-        this._rowID = rowid;
-        this._stateCol = statecol;
-        this._editable = (stateid && rowid);
-    }
-    setCallbackStateChange(callback) {
-        this._callbackStateChange = callback;
+        this._stateID = rowData[statecol];
+        this._editable = true;
+        this.rowData = rowData;
+        this.stateCol = statecol;
     }
 }
-class RawTable {
-    constructor(tablename) {
+class Table {
+    constructor(tablename, SelType = SelectType.NoSelect) {
         this.Sort = '';
         this.Search = '';
         this.PriColname = '';
+        this.Config = null;
         this.PageLimit = 10;
         this.PageIndex = 0;
-        const t = this;
-        t.actRowCount = 0;
-        t.tablename = tablename;
-        t.Config = JSON.parse(JSON.stringify(DB.Config.tables[tablename]));
-        t.Columns = t.Config.columns;
-        for (const colname of Object.keys(t.Columns)) {
-            if (t.Columns[colname].is_primary) {
-                t.PriColname = colname;
-                return;
+        this.Path = '';
+        this.DOMContainer = null;
+        this.SM = null;
+        this.selType = SelectType.NoSelect;
+        this.TableType = TableType.obj;
+        this.selectedRows = [];
+        this.options = {
+            maxCellLength: 50,
+            smallestTimeUnitMins: true,
+            showControlColumn: true,
+            showWorkflowButton: false,
+            showCreateButton: true,
+            showSearch: true
+        };
+        this.isExpanded = true;
+        this.callbackSelectionChanged = resp => { };
+        this.callbackCreatedElement = resp => { };
+        this.callbackSelectElement = row => { };
+        this.callbackUnselectElement = row => { };
+        const self = this;
+        self.actRowCount = 0;
+        self.tablename = tablename;
+        self.Path = tablename + '/0';
+        self.Config = Object.assign({}, DB.Config.tables[tablename]);
+        self.Columns = self.Config.columns;
+        for (const colname of Object.keys(self.Columns)) {
+            if (self.Columns[colname].is_primary) {
+                self.PriColname = colname;
+                break;
             }
         }
-        t.resetFilter();
+        self.resetFilter();
+        self.selType = SelType;
+        self.TableType = self.Config.table_type;
+        self.setSort(self.Config.stdsorting);
+        self.ReadOnly = (self.Config.mode == 'ro');
+        if (self.Config.se_active)
+            self.SM = new StateMachine(self.Config.sm_states, self.Config.sm_rules);
+        self.formCreateSettingsDiff = JSON.parse(self.Config.formcreate);
     }
-    createRow(data, callback) { DB.request('create', { table: this.tablename, row: data }, r => { callback(r); }); }
-    importData(data, callback) { DB.request('import', data, r => callback(r)); }
+    isRelationTable() {
+        return (this.TableType !== TableType.obj);
+    }
+    createRow(data, callback) {
+        DB.request('create', { table: this.tablename, row: data }, r => { callback(r); });
+    }
+    importData(data, callback) {
+        const self = this;
+        DB.request('import', data, r => {
+            callback(r);
+            self.callbackCreatedElement(r);
+        });
+    }
     updateRow(RowID, new_data, callback) {
         const data = new_data;
         data[this.PriColname] = RowID;
@@ -463,7 +509,9 @@ class RawTable {
     loadRows(callback) {
         const me = this;
         const offset = me.PageIndex * me.PageLimit;
-        const data = { table: me.tablename, sort: me.Sort };
+        const data = { table: me.tablename };
+        if (me.Sort && me.Sort !== '')
+            data['sort'] = me.Sort;
         if (me.Filter && me.Filter !== '')
             data['filter'] = me.Filter;
         if (me.Search && me.Search !== '')
@@ -492,39 +540,10 @@ class RawTable {
     setFilter(filterStr) { if (filterStr && filterStr.trim().length > 0)
         this.Filter = filterStr; }
     setColumnFilter(columnName, filterText) { this.Filter = '{"=": ["' + columnName + '","' + filterText + '"]}'; }
-    setRows(ArrOfRows) { this.Rows = ArrOfRows; }
+    setRows(ArrOfRows) { this.actRowCount = ArrOfRows.length; this.Rows = ArrOfRows; }
     resetFilter() { this.Filter = ''; }
     resetLimit() { this.PageIndex = null; this.PageLimit = null; }
-}
-class Table extends RawTable {
-    constructor(tablename, SelType = SelectType.NoSelect) {
-        super(tablename);
-        this.SM = null;
-        this.selType = SelectType.NoSelect;
-        this.TableType = TableType.obj;
-        this.selectedRows = [];
-        this.options = {
-            maxCellLength: 50,
-            smallestTimeUnitMins: true,
-            showControlColumn: true,
-            showWorkflowButton: false,
-            showCreateButton: false,
-            showSearch: false
-        };
-        this.isExpanded = true;
-        this._callbackSelectionChanged = (resp) => { };
-        const config = this.getConfig();
-        this.GUID = DB.getID();
-        this.selType = SelType;
-        this.TableType = config.table_type;
-        this.setSort(config.stdsorting);
-        this.ReadOnly = (config.mode == 'ro');
-        if (config.se_active)
-            this.SM = new StateMachine(config.sm_states, config.sm_rules);
-    }
-    isRelationTable() { return (this.TableType !== TableType.obj); }
-    getTableType() { return this.TableType; }
-    getDefaultForm() {
+    getFormCreateDefault() {
         const me = this;
         let FormObj = {};
         for (const colname of Object.keys(me.Columns)) {
@@ -535,36 +554,34 @@ class Table extends RawTable {
         }
         return FormObj;
     }
-    getDifferenceForm() { return JSON.parse(this.getConfig().formcreate); }
+    getFormCreateSettingsDiff() {
+        return this.formCreateSettingsDiff;
+    }
     getFormCreate() {
-        const defaultForm = this.getDefaultForm();
-        const diffForm = this.getDifferenceForm();
+        const defaultForm = this.getFormCreateDefault();
+        const diffForm = this.formCreateSettingsDiff;
         return DB.mergeDeep({}, defaultForm, diffForm);
     }
-    toggleSort(ColumnName) {
-        let t = this;
-        const SortDir = (t.getSortDir() == SortOrder.DESC) ? SortOrder.ASC : SortOrder.DESC;
-        this.setSort(ColumnName + ',' + SortDir);
-        this.loadRows(() => { t.renderContent(); });
+    getFormModify(row) {
+        const stdForm = this.getFormCreateDefault();
+        let diffFormState = {};
+        let combinedForm = {};
+        if (this.hasStateMachine()) {
+            const actStateID = row['state_id'];
+            diffFormState = this.SM.getFormDiffByState(actStateID);
+        }
+        combinedForm = DB.mergeDeep({}, stdForm, diffFormState);
+        return combinedForm;
     }
-    async setPageIndex(targetIndex) {
-        let me = this;
-        var newIndex = targetIndex;
-        var lastPageIndex = this.getNrOfPages() - 1;
-        if (targetIndex < 0)
-            newIndex = 0;
-        if (targetIndex > lastPageIndex)
-            newIndex = lastPageIndex;
-        this.PageIndex = newIndex;
-        this.loadRows(async function () {
-            await me.renderContent();
-            await me.renderFooter();
-        });
+    setPath(newPath) {
+        this.Path = newPath;
     }
-    getNrOfPages() { return Math.ceil(this.getNrOfRows() / this.PageLimit); }
+    getPath() {
+        return this.Path;
+    }
     getPaginationButtons() {
         const MaxNrOfButtons = 5;
-        var NrOfPages = this.getNrOfPages();
+        var NrOfPages = Math.ceil(this.getNrOfRows() / this.PageLimit);
         if (NrOfPages <= MaxNrOfButtons) {
             var pages = new Array(NrOfPages);
             for (var i = 0; i < pages.length; i++)
@@ -590,312 +607,31 @@ class Table extends RawTable {
         const pcname = this.getPrimaryColname();
         return this.selectedRows.map(el => { return el[pcname]; });
     }
-    setSelectedRows(selRowData) { this.selectedRows = selRowData; }
-    hasStateMachine() { return !!this.SM; }
-    modifyRow(id) {
-        let t = this;
-        const pcname = t.getPrimaryColname();
-        if (t.selType !== SelectType.NoSelect) {
-            const selRow = t.Rows.filter(el => { return el[pcname] == id; })[0];
-            const isAlreadySeletecd = t.selectedRows.filter(el => { return el[pcname] == id; }).length > 0;
-            if (isAlreadySeletecd) {
-                t.selectedRows = t.selectedRows.filter(el => { return el[pcname] != id; });
-            }
-            else {
-                if (t.selType === SelectType.Single)
-                    t.selectedRows = [];
-                t.selectedRows.push(selRow);
-            }
-            if (this._callbackSelectionChanged)
-                this._callbackSelectionChanged(t.selectedRows);
-            t.renderContent();
-            return;
-        }
-        else {
-            if (t.ReadOnly) {
-                return;
-            }
-            let TheRow = null;
-            this.Rows.forEach(row => { if (row[pcname] == id)
-                TheRow = row; });
-            if (t.SM) {
-                const diffJSON = t.SM.getFormDiffByState(TheRow.state_id);
-                const defaultFormObj = this.getDefaultForm();
-                const newObj = DB.mergeDeep({}, defaultFormObj, diffJSON);
-                for (const key of Object.keys(TheRow))
-                    newObj[key].value = TheRow[key];
-            }
-        }
+    setSelectedRows(selRowData) {
+        this.selectedRows = selRowData;
     }
-    setCallbackSelectionChanged(callback) { this._callbackSelectionChanged = callback; }
-    formatCellFK(colname, cellData) {
-        const showColumns = this.Columns[colname].foreignKey.col_subst;
-        let cols = [];
-        Object.keys(cellData).forEach(c => {
-            if (showColumns === '*' || showColumns.indexOf(c) >= 0) {
-                let subCell = {};
-                subCell[c] = cellData[c];
-                cols.push(subCell);
-            }
-        });
-        return cols;
+    hasStateMachine() {
+        return !!this.SM;
     }
-    formatCell(colname, cellContent, isHTML = false, mainRowID) {
-        if (isHTML)
-            return cellContent;
-        if (typeof cellContent == 'string') {
-            if (cellContent.length > this.options.maxCellLength)
-                return DB.escapeHtml(cellContent.substr(0, this.options.maxCellLength) + "\u2026");
-        }
-        else if ((typeof cellContent === "object") && (cellContent !== null)) {
-            let cols = this.formatCellFK(colname, cellContent);
-            let content = '';
-            const split = (100 * (1 / cols.length)).toFixed(0);
-            const firstEl = cellContent;
-            const fTablename = this.Columns[colname].foreignKey.table;
-            let rowID = null;
-            let fTbl = new Table(fTablename);
-            cols.forEach(col => {
-                let htmlCell = col;
-                if (DB.isObject(col)) {
-                    const vals = DB.recflattenObj(col);
-                    let v = vals.join(' | ');
-                    v = v.length > 55 ? v.substring(0, 55) + "\u2026" : v;
-                    htmlCell = v;
-                }
-                if (fTbl)
-                    htmlCell = fTbl.renderCell(col, Object.keys(col)[0]);
-                content += '<td class="border-0" style="width: ' + split + '%;">' + htmlCell + '</td>';
-            });
-            if (fTbl && !fTbl.ReadOnly) {
-                rowID = firstEl[Object.keys(firstEl)[0]];
-                if (rowID) {
-                    const path = location.hash.split('/');
-                    path.shift();
-                    if (path.length === 1)
-                        path.push(mainRowID.toString());
-                    path.push(fTablename, rowID);
-                    content = `<td style="max-width: 30px; width: 30px;" class="border-0 controllcoulm align-middle">
-            <a href="#/${path.join('/')}"><i class="fas fa-edit"></i></a></td>` + content;
-                }
-            }
-            return `<table class="w-100 h-100 p-0 m-0 border-0" style="white-space: nowrap;"><tr data-rowid="${fTablename}:${rowID}">${content}</tr></table>`;
-        }
-        return DB.escapeHtml(cellContent);
-    }
-    renderCell(row, col) {
-        const t = this;
-        let value = row[col];
-        if (!value)
-            return '&nbsp;';
-        if (t.Columns[col].field_type == 'date') {
-            let tmp = new Date(value);
-            if (!isNaN(tmp.getTime()))
-                value = tmp.toLocaleDateString('de-DE');
-            else
-                value = '';
-            return value;
-        }
-        else if (t.Columns[col].field_type == 'time') {
-            if (t.options.smallestTimeUnitMins) {
-                let timeArr = value.split(':');
-                timeArr.pop();
-                value = timeArr.join(':');
-                return value;
-            }
-        }
-        else if (t.Columns[col].field_type == 'datetime') {
-            let tmp = new Date(value);
-            if (!isNaN(tmp.getTime())) {
-                value = tmp.toLocaleString('de-DE');
-                if (t.options.smallestTimeUnitMins) {
-                    const timeArr = value.split(':');
-                    timeArr.pop();
-                    value = timeArr.join(':');
-                }
-            }
-            else
-                value = '';
-            return value;
-        }
-        else if (t.Columns[col].field_type == 'rawhtml') {
-            return value;
-        }
-        else if (t.Columns[col].field_type == 'number') {
-            const number = parseInt(value);
-            return number.toString();
-        }
-        else if (t.Columns[col].field_type == 'float') {
-            const number = parseFloat(value);
-            return number.toLocaleString('de-DE');
-        }
-        else if (t.Columns[col].field_type == 'switch' || t.Columns[col].field_type == 'checkbox') {
-            return parseInt(value) !== 0 ? '<i class="fa fa-check text-success "></i>' : '<i class="fa fa-times text-danger"></i>';
-        }
-        else if (t.Columns[col].field_type == 'state') {
-            const RowID = row[t.getPrimaryColname()];
-            const SB = new StateButton(value, RowID, col);
-            SB.setTable(t);
-            SB.setReadOnly(t.ReadOnly || t.SM.isExitNode(value));
-            SB.setCallbackStateChange(resp => {
-                t.loadRows(() => { t.renderContent(); });
-            });
-            const tmpID = DB.getID();
-            setTimeout(() => {
-                const el = document.getElementById(tmpID);
-                if (el) {
-                    document.getElementById(tmpID).innerHTML = '';
-                    document.getElementById(tmpID).appendChild(SB.getElement());
-                }
-            }, 10);
-            return `<div id="${tmpID}"></div>`;
-        }
-        else if (col == 'name' && t.getTablename() == 'state') {
-            const SB = new StateButton(row['state_id']);
-            SB.setName(value);
-            return SB.getElement().outerHTML;
-        }
-        else if ((col == 'state_id_FROM' || col == 'state_id_TO') && t.getTablename() == 'state_rules') {
-            const SB = new StateButton(value['state_id']);
-            SB.setName(value['name']);
-            return SB.getElement().outerHTML;
-        }
-        const isHTML = t.Columns[col].is_virtual || t.Columns[col].field_type == 'htmleditor';
-        value = t.formatCell(col, value, isHTML, row[t.getPrimaryColname()]);
-        return value;
-    }
-    htmlHeaders(colnames) {
-        let t = this;
-        let th = '';
-        if (t.options.showControlColumn) {
-            th = `<th class="controllcoulm"></th>`;
-            if (t.TableType !== TableType.obj && t.selType === SelectType.NoSelect) {
-                const cols = [];
-                colnames.map(col => {
-                    if (t.Columns[col].field_type == 'foreignkey')
-                        cols.push(col);
-                });
-                const colM = cols[1];
-                const objTable2 = t.Columns[colM].foreignKey.table;
-                th = `<th class="controllcoulm">
-          <a href="${location.hash + '/' + t.getTablename() + '/create/' + objTable2 + '/create'}"><i class="fa fa-plus text-success"></i></a>
-          <a href="${location.hash + '/' + t.getTablename() + '/create'}" class="ml-2"><i class="fa fa-link text-success"></i></a>
-        </th>`;
-            }
-            else if (t.TableType === TableType.obj && t.selType !== SelectType.NoSelect) {
-                if (t.selectedRows.length > 0 && !t.isExpanded) {
-                    th = `<th class="controllcoulm">
-            <a href="javascript:void(0);" class="resetTableFilter">
-              <i class="fas fa-chevron-down"></i>
-            </a>
-          </th>`;
-                }
-                else {
-                    const createBtn = `<a href="${location.hash + '/' + t.getTablename()}/create"><i class="fa fa-plus text-success"></i></a>`;
-                    th = `<th class="controllcoulm">${t.ReadOnly ? '' : createBtn}</th>`;
-                }
-            }
-        }
-        for (const colname of colnames) {
-            if (t.Columns[colname].show_in_grid) {
-                const ordercol = t.getSortColname();
-                const orderdir = t.getSortDir();
-                th += `<th data-colname="${colname}" ${(['state_id', 'state_id_FROM', 'state_id_TO'].indexOf(colname) >= 0) ? 'style="max-width:80px;width:80px;" ' : ''}class="border-0 p-0 align-middle datatbl_header${colname == ordercol ? ' sorted' : ''}">` +
-                    '<div class="float-left pl-1 pb-1">' + t.Columns[colname].column_alias + '</div>' +
-                    '<div class="float-right pr-3">' + (colname == ordercol ?
-                    '&nbsp;' + (orderdir == SortOrder.ASC ? '<i class="fa fa-sort-up"></i>' : (orderdir == SortOrder.DESC ? '<i class="fa fa-sort-down"></i>' : '')) + '' : '') +
-                    '</div>';
-                if (t.Columns[colname].field_type == 'foreignkey') {
-                    let cols = {};
-                    try {
-                        cols = JSON.parse(t.Columns[colname].foreignKey.col_subst);
-                    }
-                    catch (error) {
-                        cols[t.Columns[colname].foreignKey.col_subst] = 1;
-                    }
-                    const colsnames = Object.keys(cols);
-                    if (colsnames.length > 1) {
-                        let subheaders = '';
-                        let tmpTable = new Table(t.Columns[colname].foreignKey.table);
-                        const split = (100 * (1 / colsnames.length)).toFixed(0);
-                        for (const c of colsnames) {
-                            const tmpAlias = tmpTable.Columns[c].column_alias;
-                            subheaders += '<td class="border-0 align-middle" style="width: ' + split + '%">' + tmpAlias + '</td>';
-                        }
-                        ;
-                        th += `<table class="w-100 border-0"><tr>${subheaders}</tr></table>`;
-                    }
-                }
-                th += '<div class="clearfix"></div>';
-                th += '</th>';
-            }
-        }
-        return th;
-    }
-    getContent() {
-        let t = this;
-        let tds = '';
-        const pcname = t.getPrimaryColname();
-        function compare(a, b) {
-            a = parseInt(t.Columns[a].col_order);
-            b = parseInt(t.Columns[b].col_order);
-            return a < b ? -1 : (a > b ? 1 : 0);
-        }
-        const sortedColumnNames = Object.keys(t.Columns).sort(compare);
-        const ths = t.htmlHeaders(sortedColumnNames);
-        t.Rows.forEach(row => {
-            const RowID = row[pcname];
-            let data_string = '';
-            let isSelected = false;
-            if (t.selectedRows.length > 0) {
-                isSelected = t.selectedRows.filter(el => { return el[pcname] == RowID; }).length > 0;
-            }
-            if (t.options.showControlColumn) {
-                const path = location.hash.split('/');
-                const loc = (path.length === 2) ? '#' : path.join('/');
-                data_string = `<td class="controllcoulm">
-          ${(t.selType !== SelectType.NoSelect ? (isSelected ? '<i class="modRow fa fa-check-square text-success"></i>' : '<i class="modRow far fa-square text-secondary"></i>') : (!t.ReadOnly ? (t.TableType === TableType.obj ? `<a href="${loc}/${t.getTablename()}/${RowID}"><i class="fas fa-edit"></i></a>` : `<a href="${loc}/${t.getTablename()}/${RowID}"><i class="fas fa-link"></i></a>`) : ''))}
-        </td>`;
-            }
-            sortedColumnNames.forEach(col => {
-                if (t.Columns[col].show_in_grid) {
-                    data_string += '<td ' + (t.Columns[col].field_type === 'foreignkey' ? ' class="p-0 m-0 h-100"' : '') + '>' +
-                        t.renderCell(row, col) +
-                        '</td>';
-                }
-            });
-            if (t.options.showControlColumn) {
-                tds += `<tr class="${(isSelected ? ' table-info' : (row['gridclass'] ? row['gridclass'] : 'gridrow'))}" data-rowid="${t.getTablename() + ':' + row[pcname]}">${data_string}</tr>`;
-            }
-            else {
-                if (t.ReadOnly) {
-                    tds += '<tr data-rowid="' + t.getTablename() + ':' + row[pcname] + '">' + data_string + '</tr>';
-                }
-                else {
-                    tds += '<tr class="editFullRow modRow" data-rowid="' + t.getTablename() + ':' + row[pcname] + '">' + data_string + '</tr>';
-                }
-            }
-        });
-        return `<div class="tbl_content" id="${t.GUID}">
-      ${(t.Rows && t.Rows.length > 0) ?
-            `<div class="tablewrapper border table-responsive-md">
-        <table class="table table-striped table-hover m-0 table-sm datatbl">
-          <thead>
-            <tr>${ths}</tr>
-          </thead>
-          <tbody>
-            ${tds}
-          </tbody>
-        </table>
-      </div>` : (t.getSearch() != '' ? gText[setLang].noFinds : '')}
-    </div>`;
-    }
-    getCreateButton() {
+    onSelectionChanged(callback) { this.callbackSelectionChanged = callback; }
+    onCreatedElement(callback) { this.callbackCreatedElement = callback; }
+    onSelectElement(callback) { this.callbackSelectElement = callback; }
+    onUnselectElement(callback) { this.callbackUnselectElement = callback; }
+    getCreateButton(table = null) {
+        const self = this;
+        if (!table)
+            table = self;
         const createBtnElement = document.createElement('a');
         createBtnElement.classList.add('tbl_createbtn');
-        createBtnElement.setAttribute('href', `#/${this.getTablename()}/create`);
-        createBtnElement.innerText = this.TableType !== 'obj' ? gText[setLang].Relate : gText[setLang].Create;
-        createBtnElement.classList.add('btn', 'btn-success', 'mr-1', 'mb-1');
+        createBtnElement.setAttribute('href', `javascript:void(0);`);
+        createBtnElement.innerText = '+ ' + table.getTableAlias();
+        createBtnElement.classList.add('btn', 'btn-success', 'mr-1');
+        createBtnElement.addEventListener('click', () => {
+            const createForm = new Form(table);
+            createForm.setNewOriginTable(self);
+            self.DOMContainer.replaceWith(createForm.getForm());
+            createForm.focusFirst();
+        });
         return createBtnElement;
     }
     getWorkflowButton() {
@@ -903,7 +639,7 @@ class Table extends RawTable {
         createBtnElement.classList.add('tbl_workflowbtn');
         createBtnElement.setAttribute('href', `#/${this.getTablename()}/workflow`);
         createBtnElement.innerText = gText[setLang].Workflow;
-        createBtnElement.classList.add('btn', 'btn-info', 'mr-1', 'mb-1');
+        createBtnElement.classList.add('btn', 'btn-info', 'mr-1');
         return createBtnElement;
     }
     getSearchBar() {
@@ -912,12 +648,11 @@ class Table extends RawTable {
         searchBarElement.setAttribute('type', "text");
         searchBarElement.setAttribute('placeholder', gText[setLang].Search);
         searchBarElement.classList.add('tbl_searchbar');
-        searchBarElement.classList.add('form-control', 'd-inline-block', 'w-50', 'w-lg-25', 'mr-1', 'mb-1');
+        searchBarElement.classList.add('form-control', 'd-inline-block', 'w-50', 'w-lg-25', 'mr-1');
         const dHandler = DB.debounce(250, () => {
             t.setSearch(searchBarElement.value);
             t.loadRows(() => {
-                t.renderContent();
-                t.renderFooter();
+                t.reRenderRows();
             });
         });
         searchBarElement.addEventListener("input", dHandler);
@@ -940,137 +675,259 @@ class Table extends RawTable {
         const footerElement = document.createElement('div');
         footerElement.classList.add('tbl_footer');
         if (!t.Rows || t.Rows.length <= 0)
-            return footerElement.outerHTML;
+            return footerElement;
         if ((t.selType !== SelectType.NoSelect) && !t.isExpanded)
-            return footerElement.outerHTML;
+            return footerElement;
         if ((t.TableType == TableType.t1_1 || t.TableType == TableType.tn_1) && t.getNrOfRows() === 1)
-            return footerElement.outerHTML;
-        const PaginationButtons = t.getPaginationButtons();
-        let pgntn = '';
-        if (PaginationButtons.length > 1) {
-            PaginationButtons.forEach(btnIndex => {
-                if (t.PageIndex == t.PageIndex + btnIndex)
-                    pgntn += `<li class="page-item active"><span class="page-link">${t.PageIndex + 1 + btnIndex}</span></li>`;
-                else
-                    pgntn += `<li class="page-item"><a href="${window.location}" class="page-link" data-pageindex="${t.PageIndex + btnIndex}">${t.PageIndex + 1 + btnIndex}</a></li>`;
+            return footerElement;
+        const pageButtons = t.getPaginationButtons();
+        if (pageButtons.length > 1) {
+            const paginationElement = document.createElement('nav');
+            paginationElement.classList.add('float-right');
+            const btnList = document.createElement('ul');
+            btnList.classList.add('pagination', 'pagination-sm', 'm-0', 'my-1');
+            paginationElement.appendChild(btnList);
+            pageButtons.forEach(btnIndex => {
+                const actPage = t.PageIndex + btnIndex;
+                const btn = document.createElement('li');
+                btn.classList.add('page-item');
+                if (t.PageIndex === actPage)
+                    btn.classList.add('active');
+                const pageLinkEl = document.createElement('a');
+                pageLinkEl.setAttribute('href', 'javascript:void(0);');
+                pageLinkEl.innerText = `${actPage + 1}`;
+                pageLinkEl.addEventListener('click', () => {
+                    t.PageIndex = actPage;
+                    t.loadRows(() => { t.renderHTML(); });
+                });
+                pageLinkEl.classList.add('page-link');
+                btn.appendChild(pageLinkEl);
+                btnList.appendChild(btn);
+            });
+            footerElement.appendChild(paginationElement);
+            const statusTextElem = t.getStatusText();
+            footerElement.appendChild(statusTextElem);
+        }
+        const clearing = document.createElement('div');
+        clearing.setAttribute('style', 'clear:both;');
+        footerElement.appendChild(clearing);
+        return footerElement;
+    }
+    getHeader() {
+        const self = this;
+        const header = document.createElement('div');
+        header.setAttribute('class', 'tbl_header mb-1');
+        if (this.selectedRows.length > 0 && !this.isExpanded)
+            return header;
+        if (this.options.showSearch) {
+            const searchBar = this.getSearchBar();
+            header.appendChild(searchBar);
+            searchBar.focus();
+        }
+        if (!this.ReadOnly && this.options.showCreateButton) {
+            header.appendChild(self.getCreateButton(self));
+        }
+        if (this.SM && this.options.showWorkflowButton) {
+            header.appendChild(this.getWorkflowButton());
+        }
+        const subtypes = (this.getTablename() == 'partner') ? ['person', 'organization'] : null;
+        if (subtypes) {
+            subtypes.map(subtype => {
+                const tmpTable = new Table(subtype);
+                const tmpCreateBtn = this.getCreateButton(tmpTable);
+                header.appendChild(tmpCreateBtn);
             });
         }
-        return `<div class="tbl_footer">
-        ${PaginationButtons.length === 1 ? '' : this.getStatusText().outerHTML}
-        <!-- Pagination -->
-        <nav class="float-right"><ul class="pagination pagination-sm m-0 my-1">${pgntn}</ul></nav>
-        <div style="clear:both;"></div>
-    </div>`;
+        return header;
     }
-    async renderContent() {
-        let els = null;
-        const t = this;
-        const output = await t.getContent();
-        const tableEl = document.getElementById(t.GUID);
-        tableEl.innerHTML = output;
-        els = tableEl.getElementsByClassName('datatbl_header');
-        if (els) {
-            for (const el of els) {
-                el.addEventListener('click', e => {
-                    e.preventDefault();
-                    const colname = el.getAttribute('data-colname');
-                    t.toggleSort(colname);
-                });
-            }
-        }
-        els = tableEl.getElementsByClassName('resetTableFilter');
-        if (els) {
-            for (const el of els) {
-                el.addEventListener('click', e => {
-                    e.preventDefault();
-                    t.isExpanded = true;
-                    t.resetFilter();
-                    t.loadRows(() => {
-                        t.renderContent();
-                        t.renderFooter();
-                    });
-                });
-            }
-        }
-        els = tableEl.getElementsByClassName('modRow');
-        if (els) {
-            for (const el of els) {
-                el.addEventListener('click', e => {
-                    e.preventDefault();
-                    const RowData = el.parentNode.parentNode.getAttribute('data-rowid').split(':');
-                    const Tablename = RowData[0];
-                    const ID = RowData[1];
-                    if (t.getTablename() !== Tablename) {
-                        const tmpTable = new Table(Tablename);
-                        tmpTable.loadRow(ID, Row => {
-                            tmpTable.setRows([Row]);
-                            tmpTable.modifyRow(ID);
-                        });
+    getTable() {
+        const self = this;
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('tbl_content');
+        wrapper.classList.add('table-responsive-md');
+        const tbl = document.createElement('table');
+        tbl.classList.add('datatbl');
+        tbl.classList.add('table', 'table-striped', 'table-hover', 'table-sm', 'm-0', 'border');
+        wrapper.appendChild(tbl);
+        const allowedCols = Object.keys(self.Columns).filter(col => self.Columns[col].show_in_grid);
+        const sortedCols = allowedCols.sort((a, b) => Math.sign(self.Columns[a].col_order - self.Columns[b].col_order));
+        const expandedCols = [];
+        const aliasCols = [];
+        sortedCols.map(col => {
+            if (self.Columns[col].field_type === "foreignkey") {
+                const fkTable = new Table(self.Columns[col].foreignKey.table);
+                Object.keys(fkTable.Columns).map(fcol => {
+                    if (!fkTable.Columns[fcol].is_virtual && fkTable.Columns[fcol].show_in_grid) {
+                        expandedCols.push('`' + self.getTablename() + '/' + col + '`.' + fcol);
+                        aliasCols.push(fkTable.Columns[fcol].column_alias);
                     }
-                    else
-                        t.modifyRow(ID);
                 });
             }
+            else {
+                expandedCols.push('`' + self.getTablename() + '`.' + col);
+                aliasCols.push(self.Columns[col].column_alias);
+            }
+        });
+        if (!self.ReadOnly) {
+            expandedCols.unshift("edit");
+            aliasCols.unshift("Edit");
         }
-    }
-    renderFooter() {
-        const t = this;
-        const parent = document.getElementById(t.GUID).parentElement;
-        parent.getElementsByClassName('tbl_footer')[0].outerHTML = t.getFooter();
-        const btns = parent.getElementsByClassName('page-link');
-        for (const btn of btns) {
-            btn.addEventListener('click', e => {
-                e.preventDefault();
-                t.setPageIndex(parseInt(btn.innerHTML) - 1);
+        if (self.selType === SelectType.Single || self.selType === SelectType.Multi) {
+            expandedCols.unshift("select");
+            aliasCols.unshift("Select");
+        }
+        const thead = document.createElement('thead');
+        const tr = document.createElement('tr');
+        thead.appendChild(tr);
+        tbl.appendChild(thead);
+        expandedCols.map((colname, index) => {
+            const th = document.createElement('th');
+            if (colname === "select")
+                th.classList.add('col-sel');
+            else if (colname === "edit")
+                th.classList.add('col-edit');
+            else {
+                let sortHTML = '<i class="fas fa-sort mr-1 text-muted"></i>';
+                if (colname === self.getSortColname()) {
+                    if (self.getSortDir() === 'DESC')
+                        sortHTML = '<i class="fas fa-sort-down mr-1"></i>';
+                    if (self.getSortDir() === 'ASC')
+                        sortHTML = '<i class="fas fa-sort-up mr-1"></i>';
+                }
+                th.innerHTML = sortHTML + aliasCols[index];
+                th.addEventListener('click', () => {
+                    let newSortDir = "ASC";
+                    if (colname === self.getSortColname()) {
+                        newSortDir = (self.getSortDir() === "ASC") ? "DESC" : null;
+                    }
+                    if (newSortDir)
+                        self.setSort(`${colname},${newSortDir}`);
+                    else
+                        self.setSort('');
+                    self.loadRows(() => { self.reRenderRows(); });
+                });
+            }
+            tr.appendChild(th);
+        });
+        const tbody = document.createElement('tbody');
+        tbl.appendChild(tbody);
+        self.Rows.map(row => {
+            const tr = document.createElement('tr');
+            expandedCols.map(colname => {
+                const td = document.createElement('td');
+                if (colname === "select") {
+                    td.classList.add('col-sel');
+                    const cb = document.createElement('input');
+                    cb.setAttribute('type', 'checkbox');
+                    const pcol = self.getPrimaryColname();
+                    const inSel = self.selectedRows.filter(r => r[pcol] === row[pcol]);
+                    if (inSel.length > 0)
+                        cb.setAttribute('checked', 'checked');
+                    cb.addEventListener('click', () => {
+                        if (cb.checked) {
+                            if (self.selType === SelectType.Single)
+                                self.selectedRows = [];
+                            self.selectedRows.push(row);
+                            self.callbackSelectElement(row);
+                        }
+                        else {
+                            const pcol = self.getPrimaryColname();
+                            self.selectedRows = self.selectedRows.filter(r => r[pcol] !== row[pcol]);
+                            self.callbackUnselectElement(row);
+                        }
+                        self.callbackSelectionChanged(self.selectedRows);
+                    });
+                    td.appendChild(cb);
+                }
+                else if (colname === "edit") {
+                    td.classList.add('col-sel');
+                    const editBtn = document.createElement('a');
+                    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+                    editBtn.setAttribute('href', 'javascript:void(0);');
+                    editBtn.addEventListener('click', () => {
+                        const modForm = new Form(self, row);
+                        wrapper.parentElement.replaceWith(modForm.getForm());
+                    });
+                    td.appendChild(editBtn);
+                }
+                else {
+                    const colnames = colname.split('.');
+                    if (colnames.length > 1) {
+                        const path = colnames[0].slice(1, -1);
+                        const sub = path.split('/').pop();
+                        if (sub === self.getTablename())
+                            td.innerText = td.innerText = row[colnames[1]];
+                        else
+                            td.innerText = row[sub][colnames[1]];
+                    }
+                }
+                tr.appendChild(td);
             });
-        }
+            tbody.appendChild(tr);
+        });
+        return wrapper;
     }
-    async renderHTML(DOM_ID) {
-        const content = await this.getContent() + this.getFooter();
-        const el = document.getElementById(DOM_ID);
-        if (el) {
-            if (this.actRowCount === 0) {
-                el.innerHTML = this.ReadOnly ? gText[setLang].noEntries :
-                    `<a class="btn btn-success" href="${location.hash}/create">${gText[setLang].Create}</a>`;
-                return;
-            }
-            el.innerHTML = content;
-            await this.renderContent();
-            await this.renderFooter();
-            if (this.SM && this.options.showWorkflowButton) {
-                el.prepend(this.getWorkflowButton());
-            }
-            if (!this.ReadOnly && this.options.showCreateButton) {
-                el.prepend(this.getCreateButton());
-            }
-            if (this.options.showSearch) {
-                const searchBar = this.getSearchBar();
-                el.prepend(searchBar);
-                searchBar.focus();
-            }
+    renderHTML(container = null) {
+        const self = this;
+        container = container || self.DOMContainer;
+        if (this.actRowCount === 0) {
+            const createForm = new Form(self);
+            container.replaceWith(createForm.getForm());
+            createForm.focusFirst();
+            return;
         }
+        const comp = document.createElement('div');
+        comp.appendChild(self.getHeader());
+        comp.appendChild(self.getTable());
+        comp.appendChild(self.getFooter());
+        self.DOMContainer = comp;
+        container.replaceWith(comp);
+    }
+    reRenderRows() {
+        const self = this;
+        self.DOMContainer.getElementsByClassName('tbl_content')[0].replaceWith(self.getTable());
+        self.DOMContainer.getElementsByClassName('tbl_footer')[0].replaceWith(self.getFooter());
     }
 }
 class Form {
-    constructor(Table, RowID = null, formConfig, Path = null) {
+    constructor(Table, RowData = null, Path = null) {
+        this.showFooter = false;
         this.oTable = Table;
-        this.oRowID = RowID;
-        this._formConfig = formConfig;
-        this._path = Path || Table.getTablename() + '/0';
+        this.oRowData = RowData;
+        this._formConfig = Table.getFormCreate();
+        if (RowData) {
+            this._formConfig = Table.getFormModify(RowData);
+            for (const key of Object.keys(RowData))
+                this._formConfig[key].value = RowData[key];
+        }
+        if (!Path)
+            this.showFooter = true;
+        this._path = Path || Table.getPath();
     }
     put(obj, path, val) {
         path = (typeof path !== 'string') ? path : path.split('/');
         path = path.map(p => !isNaN(p) ? parseInt(p) : p);
         const length = path.length;
         let current = obj;
+        let lastkey = null;
         path.forEach((key, index) => {
             if (index === length - 1) {
                 current[key] = val;
             }
             else {
-                if (!current[key])
-                    current[key] = [{}];
+                if (!current[key]) {
+                    if (Number.isInteger(key) && key > 0) {
+                        const tmp = new Table(lastkey);
+                        const newObj = {};
+                        newObj[tmp.getPrimaryColname()] = key;
+                        current[0] = DB.mergeDeep(current[0], newObj);
+                        key = 0;
+                    }
+                    else
+                        current[key] = [{}];
+                }
                 current = current[key];
+                lastkey = key;
             }
         });
     }
@@ -1082,6 +939,7 @@ class Form {
         return Elem;
     }
     getInput(key, el) {
+        const self = this;
         let v = el.value || '';
         if (el.value === 0)
             v = 0;
@@ -1090,6 +948,8 @@ class Form {
         if (el.mode_form == 'hi')
             return null;
         if (el.mode_form == 'ro' && el.is_primary)
+            return null;
+        if (!this.oRowData && el.field_type === 'state')
             return null;
         let crElem = null;
         const path = this._path + '/' + key;
@@ -1192,7 +1052,9 @@ class Form {
             crElem = wrapper;
         }
         else if (el.field_type == 'foreignkey') {
-            const selType = parseInt(el.seltype) || SelectType.Single;
+            let selType = parseInt(el.seltype);
+            if (!selType && selType !== 0)
+                selType = SelectType.Single;
             const tmpTable = new Table(el.fk_table, selType);
             const randID = DB.getID();
             tmpTable.ReadOnly = (el.mode_form == 'ro');
@@ -1209,38 +1071,41 @@ class Form {
             else
                 v = "";
             if (el.show_in_form) {
+                const rowData = this.oRowData;
                 if (el.customfilter) {
-                    const rd = this._formConfig;
-                    const colnames = Object.keys(rd);
-                    for (const colname of colnames) {
+                    for (const colname of Object.keys(rowData)) {
                         const pattern = '%' + colname + '%';
                         if (el.customfilter.indexOf(pattern) >= 0) {
-                            const firstCol = Object.keys(rd[colname].value)[0];
-                            el.customfilter = el.customfilter.replace(new RegExp(pattern, "g"), rd[colname].value[firstCol]);
+                            const replaceWith = rowData[colname];
+                            el.customfilter = el.customfilter.replace(new RegExp(pattern, "g"), replaceWith);
                         }
                     }
                     el.customfilter = decodeURI(el.customfilter);
                     tmpTable.setFilter(el.customfilter);
+                    if (el.revfk_col) {
+                        const fCreate = tmpTable.getFormCreateSettingsDiff();
+                        fCreate[el.revfk_col] = {};
+                        fCreate[el.revfk_col]['value'] = {};
+                        fCreate[el.revfk_col].value[el.revfk_col] = rowData[el.revfk_col];
+                    }
                 }
-                tmpTable.setCallbackSelectionChanged(selRows => {
+                tmpTable.onSelectionChanged(selRows => {
                     let value = "";
-                    if (selType === SelectType.Single) {
+                    if (selType === SelectType.Single)
                         value = tmpTable.getSelectedIDs()[0];
-                    }
-                    else if (selType === SelectType.Multi) {
+                    else if (selType === SelectType.Multi)
                         value = JSON.stringify(tmpTable.getSelectedIDs());
-                    }
                     if (!value)
                         value = "";
-                    document.getElementById(randID).parentElement.getElementsByClassName('rwInput')[0].setAttribute('value', value);
+                    crElem.parentElement.getElementsByClassName('rwInput')[0].setAttribute('value', value);
                 });
                 tmpTable.loadRows(rows => {
                     if (rows["count"] == 0) {
-                        document.getElementById(randID).outerHTML = tmpTable.ReadOnly ? gText[setLang].noEntries :
-                            `<a class="btn btn-sm btn-success" href="${location.hash}/${tmpTable.getTablename()}/create">${gText[setLang].Create}</a>`;
+                        const createForm = new Form(tmpTable);
+                        document.getElementById(randID).replaceWith(createForm.getForm());
                     }
                     else {
-                        tmpTable.renderHTML(randID);
+                        tmpTable.renderHTML(document.getElementById(randID));
                     }
                 });
             }
@@ -1259,49 +1124,62 @@ class Form {
             crElem.appendChild(hiddenInp);
         }
         else if (el.field_type == 'reversefk') {
-            const tmpGUID = DB.getID();
-            const extTablename = el.revfk_tablename;
-            const extTableColSelf = el.revfk_colname1;
-            const hideCol = '`' + extTablename + '`.' + extTableColSelf;
-            const extTable = new Table(extTablename);
-            const tablenameM = extTable.Columns[el.revfk_colname2].foreignKey.table || null;
-            extTable.ReadOnly = (el.mode_form == 'ro');
-            const isCreate = !this.oRowID;
-            if (isCreate) {
-                if (tablenameM) {
-                    const tblM = new Table(tablenameM);
-                    const formConfig = tblM.getFormCreate();
-                    const extForm = new Form(extTable, null, formConfig, this._path + '/' + tablenameM + '/0');
-                    setTimeout(() => {
-                        document.getElementById(tmpGUID).innerHTML = extForm.getHTML();
-                    }, 10);
-                }
+            const isCreate = !this.oRowData;
+            const nmTable = new Table(el.revfk_tablename);
+            const hideCol = '`' + el.revfk_tablename + '`.' + el.revfk_colname1;
+            const mTablename = nmTable.Columns[el.revfk_colname2].foreignKey.table;
+            const mTable = new Table(mTablename, SelectType.Multi);
+            nmTable.ReadOnly = (el.mode_form == 'ro');
+            nmTable.setColumnFilter(hideCol, 'null');
+            if (!isCreate) {
+                const tmpGUID = DB.getID();
+                const RowID = this.oRowData[this.oTable.getPrimaryColname()];
+                const myCol = nmTable.Columns[el.revfk_colname1].foreignKey.col_id;
+                const fCreate = nmTable.getFormCreateSettingsDiff();
+                fCreate[el.revfk_colname1] = { show_in_form: false };
+                fCreate[el.revfk_colname1]['value'] = {};
+                fCreate[el.revfk_colname1].value[myCol] = RowID;
+                nmTable.setColumnFilter(hideCol, RowID);
+                nmTable.resetLimit();
+                nmTable.Columns[el.revfk_colname1].show_in_grid = false;
+                nmTable.loadRows(r => {
+                    const container = document.getElementById(tmpGUID);
+                    const allRels = nmTable.getRows();
+                    const connRels = allRels.filter(rel => rel.state_id == nmTable.getConfig().stateIdSel);
+                    const mObjs = allRels.map(row => row[el.revfk_colname2]);
+                    const mObjsSel = connRels.map(row => row[el.revfk_colname2]);
+                    mTable.setPath(this.oTable.getTablename() + '/' + RowID + '/' + mTable.getTablename() + '/0');
+                    mTable.setRows(mObjs);
+                    mTable.setSelectedRows(mObjsSel);
+                    mTable.renderHTML(container);
+                    mTable.onCreatedElement(resp => {
+                        const newForm = new Form(self.oTable, self.oRowData);
+                        self.formElement.replaceWith(newForm.getForm());
+                    });
+                    mTable.onSelectElement(row => {
+                        const mID = row[mTable.getPrimaryColname()];
+                        const data = { table: nmTable.getTablename(), row: {} };
+                        data.row[el.revfk_colname1] = RowID;
+                        data.row[el.revfk_colname2] = mID;
+                        DB.request('create', data, resp => {
+                            const newForm = new Form(self.oTable, self.oRowData);
+                            self.formElement.replaceWith(newForm.getForm());
+                        });
+                    });
+                });
+                crElem = document.createElement('div');
+                crElem.setAttribute('class', 'row');
+                crElem.setAttribute('id', tmpGUID);
+                crElem.innerText = gText[setLang].Loading;
             }
             else {
-                if (extTable.isRelationTable()) {
-                    extTable.Columns[extTableColSelf].show_in_grid = false;
-                    extTable.options.showControlColumn = !(el.mode_form == 'ro');
-                    extTable.setColumnFilter(hideCol, this.oRowID.toString());
+                if (!nmTable.ReadOnly) {
+                    const frm = new Form(mTable, null, this._path + '/' + mTablename + '/0');
+                    crElem = frm.getForm();
                 }
-                extTable.loadRows(rows => {
-                    if (!extTable.ReadOnly && rows['count'] == 0) {
-                        const pathOrigin = location.hash + '/' + extTable.getTablename();
-                        document.getElementById(tmpGUID).innerHTML =
-                            `<a class="btn btn-default text-success" href="${pathOrigin}/create/${tablenameM}/create"><i class="fa fa-plus"></i> ${gText[setLang].Create}</a>
-              <a class="btn btn-default text-success" href="${pathOrigin}/create"><i class="fa fa-link"></i> ${gText[setLang].Relate}</a>`;
-                    }
-                    else if (extTable.ReadOnly && rows['count'] == 0) {
-                        document.getElementById(tmpGUID).innerHTML = `<span class="text-muted">${gText[setLang].noEntries}</span>`;
-                    }
-                    else
-                        extTable.renderHTML(tmpGUID);
-                });
+                else {
+                }
             }
-            crElem = document.createElement('div');
-            if (isCreate)
-                crElem.setAttribute('class', 'row');
-            crElem.setAttribute('id', tmpGUID);
-            crElem.innerHTML = '<span class="spinner-grow spinner-grow-sm"></span> ' + gText[setLang].Loading;
         }
         else if (el.field_type == 'htmleditor') {
             crElem = document.createElement('div');
@@ -1325,9 +1203,18 @@ class Form {
             crElem.innerHTML = el.value;
         }
         else if (el.field_type == 'state') {
-            const SB = new StateButton(el.value, this.oRowID, key);
+            const self = this;
+            const SB = new StateButton(this.oRowData, key);
             SB.setTable(this.oTable);
-            SB.setCallbackStateChange(resp => { document.location.reload(); });
+            SB.setForm(self);
+            SB.setOnSuccess(() => {
+                const pcol = self.oTable.getPrimaryColname();
+                const RowID = self.oRowData[pcol];
+                self.oTable.loadRow(RowID, row => {
+                    const newForm = new Form(self.oTable, row);
+                    self.formElement.replaceWith(newForm.getForm());
+                });
+            });
             crElem = SB.getElement();
         }
         else if (el.field_type == 'enum') {
@@ -1383,17 +1270,82 @@ class Form {
             resWrapper.appendChild(crElem);
         return resWrapper;
     }
-    getValues(formElement = null) {
+    getFooter() {
+        const self = this;
+        const tblCreate = this.oTable;
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('col-12', 'my-4');
+        if (!self.oRowData) {
+            const createBtn = document.createElement('a');
+            createBtn.innerText = gText[setLang].Create;
+            createBtn.setAttribute('href', 'javascript:void(0);');
+            createBtn.classList.add('btn', 'btn-success', 'mr-1', 'mb-1');
+            createBtn.addEventListener('click', () => {
+                const data = self.getValues();
+                tblCreate.importData(data, resp => {
+                    resp.forEach(answer => {
+                        let counter = 0;
+                        const messages = [];
+                        answer.forEach(msg => {
+                            if (msg.errormsg || msg.show_message)
+                                messages.push({ type: counter, text: msg.errormsg || msg.message });
+                            counter++;
+                        });
+                        messages.reverse();
+                        let btnTo = null;
+                        if (answer[0]['_entry-point-state']) {
+                            const targetStateID = answer[0]['_entry-point-state'].id;
+                            btnTo = new StateButton({ state_id: targetStateID });
+                            btnTo.setTable(tblCreate);
+                            btnTo.setReadOnly(true);
+                        }
+                        for (const msg of messages) {
+                            let title = '';
+                            if (msg.type == 0)
+                                title += gText[setLang].Create + (btnTo ? ' &rarr;' + btnTo.getElement().outerHTML : '');
+                            document.getElementById('myModalTitle').innerHTML = title;
+                            document.getElementById('myModalContent').innerHTML = msg.text;
+                            $('#myModal').modal({});
+                        }
+                    });
+                    self.oTable.loadRows(() => {
+                        self.oTable.renderHTML(self.formElement);
+                    });
+                });
+            });
+            wrapper.appendChild(createBtn);
+        }
+        const cancelBtn = document.createElement('a');
+        cancelBtn.innerText = gText[setLang].Cancel;
+        cancelBtn.setAttribute('href', 'javascript:void(0);');
+        cancelBtn.classList.add('btn', 'btn-light', 'mr-1', 'mb-1');
+        cancelBtn.addEventListener('click', () => {
+            self.oTable.loadRows(() => {
+                self.oTable.renderHTML(self.formElement);
+            });
+        });
+        wrapper.appendChild(cancelBtn);
+        return wrapper;
+    }
+    focusFirst() {
+        const elem = document.querySelectorAll('.rwInput:not([type="hidden"]):not([disabled])')[0];
+        if (elem)
+            elem.focus();
+    }
+    getValues(onlyLastLayer = false) {
         const result = {};
         let res = {};
-        if (!formElement)
-            formElement = document;
-        const rwInputs = formElement.getElementsByClassName('rwInput');
+        const rwInputs = this.formElement.getElementsByClassName('rwInput');
         for (const element of rwInputs) {
             const inp = element;
             const key = inp.getAttribute('name');
             const type = inp.getAttribute('type');
-            const path = inp.getAttribute('data-path');
+            let path = inp.getAttribute('data-path');
+            if (onlyLastLayer) {
+                const parts = path.split('/');
+                if (parts.length > 3)
+                    path = parts.slice(parts.length - 3).join('/');
+            }
             let value = undefined;
             if (type == 'checkbox')
                 value = inp.matches(':checked') ? 1 : 0;
@@ -1421,13 +1373,16 @@ class Form {
         }
         return res;
     }
-    getHTML() {
+    setNewOriginTable(newTable) {
+        this.oTable = newTable;
+    }
+    getForm() {
         const self = this;
         const conf = this._formConfig;
         const sortedKeys = Object.keys(conf).sort((x, y) => {
             const a = parseInt(conf[x].orderF || 0);
             const b = parseInt(conf[y].orderF || 0);
-            return a < b ? -1 : (a > b ? 1 : 0);
+            return Math.sign(a - b);
         });
         const frm = document.createElement('form');
         frm.classList.add('formcontent', 'row');
@@ -1436,6 +1391,9 @@ class Form {
             if (inp)
                 frm.appendChild(inp);
         });
-        return frm.outerHTML;
+        this.formElement = frm;
+        if (self.showFooter)
+            frm.appendChild(self.getFooter());
+        return frm;
     }
 }

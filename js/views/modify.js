@@ -18,23 +18,15 @@ export default (props) => {
 
   // Texts
   const textLoading = gText[setLang].Loading;
-  const textCancel = gText[setLang].Cancel;
-  const textSave = gText[setLang].Save;
+   const textSave = gText[setLang].Save;
 
   //===================================================================
   // Generate HTML from Form
   //===================================================================
   function focusFirstElement() {
-    // FOCUS First Element
-    const elem = document.getElementsByClassName('rwInput')[0];
-    if (elem) {
-      const elemLen = elem.value.length;
-      if (elem.selectionStart || elem.selectionStart == '0') {
-        elem.selectionStart = elemLen;
-        elem.selectionEnd = elemLen;
-        elem.focus();
-      }
-    }
+    //--- FOCUS First Element - TODO: foreignKey + HTMLEditor
+    const elem = document.querySelectorAll('.rwInput:not([type="hidden"]):not([disabled])')[0];
+    if (elem) elem.focus();
   }
   function setFormState(allDisabled, btn, textCommand) {
     // Btn
@@ -65,15 +57,7 @@ export default (props) => {
         document.getElementById('formedit').innerHTML = `<div><p style="color: red;">Error: Row not found!</p></div>`;
         return;
       }
-      let diffObject = {};
-      let newObj = {};
-      let defaultFormObj = t.getDefaultForm(); // TODO: This is private!
-      //--- Overwrite and merge the differences from diffObject
-      if (t.SM) {
-        actStateID = row['state_id'];
-        diffObject = t.SM.getFormDiffByState(actStateID);
-      }
-      newObj = DB.mergeDeep({}, defaultFormObj, diffObject);
+      const newObj = t.getFormModify(row);
 
       if (t.getTableType() !== 'obj') {
         //=======================================
@@ -102,8 +86,8 @@ export default (props) => {
               count++;
             }
             //- Generate a Modify-Form
-            newForm = new Form(t, actRowID, newObj);
-            document.getElementById('formedit').innerHTML = newForm.getHTML();
+            newForm = new Form(t, row, newObj);
+            document.getElementById('formedit').replaceWith(newForm.getForm());
             x();
           });
         }
@@ -112,8 +96,8 @@ export default (props) => {
           for (const key of Object.keys(row))
             newObj[key].value = row[key];
           //- Generate a Modify-Form
-          newForm = new Form(t, actRowID, newObj);
-          document.getElementById('formedit').innerHTML = newForm.getHTML();
+          newForm = new Form(t, row, newObj);
+          document.getElementById('formedit').replaceWith(newForm.getForm());
           x();
         }
       }
@@ -125,8 +109,8 @@ export default (props) => {
         for (const key of Object.keys(row))
           newObj[key].value = row[key];
         //- Generate a Modify-Form
-        newForm = new Form(t, actRowID, newObj);
-        document.getElementById('formedit').innerHTML = newForm.getHTML();
+        newForm = new Form(t, row, newObj);
+        document.getElementById('formedit').replaceWith(newForm.getForm());
         x();
         focusFirstElement();
       }
@@ -140,8 +124,9 @@ export default (props) => {
         el = document.getElementById('nextstates'); if (el) el.innerHTML = "";
         // Set current State if has one
         if (t.SM) {
-          const SB = new StateButton(actStateID);
+          const SB = new StateButton(row);
           SB.setTable(t);
+          SB.setReadOnly(true);
           document.getElementById('actualState').innerHTML = SB.getElement().outerHTML;
         }
 
@@ -274,7 +259,6 @@ return `<div>
       '<span class="mr-3" id="saveBtns"></span><span class="mr-3" id="nextstates"></span>' :
       `<a class="btn btn-primary btnSave" href="#/${actTable}">${textSave}</a><span class="mx-3 text-muted"></span>`
     }
-    <span><a class="btn btn-light" href="${backPath}">${textCancel}</a></span>
   </div>
 </div>`;
 }
