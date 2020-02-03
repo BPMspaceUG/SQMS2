@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Exam Set Wizard | SQMS2</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <style>
         section p:first-of-type {color:gray; border-bottom: 1px solid whitesmoke;}
     </style>
@@ -14,36 +13,21 @@
 <body>
     <div class="container py-3">
         <h4 class="my-4 text-primary">Exam Set Wizard 🧙</h4>
-
         <!-- 1. SYLLABUS -->
         <section id="step1" class="card p-3 mb-3">
             <p>1. Select a Syllabus</p>
             <div id="tblSyllabus"></div>
             <button id="btnStep1" class="btn btn-success w-25 mt-5 disabled">Continue</button>
         </section>
-
         <!-- 2. QUESTIONS -->
         <section id="step2" style="display:none;" class="card p-3 mb-3">
             <div class="row">
                 <p class="col-7">2. Select Questions from Syllabus</p>
-                <div id="qstats1" class="col-3">Selected: 0 / 30</div>
-                <!--
-                <div class="col-2">
-                    <select class="custom-select custom-select-sm" onchange="changeQuestLang(this)">
-                        <option value="EN" selected>english</option>
-                        <option value="DE">deutsch</option>
-                        <option value="IT">italiano</option>
-                        <option value="FR">français</option>
-                        <option value="SP">español</option>
-                    </select>
-                </div>
-                -->
+                <div id="qstats1" class="col-3">Selected: <span id="questionsSelected"></span> / <span id="questionsTotal"></span></div>
             </div>
-            <!--<select class="custom-select" id="lstQuestion" multiple></select>-->
             <div id="tblQuestions"></div>
-            <button id="btnStep2" class="btn btn-success w-25 mt-5">Continue</button>
+            <button id="btnStep2" class="btn btn-success w-25 mt-5 disabled">Continue</button>
         </section>
-
         <!-- 3. ANSWERS -->
         <section id="step3" style="display:none;" class="card p-3 mb-3">
             <div class="row">
@@ -58,7 +42,6 @@
                     </select>
                 </div>
             </div>
-
             <p>❔ <span id="txtActQuest">1</span> / <span id="txtCntQuest">2</span> : <span id="txtQuestion" class="font-weight-bold text-primary"></span></p>
             <div class="mb-3" id="lstAnswers"></div>
             <table class="table table-borderless table-sm">
@@ -78,17 +61,13 @@
             <hr>
             <button id="btnStep3next" class="btn btn-success w-25 mx-auto">&rarr; Next</button>
         </section>
-
         <!-- 4. FINISHED -->
         <section id="step4" style="display:none;" class="card p-3 mb-3 text-center">
             <p>4. Finish</p>
             <h4>Wizard complete!</h4>
             <a href="javascript:void(0);" onclick="window.history.back();" class="btn btn-primary btn-lg">Back</a>
         </section>
-
     </div>
-
-
 
     <!-- JS -->
     <script src="../js/main.js"></script>
@@ -178,8 +157,11 @@
                         lstQuestions.options.showSearch = true;
                         lstQuestions.Columns.state_id.show_in_grid = false;
                         lstQuestions.onSelectionChanged(selRows => {
-                            document.getElementById('qstats1').innerText = `Selected: ${selRows.length} / 30`;
+                            document.getElementById('questionsSelected').innerText = selRows.length;
                             gQuestions = selRows;
+                            if (selRows.length === Syllabus.sqms2_Exam_QuestionsTotal) {
+                                document.getElementById('btnStep2').classList.remove('disabled');
+                            }
                         });
                         lstQuestions.loadRows(rows => {
                             lstQuestions.renderHTML(document.getElementById('tblQuestions'));
@@ -247,7 +229,10 @@
 
         //==============================================> EVENTS / STEPS
         // FIRST [1] -> [2] Create ExamVersion Sets
-        document.getElementById('btnStep1').addEventListener('click', () => {            
+        const btn1 = document.getElementById('btnStep1');
+        btn1.addEventListener('click', e => {
+            if (btn1.classList.contains('disabled')) return;
+            if (!Syllabus) return;      
             // Params -> 1 Sample, 2 Live
             const live = [1,1,0];
             const version = 1;
@@ -275,7 +260,6 @@
                 }})}
                 ).then(r=>r.json()).then(res => {
                     res = res[0];
-                    console.log(res);
                     // append to Array
                     gSets.push({id: res[1].element_id, name: setname});
                 });
@@ -283,13 +267,16 @@
             // next Step
             document.getElementById('step1').style.display = "none";
             document.getElementById('step2').style.display = "block";
+            document.getElementById('questionsTotal').innerText = Syllabus.sqms2_Exam_QuestionsTotal;
             // Prepare Step 2
             // 1. Read out all syllabuschapters from syllabus
             loadQuestions(Syllabus.sqms2_Syllabus_id);
         });
         //=======================================================================
         // SECOND [2] -> [3] Create Sets-Questions
-        document.getElementById('btnStep2').addEventListener('click', () => {
+        const btn2 = document.getElementById('btnStep2');
+        btn2.addEventListener('click', e => {
+            if (btn2.classList.contains('disabled')) return;
             // Create for each Set for each Question...
             gSets.forEach(set => {
                 gQuestions.forEach(q => {
@@ -323,7 +310,6 @@
                 tbl.appendChild(rowSet);
             }
             loadQuestion();
-
             document.getElementById('step2').style.display = "none";
             document.getElementById('step3').style.display = "block";
         });        

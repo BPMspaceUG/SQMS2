@@ -904,11 +904,15 @@ class Table {
                     const pcol = self.getPrimaryColname();
                     const inSel = self.selectedRows.filter(r => r[pcol] === row[pcol]);
                     if (inSel.length > 0)
-                        cb.setAttribute('checked', 'checked');
-                    cb.addEventListener('click', () => {
+                        cb.checked = true;
+                    cb.addEventListener('click', e => {
                         if (cb.checked) {
-                            if (self.selType === SelectType.Single)
+                            const allCheckboxes = cb.parentElement.parentElement.parentElement.querySelectorAll('input[type=checkbox]');
+                            if (self.selType === SelectType.Single) {
+                                allCheckboxes.forEach(checkB => checkB.checked = false);
                                 self.selectedRows = [];
+                            }
+                            cb.checked = true;
                             self.selectedRows.push(row);
                             self.callbackSelectElement(row);
                         }
@@ -1231,6 +1235,7 @@ class Form {
                     const mObjs = allRels.map(row => row[el.revfk_colname2]);
                     const mObjsSel = connRels.map(row => row[el.revfk_colname2]);
                     mTable.setPath(this.oTable.getTablename() + '/' + RowID + '/' + mTable.getTablename() + '/0');
+                    mTable.options.showSearch = false;
                     mTable.setRows(mObjs);
                     mTable.setSelectedRows(mObjsSel);
                     mTable.renderHTML(container);

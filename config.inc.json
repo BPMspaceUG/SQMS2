@@ -158,6 +158,26 @@
                 "mode_form": "rw",
                 "field_type": "number"
             },
+            "sqms2_passmark_paperbased": {
+                "column_alias": "Passmark Paperbased",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "show_in_form": true,
+                "col_order": 10,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
+            "sqms2_passmark_online": {
+                "column_alias": "Passmark Online",
+                "is_primary": false,
+                "is_virtual": false,
+                "show_in_grid": false,
+                "show_in_form": true,
+                "col_order": 11,
+                "mode_form": "rw",
+                "field_type": "number"
+            },
             "state_id": {
                 "column_alias": "State",
                 "is_primary": false,
@@ -599,6 +619,20 @@
                 "revfk_colname1": "sqms2_ExamSetVersion_id_fk_264577",
                 "revfk_tablename": "sqms2_question_examsetversion",
                 "revfk_colname2": "sqms2_Question_id_fk_615560"
+            },
+            "virtualColxxx": {
+                "field_type": "reversefk",
+                "column_alias": "Topic",
+                "show_in_grid": false,
+                "mode_form": "rw",
+                "col_order": 3,
+                "is_virtual": true,
+                "is_primary": false,
+                "virtual_select": "",
+                "revfk_tablename": "sqms2_topic_question",
+                "revfk_colname2": "sqms2_Topic_id_fk_824630",
+                "revfk_colname1": "sqms2_Question_id_fk_664094",
+                "show_in_form": true
             }
         },
         "table_icon": "\u003Ci class=\u0022fa fa-question\u0022\u003E\u003C\/i\u003E"
@@ -944,7 +978,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Syllabus_id_fk_783731",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": true,
         "stateIdSel": "7495",
         "columns": {
@@ -1438,7 +1472,7 @@
                 }
             },
             "state_id": {
-                "column_alias": "State id",
+                "column_alias": "State",
                 "is_primary": false,
                 "is_virtual": false,
                 "show_in_grid": true,
@@ -1703,7 +1737,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "state_id,DESC",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
