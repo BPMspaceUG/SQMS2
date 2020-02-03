@@ -69,10 +69,10 @@
         "stateIdSel": 0,
         "columns": {
             "sqms2_Syllabus_id": {
-                "column_alias": "Syllabus id",
+                "column_alias": "SyllabusID",
                 "is_primary": true,
                 "is_virtual": false,
-                "show_in_grid": false,
+                "show_in_grid": true,
                 "show_in_form": false,
                 "col_order": 1,
                 "mode_form": "ro",
@@ -125,7 +125,7 @@
                 "show_in_grid": true,
                 "show_in_form": false,
                 "col_order": 6,
-                "mode_form": "hi",
+                "mode_form": "ro",
                 "field_type": "number"
             },
             "sqms2_ExamVersionPlannedDuration": {
@@ -944,7 +944,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Syllabus_id_fk_783731",
-        "in_menu": false,
+        "in_menu": true,
         "se_active": true,
         "stateIdSel": "7495",
         "columns": {
@@ -1328,7 +1328,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "sqms2_Text_id,DESC",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": true,
         "stateIdSel": 0,
         "columns": {
@@ -1659,7 +1659,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "id,DESC",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {
@@ -1782,7 +1782,7 @@
         "mode": "rw",
         "stdfilter": "",
         "stdsorting": "state_rules_id,DESC",
-        "in_menu": true,
+        "in_menu": false,
         "se_active": false,
         "stateIdSel": 0,
         "columns": {

@@ -30,7 +30,7 @@ const gText = {
         noFinds: 'Sorry, nothing found.'
     },
     de: {
-        Create: 'Hinzufügen',
+        Create: 'Erstellen',
         Cancel: 'Abbrechen',
         Search: 'Suchen...',
         Loading: 'Laden...',
@@ -346,6 +346,46 @@ class StateButton {
             btn.innerText = this._name;
             return btn;
         };
+        this.handleTrans = (targetStateID) => {
+            const self = this;
+            const data = { table: self._table.getTablename(), row: self.rowData };
+            if (self.modForm) {
+                const newVals = self.modForm.getValues(true);
+                const newRowDataFromForm = newVals[self._table.getTablename()][0];
+                data.row = DB.mergeDeep({}, data.row, newRowDataFromForm);
+            }
+            data.row[self.stateCol] = targetStateID;
+            DB.request('makeTransition', data, resp => {
+                if (resp.length === 3)
+                    self.onSuccess();
+                let counter = 0;
+                const messages = [];
+                resp.forEach(msg => {
+                    if (msg.show_message)
+                        messages.push({ type: counter, text: msg.message });
+                    counter++;
+                });
+                messages.reverse();
+                const btnFrom = new StateButton({ state_id: self._stateID });
+                const btnTo = new StateButton({ state_id: targetStateID });
+                btnFrom.setTable(self._table);
+                btnFrom.setReadOnly(true);
+                btnTo.setTable(self._table);
+                btnTo.setReadOnly(true);
+                for (const msg of messages) {
+                    let title = '';
+                    if (msg.type == 0)
+                        title += `${btnFrom.getElement().outerHTML} &rarr;`;
+                    if (msg.type == 1)
+                        title += `${btnFrom.getElement().outerHTML} &rarr; ${btnTo.getElement().outerHTML}`;
+                    if (msg.type == 2)
+                        title += `&rarr; ${btnTo.getElement().outerHTML}`;
+                    document.getElementById('myModalTitle').innerHTML = title;
+                    document.getElementById('myModalContent').innerHTML = msg.text;
+                    $('#myModal').modal({});
+                }
+            });
+        };
         this.getElement = () => {
             const self = this;
             if (!this._editable) {
@@ -375,60 +415,44 @@ class StateButton {
                         nextbtn.innerText = state.name;
                         nextbtn.addEventListener("click", e => {
                             e.preventDefault();
-                            btn.innerText = 'Loading...';
-                            btn.classList.remove('dropdown-toggle');
-                            const data = {
-                                table: self._table.getTablename(),
-                                row: self.rowData
-                            };
-                            if (self.modForm) {
-                                const newVals = self.modForm.getValues(true);
-                                const newRowDataFromForm = newVals[self._table.getTablename()][0];
-                                data.row = DB.mergeDeep({}, data.row, newRowDataFromForm);
-                            }
-                            data.row[self.stateCol] = state.id;
-                            DB.request('makeTransition', data, resp => {
-                                btn.innerText = self._name;
-                                btn.classList.add('dropdown-toggle');
-                                if (resp.length === 3) {
-                                    self.onSuccess();
-                                }
-                                let counter = 0;
-                                const messages = [];
-                                resp.forEach(msg => {
-                                    if (msg.show_message)
-                                        messages.push({ type: counter, text: msg.message });
-                                    counter++;
-                                });
-                                messages.reverse();
-                                const btnFrom = new StateButton({ state_id: self._stateID });
-                                const btnTo = new StateButton({ state_id: state.id });
-                                btnFrom.setTable(self._table);
-                                btnFrom.setReadOnly(true);
-                                btnTo.setTable(self._table);
-                                btnTo.setReadOnly(true);
-                                for (const msg of messages) {
-                                    let title = '';
-                                    if (msg.type == 0)
-                                        title += `${btnFrom.getElement().outerHTML} &rarr;`;
-                                    if (msg.type == 1)
-                                        title += `${btnFrom.getElement().outerHTML} &rarr; ${btnTo.getElement().outerHTML}`;
-                                    if (msg.type == 2)
-                                        title += `&rarr; ${btnTo.getElement().outerHTML}`;
-                                    document.getElementById('myModalTitle').innerHTML = title;
-                                    document.getElementById('myModalContent').innerHTML = msg.text;
-                                    $('#myModal').modal({});
-                                }
-                            });
+                            self.handleTrans(state.id);
                             list.classList.remove('show');
                         });
                         list.appendChild(nextbtn);
                     });
                 }
+                else
+                    return self.getButton();
                 wrapper.appendChild(btn);
                 wrapper.appendChild(list);
                 return wrapper;
             }
+        };
+        this.getTransButtons = () => {
+            const self = this;
+            const wrapper = document.createElement('span');
+            const nextstates = this._table.SM.getNextStates(this._stateID);
+            if (nextstates.length > 0) {
+                nextstates.map(state => {
+                    const nextbtn = document.createElement('a');
+                    nextbtn.classList.add('btn', 'mr-1');
+                    nextbtn.setAttribute('href', 'javascript:void(0)');
+                    if (state.id === self._stateID) {
+                        nextbtn.innerText = gText[setLang].Save;
+                        nextbtn.classList.add('btnState', 'btnEnabled', 'btn-primary');
+                    }
+                    else {
+                        nextbtn.innerText = state.name;
+                        nextbtn.classList.add('btnState', 'btnEnabled', 'state' + state.id);
+                    }
+                    nextbtn.addEventListener("click", e => {
+                        e.preventDefault();
+                        self.handleTrans(state.id);
+                    });
+                    wrapper.appendChild(nextbtn);
+                });
+            }
+            return wrapper;
         };
         this._stateID = rowData[statecol];
         this._editable = true;
@@ -451,7 +475,6 @@ class Table {
         this.TableType = TableType.obj;
         this.selectedRows = [];
         this.options = {
-            maxCellLength: 50,
             smallestTimeUnitMins: true,
             showControlColumn: true,
             showWorkflowButton: false,
@@ -497,10 +520,8 @@ class Table {
             self.callbackCreatedElement(r);
         });
     }
-    updateRow(RowID, new_data, callback) {
-        const data = new_data;
-        data[this.PriColname] = RowID;
-        DB.request('update', { table: this.tablename, row: new_data }, r => { callback(r); });
+    updateRow(RowData, callback) {
+        DB.request('update', { table: this.tablename, row: RowData }, r => { callback(r); });
     }
     loadRow(RowID, callback) {
         const data = { table: this.tablename, limit: 1, filter: '{"=":["' + this.PriColname + '", ' + RowID + ']}' };
@@ -719,16 +740,12 @@ class Table {
         header.setAttribute('class', 'tbl_header mb-1');
         if (this.selectedRows.length > 0 && !this.isExpanded)
             return header;
+        if (this.ReadOnly && this.actRowCount < self.PageLimit)
+            return header;
         if (this.options.showSearch) {
             const searchBar = this.getSearchBar();
             header.appendChild(searchBar);
             searchBar.focus();
-        }
-        if (!this.ReadOnly && this.options.showCreateButton) {
-            header.appendChild(self.getCreateButton(self));
-        }
-        if (this.SM && this.options.showWorkflowButton) {
-            header.appendChild(this.getWorkflowButton());
         }
         const subtypes = (this.getTablename() == 'partner') ? ['person', 'organization'] : null;
         if (subtypes) {
@@ -738,7 +755,55 @@ class Table {
                 header.appendChild(tmpCreateBtn);
             });
         }
+        else {
+            if (!this.ReadOnly && this.options.showCreateButton) {
+                header.appendChild(self.getCreateButton(self));
+            }
+        }
+        if (this.SM && this.options.showWorkflowButton) {
+            header.appendChild(this.getWorkflowButton());
+        }
         return header;
+    }
+    renderGridElement(options, rowID, value) {
+        const element = document.createElement('span');
+        element.classList.add('datacell');
+        if (options.column.field_type === 'switch' || options.column.field_type === 'checkbox') {
+            element.innerHTML = value == "1" ? '<i class="fas fa-check text-success"></i>' : '<i class="fas fa-times text-danger"></i>';
+        }
+        else if (options.column.field_type === 'state') {
+            const self = this;
+            const rowData = {};
+            rowData[options.table.getPrimaryColname()] = rowID;
+            rowData[options.name] = value;
+            const SB = new StateButton(rowData, options.name);
+            SB.setTable(options.table);
+            SB.setOnSuccess(() => {
+                self.loadRows(() => {
+                    self.reRenderRows();
+                });
+            });
+            element.appendChild(SB.getElement());
+        }
+        else if (options.column.field_type === 'rawhtml' || options.column.field_type === 'htmleditor') {
+            element.innerHTML = value;
+        }
+        else if (options.column.field_type === 'date') {
+            if (value) {
+                const prts = value.split('-');
+                if (setLang == 'en')
+                    element.innerText = prts[1] + '/' + prts[2] + '/' + prts[0];
+                if (setLang == 'de')
+                    element.innerText = prts[2] + '.' + prts[1] + '.' + prts[0];
+            }
+        }
+        else if (options.column.field_type === 'time') {
+        }
+        else if (options.column.field_type === 'datetime') {
+        }
+        else
+            element.innerText = value;
+        return element;
     }
     getTable() {
         const self = this;
@@ -753,6 +818,7 @@ class Table {
         const sortedCols = allowedCols.sort((a, b) => Math.sign(self.Columns[a].col_order - self.Columns[b].col_order));
         const expandedCols = [];
         const aliasCols = [];
+        const optionCols = [];
         sortedCols.map(col => {
             if (self.Columns[col].field_type === "foreignkey") {
                 const fkTable = new Table(self.Columns[col].foreignKey.table);
@@ -760,21 +826,25 @@ class Table {
                     if (!fkTable.Columns[fcol].is_virtual && fkTable.Columns[fcol].show_in_grid) {
                         expandedCols.push('`' + self.getTablename() + '/' + col + '`.' + fcol);
                         aliasCols.push(fkTable.Columns[fcol].column_alias);
+                        optionCols.push({ name: fcol, table: fkTable, column: fkTable.Columns[fcol] });
                     }
                 });
             }
             else {
                 expandedCols.push('`' + self.getTablename() + '`.' + col);
                 aliasCols.push(self.Columns[col].column_alias);
+                optionCols.push({ name: col, table: self, column: self.Columns[col] });
             }
         });
         if (!self.ReadOnly) {
             expandedCols.unshift("edit");
             aliasCols.unshift("Edit");
+            optionCols.unshift("Edit");
         }
         if (self.selType === SelectType.Single || self.selType === SelectType.Multi) {
             expandedCols.unshift("select");
             aliasCols.unshift("Select");
+            optionCols.unshift("Select");
         }
         const thead = document.createElement('thead');
         const tr = document.createElement('tr');
@@ -782,8 +852,20 @@ class Table {
         tbl.appendChild(thead);
         expandedCols.map((colname, index) => {
             const th = document.createElement('th');
-            if (colname === "select")
+            if (colname === "select") {
                 th.classList.add('col-sel');
+                if (self.selectedRows.length > 0) {
+                    th.innerHTML = '<i class="fas fa-unlink text-primary"></i>';
+                    th.addEventListener('click', () => {
+                        self.resetFilter();
+                        self.setSelectedRows([]);
+                        self.isExpanded = true;
+                        self.loadRows(() => {
+                            self.renderHTML();
+                        });
+                    });
+                }
+            }
             else if (colname === "edit")
                 th.classList.add('col-edit');
             else {
@@ -813,7 +895,7 @@ class Table {
         tbl.appendChild(tbody);
         self.Rows.map(row => {
             const tr = document.createElement('tr');
-            expandedCols.map(colname => {
+            expandedCols.map((colname, index) => {
                 const td = document.createElement('td');
                 if (colname === "select") {
                     td.classList.add('col-sel');
@@ -855,10 +937,9 @@ class Table {
                     if (colnames.length > 1) {
                         const path = colnames[0].slice(1, -1);
                         const sub = path.split('/').pop();
-                        if (sub === self.getTablename())
-                            td.innerText = td.innerText = row[colnames[1]];
-                        else
-                            td.innerText = row[sub][colnames[1]];
+                        const value = (sub === self.getTablename()) ? row[colnames[1]] : row[sub][colnames[1]];
+                        const rowID = (sub === self.getTablename()) ? row[self.getPrimaryColname()] : row[sub][optionCols[index].table.getPrimaryColname()];
+                        td.appendChild(self.renderGridElement(optionCols[index], rowID, value));
                     }
                 }
                 tr.appendChild(td);
@@ -1071,23 +1152,24 @@ class Form {
             else
                 v = "";
             if (el.show_in_form) {
-                const rowData = this.oRowData;
                 if (el.customfilter) {
-                    for (const colname of Object.keys(rowData)) {
-                        const pattern = '%' + colname + '%';
-                        if (el.customfilter.indexOf(pattern) >= 0) {
-                            const replaceWith = rowData[colname];
-                            el.customfilter = el.customfilter.replace(new RegExp(pattern, "g"), replaceWith);
+                    if (self.oRowData) {
+                        for (const colname of Object.keys(self.oRowData)) {
+                            const pattern = '%' + colname + '%';
+                            if (el.customfilter.indexOf(pattern) >= 0) {
+                                const replaceWith = self.oRowData[colname];
+                                el.customfilter = el.customfilter.replace(new RegExp(pattern, "g"), replaceWith);
+                            }
+                        }
+                        if (el.revfk_col) {
+                            const fCreate = tmpTable.getFormCreateSettingsDiff();
+                            fCreate[el.revfk_col] = {};
+                            fCreate[el.revfk_col]['value'] = {};
+                            fCreate[el.revfk_col].value[el.revfk_col] = self.oRowData[el.revfk_col];
                         }
                     }
                     el.customfilter = decodeURI(el.customfilter);
                     tmpTable.setFilter(el.customfilter);
-                    if (el.revfk_col) {
-                        const fCreate = tmpTable.getFormCreateSettingsDiff();
-                        fCreate[el.revfk_col] = {};
-                        fCreate[el.revfk_col]['value'] = {};
-                        fCreate[el.revfk_col].value[el.revfk_col] = rowData[el.revfk_col];
-                    }
                 }
                 tmpTable.onSelectionChanged(selRows => {
                     let value = "";
@@ -1166,6 +1248,20 @@ class Form {
                             self.formElement.replaceWith(newForm.getForm());
                         });
                     });
+                    mTable.onUnselectElement(row => {
+                        const links = connRels.filter(rels => {
+                            if (rels[el.revfk_colname2][mTable.getPrimaryColname()] === row[mTable.getPrimaryColname()])
+                                return rels;
+                        });
+                        const primID = links[0][nmTable.getPrimaryColname()];
+                        const data = { table: nmTable.getTablename(), row: {} };
+                        data.row[nmTable.getPrimaryColname()] = primID;
+                        data.row['state_id'] = parseInt(nmTable.getConfig().stateIdSel) + 1;
+                        DB.request('makeTransition', data, resp => {
+                            const newForm = new Form(self.oTable, self.oRowData);
+                            self.formElement.replaceWith(newForm.getForm());
+                        });
+                    });
                 });
                 crElem = document.createElement('div');
                 crElem.setAttribute('class', 'row');
@@ -1183,6 +1279,7 @@ class Form {
         }
         else if (el.field_type == 'htmleditor') {
             crElem = document.createElement('div');
+            crElem.classList.add('htmleditor');
             const newID = DB.getID();
             const cont = this.getNewFormElement('div', key, path);
             cont.setAttribute('id', newID);
@@ -1207,6 +1304,7 @@ class Form {
             const SB = new StateButton(this.oRowData, key);
             SB.setTable(this.oTable);
             SB.setForm(self);
+            SB.setReadOnly(el.mode_form === 'ro');
             SB.setOnSuccess(() => {
                 const pcol = self.oTable.getPrimaryColname();
                 const RowID = self.oRowData[pcol];
@@ -1280,9 +1378,11 @@ class Form {
             createBtn.innerText = gText[setLang].Create;
             createBtn.setAttribute('href', 'javascript:void(0);');
             createBtn.classList.add('btn', 'btn-success', 'mr-1', 'mb-1');
+            wrapper.appendChild(createBtn);
             createBtn.addEventListener('click', () => {
                 const data = self.getValues();
                 tblCreate.importData(data, resp => {
+                    let importWasSuccessful = true;
                     resp.forEach(answer => {
                         let counter = 0;
                         const messages = [];
@@ -1302,33 +1402,67 @@ class Form {
                         for (const msg of messages) {
                             let title = '';
                             if (msg.type == 0)
-                                title += gText[setLang].Create + (btnTo ? ' &rarr;' + btnTo.getElement().outerHTML : '');
+                                title += gText[setLang].Create + (btnTo ? ' &rarr; ' + btnTo.getElement().outerHTML : '');
                             document.getElementById('myModalTitle').innerHTML = title;
                             document.getElementById('myModalContent').innerHTML = msg.text;
                             $('#myModal').modal({});
                         }
+                        if (answer.length != 2)
+                            importWasSuccessful = false;
                     });
-                    self.oTable.loadRows(() => {
-                        self.oTable.renderHTML(self.formElement);
-                    });
+                    if (importWasSuccessful) {
+                        self.oTable.loadRows(() => { self.oTable.renderHTML(self.formElement); });
+                    }
                 });
             });
-            wrapper.appendChild(createBtn);
+        }
+        else {
+            if (self.oTable.hasStateMachine()) {
+                const S = new StateButton(self.oRowData);
+                S.setTable(self.oTable);
+                S.setForm(self);
+                const nextStateBtns = S.getTransButtons();
+                S.setOnSuccess(() => {
+                    const RowID = self.oRowData[self.oTable.getPrimaryColname()];
+                    self.oTable.loadRow(RowID, row => {
+                        const F = new Form(self.oTable, row);
+                        self.formElement.replaceWith(F.getForm());
+                    });
+                });
+                wrapper.appendChild(nextStateBtns);
+            }
+            else {
+                const saveBtn = document.createElement('a');
+                saveBtn.innerText = gText[setLang].Save;
+                saveBtn.setAttribute('href', 'javascript:void(0);');
+                saveBtn.classList.add('btn', 'btn-primary', 'mr-1', 'mb-1');
+                wrapper.appendChild(saveBtn);
+                saveBtn.addEventListener('click', () => {
+                    const data = self.getValues(true);
+                    const newRowData = data[self.oTable.getTablename()][0];
+                    newRowData[self.oTable.getPrimaryColname()] = self.oRowData[self.oTable.getPrimaryColname()];
+                    self.oTable.updateRow(newRowData, () => {
+                        self.oTable.loadRows(() => {
+                            self.oTable.renderHTML(self.formElement);
+                        });
+                    });
+                });
+            }
         }
         const cancelBtn = document.createElement('a');
         cancelBtn.innerText = gText[setLang].Cancel;
         cancelBtn.setAttribute('href', 'javascript:void(0);');
         cancelBtn.classList.add('btn', 'btn-light', 'mr-1', 'mb-1');
+        wrapper.appendChild(cancelBtn);
         cancelBtn.addEventListener('click', () => {
             self.oTable.loadRows(() => {
                 self.oTable.renderHTML(self.formElement);
             });
         });
-        wrapper.appendChild(cancelBtn);
         return wrapper;
     }
     focusFirst() {
-        const elem = document.querySelectorAll('.rwInput:not([type="hidden"]):not([disabled])')[0];
+        const elem = this.formElement.querySelectorAll('.rwInput:not([type="hidden"]):not([disabled])')[0];
         if (elem)
             elem.focus();
     }
@@ -1385,7 +1519,9 @@ class Form {
             return Math.sign(a - b);
         });
         const frm = document.createElement('form');
-        frm.classList.add('formcontent', 'row');
+        frm.classList.add('formcontent', 'row', 'pt-3');
+        if (!self.oRowData)
+            frm.setAttribute('style', 'background-color: #eefdec;');
         sortedKeys.forEach(key => {
             const inp = self.getInput(key, conf[key]);
             if (inp)
