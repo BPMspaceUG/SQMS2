@@ -1,0 +1,640 @@
+{
+	"ExamVersion_ID": "",
+	"ExamVersion_EXTERNAL_ID": 99008,
+	"ExamVersion_Name": "SCRUM Fnd - de - SampleSet 1 -  v1",
+	"ExamVersion_CustomName": "SQMS CUSTOM SCRUM FND DE SAMPLE SET",
+	"ExamVersion_Set": 1,
+	"ExamVersion_Version": 1,
+	"ExamVersion_SampleSet": true,
+	"ExamVersion_QuestionNumber": "",
+	"Exam_SuccessPercent": 65,
+	"ExamVersion_maxPoints": 30,
+	"ExamVersion_passingPoints": 20,
+	"ExamVersion_Language": "de",
+	"ExamVersion_Type": "static",
+	"BulkEvent_ID": "",
+	"BulkEvent_EXTERNAL_ID": "",
+	"Participant_ID": "",
+	"Participant_EXTERNAL_ID": "",
+	"Participant_MatriculationNumber": "",
+	"Participant_Firstname": "",
+	"Participant_Lastname": "",
+	"Participant_Expert": false,
+	"ExamEvent_ID": "",
+	"ExamEvent_EXTERNAL_ID": "",
+	"ExamEvent_GenerationTime": "",
+	"ExamEvent_ReadyTime": "",
+	"ExamEvent_StartTime": "",
+	"ExamEvent_EndTime": "",
+	"ExamVersion_plannedDuration": "",
+	"Exam_Started": false,
+	"Exam_Finished": false,
+	"Exam_FMR": "",
+	"Exam_Id": "0000000700-00001-00001-1",
+	"Exam_Uid": "",
+	"Exam_QuestionIndex": 0,
+	"Exam_QuestionTotal": 30,
+	"Exam_AnswerOptions": [],
+	"examQuestions": [
+		{
+			"question_id": "0000000397",
+			"question_text": "Welcher der folgenden Aspekte ist ein zentraler Wert des agilen Manifests?",
+			"answers": [
+				{
+					"answer_id": "0000001371",
+					"answer_text": "Der Mensch steht im Mittelpunkt der Softwareentwicklung."
+				},
+				{
+					"answer_id": "0000001372",
+					"answer_text": "Zusammenarbeit mit dem Kunden und Kundenzufriedenheit."
+				},
+				{
+					"answer_id": "0000001373",
+					"answer_text": "Striktes Einhalten von Projektpl&amp;auml;nen."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "af7e6375a8fde782ec2e2f00c6649448a156c757914df7268b07947dd3e4501bbdd62ff6a9da4d06a63c87be5957fd54626ea193422e9201e4a41fbe7f8b4a0c"
+		},
+		{
+			"question_id": "0000000399",
+			"question_text": "Welche der folgenden Eigenschaften gilt f&amp;uuml;r ein Produktinkrement in Scrum?",
+			"answers": [
+				{
+					"answer_id": "0000001381",
+					"answer_text": "Es ist getestet."
+				},
+				{
+					"answer_id": "0000001382",
+					"answer_text": "Es ist lauff&amp;auml;hig."
+				},
+				{
+					"answer_id": "0000001384",
+					"answer_text": "Es muss lauff&amp;auml;hig, aber nicht zwangsl&amp;auml;ufig bereits dokumentiert sein."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "2f13c841807eb56289c382c0474c1259a1e08af729cb99c7888257678dd79f23b2d9ff7969c2b9b7305c9b3e17334014f2ec025dae9d102c3a956fcd57e4b642"
+		},
+		{
+			"question_id": "0000000400",
+			"question_text": "Welche der folgenden Aussagen ist &lt;strong&gt;nicht&lt;/strong&gt; korrekt?",
+			"answers": [
+				{
+					"answer_id": "0000001385",
+					"answer_text": "Das Product Backlog enth&amp;auml;lt ausschlie&amp;szlig;lich die Anforderungen an einen Sprint."
+				},
+				{
+					"answer_id": "0000001386",
+					"answer_text": "Der Scrum Master hat die Entscheidungsgewalt &amp;uuml;ber die Anforderungen an das Produkt."
+				},
+				{
+					"answer_id": "0000001388",
+					"answer_text": "Das Sprint Backlog beschreibt eine Teilmenge der Anforderungen an das Produkt."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "1fac4ce39aff8b4bc03185b3556d0750f6ded60fe6af1fb3d1d0c50cdf9861df9c308026a25c75dbbe87900ab3ee55a7fe32948e3ff14f7fce04eb5935d0f04a"
+		},
+		{
+			"question_id": "0000000401",
+			"question_text": "Worauf sollte man achten, wenn man Scrum in einem Unternehmen einf&amp;uuml;hren will?",
+			"answers": [
+				{
+					"answer_id": "0000001389",
+					"answer_text": "&amp;Uuml;bertragung von Kontrolle an das Team."
+				},
+				{
+					"answer_id": "0000001390",
+					"answer_text": "Das Management sollte einen Wandel in der Unternehmensstruktur vertreten."
+				},
+				{
+					"answer_id": "0000001391",
+					"answer_text": "Der Scrum Master stellt das Team zusammen und hat Personalverantwortung f&amp;uuml;r die Teammitglieder."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "5a87bbe19b667c63808de0c79bd73a6c740ee34b38db76dee90146f3e7a90a53eedee06c3acf36f146ab1f3fa243474cba4d98f8a772a6792b2d64663fc5101c"
+		},
+		{
+			"question_id": "0000000404",
+			"question_text": "Was wird in Scrum vom Entwicklungsteam entschieden?",
+			"answers": [
+				{
+					"answer_id": "0000001405",
+					"answer_text": "Welche Anforderungen es f&amp;uuml;r die Umsetzung in einem Sprint plant."
+				},
+				{
+					"answer_id": "0000001406",
+					"answer_text": "Wo und zu welcher Zeit das Daily Scrum stattfinden soll."
+				},
+				{
+					"answer_id": "0000001409",
+					"answer_text": "Welche Arbeitsergebnisse im Sprint Review abgenommen werden."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "b229bd11e93994ffa0ce93cb653e13c2326a7fe47898468bcda73046658ae6324bdf62787baacab0715b328ca841095436c1c13c576efecae955e505fb369efc"
+		},
+		{
+			"question_id": "0000000405",
+			"question_text": "Bis ein Scrum Team optimal und effizient arbeitet, durchl&amp;auml;uft es einen l&amp;auml;ngeren Teamprozess. Dabei gilt:",
+			"answers": [
+				{
+					"answer_id": "0000001410",
+					"answer_text": "Die Auseinandersetzungsphase wird nach Tuckman auch als &quot;Storming&quot; bezeichnet."
+				},
+				{
+					"answer_id": "0000001411",
+					"answer_text": "Nach Tuckman folgt auf die Phase des &quot;Forming&quot; unmittelbar die Phase des &quot;Storming&quot;."
+				},
+				{
+					"answer_id": "0000001412",
+					"answer_text": "Nach Tuckman folgt auf die Phase des &quot;Forming&quot; unmittelbar die Phase des &quot;Performing&quot;."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "0b200880bc8f78cc53f01ebddc366699152146d601567a2841e66751c0553022373b19b82b25c0368a4e73ba0c56b54853ecc3c6477195285119fdb0a2c1afcf"
+		},
+		{
+			"question_id": "0000000406",
+			"question_text": "Welche der folgenden Aussagen bez&amp;uuml;glich des Scrum Masters ist korrekt?",
+			"answers": [
+				{
+					"answer_id": "0000001415",
+					"answer_text": "Der Scrum Master tr&amp;auml;gt Verantwortung f&amp;uuml;r den Scrum-Prozess und dessen korrekte Implementierung."
+				},
+				{
+					"answer_id": "0000001416",
+					"answer_text": "Der Scrum Master moderiert Sprint Planning, Sprint Review und Sprint Retrospektive."
+				},
+				{
+					"answer_id": "0000001418",
+					"answer_text": "F&amp;uuml;r ein effizient arbeitendes Team sollte der Scrum Master Autorit&amp;auml;t bez&amp;uuml;glich der Arbeitsorganisation im Team haben."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "b1a854234e3d9d34e8329d178af220d8142b88a634a698f6407098555c416274505742b93b6cc8014c152a8f607fbfffce590e994be3a946d3bc5ba48bf38b15"
+		},
+		{
+			"question_id": "0000000410",
+			"question_text": "Oft ist es sinnvoll, umfangreiche User Stories zu unterteilen (Splitting stories). Hierbei gilt:",
+			"answers": [
+				{
+					"answer_id": "0000001435",
+					"answer_text": "Eine User Story sollte so klein gehalten werden, dass sie in einem Sprint umgesetzt werden kann."
+				},
+				{
+					"answer_id": "0000001436",
+					"answer_text": "Durch die Unterteilungen und die damit verbundene Detailtiefe entstehen pr&amp;auml;zisere Sch&amp;auml;tzungen."
+				},
+				{
+					"answer_id": "0000001437",
+					"answer_text": "Splitting Stories geh&amp;ouml;rt nicht zum Refinement und darf daher keine Kapazit&amp;auml;t des Entwicklungsteams beanspruchen."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "f9b9bc6fdeca486d96f44e11c683d1d2c5ad9713765b54e5ebf90b61b55ebfa536d01a921d0d7cbb0f8b36a375d77d13f87311b1bdfdea87db65d3a4e627dda0"
+		},
+		{
+			"question_id": "0000000411",
+			"question_text": "Die Priorisierung des Product Backlogs durch den Product Owner ist ein wichtiges Mittel, um das Projekt zu steuern. Bei der Priorisierung sollte beachtet werden,...",
+			"answers": [
+				{
+					"answer_id": "0000001440",
+					"answer_text": "...dass die wichtigsten Anforderungen nicht sofort umgesetzt werden."
+				},
+				{
+					"answer_id": "0000001441",
+					"answer_text": "...dass Anforderungen mit einem hohen Risiko und geringen Nutzen als erstes umgesetzt werden sollten."
+				},
+				{
+					"answer_id": "0000001442",
+					"answer_text": "...dass Anforderungen mit einem hohen Risiko und hohen Nutzen m&amp;ouml;glichst fr&amp;uuml;h umgesetzt werden sollten."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "a2513d86e047de055f96994cbc312307eca822b1fb15c607d6327e8bcc2ed8803465a2bbd5ee8e49672cb76b05fb27be90b31f1458d5d092319b9927e5879427"
+		},
+		{
+			"question_id": "0000000412",
+			"question_text": "F&amp;uuml;r die Sprint Planung ist es wichtig, dass Anforderungen gut formuliert werden. Hierbei sollten Anforderungen die INVEST-Eigenschaften erf&amp;uuml;llen. Dabei gilt:",
+			"answers": [
+				{
+					"answer_id": "0000001444",
+					"answer_text": "Das &quot;V&quot; in INVEST besagt, dass der Nutzen der Anforderung klar erkennbar sein sollte (valuable)."
+				},
+				{
+					"answer_id": "0000001445",
+					"answer_text": "Das &quot;N&quot; in INVEST bedeutet verhandelbar (negotiable)."
+				},
+				{
+					"answer_id": "0000001446",
+					"answer_text": "Das &quot;T&quot; in INVEST steht f&amp;uuml;r testbar (testable)."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "0ffb64d3e07e46ccd33f001bae643df12fc8dd2a42b16cfe2b39b681b517b95c858ab648c36abdf311f9b4cd2a424aa1ff8ee7d8d1e0d3b8e1c9f36472a7cef2"
+		},
+		{
+			"question_id": "0000000413",
+			"question_text": "Bei komplexen Systemen kann es sinnvoll sein, ein Produktkonzept zu erstellen. Welche der folgenden Aussagen treffen zu?",
+			"answers": [
+				{
+					"answer_id": "0000001451",
+					"answer_text": "Aus der Produktidee wird zun&amp;auml;chst ein Produktkonzept formuliert, bevor das Product Backlog gef&amp;uuml;llt wird."
+				},
+				{
+					"answer_id": "0000001452",
+					"answer_text": "Ein Produktkonzept wird nur in gro&amp;szlig;en und verteilten Projekten genutzt."
+				},
+				{
+					"answer_id": "0000001453",
+					"answer_text": "Nachdem das Product Backlog initial bef&amp;uuml;llt wurde, sollte man die zentralen Aspekte und Eigenschaften in einem Konzept zusammenfassen."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "255c16bfb779f85b298dd4fd5aa84e23a8c434b4fa2a75483a69adfb5bcda4d70a0e57973c33be0b2dfc282326bfc08a8513138a243f598d358eecc7a43b83eb"
+		},
+		{
+			"question_id": "0000000414",
+			"question_text": "Im Release Management sind die Zusammenh&amp;auml;nge der verschiedenen Planungsebenen wichtig. Welche der folgenden Aussagen ist &lt;strong&gt;falsch&lt;/strong&gt;?",
+			"answers": [
+				{
+					"answer_id": "0000001455",
+					"answer_text": "Ein Release besteht aus mindestens einem Sprint."
+				},
+				{
+					"answer_id": "0000001456",
+					"answer_text": "Ein Task muss in einem Sprint erledigt werden k&amp;ouml;nnen."
+				},
+				{
+					"answer_id": "0000001458",
+					"answer_text": "Bei Projekten, die weniger als 6 Sprints dauern, ben&amp;ouml;tigt man generell keine Release Planung."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "780efc9b4e99fc82820167acfbe6c24e8073411f0142ed67ab4bbf3c0cfb7a508c0a24f650d872a423c13bcd7a4d23e1021d39b28910af3ab9a9912b7efa1845"
+		},
+		{
+			"question_id": "0000000416",
+			"question_text": "Es gibt verschiedene Varianten, die Velocity (Entwicklungsgeschwindigkeit) zu ermitteln. Welche der folgenden Aussagen ist korrekt?",
+			"answers": [
+				{
+					"answer_id": "0000001463",
+					"answer_text": "Wenn vor dem ersten Sprint bereits ein Releaseplan existieren muss, kann die Entwicklungsgeschwindigkeit mit Hilfe des Teams abgesch&amp;auml;tzt werden."
+				},
+				{
+					"answer_id": "0000001464",
+					"answer_text": "Wenn das gleiche Team bereits ein vergleichbares Produkt erstellt hat, kann auf historische Daten zur&amp;uuml;ckgegriffen werden."
+				},
+				{
+					"answer_id": "0000001465",
+					"answer_text": "Die Entwicklungsgeschwindigkeit ist unabh&amp;auml;ngig von der Gr&amp;ouml;&amp;szlig;e des Entwicklungsteams."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "b0333156fd44889d06207ba75af11374d42271155a7dc7bd37324e22895bf44dad96c5bcd94b1a6437c500b013119739af97eface4b12e3ac8118169c3663572"
+		},
+		{
+			"question_id": "0000000417",
+			"question_text": "Im Sprint Planning ist eine genaue Absch&amp;auml;tzung der Aufw&amp;auml;nde wichtig. Welche der folgenden Aussagen ist &lt;strong&gt;falsch&lt;/strong&gt;?",
+			"answers": [
+				{
+					"answer_id": "0000001468",
+					"answer_text": "Die Fibonacci-Reihe ist eine m&amp;ouml;gliche Punktereihe f&amp;uuml;r Planning Poker."
+				},
+				{
+					"answer_id": "0000001469",
+					"answer_text": "Planning Poker ist eine Methode, um Teamentscheidungen herbeizuf&amp;uuml;hren."
+				},
+				{
+					"answer_id": "0000001471",
+					"answer_text": "In Scrum d&amp;uuml;rfen ausschlie&amp;szlig;lich Story Points (Punkte) f&amp;uuml;r die Aufw&amp;auml;nde vergeben werden."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "54fe91107894e41be9ccb7fe73dfd3e1768d6bbdd742ec4d81c57c0cdf90fc55a59ba090a65b405523e42987973f266e558f56a9d8a6a1a6c38ead45a4b5bbb0"
+		},
+		{
+			"question_id": "0000000419",
+			"question_text": "Um den Projektfortschritt besser verfolgen zu k&amp;ouml;nnen, ist es sinnvoll, weitere Metriken zu definieren. Welche der folgenden Metriken k&amp;ouml;nnen sinnvoll sein?&lt;br /&gt;1) Anzahl der Hindernisse&lt;br /&gt;2) Geplanter vs. erreichter Projektstatus&lt;br /&gt;3) Ergebnisse eines einzelnen Teams&lt;br /&gt;4) Velocity (Entwicklungsgeschwindigkeit)",
+			"answers": [
+				{
+					"answer_id": "0000001476",
+					"answer_text": "Alle genannten."
+				},
+				{
+					"answer_id": "0000001477",
+					"answer_text": "Nur 1 und 2."
+				},
+				{
+					"answer_id": "0000001478",
+					"answer_text": "Nur 2 und 4."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "0d4f68be30ce2ac086e74557bae3a911cd516b6596f2aca504c304e9898927560e2ee9bc116ef092f3f2924e00a5ec49e44eae06bd6339d65965a05f4aa45391"
+		},
+		{
+			"question_id": "0000000420",
+			"question_text": "Welche der folgenden Aussagen bez&amp;uuml;glich Sprints ist korrekt?",
+			"answers": [
+				{
+					"answer_id": "0000001480",
+					"answer_text": "Ein Sprint dauert maximal 30 Tage."
+				},
+				{
+					"answer_id": "0000001481",
+					"answer_text": "Jeder Sprint erzeugt ein eigenes, unabh&amp;auml;ngiges Produktinkrement."
+				},
+				{
+					"answer_id": "0000001485",
+					"answer_text": "Der Product Owner darf die Anforderungen w&amp;auml;hrend eines Sprints nicht &amp;auml;ndern."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "a265ae7c6758d614aa77a6aa32b9f581ab7035d74e90969b26e24063035e6305ad674186f27859044a909a50bc3277391ba988f6f880f27117dfba651c5684ba"
+		},
+		{
+			"question_id": "0000000422",
+			"question_text": "Welche der folgenden Aussagen bez&amp;uuml;glich der Sprint Review ist korrekt?",
+			"answers": [
+				{
+					"answer_id": "0000001490",
+					"answer_text": "Das Ziel der Sprint Review ist die Begutachtung und Abnahme der Arbeitsergebnisse eines Sprints."
+				},
+				{
+					"answer_id": "0000001491",
+					"answer_text": "Der Scrum Master l&amp;auml;dt zur Sprint Review ein."
+				},
+				{
+					"answer_id": "0000001493",
+					"answer_text": "Sie findet am Ende eines Sprints statt und dauert maximal 2 Stunden."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "c1ffe48b83e51d3b76b117acdad9b7fc3df68c483bdbc506472cce9bc3cc09ba6da422e0f6a56d88543bc71fdc77b2e0b01e6538ab0082b6ab4ece1383d7487f"
+		},
+		{
+			"question_id": "0000000424",
+			"question_text": "Das Sprint Backlog kann als Zeitmanagement-System aufgebaut sein, um den Sprint Fortschritt zu verfolgen. Welche der folgenden Eigenschaften hat das Sprint Backlog &lt;strong&gt;nicht&lt;/strong&gt;?",
+			"answers": [
+				{
+					"answer_id": "0000001498",
+					"answer_text": "Es beinhaltet die Anforderungen und Tasks, zu denen sich das Team verpflichtet hat."
+				},
+				{
+					"answer_id": "0000001499",
+					"answer_text": "Es ist das Ergebnis des Sprint Plannings."
+				},
+				{
+					"answer_id": "0000001501",
+					"answer_text": "Es enth&amp;auml;lt die vom Product Owner abgesch&amp;auml;tzten Aufw&amp;auml;nde."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "8dca84b9a0cea9afe65889e2f3f3d9febeafef6d93d1f674762591f68033b43ca3ed2e81d4678a5c0e9ce22b8de21fea11057bd065547097261934c86cf7b26d"
+		},
+		{
+			"question_id": "0000000426",
+			"question_text": "Welche der folgenden Fragen werden im Daily Scrum &lt;strong&gt;nicht&lt;/strong&gt; beantwortet?",
+			"answers": [
+				{
+					"answer_id": "0000001506",
+					"answer_text": "Werde ich an der Ausf&amp;uuml;hrung meiner Aktivit&amp;auml;ten behindert?"
+				},
+				{
+					"answer_id": "0000001507",
+					"answer_text": "Woran plane ich bis zum n&amp;auml;chsten Mal zu arbeiten?"
+				},
+				{
+					"answer_id": "0000001509",
+					"answer_text": "Welche Anforderungen aus dem Product Backlog sind falsch abgesch&amp;auml;tzt?"
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "a2eac96e0fc0dd2713c86e309df355c7e2f5c2db727d1e89510bfe1bf8d9523e43177d4595c366b9d09260367e9c21b3fb6af1d47cb6715833278c0a8c1f3606"
+		},
+		{
+			"question_id": "0000000428",
+			"question_text": "Wenn ein Projekt Scrum of Scrums verwendet, dann hat es folgende Eigenschaft:",
+			"answers": [
+				{
+					"answer_id": "0000001514",
+					"answer_text": "Scrum of Scrums findet erst ab einer Gr&amp;ouml;&amp;szlig;e von 5 Scrum Teams statt."
+				},
+				{
+					"answer_id": "0000001515",
+					"answer_text": "Es findet zus&amp;auml;tzlich zu den Daily Scrums ein weiteres Meeting von der Art eines Daily Scrums statt - das sogenannte Scrum of Scrums."
+				},
+				{
+					"answer_id": "0000001516",
+					"answer_text": "Nur die Scrum Master nehmen am Scrum of Scrums teil."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "e83d2a88c30b1cb98545a82cb716460e53df968ac34a8752fec7a6b64a11b932407e0ceb92eadbc937990cc46d8d284f6314356474756e00bf980ced60cc4ce8"
+		},
+		{
+			"question_id": "0000000429",
+			"question_text": "Welche Eigenschaften hat nach Scrum das Product Owner Team in gro&amp;szlig;en Projekten?&lt;br /&gt;1) Es besteht mindestens aus den Product Ownern aller Teams.&lt;br /&gt;2) Es besitzt einen Chief Product Owner, der zugleich verantwortlich f&amp;uuml;r das gesamte Produkt ist.&lt;br /&gt;3) Es kann sich selbst nach Scrum-Regeln organisieren und einen Scrum Master f&amp;uuml;r das Product Owner Team benennen.&lt;br /&gt;4) Es kann sinnvoll sein, zus&amp;auml;tzliche Experten (z.B. einen Mitarbeiter aus dem Vertrieb) in das Product Owner Team aufzunehmen.",
+			"answers": [
+				{
+					"answer_id": "0000001518",
+					"answer_text": "Alle genannten."
+				},
+				{
+					"answer_id": "0000001519",
+					"answer_text": "Nur 1 und 2."
+				},
+				{
+					"answer_id": "0000001520",
+					"answer_text": "Nur 2 und 3."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "6d3de1c59f1a6ea7ad1775afcce543fc64bab0da4f817d3ce9cd07987b14d5b44b0dc6a2b45e96846da97df3a77c623eb6ca4cfa63fb0a285d9ed48cd3f7e087"
+		},
+		{
+			"question_id": "0000000430",
+			"question_text": "Welche der folgenden Aussagen trifft auf Scrum zu?",
+			"answers": [
+				{
+					"answer_id": "0000001522",
+					"answer_text": "Aus dem Product Backlog werden Anforderungen in das Sprint Backlog &amp;uuml;bernommen."
+				},
+				{
+					"answer_id": "0000001523",
+					"answer_text": "Ein Sprint dauert in der Regel 2-4 Tage."
+				},
+				{
+					"answer_id": "0000001526",
+					"answer_text": "Das Product Backlog beschreibt die Anforderungen an das Produkt."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "de1dab59656bbad7d94c03fa57aac8a662560a588c310ca1f1f912029eb955f2b39465576ade0ddff1beb956275e52867b03f262ea1a562f602d690cc327ad54"
+		},
+		{
+			"question_id": "0000000431",
+			"question_text": "Was geh&amp;ouml;rt zu den Aufgaben des Product Owners?",
+			"answers": [
+				{
+					"answer_id": "0000001530",
+					"answer_text": "Erstellung eines Releaseplans."
+				},
+				{
+					"answer_id": "0000001533",
+					"answer_text": "Er kommuniziert die Vision des Produktes."
+				},
+				{
+					"answer_id": "0000001534",
+					"answer_text": "Er verfeinert und priorisiert das Product Backlog."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "c3b5fcde5762e2cd1dedddcf3e7faf155ca8a16fc2f2e745512ed617619c8784182dba7ca3080f9aa9175a23a1db50b7118d961d5c42e319bd655312ea7dff76"
+		},
+		{
+			"question_id": "0000000432",
+			"question_text": "Welche der folgenden Aussagen bez&amp;uuml;glich eines Entwicklungsteams in Scrum ist korrekt?",
+			"answers": [
+				{
+					"answer_id": "0000001537",
+					"answer_text": "Ein Entwicklungsteam sollte so autonom arbeiten k&amp;ouml;nnen, dass das Sprint-Ziel ohne externe Abh&amp;auml;ngigkeiten erreicht werden kann."
+				},
+				{
+					"answer_id": "0000001538",
+					"answer_text": "Detaillierte Fragen zu Anforderungen werden in Scrum vom Entwicklungsteam direkt mit Kunden ohne Einbindung des Product Owners gekl&amp;auml;rt."
+				},
+				{
+					"answer_id": "0000001539",
+					"answer_text": "Ein Entwicklungsteam sollte mehr als 20 Mitglieder haben."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "42f9595ea933720af29249907c2de57b4043baa38220b9b79bde2e1becfc9da704473781dc04776b0ffad2d6174150526431ddf1f83ee95e2eb289f5b3a42c3c"
+		},
+		{
+			"question_id": "0000000435",
+			"question_text": "Welche Aussage zum Scrum Master ist richtig?",
+			"answers": [
+				{
+					"answer_id": "0000001553",
+					"answer_text": "Je weniger er zu tun hat, desto produktiver ist das Team."
+				},
+				{
+					"answer_id": "0000001554",
+					"answer_text": "Um Rivalit&amp;auml;ten im Team vorzubeugen, sollte der Scrum Master vom Management ernannt werden."
+				},
+				{
+					"answer_id": "0000001555",
+					"answer_text": "Es ist von Vorteil, wenn der Scrum Master auch Personalverantwortung f&amp;uuml;r die Teammitglieder hat."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "9a6d68354a2517d8e1dbcdf29e79c8aa40aa8563f4a19ee68afc36edb36e70c1e5ada1f506c35090c67bce7a70e665f9e39bc8ad4cf3126befa0f23bd0cbe662"
+		},
+		{
+			"question_id": "0000000441",
+			"question_text": "Welche der folgenden ist ein Scrum Artefakt?",
+			"answers": [
+				{
+					"answer_id": "0000001577",
+					"answer_text": "Product Backlog"
+				},
+				{
+					"answer_id": "0000001578",
+					"answer_text": "Sprint Backlog"
+				},
+				{
+					"answer_id": "0000001579",
+					"answer_text": "Produktinkrement"
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "1ade77988f3eedf2ed64d256cd24a271aa686d743804011359c83bd0059157f90fe64201da7b0793ea34e1906175d2faf62c319a55d4099c2b039640b1942d62"
+		},
+		{
+			"question_id": "0000000442",
+			"question_text": "Welche der folgenden ist ein Wert in Scrum (Scrum Values)?",
+			"answers": [
+				{
+					"answer_id": "0000001585",
+					"answer_text": "Courage"
+				},
+				{
+					"answer_id": "0000001586",
+					"answer_text": "Focus"
+				},
+				{
+					"answer_id": "0000001587",
+					"answer_text": "Commitment"
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "7eb917d5d044ff4c3605d7c46e5603f31ac0d16a222e8b818b9650158ff473a7bf7dd43847b4e94e52036388898d4c7520a32e225d7a397c6bcd88479be1690b"
+		},
+		{
+			"question_id": "0000000443",
+			"question_text": "Wer erstellt das Produktinkrement?",
+			"answers": [
+				{
+					"answer_id": "0000001596",
+					"answer_text": "Das Entwicklungsteam und der Product Owner."
+				},
+				{
+					"answer_id": "0000001597",
+					"answer_text": "Das Scrum Team."
+				},
+				{
+					"answer_id": "0000001598",
+					"answer_text": "Das Entwicklungsteam."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "472bf56db9ef40f92e134c50febe30463ccf246f6330ca8b9cd04bf57dc4a334963881dcc4d7ba55208075c58dde70b2b6e9fcbf84dd8f155c41c4b69495f5c0"
+		},
+		{
+			"question_id": "0000000445",
+			"question_text": "Wer ist &lt;strong&gt;kein&lt;/strong&gt; Mitglied des Scrum Teams?",
+			"answers": [
+				{
+					"answer_id": "0000001606",
+					"answer_text": "Entwicklungsteam"
+				},
+				{
+					"answer_id": "0000001607",
+					"answer_text": "Product Owner"
+				},
+				{
+					"answer_id": "0000001608",
+					"answer_text": "Stakeholder"
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "c5a129b547b58c160728be4bd1a37687a104ff2804cf93e5d516e9c95ce6a5a026194c31499d570b5fe214744c9d3b1f7d307bc9dc01d72b72e47e4acaceb66e"
+		},
+		{
+			"question_id": "0000000446",
+			"question_text": "Welche der folgenden Aussagen beschreibt ein Velocity Chart?",
+			"answers": [
+				{
+					"answer_id": "0000001610",
+					"answer_text": "Auf der X-Achse werden die einzelnen Sprints angetragen"
+				},
+				{
+					"answer_id": "0000001611",
+					"answer_text": "Mit dem Velocity Chart wird die Entwicklungsgeschwindigkeit des n&amp;auml;chsten Sprints dargestellt."
+				},
+				{
+					"answer_id": "0000001612",
+					"answer_text": "Die ideale Kurve im Entwicklungsgeschwindigkeitsbericht ist die charakteristische S&amp;auml;gezahnkurve."
+				}
+			],
+			"answersSelected": [],
+			"answersHash": "1d52388991459626a2dd7878c3551b2b5ba793b0b612aebb6ededa84b4ebf656ec462294298e22af83423d0a1a5c93af1a90e98d2349765e6b7ba5362cc23ece"
+		}
+	]
+}

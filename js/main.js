@@ -27,7 +27,8 @@ const gText = {
         titleWorkflow: 'Workflow of {alias}',
         noEntries: 'No Entries',
         entriesStats: 'Entries {lim_from}-{lim_to} of {count}',
-        noFinds: 'Sorry, nothing found.'
+        noFinds: 'Sorry, nothing found.',
+        PleaseChoose: 'Please choose...'
     },
     de: {
         Create: 'Erstellen',
@@ -43,10 +44,11 @@ const gText = {
         titleWorkflow: 'Workflow von {alias}',
         noEntries: 'Keine Einträge',
         entriesStats: 'Einträge {lim_from}-{lim_to} von {count}',
-        noFinds: 'Keine Ergebnisse gefunden.'
+        noFinds: 'Keine Ergebnisse gefunden.',
+        PleaseChoose: 'Bitte wählen...'
     }
 };
-const setLang = 'en';
+const setLang = 'de';
 class DB {
     static request(command, params, callback) {
         let me = this;
@@ -351,7 +353,7 @@ class StateButton {
             const data = { table: self._table.getTablename(), row: self.rowData };
             if (self.modForm) {
                 const newVals = self.modForm.getValues(true);
-                const newRowDataFromForm = newVals[self._table.getTablename()][0];
+                const newRowDataFromForm = (Object.keys(newVals).length === 0 && newVals.constructor === Object) ? {} : newVals[self._table.getTablename()][0];
                 data.row = DB.mergeDeep({}, data.row, newRowDataFromForm);
             }
             data.row[self.stateCol] = targetStateID;
@@ -474,6 +476,7 @@ class Table {
         this.selType = SelectType.NoSelect;
         this.TableType = TableType.obj;
         this.selectedRows = [];
+        this.superTypeOf = null;
         this.options = {
             smallestTimeUnitMins: true,
             showControlColumn: true,
@@ -481,7 +484,7 @@ class Table {
             showCreateButton: true,
             showSearch: true
         };
-        this.isExpanded = true;
+        this.isExpanded = false;
         this.callbackSelectionChanged = resp => { };
         this.callbackCreatedElement = resp => { };
         this.callbackSelectElement = row => { };
@@ -509,6 +512,9 @@ class Table {
     }
     isRelationTable() {
         return (this.TableType !== TableType.obj);
+    }
+    setStuperTypeOf(...tablenames) {
+        this.superTypeOf = tablenames;
     }
     createRow(data, callback) {
         DB.request('create', { table: this.tablename, row: data }, r => { callback(r); });
@@ -755,9 +761,8 @@ class Table {
             header.appendChild(searchBar);
             searchBar.focus();
         }
-        const subtypes = (this.getTablename() == 'partner') ? ['person', 'organization'] : null;
-        if (subtypes) {
-            subtypes.map(subtype => {
+        if (this.superTypeOf) {
+            this.superTypeOf.map(subtype => {
                 const tmpTable = new Table(subtype);
                 const tmpCreateBtn = this.getCreateButton(tmpTable);
                 header.appendChild(tmpCreateBtn);
@@ -828,6 +833,8 @@ class Table {
         const wrapper = document.createElement('div');
         wrapper.classList.add('tbl_content');
         wrapper.classList.add('table-responsive-md');
+        if (!self.isExpanded && self.selectedRows.length === 0 && self.Search === "" && self.selType > 0)
+            return wrapper;
         const tbl = document.createElement('table');
         tbl.classList.add('datatbl');
         tbl.classList.add('table', 'table-striped', 'table-hover', 'table-sm', 'm-0', 'border');
@@ -878,11 +885,10 @@ class Table {
             const th = document.createElement('th');
             if (colname === "select") {
                 th.classList.add('col-sel');
-                if (self.selectedRows.length > 0) {
-                    th.innerHTML = '<i class="fas fa-unlink text-primary"></i>';
+                if (!self.isExpanded) {
+                    th.innerHTML = '<i class="fas fa-chevron-down text-primary"></i>';
                     th.addEventListener('click', () => {
                         self.resetFilter();
-                        self.setSelectedRows([]);
                         self.isExpanded = true;
                         self.loadRows(() => {
                             self.renderHTML();
@@ -959,8 +965,24 @@ class Table {
                     editBtn.innerHTML = '<i class="fas fa-edit"></i>';
                     editBtn.setAttribute('href', 'javascript:void(0);');
                     editBtn.addEventListener('click', () => {
-                        const modForm = new Form(self, row);
-                        wrapper.parentElement.replaceWith(modForm.getForm());
+                        if (!self.superTypeOf) {
+                            const modForm = new Form(self, row);
+                            wrapper.parentElement.replaceWith(modForm.getForm());
+                        }
+                        else {
+                            const SuperTableRowID = row[self.getPrimaryColname()];
+                            self.superTypeOf.map(subTableName => {
+                                const tmpTable = new Table(subTableName);
+                                tmpTable.setFilter('{"=":["`' + tmpTable.getTablename() + '`.' + self.tablename + '_id",' + SuperTableRowID + ']}');
+                                tmpTable.loadRows(rows => {
+                                    if (rows.count > 0) {
+                                        const modForm = new Form(tmpTable, rows.records[0]);
+                                        wrapper.parentElement.replaceWith(modForm.getForm());
+                                        modForm.setNewOriginTable(self);
+                                    }
+                                });
+                            });
+                        }
                     });
                     td.appendChild(editBtn);
                 }
@@ -983,7 +1005,11 @@ class Table {
     renderHTML(container = null) {
         const self = this;
         container = container || self.DOMContainer;
-        if (this.actRowCount === 0) {
+        if (!container)
+            return;
+        if (this.getTablename() === 'partner')
+            this.setStuperTypeOf('person', 'organization');
+        if (this.actRowCount === 0 && !this.ReadOnly && !this.superTypeOf) {
             const createForm = new Form(self);
             container.replaceWith(createForm.getForm());
             createForm.focusFirst();
@@ -1008,11 +1034,11 @@ class Form {
         this.showFooter = false;
         this.oTable = Table;
         this.oRowData = RowData;
-        this._formConfig = Table.getFormCreate();
+        this.formConf = Table.getFormCreate();
         if (RowData) {
-            this._formConfig = Table.getFormModify(RowData);
+            this.formConf = Table.getFormModify(RowData);
             for (const key of Object.keys(RowData))
-                this._formConfig[key].value = RowData[key];
+                this.formConf[key].value = RowData[key];
         }
         if (!Path)
             this.showFooter = true;
@@ -1100,16 +1126,29 @@ class Form {
         }
         else if (el.field_type == 'float') {
             if (el.value)
-                el.value = parseFloat(el.value).toLocaleString('de-DE');
-            crElem = this.getNewFormElement('input', key, path);
-            crElem.setAttribute('type', 'text');
+                el.value = parseFloat(el.value).toLocaleString();
+            const inp = this.getNewFormElement('input', key, path);
+            inp.setAttribute('type', 'text');
+            inp.classList.add('inpFloat');
+            inp.classList.add('form-control', 'col-10');
             if (el.mode_form === 'rw')
-                crElem.classList.add('rwInput');
-            if (el.mode_form === 'ro')
-                crElem.setAttribute('readonly', 'readonly');
-            crElem.classList.add('inpFloat');
-            crElem.classList.add('form-control');
-            crElem.setAttribute('value', v);
+                inp.classList.add('rwInput');
+            if (el.mode_form === 'ro') {
+                inp.setAttribute('readonly', 'readonly');
+                inp.classList.replace('form-control', 'form-control-plaintext');
+                v = Number(v).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            inp.classList.add('num-float');
+            inp.classList.add('text-right');
+            inp.setAttribute('value', v);
+            const div2 = document.createElement('div');
+            div2.classList.add('col-2', 'p-0');
+            div2.setAttribute('style', 'padding-top: 0.4em !important;');
+            div2.innerHTML = "&#8203;";
+            crElem = document.createElement('div');
+            crElem.classList.add('row', 'container');
+            crElem.appendChild(inp);
+            crElem.appendChild(div2);
         }
         else if (el.field_type == 'time') {
             crElem = this.getNewFormElement('input', key, path);
@@ -1246,8 +1285,8 @@ class Form {
             const mTable = new Table(mTablename, SelectType.Multi);
             nmTable.ReadOnly = (el.mode_form == 'ro');
             nmTable.setColumnFilter(hideCol, 'null');
+            console.log('nm', isCreate);
             if (!isCreate) {
-                const tmpGUID = DB.getID();
                 const RowID = this.oRowData[this.oTable.getPrimaryColname()];
                 const myCol = nmTable.Columns[el.revfk_colname1].foreignKey.col_id;
                 const fCreate = nmTable.getFormCreateSettingsDiff();
@@ -1258,16 +1297,23 @@ class Form {
                 nmTable.resetLimit();
                 nmTable.Columns[el.revfk_colname1].show_in_grid = false;
                 nmTable.loadRows(r => {
-                    const container = document.getElementById(tmpGUID);
+                    mTable.setPath(this.oTable.getTablename() + '/' + RowID + '/' + mTable.getTablename() + '/0');
+                    mTable.options.showSearch = true;
+                    mTable.ReadOnly = nmTable.ReadOnly;
                     const allRels = nmTable.getRows();
                     const connRels = allRels.filter(rel => rel.state_id == nmTable.getConfig().stateIdSel);
-                    const mObjs = allRels.map(row => row[el.revfk_colname2]);
-                    const mObjsSel = connRels.map(row => row[el.revfk_colname2]);
-                    mTable.setPath(this.oTable.getTablename() + '/' + RowID + '/' + mTable.getTablename() + '/0');
-                    mTable.options.showSearch = false;
-                    mTable.setRows(mObjs);
-                    mTable.setSelectedRows(mObjsSel);
-                    mTable.renderHTML(container);
+                    if (r.count > 0) {
+                        const mObjs = allRels.map(row => row[el.revfk_colname2]);
+                        const mObjsSel = connRels.map(row => row[el.revfk_colname2]);
+                        const mFilter = '{"in":["' + mTable.getPrimaryColname() + '","' + mObjsSel.map(o => o[mTable.getPrimaryColname()]).join(',') + '"]}';
+                        mTable.setFilter(mFilter);
+                        mTable.setRows(mObjs);
+                        mTable.setSelectedRows(mObjsSel);
+                        mTable.renderHTML(crElem);
+                    }
+                    else {
+                        mTable.loadRows(rows => { mTable.renderHTML(crElem); });
+                    }
                     mTable.onCreatedElement(resp => {
                         const newForm = new Form(self.oTable, self.oRowData);
                         self.formElement.replaceWith(newForm.getForm());
@@ -1297,9 +1343,7 @@ class Form {
                         });
                     });
                 });
-                crElem = document.createElement('div');
-                crElem.setAttribute('class', 'row');
-                crElem.setAttribute('id', tmpGUID);
+                crElem = document.createElement('p');
                 crElem.innerText = gText[setLang].Loading;
             }
             else {
@@ -1350,24 +1394,57 @@ class Form {
             crElem = SB.getElement();
         }
         else if (el.field_type == 'enum') {
-            const options = JSON.parse(el.col_options);
             crElem = this.getNewFormElement('select', key, path);
-            if (el.maxlength)
-                crElem.setAttribute('maxlength', el.maxlength);
             if (el.mode_form === 'rw')
                 crElem.classList.add('rwInput');
             if (el.mode_form === 'ro')
                 crElem.setAttribute('disabled', 'disabled');
             crElem.classList.add('custom-select');
-            if (el.col_options)
-                for (const o of options) {
-                    const opt = document.createElement('option');
-                    opt.setAttribute('value', o.value);
-                    opt.innerText = o.name;
-                    if (el.value == o.value)
-                        opt.setAttribute('selected', 'selected');
-                    crElem.appendChild(opt);
+            try {
+                const options = JSON.parse(el.col_options);
+                if (options)
+                    for (const o of options) {
+                        const opt = document.createElement('option');
+                        opt.setAttribute('value', o.value);
+                        opt.innerText = o.name;
+                        if (el.value == o.value)
+                            opt.setAttribute('selected', 'selected');
+                        crElem.appendChild(opt);
+                    }
+            }
+            catch (error) {
+                if (el.foreignKey) {
+                    const tblOptions = new Table(el.foreignKey.table);
+                    tblOptions.resetLimit();
+                    tblOptions.resetFilter();
+                    if (el.customfilter)
+                        tblOptions.setFilter(el.customfilter);
+                    if (el.onchange)
+                        crElem.addEventListener('change', () => {
+                            eval(el.onchange);
+                        });
+                    const fkIsSet = !Object.values(v).every(o => o === null);
+                    if (fkIsSet) {
+                        if (DB.isObject(v)) {
+                            const key = Object.keys(v)[0];
+                            v = v[key];
+                        }
+                    }
+                    else
+                        v = "";
+                    tblOptions.loadRows(rows => {
+                        rows.records.map(row => {
+                            const opt = document.createElement('option');
+                            const val = row[tblOptions.getPrimaryColname()];
+                            opt.setAttribute('value', val);
+                            opt.innerText = row[el.col_options];
+                            if (v == val)
+                                opt.setAttribute('selected', 'selected');
+                            crElem.appendChild(opt);
+                        });
+                    });
                 }
+            }
         }
         else if (el.field_type == 'switch' || el.field_type == 'checkbox') {
             const checkEl = this.getNewFormElement('input', key, path);
@@ -1404,7 +1481,7 @@ class Form {
     }
     getFooter() {
         const self = this;
-        const tblCreate = this.oTable;
+        const tblSaved = this.oTable;
         const wrapper = document.createElement('div');
         wrapper.classList.add('col-12', 'my-4');
         if (!self.oRowData) {
@@ -1416,7 +1493,7 @@ class Form {
             createBtn.addEventListener('click', () => {
                 const data = self.getValues();
                 let newRowID = null;
-                tblCreate.importData(data, resp => {
+                tblSaved.importData(data, resp => {
                     let importWasSuccessful = true;
                     resp.forEach(answer => {
                         let counter = 0;
@@ -1431,7 +1508,7 @@ class Form {
                         if (answer[0]['_entry-point-state']) {
                             const targetStateID = answer[0]['_entry-point-state'].id;
                             btnTo = new StateButton({ state_id: targetStateID });
-                            btnTo.setTable(tblCreate);
+                            btnTo.setTable(tblSaved);
                             btnTo.setReadOnly(true);
                         }
                         for (const msg of messages) {
@@ -1462,15 +1539,15 @@ class Form {
             });
         }
         else {
-            if (self.oTable.hasStateMachine()) {
+            if (tblSaved.hasStateMachine()) {
                 const S = new StateButton(self.oRowData);
-                S.setTable(self.oTable);
+                S.setTable(tblSaved);
                 S.setForm(self);
                 const nextStateBtns = S.getTransButtons();
                 S.setOnSuccess(() => {
-                    const RowID = self.oRowData[self.oTable.getPrimaryColname()];
-                    self.oTable.loadRow(RowID, row => {
-                        const F = new Form(self.oTable, row);
+                    const RowID = self.oRowData[tblSaved.getPrimaryColname()];
+                    tblSaved.loadRow(RowID, row => {
+                        const F = new Form(tblSaved, row);
                         self.formElement.replaceWith(F.getForm());
                     });
                 });
@@ -1484,11 +1561,11 @@ class Form {
                 wrapper.appendChild(saveBtn);
                 saveBtn.addEventListener('click', () => {
                     const data = self.getValues(true);
-                    const newRowData = data[self.oTable.getTablename()][0];
-                    newRowData[self.oTable.getPrimaryColname()] = self.oRowData[self.oTable.getPrimaryColname()];
-                    self.oTable.updateRow(newRowData, () => {
-                        self.oTable.loadRows(() => {
-                            self.oTable.renderHTML(self.formElement);
+                    const newRowData = data[tblSaved.getTablename()][0];
+                    newRowData[tblSaved.getPrimaryColname()] = self.oRowData[tblSaved.getPrimaryColname()];
+                    tblSaved.updateRow(newRowData, () => {
+                        this.oTable.loadRows(() => {
+                            this.oTable.renderHTML(self.formElement);
                         });
                     });
                 });
@@ -1559,20 +1636,32 @@ class Form {
     }
     getForm() {
         const self = this;
-        const conf = this._formConfig;
-        const sortedKeys = Object.keys(conf).sort((x, y) => {
-            const a = parseInt(conf[x].orderF || 0);
-            const b = parseInt(conf[y].orderF || 0);
-            return Math.sign(a - b);
-        });
+        const sortedKeys = Object.keys(self.formConf).sort((x, y) => Math.sign(parseInt(self.formConf[x].orderF || 0) - parseInt(self.formConf[y].orderF || 0)));
         const frm = document.createElement('form');
         frm.classList.add('formcontent', 'row');
         if (!self.oRowData)
             frm.classList.add('frm-create');
-        sortedKeys.forEach(key => {
-            const inp = self.getInput(key, conf[key]);
-            if (inp)
-                frm.appendChild(inp);
+        const cols = [];
+        sortedKeys.map(key => {
+            const actCol = self.formConf[key].col || 0;
+            const inp = self.getInput(key, self.formConf[key]);
+            if (inp) {
+                if (actCol > 0) {
+                    if (!cols[actCol]) {
+                        const c = document.createElement('div');
+                        c.classList.add('col');
+                        const row = document.createElement('div');
+                        row.classList.add('row');
+                        c.appendChild(row);
+                        cols[actCol] = c;
+                        frm.appendChild(c);
+                    }
+                    cols[actCol].firstChild.appendChild(inp);
+                }
+                else {
+                    frm.appendChild(inp);
+                }
+            }
         });
         this.formElement = frm;
         if (self.showFooter)

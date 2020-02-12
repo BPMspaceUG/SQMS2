@@ -131,7 +131,7 @@ CREATE TABLE `sqms2_answer` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_answer_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_6430a55a` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=78448331 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=78448335 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `sqms2_answer_text` (
   CONSTRAINT `sqms2_answer_text_ibfk_1` FOREIGN KEY (`sqms2_Answer_id_fk_154388`) REFERENCES `sqms2_answer` (`sqms2_Answer_id`),
   CONSTRAINT `sqms2_answer_text_ibfk_2` FOREIGN KEY (`sqms2_Text_id_fk_842740`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `state_id_2da22e8a` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=45048525 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=45048533 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ CREATE TABLE `sqms2_examsetversion` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_examsetversion_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_ef8c669a` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=417 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `sqms2_question` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_question_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_c8e133bc` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=85649583 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=85649584 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `sqms2_question_answer` (
   CONSTRAINT `sqms2_question_answer_ibfk_1` FOREIGN KEY (`sqms2_Question_id_fk_735802`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `sqms2_question_answer_ibfk_2` FOREIGN KEY (`sqms2_Answer_id_fk_995603`) REFERENCES `sqms2_answer` (`sqms2_Answer_id`),
   CONSTRAINT `state_id_0f4d6485` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6512250 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6512254 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +241,7 @@ CREATE TABLE `sqms2_question_examsetversion` (
   CONSTRAINT `sqms2_question_examsetversion_ibfk_1` FOREIGN KEY (`sqms2_ExamSetVersion_id_fk_264577`) REFERENCES `sqms2_examsetversion` (`sqms2_ExamSetVersion_id`),
   CONSTRAINT `sqms2_question_examsetversion_ibfk_2` FOREIGN KEY (`sqms2_Question_id_fk_615560`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `state_id_876b567a` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +263,7 @@ CREATE TABLE `sqms2_question_examsetversion_answer` (
   CONSTRAINT `sqms2_question_examsetversion_answer_ibfk_1` FOREIGN KEY (`sqms2_Question_ExamSetVersion_id_fk_186326`) REFERENCES `sqms2_question_examsetversion` (`sqms2_Question_ExamSetVersion_id`),
   CONSTRAINT `sqms2_question_examsetversion_answer_ibfk_2` FOREIGN KEY (`sqms2_Answer_id_fk_507266`) REFERENCES `sqms2_answer` (`sqms2_Answer_id`),
   CONSTRAINT `state_id_d1166126` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +285,7 @@ CREATE TABLE `sqms2_question_text` (
   CONSTRAINT `sqms2_question_text_ibfk_1` FOREIGN KEY (`sqms2_Text_id_fk_559100`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `sqms2_question_text_ibfk_2` FOREIGN KEY (`sqms2_Question_id_fk_783494`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `state_id_1438cb88` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=75037357 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=75037360 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +312,7 @@ CREATE TABLE `sqms2_syllabus` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_syllabus_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_0bc4d1a1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=34783 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=34786 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +334,7 @@ CREATE TABLE `sqms2_syllabus_desc` (
   CONSTRAINT `sqms2_syllabus_desc_ibfk_1` FOREIGN KEY (`sqms2_Syllabus_id_fk_783731`) REFERENCES `sqms2_syllabus` (`sqms2_Syllabus_id`),
   CONSTRAINT `sqms2_syllabus_desc_ibfk_2` FOREIGN KEY (`sqms2_Text_id_fk_178796`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `state_id_ade6fcec` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=80035456 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=80035459 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ CREATE TABLE `sqms2_syllabus_syllabuschapter` (
   CONSTRAINT `sqms2_syllabus_syllabuschapter_ibfk_1` FOREIGN KEY (`sqms2_Syllabus_id_fk_870666`) REFERENCES `sqms2_syllabus` (`sqms2_Syllabus_id`),
   CONSTRAINT `sqms2_syllabus_syllabuschapter_ibfk_2` FOREIGN KEY (`sqms2_SyllabusChapter_id_fk_327935`) REFERENCES `sqms2_syllabuschapter` (`sqms2_SyllabusChapter_id`),
   CONSTRAINT `state_id_e8dbebbc` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=381 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -378,7 +378,7 @@ CREATE TABLE `sqms2_syllabus_topic` (
   CONSTRAINT `sqms2_syllabus_topic_ibfk_1` FOREIGN KEY (`sqms2_Syllabus_id_fk_345197`) REFERENCES `sqms2_syllabus` (`sqms2_Syllabus_id`),
   CONSTRAINT `sqms2_syllabus_topic_ibfk_2` FOREIGN KEY (`sqms2_Topic_id_fk_945295`) REFERENCES `sqms2_topic` (`sqms2_Topic_id`),
   CONSTRAINT `state_id_8e195a84` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10035081 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10035085 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -399,7 +399,7 @@ CREATE TABLE `sqms2_syllabuschapter` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_syllabuschapter_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_6c68c041` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1234565697 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1234565700 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -421,7 +421,7 @@ CREATE TABLE `sqms2_syllabuschapter_desc` (
   CONSTRAINT `sqms2_syllabuschapter_desc_ibfk_1` FOREIGN KEY (`sqms2_SyllabusChapter_id_fk_886795`) REFERENCES `sqms2_syllabuschapter` (`sqms2_SyllabusChapter_id`),
   CONSTRAINT `sqms2_syllabuschapter_desc_ibfk_2` FOREIGN KEY (`sqms2_Text_id_fk_524933`) REFERENCES `sqms2_text` (`sqms2_Text_id`),
   CONSTRAINT `state_id_6059d74e` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=549 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=552 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -443,7 +443,7 @@ CREATE TABLE `sqms2_syllabuschapter_question` (
   CONSTRAINT `sqms2_syllabuschapter_question_ibfk_1` FOREIGN KEY (`sqms2_SyllabusChapter_id_fk_920241`) REFERENCES `sqms2_syllabuschapter` (`sqms2_SyllabusChapter_id`),
   CONSTRAINT `sqms2_syllabuschapter_question_ibfk_2` FOREIGN KEY (`sqms2_Question_id_fk_285826`) REFERENCES `sqms2_question` (`sqms2_Question_id`),
   CONSTRAINT `state_id_aa13ed26` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=910 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=911 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,7 +463,7 @@ CREATE TABLE `sqms2_text` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_text_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_8c14317f` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=70052318 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=70052335 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -504,7 +504,7 @@ CREATE TABLE `sqms2_topic` (
   KEY `state_id` (`state_id`),
   CONSTRAINT `sqms2_topic_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`),
   CONSTRAINT `state_id_ed734481` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=872438345 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=872438349 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -672,7 +672,7 @@ CREATE TABLE `state_rules` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `_edges` AS select 'sqms2_answer_text' AS `EdgeType`,`sqms2_answer_text`.`sqms2_Answer_Text_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_answer_text`.`state_id` AS `EdgeStateID`,`sqms2_answer_text`.`sqms2_Answer_id_fk_154388` AS `ObjectID` from `sqms2_answer_text` union select 'sqms2_answer_text' AS `EdgeType`,`sqms2_answer_text`.`sqms2_Answer_Text_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_answer_text`.`state_id` AS `EdgeStateID`,`sqms2_answer_text`.`sqms2_Text_id_fk_842740` AS `ObjectID` from `sqms2_answer_text` union select 'sqms2_question_answer' AS `EdgeType`,`sqms2_question_answer`.`sqms2_Question_Answer_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_answer`.`sqms2_Question_id_fk_735802` AS `ObjectID` from `sqms2_question_answer` union select 'sqms2_question_answer' AS `EdgeType`,`sqms2_question_answer`.`sqms2_Question_Answer_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_answer`.`sqms2_Answer_id_fk_995603` AS `ObjectID` from `sqms2_question_answer` union select 'sqms2_question_examsetversion' AS `EdgeType`,`sqms2_question_examsetversion`.`sqms2_Question_ExamSetVersion_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_examsetversion`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion`.`sqms2_ExamSetVersion_id_fk_264577` AS `ObjectID` from `sqms2_question_examsetversion` union select 'sqms2_question_examsetversion' AS `EdgeType`,`sqms2_question_examsetversion`.`sqms2_Question_ExamSetVersion_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_examsetversion`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion`.`sqms2_Question_id_fk_615560` AS `ObjectID` from `sqms2_question_examsetversion` union select 'sqms2_question_examsetversion_answer' AS `EdgeType`,`sqms2_question_examsetversion_answer`.`sqms2_Question_ExamSetVersion_Answer_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_examsetversion_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion_answer`.`sqms2_Question_ExamSetVersion_id_fk_186326` AS `ObjectID` from `sqms2_question_examsetversion_answer` union select 'sqms2_question_examsetversion_answer' AS `EdgeType`,`sqms2_question_examsetversion_answer`.`sqms2_Question_ExamSetVersion_Answer_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_examsetversion_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion_answer`.`sqms2_Answer_id_fk_507266` AS `ObjectID` from `sqms2_question_examsetversion_answer` union select 'sqms2_question_text' AS `EdgeType`,`sqms2_question_text`.`sqms2_Question_Text_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_text`.`state_id` AS `EdgeStateID`,`sqms2_question_text`.`sqms2_Question_id_fk_783494` AS `ObjectID` from `sqms2_question_text` union select 'sqms2_question_text' AS `EdgeType`,`sqms2_question_text`.`sqms2_Question_Text_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_text`.`state_id` AS `EdgeStateID`,`sqms2_question_text`.`sqms2_Text_id_fk_559100` AS `ObjectID` from `sqms2_question_text` union select 'sqms2_syllabus_desc' AS `EdgeType`,`sqms2_syllabus_desc`.`sqms2_Syllabus_desc_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabus_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_desc`.`sqms2_Syllabus_id_fk_783731` AS `ObjectID` from `sqms2_syllabus_desc` union select 'sqms2_syllabus_desc' AS `EdgeType`,`sqms2_syllabus_desc`.`sqms2_Syllabus_desc_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabus_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_desc`.`sqms2_Text_id_fk_178796` AS `ObjectID` from `sqms2_syllabus_desc` union select 'sqms2_syllabus_syllabuschapter' AS `EdgeType`,`sqms2_syllabus_syllabuschapter`.`sqms2_Syllabus_SyllabusChapter_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabus_syllabuschapter`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_syllabuschapter`.`sqms2_Syllabus_id_fk_870666` AS `ObjectID` from `sqms2_syllabus_syllabuschapter` union select 'sqms2_syllabus_syllabuschapter' AS `EdgeType`,`sqms2_syllabus_syllabuschapter`.`sqms2_Syllabus_SyllabusChapter_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabus_syllabuschapter`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_syllabuschapter`.`sqms2_SyllabusChapter_id_fk_327935` AS `ObjectID` from `sqms2_syllabus_syllabuschapter` union select 'sqms2_syllabus_topic' AS `EdgeType`,`sqms2_syllabus_topic`.`sqms2_Syllabus_Topic_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabus_topic`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_topic`.`sqms2_Syllabus_id_fk_345197` AS `ObjectID` from `sqms2_syllabus_topic` union select 'sqms2_syllabus_topic' AS `EdgeType`,`sqms2_syllabus_topic`.`sqms2_Syllabus_Topic_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabus_topic`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_topic`.`sqms2_Topic_id_fk_945295` AS `ObjectID` from `sqms2_syllabus_topic` union select 'sqms2_syllabuschapter_desc' AS `EdgeType`,`sqms2_syllabuschapter_desc`.`sqms2_SyllabusChapter_desc_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabuschapter_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_desc`.`sqms2_SyllabusChapter_id_fk_886795` AS `ObjectID` from `sqms2_syllabuschapter_desc` union select 'sqms2_syllabuschapter_desc' AS `EdgeType`,`sqms2_syllabuschapter_desc`.`sqms2_SyllabusChapter_desc_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabuschapter_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_desc`.`sqms2_Text_id_fk_524933` AS `ObjectID` from `sqms2_syllabuschapter_desc` union select 'sqms2_syllabuschapter_question' AS `EdgeType`,`sqms2_syllabuschapter_question`.`sqms2_SyllabusChapter_Question_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabuschapter_question`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_question`.`sqms2_SyllabusChapter_id_fk_920241` AS `ObjectID` from `sqms2_syllabuschapter_question` union select 'sqms2_syllabuschapter_question' AS `EdgeType`,`sqms2_syllabuschapter_question`.`sqms2_SyllabusChapter_Question_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabuschapter_question`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_question`.`sqms2_Question_id_fk_285826` AS `ObjectID` from `sqms2_syllabuschapter_question` union select 'sqms2_text_text' AS `EdgeType`,`sqms2_text_text`.`sqms2_Text_Text_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_text_text`.`state_id` AS `EdgeStateID`,`sqms2_text_text`.`sqms2_Text_id_fk_508677` AS `ObjectID` from `sqms2_text_text` union select 'sqms2_text_text' AS `EdgeType`,`sqms2_text_text`.`sqms2_Text_Text_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_text_text`.`state_id` AS `EdgeStateID`,`sqms2_text_text`.`sqms2_Text_id_fk_899589` AS `ObjectID` from `sqms2_text_text` union select 'sqms2_topic_question' AS `EdgeType`,`sqms2_topic_question`.`sqms2_Topic_Question_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_topic_question`.`state_id` AS `EdgeStateID`,`sqms2_topic_question`.`sqms2_Topic_id_fk_824630` AS `ObjectID` from `sqms2_topic_question` union select 'sqms2_topic_question' AS `EdgeType`,`sqms2_topic_question`.`sqms2_Topic_Question_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_topic_question`.`state_id` AS `EdgeStateID`,`sqms2_topic_question`.`sqms2_Question_id_fk_664094` AS `ObjectID` from `sqms2_topic_question` union select 'sqms2_topic_role' AS `EdgeType`,`sqms2_topic_role`.`sqms2_Topic_Role_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_topic_role`.`state_id` AS `EdgeStateID`,`sqms2_topic_role`.`sqms2_Topic_id_fk_811732` AS `ObjectID` from `sqms2_topic_role` union select 'sqms2_topic_role' AS `EdgeType`,`sqms2_topic_role`.`sqms2_Topic_Role_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_topic_role`.`state_id` AS `EdgeStateID`,`sqms2_topic_role`.`Role_id_fk_928470` AS `ObjectID` from `sqms2_topic_role` */;
+/*!50001 VIEW `_edges` AS select 'sqms2_answer_text' AS `EdgeType`,`sqms2_answer_text`.`sqms2_Answer_Text_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_answer_text`.`state_id` AS `EdgeStateID`,`sqms2_answer_text`.`sqms2_Answer_id_fk_154388` AS `ObjectID` from `sqms2_answer_text` union select 'sqms2_answer_text' AS `EdgeType`,`sqms2_answer_text`.`sqms2_Answer_Text_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_answer_text`.`state_id` AS `EdgeStateID`,`sqms2_answer_text`.`sqms2_Text_id_fk_842740` AS `ObjectID` from `sqms2_answer_text` union select 'sqms2_question_answer' AS `EdgeType`,`sqms2_question_answer`.`sqms2_Question_Answer_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_answer`.`sqms2_Question_id_fk_735802` AS `ObjectID` from `sqms2_question_answer` union select 'sqms2_question_answer' AS `EdgeType`,`sqms2_question_answer`.`sqms2_Question_Answer_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_answer`.`sqms2_Answer_id_fk_995603` AS `ObjectID` from `sqms2_question_answer` union select 'sqms2_question_text' AS `EdgeType`,`sqms2_question_text`.`sqms2_Question_Text_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_text`.`state_id` AS `EdgeStateID`,`sqms2_question_text`.`sqms2_Question_id_fk_783494` AS `ObjectID` from `sqms2_question_text` union select 'sqms2_question_text' AS `EdgeType`,`sqms2_question_text`.`sqms2_Question_Text_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_text`.`state_id` AS `EdgeStateID`,`sqms2_question_text`.`sqms2_Text_id_fk_559100` AS `ObjectID` from `sqms2_question_text` union select 'sqms2_syllabus_desc' AS `EdgeType`,`sqms2_syllabus_desc`.`sqms2_Syllabus_desc_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabus_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_desc`.`sqms2_Syllabus_id_fk_783731` AS `ObjectID` from `sqms2_syllabus_desc` union select 'sqms2_syllabus_desc' AS `EdgeType`,`sqms2_syllabus_desc`.`sqms2_Syllabus_desc_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabus_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_desc`.`sqms2_Text_id_fk_178796` AS `ObjectID` from `sqms2_syllabus_desc` union select 'sqms2_syllabus_syllabuschapter' AS `EdgeType`,`sqms2_syllabus_syllabuschapter`.`sqms2_Syllabus_SyllabusChapter_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabus_syllabuschapter`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_syllabuschapter`.`sqms2_Syllabus_id_fk_870666` AS `ObjectID` from `sqms2_syllabus_syllabuschapter` union select 'sqms2_syllabus_syllabuschapter' AS `EdgeType`,`sqms2_syllabus_syllabuschapter`.`sqms2_Syllabus_SyllabusChapter_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabus_syllabuschapter`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_syllabuschapter`.`sqms2_SyllabusChapter_id_fk_327935` AS `ObjectID` from `sqms2_syllabus_syllabuschapter` union select 'sqms2_syllabus_topic' AS `EdgeType`,`sqms2_syllabus_topic`.`sqms2_Syllabus_Topic_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabus_topic`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_topic`.`sqms2_Syllabus_id_fk_345197` AS `ObjectID` from `sqms2_syllabus_topic` union select 'sqms2_syllabus_topic' AS `EdgeType`,`sqms2_syllabus_topic`.`sqms2_Syllabus_Topic_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabus_topic`.`state_id` AS `EdgeStateID`,`sqms2_syllabus_topic`.`sqms2_Topic_id_fk_945295` AS `ObjectID` from `sqms2_syllabus_topic` union select 'sqms2_syllabuschapter_desc' AS `EdgeType`,`sqms2_syllabuschapter_desc`.`sqms2_SyllabusChapter_desc_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabuschapter_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_desc`.`sqms2_SyllabusChapter_id_fk_886795` AS `ObjectID` from `sqms2_syllabuschapter_desc` union select 'sqms2_syllabuschapter_desc' AS `EdgeType`,`sqms2_syllabuschapter_desc`.`sqms2_SyllabusChapter_desc_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabuschapter_desc`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_desc`.`sqms2_Text_id_fk_524933` AS `ObjectID` from `sqms2_syllabuschapter_desc` union select 'sqms2_syllabuschapter_question' AS `EdgeType`,`sqms2_syllabuschapter_question`.`sqms2_SyllabusChapter_Question_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_syllabuschapter_question`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_question`.`sqms2_SyllabusChapter_id_fk_920241` AS `ObjectID` from `sqms2_syllabuschapter_question` union select 'sqms2_syllabuschapter_question' AS `EdgeType`,`sqms2_syllabuschapter_question`.`sqms2_SyllabusChapter_Question_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_syllabuschapter_question`.`state_id` AS `EdgeStateID`,`sqms2_syllabuschapter_question`.`sqms2_Question_id_fk_285826` AS `ObjectID` from `sqms2_syllabuschapter_question` union select 'sqms2_text_text' AS `EdgeType`,`sqms2_text_text`.`sqms2_Text_Text_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_text_text`.`state_id` AS `EdgeStateID`,`sqms2_text_text`.`sqms2_Text_id_fk_508677` AS `ObjectID` from `sqms2_text_text` union select 'sqms2_text_text' AS `EdgeType`,`sqms2_text_text`.`sqms2_Text_Text_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_text_text`.`state_id` AS `EdgeStateID`,`sqms2_text_text`.`sqms2_Text_id_fk_899589` AS `ObjectID` from `sqms2_text_text` union select 'sqms2_topic_question' AS `EdgeType`,`sqms2_topic_question`.`sqms2_Topic_Question_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_topic_question`.`state_id` AS `EdgeStateID`,`sqms2_topic_question`.`sqms2_Topic_id_fk_824630` AS `ObjectID` from `sqms2_topic_question` union select 'sqms2_topic_question' AS `EdgeType`,`sqms2_topic_question`.`sqms2_Topic_Question_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_topic_question`.`state_id` AS `EdgeStateID`,`sqms2_topic_question`.`sqms2_Question_id_fk_664094` AS `ObjectID` from `sqms2_topic_question` union select 'sqms2_topic_role' AS `EdgeType`,`sqms2_topic_role`.`sqms2_Topic_Role_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_topic_role`.`state_id` AS `EdgeStateID`,`sqms2_topic_role`.`sqms2_Topic_id_fk_811732` AS `ObjectID` from `sqms2_topic_role` union select 'sqms2_topic_role' AS `EdgeType`,`sqms2_topic_role`.`sqms2_Topic_Role_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_topic_role`.`state_id` AS `EdgeStateID`,`sqms2_topic_role`.`Role_id_fk_928470` AS `ObjectID` from `sqms2_topic_role` union select 'sqms2_question_examsetversion' AS `EdgeType`,`sqms2_question_examsetversion`.`sqms2_Question_ExamSetVersion_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_examsetversion`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion`.`sqms2_ExamSetVersion_id_fk_264577` AS `ObjectID` from `sqms2_question_examsetversion` union select 'sqms2_question_examsetversion' AS `EdgeType`,`sqms2_question_examsetversion`.`sqms2_Question_ExamSetVersion_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_examsetversion`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion`.`sqms2_Question_id_fk_615560` AS `ObjectID` from `sqms2_question_examsetversion` union select 'sqms2_question_examsetversion_answer' AS `EdgeType`,`sqms2_question_examsetversion_answer`.`sqms2_Question_ExamSetVersion_Answer_id` AS `EdgeID`,0 AS `EdgePartner`,`sqms2_question_examsetversion_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion_answer`.`sqms2_Question_ExamSetVersion_id_fk_186326` AS `ObjectID` from `sqms2_question_examsetversion_answer` union select 'sqms2_question_examsetversion_answer' AS `EdgeType`,`sqms2_question_examsetversion_answer`.`sqms2_Question_ExamSetVersion_Answer_id` AS `EdgeID`,1 AS `EdgePartner`,`sqms2_question_examsetversion_answer`.`state_id` AS `EdgeStateID`,`sqms2_question_examsetversion_answer`.`sqms2_Answer_id_fk_507266` AS `ObjectID` from `sqms2_question_examsetversion_answer` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -724,4 +724,4 @@ CREATE TABLE `state_rules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-04 15:50:25
+-- Dump completed on 2020-02-12 11:34:32

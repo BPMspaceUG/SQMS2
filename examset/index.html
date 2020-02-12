@@ -16,7 +16,7 @@
         <!-- 1. SYLLABUS -->
         <section id="step1" class="card p-3 mb-3">
             <p>1. Select a Syllabus</p>
-            <div id="tblSyllabus"></div>
+            <div id="tblSyllabus">...</div>
             <button id="btnStep1" class="btn btn-success w-25 mt-5 disabled">Continue</button>
         </section>
         <!-- 2. QUESTIONS -->
@@ -139,37 +139,45 @@
             });
         }
         // Load List of Questions in Lang
+
         // SYLLABUS --- QUESTIONS (+Text)
-        loadQuestions = (syllID, lang = 'EN') => {
-            const qIDs = [];
-            fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",'+syllID+']}').then(resp => resp.json()).then(res => {
-                for (const row of res['records']) {
-                    const SCid = row.sqms2_SyllabusChapter_id_fk_327935.sqms2_SyllabusChapter_id;
-                    // 2. Read out all questions from chapters
-                    fetch('../api.php?table=sqms2_syllabuschapter_question&filter={"=":["sqms2_SyllabusChapter_id",'+SCid+']}').then(resp => resp.json()).then(res => {
-                        for (const row of res['records'])
-                            qIDs.push(row.sqms2_Question_id_fk_285826.sqms2_Question_id);
-                        //============================================================
-                        // Load Table Questions
-                        const lstQuestions = new Table('sqms2_question', 2);
-                        const qidstext = qIDs.join(',');
-                        lstQuestions.setFilter('{"and":[ {"in":["state_id","7470"]} , {"in":["sqms2_Question_id","'+qidstext+'"]} ]}');
-                        lstQuestions.options.showSearch = true;
-                        lstQuestions.Columns.state_id.show_in_grid = false;
-                        lstQuestions.onSelectionChanged(selRows => {
-                            document.getElementById('questionsSelected').innerText = selRows.length;
-                            gQuestions = selRows;
-                            if (selRows.length === Syllabus.sqms2_Exam_QuestionsTotal) {
-                                document.getElementById('btnStep2').classList.remove('disabled');
-                            }
+        async function loadQuestions(syllID, lang = 'EN') {
+            // Load Data
+            function getQuestionIDsBySyllabusID(syllabusID) {
+                return new Promise(resolve => {
+                    fetch('../api.php?table=sqms2_syllabus_syllabuschapter&filter={"=":["sqms2_Syllabus_id",' + syllabusID + ']}').then(resp=>resp.json()).then(res=>{
+                        const SCIDs = res.records.map(row=>row.sqms2_SyllabusChapter_id_fk_327935.sqms2_SyllabusChapter_id);
+                        // 2. Read out all questions from chapters
+                        fetch('../api.php?table=sqms2_syllabuschapter_question&filter={"in":["sqms2_SyllabusChapter_id","' + SCIDs.join(',') + '"]}').then(resp => resp.json()).then(res=>{
+                            const QIDs = res['records'].map(row=>row.sqms2_Question_id_fk_285826.sqms2_Question_id);
+                            resolve(QIDs.join(','));
                         });
-                        lstQuestions.loadRows(rows => {
-                            lstQuestions.renderHTML(document.getElementById('tblQuestions'));
-                        });
-                        //============================================================
+
                     });
+                });
+            }
+            // Load Questions
+            const qids = await getQuestionIDsBySyllabusID(syllID);
+            //============================================================
+            // Load Table Questions
+            const lstQuestions = new Table('sqms2_question', 2);
+            lstQuestions.setFilter('{"and":[ {"in":["state_id","7470"]} , {"in":["sqms2_Question_id","'+qids+'"]} ]}');
+            lstQuestions.options.showSearch = true;
+            lstQuestions.Columns.state_id.show_in_grid = false;
+            lstQuestions.isExpanded = true;
+            lstQuestions.onSelectionChanged(selRows => {
+                document.getElementById('questionsSelected').innerText = selRows.length;
+                gQuestions = selRows;
+                if (selRows.length === Syllabus.sqms2_Exam_QuestionsTotal) {
+                    document.getElementById('btnStep2').classList.remove('disabled');
+                } else {
+                    document.getElementById('btnStep2').classList.add('disabled');
                 }
-            });            
+            });
+            lstQuestions.loadRows(rows => {
+                lstQuestions.renderHTML(document.getElementById('tblQuestions'));
+            });
+            //============================================================
         }
         // Question and Answers drawing (GUI)
         loadQuestion = () => {
@@ -200,17 +208,25 @@
                 loadLanguageQandA();
             });
         }
-        changeQuestLang = el => loadQuestions(Syllabus.sqms2_Syllabus_id, el.value);
         changeAnswLang = el => loadLanguageQandA(el.value);
 
         //==============================================> INIT (Load all active + update Syllabi)
         DB.API_URL = '../api.php';
         DB.loadConfig(config => {
+            // Reset Global Variables
+            idxQuestion = 0;
+            Syllabus = undefined;
+            gQuestions.length = 0;
+            gSets.length = 0;
+            gQuestionSets.length = 0;
+            gAnswerIDs.length = 0;
+            
             // Load Table Syllabus
             const lstSyllabus = new Table('sqms2_syllabus', 1);
             lstSyllabus.setFilter('{"in":["state_id","7462,7463"]}');
             lstSyllabus.ReadOnly = true;
             lstSyllabus.options.showSearch = true;
+            lstSyllabus.isExpanded = true;
             lstSyllabus.Columns.state_id.show_in_grid = false;
             lstSyllabus.onSelectionChanged(selRows => {
                 // reset
@@ -223,6 +239,7 @@
                     document.getElementById('btnStep1').classList.add('disabled');
             });
             lstSyllabus.loadRows(rows => {
+                console.log("Loaded active Syllabi", rows);
                 lstSyllabus.renderHTML(document.getElementById('tblSyllabus'));
             });
         });
@@ -318,13 +335,17 @@
         document.getElementById('btnStep3next').addEventListener('click', () => {
             // Loop sets
             //document.getElementsByClassName('getting all queSetIDs...');
+            console.log('#### Writing Question, Answers ....');
             gSets.map(set => {
-                const setID = set.id;
+                const setID = parseInt(set.id);
                 let qsID = null;
-                for (const qs of gQuestionSets) {
-                    if (qs.idS == setID && qs.idQ == gQuestions[idxQuestion].id)
+                //console.log(gQuestionSets);
+                gQuestionSets.map(qs => {
+                    //console.log(qs, gQuestions[idxQuestion]);
+                    if (parseInt(qs.idS) === setID && qs.idQ == gQuestions[idxQuestion].sqms2_Question_id)
                         qsID = qs.id;
-                }
+                });
+                console.log('==>', qsID);
                 // Get AnswerIDs for each set
                 const answers = document.getElementById('set-' + setID).getElementsByClassName('answerbox');
                 for (let i=0; i<answers.length; i++) {
